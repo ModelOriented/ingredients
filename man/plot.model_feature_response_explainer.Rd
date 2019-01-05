@@ -22,22 +22,25 @@ library("DALEX")
 
 HR_glm_model <- glm(status == "fired" ~., data = HR, family = "binomial")
 explainer_glm <- explain(HR_glm_model, data = HR)
-expl_glm <- variable_response(explainer_glm, "hours", "pdp")
+expl_glm <- model_feature_response(explainer_glm, "hours", "pdp")
+head(expl_glm)
 plot(expl_glm)
 
  \dontrun{
 library("randomForest")
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR)
-expl_rf  <- variable_response(explainer_rf, variable = "hours",
+expl_rf  <- model_feature_response(explainer_rf, feature = "hours",
                        type = "pdp")
+head(expl_rf)
 plot(expl_rf)
 
 plot(expl_rf, expl_glm)
 
 # Example for factor variable (with factorMerger)
 library("randomForest")
-expl_rf  <- variable_response(explainer_rf, variable =  "gender", type = "factor")
+expl_rf  <- model_feature_response(explainer_rf, feature =  "gender", type = "factor")
+head(expl_rf)
 plot(expl_rf)
  }
 

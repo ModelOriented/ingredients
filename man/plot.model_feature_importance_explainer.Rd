@@ -31,14 +31,14 @@ HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
 vd_rf <- model_feature_importance(explainer_rf, type = "raw",
                             loss_function = loss_cross_entropy)
-vd_rf
+head(vd_rf)
 plot(vd_rf)
 
 HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
 vd_glm <- model_feature_importance(explainer_glm, type = "raw",
                         loss_function = loss_root_mean_square)
-vd_glm
+head(vd_glm)
 plot(vd_glm)
 
 library("xgboost")
@@ -50,7 +50,7 @@ HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
 explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
                      y = HR$status == "fired", label = "xgboost")
 vd_xgb <- model_feature_importance(explainer_xgb, type = "raw")
-vd_xgb
+head(vd_xgb)
 plot(vd_xgb)
 
 plot(vd_glm, vd_xgb)

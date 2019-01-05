@@ -113,8 +113,8 @@ model_feature_response.default <- function(x, data, predict_function,
 }
 
 #' @export
-print.factorMerger_list <- function(x) {
-  invisible(lapply(x, print))
+print.factorMerger_list <- function(x, ...) {
+  invisible(lapply(x, print, ...))
 }
 
 model_feature_response_1d <- function(x, data, predict_function,
