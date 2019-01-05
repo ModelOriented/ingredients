@@ -1,0 +1,27 @@
+Package: ingredients
+Title: Effects and Importances of Model Ingredients
+Version: 0.1
+Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", 
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0001-8423-1823"))
+Description: Collection of tools for assessment of feature importance and feature effects.
+    Part of the `DrWhy` universe. Selected function were moved from `DALEX` but now working
+    for multilabel classification.
+Depends: R (>= 3.0)
+License: GPL
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports: DALEX,
+    pdp,
+    ggplot2,
+    ALEPlot,
+    factorMerger,
+    ggpubr
+Suggests: gbm,
+  randomForest,
+  xgboost,
+  testthat,
+  dplyr
+URL: https://ModelOriented.github.io/ingredients/
+BugReports: https://github.com/ModelOriented/ingredients/issues
