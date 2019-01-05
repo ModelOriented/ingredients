@@ -1,4 +1,4 @@
-context("Check variable_importance() function")
+context("Check plot() functions")
 
 test_that("plot model_feature_importance_explainer",{
   vd_glm <- model_feature_importance(explainer_glm, type = "raw",

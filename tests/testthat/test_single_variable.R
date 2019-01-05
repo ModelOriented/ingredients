@@ -13,5 +13,5 @@ test_that("test gender", {
   expect_true("model_feature_response_explainer" %in% class(expl_glm))
 
   expl_rf <- model_feature_response(explainer_rf, "gender", "factor")
-  expect_true("model_feature_response_explainer" %in% class(expl_rf))
+  expect_true("factorMerger_list" %in% class(expl_rf))
 })

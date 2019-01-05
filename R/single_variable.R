@@ -98,7 +98,12 @@ model_feature_response.default <- function(x, data, predict_function,
                                        feature = feature, type = type,
                                        label = paste0(label, ".", selected_names[which_class]), ...)
     })
-    res <- do.call(rbind, res)
+    # it's a factor Merger
+    if ("factorMerger" %in% class(res[[1]]) ) {
+      class(res) <- "factorMerger_list"
+    } else {
+      res <- do.call(rbind, res)
+    }
   } else {
     predict_function_1d <- predict_function
     res <- model_feature_response_1d(x = x, data = data, predict_function = predict_function_1d,
@@ -107,6 +112,10 @@ model_feature_response.default <- function(x, data, predict_function,
   res
 }
 
+#' @export
+print.factorMerger_list <- function(x) {
+  invisible(lapply(x, print))
+}
 
 model_feature_response_1d <- function(x, data, predict_function,
                                       feature, type = "pdp", label = class(x)[1],  ...) {
