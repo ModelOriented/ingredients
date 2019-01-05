@@ -9,6 +9,8 @@
 #' @param max_vars maximum number of variables that shall be presented for for each model
 #'
 #' @importFrom stats model.frame reorder
+#' @importFrom utils head tail
+#' @importFrom DALEX loss_root_mean_square
 #' @return a ggplot2 object
 #' @export
 #'

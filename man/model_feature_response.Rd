@@ -9,7 +9,7 @@
 model_feature_response(x, ...)
 
 \method{model_feature_response}{explainer}(x, feature, type = "pdp",
-  which.class = NULL, ...)
+  which_class = NULL, ...)
 
 \method{model_feature_response}{default}(x, data, predict_function,
   feature, type = "pdp", label = class(x)[1], which_class = NULL,
@@ -25,13 +25,13 @@ model_feature_response(x, ...)
 \item{type}{character - type of the response to be calculated.
 Currently following options are implemented: 'pdp' for Partial Dependency and 'ale' for Accumulated Local Effects}
 
+\item{which_class}{character, for multilabel classification you can restrict results to selected classes. By default `NULL` which means that all classes are considered.}
+
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
-
-\item{which_class}{character, for multilabel classification you can restrict results to selected classes. By default `NULL` which means that all classes are considered.}
 
 \item{y}{true labels for `data`, will be extracted from `x` if it's an explainer}
 }
