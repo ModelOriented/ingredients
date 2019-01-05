@@ -42,7 +42,6 @@
 
 plot.model_feature_response_explainer <- function(x, ...) {
   if ("factorMerger_list" %in% class(x)) {
-    return(do.call(plot.variable_response_factor_explainer,x))
   }
   if ("factorMerger" %in% class(x)) {
     return(plot.variable_response_factor_explainer(x, ...))
@@ -50,6 +49,11 @@ plot.model_feature_response_explainer <- function(x, ...) {
   if ("data.frame" %in% class(x)) {
     return(plot.variable_response_numeric_explainer(x, ...))
   }
+}
+
+#' @export
+plot.factorMerger_list <- function(x, ...) {
+  do.call(plot.variable_response_factor_explainer,x)
 }
 
 plot.variable_response_factor_explainer <- function(x, ...) {
