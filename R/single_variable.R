@@ -13,7 +13,6 @@
 #' @param x a model to be explained, or an explainer created with function `DALEX2::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
-#' @param y true labels for `data`, will be extracted from `x` if it's an explainer
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #' @param feature character - name of a single variable
 #' @param type character - type of the response to be calculated.

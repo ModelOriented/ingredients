@@ -32,8 +32,6 @@ Currently following options are implemented: 'pdp' for Partial Dependency and 'a
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
-
-\item{y}{true labels for `data`, will be extracted from `x` if it's an explainer}
 }
 \value{
 An object of the class 'model_feature_response_explainer'.
