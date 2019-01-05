@@ -1,0 +1,20 @@
+language: R
+sudo: false
+cache: packages
+dist: trusty
+env:
+  global:
+  - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"
+notifications:
+  email: false
+r_packages:
+  - DALEX2
+  - archivist
+  - pdp
+  - ggplot2
+  - ALEPlot
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
+
