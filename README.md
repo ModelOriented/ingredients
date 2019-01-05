@@ -9,6 +9,9 @@ Status](https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master
 
 ingredients: Effects and Importances of Model Ingredients
 
+Here we port functions `model_feature_importance` and `model_feature_response` from DALEX. 
+Additionaly they support multidimensional model responses (multilabel classess).
+
 ## Install
 
 From GitHub
