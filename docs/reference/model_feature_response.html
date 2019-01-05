@@ -95,7 +95,7 @@ and 'ALEPlot' (Dan Apley (2017). ALEPlot: Accumulated Local Effects Plots and Pa
 
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>model_feature_response</span>(<span class='no'>x</span>, <span class='no'>feature</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pdp"</span>,
-  <span class='kw'>which.class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>which_class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>model_feature_response</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='no'>predict_function</span>,
@@ -123,6 +123,10 @@ and 'ALEPlot' (Dan Apley (2017). ALEPlot: Accumulated Local Effects Plots and Pa
 Currently following options are implemented: 'pdp' for Partial Dependency and 'ale' for Accumulated Local Effects</p></td>
     </tr>
     <tr>
+      <th>which_class</th>
+      <td><p>character, for multilabel classification you can restrict results to selected classes. By default `NULL` which means that all classes are considered.</p></td>
+    </tr>
+    <tr>
       <th>data</th>
       <td><p>validation dataset, will be extracted from `x` if it's an explainer</p></td>
     </tr>
@@ -133,14 +137,6 @@ Currently following options are implemented: 'pdp' for Partial Dependency and 'a
     <tr>
       <th>label</th>
       <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
-    </tr>
-    <tr>
-      <th>which_class</th>
-      <td><p>character, for multilabel classification you can restrict results to selected classes. By default `NULL` which means that all classes are considered.</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>true labels for `data`, will be extracted from `x` if it's an explainer</p></td>
     </tr>
     </table>
     
