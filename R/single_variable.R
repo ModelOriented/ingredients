@@ -58,7 +58,7 @@ model_feature_response <- function(x, ...)
 #' @export
 #' @rdname model_feature_response
 model_feature_response.explainer <- function(x, feature, type = "pdp", which_class = NULL, ...) {
-  if (is.null(x$data)) stop("The variable_response() function requires explainers created with specified 'data' parameter.")
+  if (is.null(x$data)) stop("The model_feature_response() function requires explainers created with specified 'data' parameter.")
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
