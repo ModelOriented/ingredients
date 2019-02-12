@@ -126,12 +126,12 @@
 <span class='no'>expl_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='model_feature_response.html'>model_feature_response</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"hours"</span>,
                        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pdp"</span>)
 <span class='fu'>head</span>(<span class='no'>expl_rf</span>)</div><div class='output co'>#&gt;          x         y   var type              label
-#&gt; 1 35.00000 0.5093883 hours  pdp randomForest.fired
-#&gt; 2 35.89955 0.6469045 hours  pdp randomForest.fired
-#&gt; 3 36.79911 0.6399936 hours  pdp randomForest.fired
-#&gt; 4 37.69866 0.6289053 hours  pdp randomForest.fired
-#&gt; 5 38.59822 0.6480311 hours  pdp randomForest.fired
-#&gt; 6 39.49777 0.6173162 hours  pdp randomForest.fired</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='img'><img src='plot.model_feature_response_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1 35.00000 0.5284720 hours  pdp randomForest.fired
+#&gt; 2 35.89955 0.6534166 hours  pdp randomForest.fired
+#&gt; 3 36.79911 0.6457665 hours  pdp randomForest.fired
+#&gt; 4 37.69866 0.6387919 hours  pdp randomForest.fired
+#&gt; 5 38.59822 0.6590837 hours  pdp randomForest.fired
+#&gt; 6 39.49777 0.6327565 hours  pdp randomForest.fired</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='img'><img src='plot.model_feature_response_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>expl_rf</span>, <span class='no'>expl_glm</span>)</div><div class='img'><img src='plot.model_feature_response_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Example for factor variable (with factorMerger)</span>
 <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
@@ -143,8 +143,8 @@
 #&gt; 
 #&gt; |   |groupA |groupB |     model| pvalVsFull| pvalVsPrevious|
 #&gt; |:--|:------|:------|---------:|----------:|--------------:|
-#&gt; |0  |       |       | -6863.212|     1.0000|         1.0000|
-#&gt; |1  |male   |female | -6863.247|     0.7912|         0.7912|
+#&gt; |0  |       |       | -6877.900|     1.0000|         1.0000|
+#&gt; |1  |male   |female | -6877.907|     0.9048|         0.9048|
 #&gt; [[2]]
 #&gt; Family: gaussian Factor Merger.
 #&gt; 
@@ -152,8 +152,8 @@
 #&gt; 
 #&gt; |   |groupA |groupB |     model| pvalVsFull| pvalVsPrevious|
 #&gt; |:--|:------|:------|---------:|----------:|--------------:|
-#&gt; |0  |       |       | -2967.241|      1.000|          1.000|
-#&gt; |1  |male   |female | -2967.441|      0.527|          0.527|
+#&gt; |0  |       |       | -2965.544|     1.0000|         1.0000|
+#&gt; |1  |male   |female | -2965.664|     0.6252|         0.6252|
 #&gt; [[3]]
 #&gt; Family: gaussian Factor Merger.
 #&gt; 
@@ -161,8 +161,8 @@
 #&gt; 
 #&gt; |   |groupA |groupB |     model| pvalVsFull| pvalVsPrevious|
 #&gt; |:--|:------|:------|---------:|----------:|--------------:|
-#&gt; |0  |       |       | -7171.136|     1.0000|         1.0000|
-#&gt; |1  |female |male   | -7171.412|     0.4571|         0.4571|</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
+#&gt; |0  |       |       | -7176.002|     1.0000|         1.0000|
+#&gt; |1  |female |male   | -7176.123|     0.6235|         0.6235|</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 #&gt; <span class='message'>replace the existing scale.</span></div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 #&gt; <span class='message'>replace the existing scale.</span></div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
 #&gt; <span class='message'>replace the existing scale.</span></div><div class='img'><img src='plot.model_feature_response_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>

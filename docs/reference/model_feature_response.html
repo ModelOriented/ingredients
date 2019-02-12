@@ -169,12 +169,12 @@ Please note that the argument <code>type</code> must be set to <code>'factor'</c
 <span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>expl_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'>model_feature_response</span>(<span class='no'>explainer_rf</span>, <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pdp"</span>)
 <span class='fu'>head</span>(<span class='no'>expl_rf</span>)</div><div class='output co'>#&gt;          x         y var type              label
-#&gt; 1 20.00389 0.3888390 age  pdp randomForest.fired
-#&gt; 2 20.80378 0.3773926 age  pdp randomForest.fired
-#&gt; 3 21.60368 0.3698636 age  pdp randomForest.fired
-#&gt; 4 22.40357 0.3765388 age  pdp randomForest.fired
-#&gt; 5 23.20346 0.3841366 age  pdp randomForest.fired
-#&gt; 6 24.00336 0.3899223 age  pdp randomForest.fired</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='img'><img src='model_feature_response-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1 20.00389 0.3997260 age  pdp randomForest.fired
+#&gt; 2 20.80378 0.3745126 age  pdp randomForest.fired
+#&gt; 3 21.60368 0.3670957 age  pdp randomForest.fired
+#&gt; 4 22.40357 0.3783217 age  pdp randomForest.fired
+#&gt; 5 23.20346 0.3829081 age  pdp randomForest.fired
+#&gt; 6 24.00336 0.3927348 age  pdp randomForest.fired</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='img'><img src='model_feature_response-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>expl_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'>model_feature_response</span>(<span class='no'>explainer_rf</span>, <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pdp"</span>,
                        <span class='kw'>which_class</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='fu'>plot</span>(<span class='no'>expl_rf</span>)</div><div class='img'><img src='model_feature_response-3.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>
