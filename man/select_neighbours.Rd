@@ -33,7 +33,7 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.
 }
 \examples{
-library("DALEX2")
+library("DALEX")
 
 new_apartment <- apartments[1, 2:6]
 small_apartments <- select_neighbours(apartments_test, new_apartment, n = 10)

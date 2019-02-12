@@ -11,6 +11,36 @@
 #' @param selected_variables if not NULL then only `selected_variables` will be presented
 #'
 #' @return a ggplot2 layer
+#' library("DALEX")
+#'  \dontrun{
+#' library("titanic")
+#' library("randomForest")
+#'
+#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic_small$Survived <- factor(titanic_small$Survived)
+#' titanic_small$Sex <- factor(titanic_small$Sex)
+#' titanic_small$Embarked <- factor(titanic_small$Embarked)
+#' titanic_small <- na.omit(titanic_small)
+#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+#'                          data = titanic_small)
+#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
+#' explainer_rf <- explain(rf_model, data = titanic_small,
+#'                         y = titanic_small$Survived == "1", label = "RF",
+#'                         predict_function = predict_rf_fuction)
+#'
+#' selected_passangers <- select_sample(titanic_small, n = 100)
+#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' cp_rf
+#'
+#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+#' pdp_rf
+#'
+#' plot(cp_rf, selected_variables = "Age", color = "grey") +
+#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'
+#' }
 #' @export
 show_aggreagated_profiles <- function(x, ...,
                       size = 0.5,

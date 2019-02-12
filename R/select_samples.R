@@ -13,7 +13,7 @@
 #'
 #' @return a data frame with selected rows
 #' @examples
-#' library("DALEX2")
+#' library("DALEX")
 #' small_apartments <- select_sample(apartments_test)
 #' head(small_apartments)
 #' @export

@@ -18,57 +18,33 @@
 #' @importFrom stats aggregate
 #'
 #' @examples
-#' library("DALEX2")
+#' library("DALEX")
 #'  \dontrun{
+#' library("titanic")
 #' library("randomForest")
-#' set.seed(59)
 #'
-#' apartments_rf <- randomForest(m2.price ~ construction.year + surface + floor +
-#'                                 no.rooms + district, data = apartments)
-#' explainer_rf <- explain(apartments_rf,
-#'                         data = apartments_test[,2:6], y = apartments_test$m2.price)
+#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic_small$Survived <- factor(titanic_small$Survived)
+#' titanic_small$Sex <- factor(titanic_small$Sex)
+#' titanic_small$Embarked <- factor(titanic_small$Embarked)
+#' titanic_small <- na.omit(titanic_small)
+#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+#'                          data = titanic_small)
+#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
+#' explainer_rf <- explain(rf_model, data = titanic_small,
+#'                         y = titanic_small$Survived == "1", label = "RF",
+#'                         predict_function = predict_rf_fuction)
 #'
-#' apartments_lm <- lm(m2.price ~ construction.year + surface + floor +
-#'                                 no.rooms + district, data = apartments)
-#' explainer_lm <- explain(apartments_lm,
-#'                         data = apartments_test[,2:6], y = apartments_test$m2.price)
+#' selected_passangers <- select_sample(titanic_small, n = 100)
+#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' cp_rf
 #'
-#' library("e1071")
-#' apartments_svm <- svm(m2.price ~ construction.year + surface + floor +
-#'                                 no.rooms + district, data = apartments)
-#' explainer_svm <- explain(apartments_svm,
-#'                         data = apartments_test[,2:6], y = apartments_test$m2.price)
+#' plot(cp_rf, selected_variables = "Age", color = "grey") +
+#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, selected_variables = "Age", color = "red")
 #'
-#' # individual explanations
-#' my_apartment <- apartments_test[1, ]
-#'
-#' # for random forest
-#' lp_rf <- ceteris_paribus(explainer_rf, my_apartment)
-#' lp_rf
-#'
-#' plot(lp_rf)
-#'
-#' # for others
-#' lp_lm <- ceteris_paribus(explainer_lm, my_apartment)
-#' plot(lp_rf, lp_lm, color = "_label_")
-#'
-#' # for others
-#' lp_svm <- ceteris_paribus(explainer_svm, my_apartment)
-#' plot(lp_rf, lp_lm, lp_svm, color = "_label_")
-#'
-#' # --------
-#' # multiclass
-#'
-#' HR_rf <- randomForest(status ~ . , data = HR)
-#' explainer_rf <- explain(HR_rf, data = HRTest, y = HRTest)
-#'
-#' my_HR <- HRTest[1, ]
-#'
-#' lp_rf <- ceteris_paribus(explainer_rf, my_HR)
-#' lp_rf
-#'
-#' plot(lp_rf, color = "_label_")
 #' }
+#' @export
 plot.ceteris_paribus_explainer <- function(x, ...,
    size = 0.5,
    alpha = 0.8,

@@ -16,7 +16,7 @@
 #'
 #' @return a data frame with selected rows
 #' @examples
-#' library("DALEX2")
+#' library("DALEX")
 #'
 #' new_apartment <- apartments[1, 2:6]
 #' small_apartments <- select_neighbours(apartments_test, new_apartment, n = 10)

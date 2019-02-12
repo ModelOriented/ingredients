@@ -26,7 +26,7 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.
 }
 \examples{
-library("DALEX2")
+library("DALEX")
 small_apartments <- select_sample(apartments_test)
 head(small_apartments)
 }

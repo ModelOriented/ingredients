@@ -21,46 +21,39 @@
 #' @export
 #'
 #' @examples
-#' library("DALEX2")
-#' library("ceterisParibus2")
+#' library("DALEX")
 #'  \dontrun{
+#' library("titanic")
 #' library("randomForest")
-#' set.seed(59)
 #'
-#' apartments_rf <- randomForest(m2.price ~ construction.year + surface + floor +
-#'                                 no.rooms + district, data = apartments)
+#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic_small$Survived <- factor(titanic_small$Survived)
+#' titanic_small$Sex <- factor(titanic_small$Sex)
+#' titanic_small$Embarked <- factor(titanic_small$Embarked)
+#' titanic_small <- na.omit(titanic_small)
+#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+#'                          data = titanic_small)
+#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
+#' explainer_rf <- explain(rf_model, data = titanic_small,
+#'                         y = titanic_small$Survived == "1", label = "RF",
+#'                         predict_function = predict_rf_fuction)
 #'
-#' explainer_rf <- explain(apartments_rf,
-#'                         data = apartments_test[,2:6], y = apartments_test$m2.price)
+#' selected_passangers <- select_sample(titanic_small, n = 100)
+#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' cp_rf
 #'
-#' my_apartment <- apartments_test[1, ]
-#'
-#' lp_rf <- ceteris_paribus(explainer_rf, my_apartment)
-#' head(lp_rf)
-#'
-#' plot(lp_rf)
-#'
-#' # --------
-#' # multiclass
-#'
-#' HR_rf <- randomForest(status ~ . , data = HR)
-#' explainer_rf <- explain(HR_rf, data = HRTest, y = HRTest)
-#'
-#' my_HR <- HRTest[1, ]
-#'
-#' lp_rf <- ceteris_paribus(explainer_rf,  my_HR)
-#' head(lp_rf)
-#'
-#' plot(lp_rf, color = "_label_")
+#' plot(cp_rf, selected_variables = "Age", color = "grey") +
+#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, selected_variables = "Age", color = "red")
 #'
 #' }
 #' @export
-#' @rdname local_profile
+#' @rdname ceteris_paribus
 ceteris_paribus <- function(x, ...)
   UseMethod("ceteris_paribus")
 
 #' @export
-#' @rdname local_profile
+#' @rdname ceteris_paribus
 ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = NULL,
                                     variable_splits = NULL, grid_points = 101,
                                     ...) {
@@ -81,7 +74,7 @@ ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = 
 
 
 #' @export
-#' @rdname local_profile
+#' @rdname ceteris_paribus
 ceteris_paribus.default <- function(x, data, predict_function = predict,
                                       new_observation, y = NULL, variables = NULL,
                                       variable_splits = NULL,
