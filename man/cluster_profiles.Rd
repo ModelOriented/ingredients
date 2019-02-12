@@ -54,13 +54,16 @@ cp_rf
 
 pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
 pdp_rf
-clust_rf <- cluster_profiles(cp_rf, k = 5, selected_variables = "Age")
+clust_rf <- cluster_profiles(cp_rf, k = 3, selected_variables = "Age")
 clust_rf
 
 plot(clust_rf, color = "_label_") +
   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 
-clust_rf <- cluster_profiles(cp_rf, k = 5, center = TRUE, selected_variables = "Age")
+plot(cp_rf, color = "grey") +
+  show_aggreagated_profiles(clust_rf, color = "_label_")
+
+clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, selected_variables = "Age")
 clust_rf
 
 plot(clust_rf, color = "_label_") +
