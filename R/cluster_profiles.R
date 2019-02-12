@@ -1,14 +1,16 @@
-#' Aggregate Ceteris Paribus into Partial Dependency Plots
+#' Cluster Ceteris Paribus
 #'
-#' Function 'aggregate_profiles' calculates aggregate of ceteris paribus profiles
+#' Function 'cluster_profiles' calculates aggregate of ceteris paribus profiles
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
 #' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param k number of clusters for the hclust function
+#' @param center shall profiles be centered before clustering
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
-#' @importFrom stats na.omit quantile
+#' @importFrom stats as.dist cutree hclust
 #' @return a 'aggregated_ceteris_paribus_explainer' layer
 #' @examples
 #' library("DALEX")
@@ -35,12 +37,25 @@
 #'
 #' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
 #' pdp_rf
+#' clust_rf <- cluster_profiles(cp_rf, k = 5, selected_variables = "Age")
+#' clust_rf
+#'
+#' plot(clust_rf, color = "_label_") +
+#'   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
+#'
+#' clust_rf <- cluster_profiles(cp_rf, k = 5, center = TRUE, selected_variables = "Age")
+#' clust_rf
+#'
+#' plot(clust_rf, color = "_label_") +
+#'   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 #' }
 #' @export
-aggregate_profiles <- function(x, ...,
-                      aggregate_function = mean,
-                      only_numerical = TRUE,
-                      selected_variables = NULL) {
+cluster_profiles <- function(x, ...,
+                               aggregate_function = mean,
+                               only_numerical = TRUE,
+                               center = FALSE,
+                               k = 3,
+                               selected_variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -73,9 +88,37 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
   }
 
-  tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
-  aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = aggregate_function)
-  colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_yhat_")
+  ## clustering
+  tmp <- all_profiles[,c("_ids_", "_vname_", "_label_", "_x_", "_yhat_")]
+  tmp <- tmp[order(tmp$`_vname_`, tmp$`_x_`, tmp$`_label_`),]
+  tmp_list <- split(tmp, tmp$`_ids_`)
+  ids <- unique(tmp$`_ids_`)
+
+  if (length(ids) <= k) stop("k larger than the number of different profiles")
+
+  dist_mat <- matrix(0, length(ids), length(ids))
+  if (length(ids) > 1) {
+    for (i in 1:(length(ids)-1)) {
+      for (j in (i + 1):length(ids)) {
+        yhi <- tmp_list[[i]]$`_yhat_`
+        yhj <- tmp_list[[j]]$`_yhat_`
+        if (center) {
+          yhi <- yhi - mean(yhi)
+          yhj <- yhj - mean(yhj)
+        }
+        dist_mat[i,j] <- sqrt(mean((yhi - yhj)^2))
+      }
+    }
+  }
+  dist_mat <- dist_mat + t(dist_mat)
+  clus <- cutree(hclust(as.dist(dist_mat), method = "ward.D2"), k = k)
+  names(clus) <- ids
+  tmp$clust <- clus[as.character(tmp$`_ids_`)]
+  ##
+
+  aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp$clust), FUN = aggregate_function)
+  colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_cluster_", "_yhat_")
+  aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_cluster_`, sep = "_")
   aggregated_profiles$`_ids_` <- 0
 
   class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")

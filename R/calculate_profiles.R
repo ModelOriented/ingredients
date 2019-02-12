@@ -112,7 +112,7 @@ calculate_variable_split.default <- function(data, variables = colnames(data), g
     selected_column <- data[,var]
     if (is.numeric(selected_column)) {
       probs <- seq(0, 1, length.out = grid_points)
-      quantile(selected_column, probs = probs)
+      unique(quantile(selected_column, probs = probs))
     } else {
       unique(selected_column)
     }
