@@ -134,7 +134,7 @@ you should overload it.</p>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments</span>[<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>6</span>]
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_neighbours</span>(<span class='no'>apartments_test</span>, <span class='no'>new_apartment</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_neighbours</span>(<span class='no'>apartmentsTest</span>, <span class='no'>new_apartment</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
 #&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='no'>small_apartments</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 2285     5875              1970      27     3        1 Srodmiescie
