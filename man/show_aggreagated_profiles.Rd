@@ -24,6 +24,11 @@ show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
 }
 \value{
 a ggplot2 layer
+}
+\description{
+Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+}
+\examples{
 library("DALEX")
  \dontrun{
 library("titanic")
@@ -54,7 +59,4 @@ show_observations(cp_rf, selected_variables = "Age", color = "grey") +
   show_aggreagated_profiles(pdp_rf, size = 3)
 
 }
-}
-\description{
-Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
 }

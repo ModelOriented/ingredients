@@ -9,6 +9,7 @@
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @return a 'aggregated_ceteris_paribus_explainer' layer
+#' @examples
 #' library("DALEX")
 #'  \dontrun{
 #' library("titanic")

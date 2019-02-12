@@ -20,6 +20,11 @@ aggregate_profiles(x, ..., aggregate_function = mean,
 }
 \value{
 a 'aggregated_ceteris_paribus_explainer' layer
+}
+\description{
+Function 'aggregate_profiles' calculate aggregate of ceteris paribus profiles
+}
+\examples{
 library("DALEX")
  \dontrun{
 library("titanic")
@@ -44,7 +49,4 @@ cp_rf
 pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
 pdp_rf
 }
-}
-\description{
-Function 'aggregate_profiles' calculate aggregate of ceteris paribus profiles
 }

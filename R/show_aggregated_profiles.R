@@ -11,6 +11,7 @@
 #' @param selected_variables if not NULL then only `selected_variables` will be presented
 #'
 #' @return a ggplot2 layer
+#' @examples
 #' library("DALEX")
 #'  \dontrun{
 #' library("titanic")
