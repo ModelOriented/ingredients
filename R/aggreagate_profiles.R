@@ -8,6 +8,7 @@
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
+#' @importFrom stats na.omit quantile
 #' @return a 'aggregated_ceteris_paribus_explainer' layer
 #' @examples
 #' library("DALEX")
@@ -15,7 +16,8 @@
 #' library("titanic")
 #' library("randomForest")
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+#'                                    "SibSp", "Parch", "Fare", "Embarked")]
 #' titanic_small$Survived <- factor(titanic_small$Survived)
 #' titanic_small$Sex <- factor(titanic_small$Sex)
 #' titanic_small$Embarked <- factor(titanic_small$Embarked)

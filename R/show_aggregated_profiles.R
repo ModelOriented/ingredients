@@ -6,7 +6,6 @@
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
-#' @param sides a string containing any of "trbl", for top, right, bottom, and left. Passed to geom rug.
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param selected_variables if not NULL then only `selected_variables` will be presented
 #'
@@ -17,7 +16,8 @@
 #' library("titanic")
 #' library("randomForest")
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+#'                                    "SibSp", "Parch", "Fare", "Embarked")]
 #' titanic_small$Survived <- factor(titanic_small$Survived)
 #' titanic_small$Sex <- factor(titanic_small$Sex)
 #' titanic_small$Embarked <- factor(titanic_small$Embarked)
@@ -62,6 +62,7 @@ show_aggreagated_profiles <- function(x, ...,
   }
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
 
+  `_yhat_` <- NULL
   if (is_color_a_variable) {
     res <- geom_line(data = aggregated_profiles, aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha)
   } else {

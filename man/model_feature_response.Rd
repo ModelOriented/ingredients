@@ -16,7 +16,7 @@ model_feature_response(x, ...)
   ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX2::explain()`.}
+\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
 
 \item{...}{other parameters}
 

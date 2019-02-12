@@ -19,8 +19,6 @@ show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
 \item{selected_variables}{if not NULL then only `selected_variables` will be presented}
-
-\item{sides}{a string containing any of "trbl", for top, right, bottom, and left. Passed to geom rug.}
 }
 \value{
 a ggplot2 layer
@@ -34,7 +32,8 @@ library("DALEX")
 library("titanic")
 library("randomForest")
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+                                   "SibSp", "Parch", "Fare", "Embarked")]
 titanic_small$Survived <- factor(titanic_small$Survived)
 titanic_small$Sex <- factor(titanic_small$Sex)
 titanic_small$Embarked <- factor(titanic_small$Embarked)

@@ -14,7 +14,7 @@
 #' @return a data frame with selected rows
 #' @examples
 #' library("DALEX")
-#' small_apartments <- select_sample(apartments_test)
+#' small_apartments <- select_sample(apartmentsTest)
 #' head(small_apartments)
 #' @export
 select_sample <- function(data, n = 100, seed = 1313) {

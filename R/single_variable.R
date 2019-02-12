@@ -10,7 +10,7 @@
 #' For factor variables we are using the 'factorMerger' package.
 #' Please note that the argument \code{type} must be set to \code{'factor'} to use this method.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX2::explain()`.
+#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model

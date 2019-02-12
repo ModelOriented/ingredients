@@ -19,7 +19,7 @@
 #' library("DALEX")
 #'
 #' new_apartment <- apartments[1, 2:6]
-#' small_apartments <- select_neighbours(apartments_test, new_apartment, n = 10)
+#' small_apartments <- select_neighbours(apartmentsTest, new_apartment, n = 10)
 #' new_apartment
 #' small_apartments
 #' @export

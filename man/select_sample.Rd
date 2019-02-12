@@ -27,6 +27,6 @@ you should overload it.
 }
 \examples{
 library("DALEX")
-small_apartments <- select_sample(apartments_test)
+small_apartments <- select_sample(apartmentsTest)
 head(small_apartments)
 }

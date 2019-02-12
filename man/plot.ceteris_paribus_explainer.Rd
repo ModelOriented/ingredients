@@ -38,7 +38,8 @@ library("DALEX")
 library("titanic")
 library("randomForest")
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")]
+titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
+                                   "SibSp", "Parch", "Fare", "Embarked")]
 titanic_small$Survived <- factor(titanic_small$Survived)
 titanic_small$Sex <- factor(titanic_small$Sex)
 titanic_small$Embarked <- factor(titanic_small$Embarked)
