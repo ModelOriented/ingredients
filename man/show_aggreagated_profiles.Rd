@@ -2,15 +2,10 @@
 % Please edit documentation in R/show_aggregated_profiles.R
 \name{show_aggreagated_profiles}
 \alias{show_aggreagated_profiles}
-\alias{plot.aggregated_ceteris_paribus_explainer}
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
 show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
   color = "black", selected_variables = NULL)
-
-\method{plot}{aggregated_ceteris_paribus_explainer}(x, ..., size = 0.5,
-  alpha = 1, color = "black", facet_ncol = NULL,
-  selected_variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -24,8 +19,6 @@ show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
 \item{selected_variables}{if not NULL then only `selected_variables` will be presented}
-
-\item{facet_ncol}{number of columns for the `facet_wrap()`}
 }
 \value{
 a ggplot2 layer
