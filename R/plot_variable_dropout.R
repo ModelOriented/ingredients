@@ -6,7 +6,7 @@
 #'
 #' @param x a variable dropout exlainer produced with the 'variable_dropout' function
 #' @param ... other explainers that shall be plotted together
-#' @param max_vars maximum number of variables that shall be presented for for each model
+#' @param max_vars maximum number of variables that shall be presented for for each model. By default NULL what means all variables
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
@@ -22,14 +22,14 @@
 #' library("randomForest")
 #' HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 #' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
-#' vd_rf <- model_feature_importance(explainer_rf, type = "raw",
+#' vd_rf <- feature_importance(explainer_rf, type = "raw",
 #'                             loss_function = loss_cross_entropy)
 #' head(vd_rf)
 #' plot(vd_rf)
 #'
 #' HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 #' explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
-#' vd_glm <- model_feature_importance(explainer_glm, type = "raw",
+#' vd_glm <- feature_importance(explainer_glm, type = "raw",
 #'                         loss_function = loss_root_mean_square)
 #' head(vd_glm)
 #' plot(vd_glm)
@@ -42,14 +42,14 @@
 #' HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
 #' explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
 #'                      y = HR$status == "fired", label = "xgboost")
-#' vd_xgb <- model_feature_importance(explainer_xgb, type = "raw")
+#' vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(vd_xgb)
 #' plot(vd_xgb)
 #'
 #' plot(vd_glm, vd_xgb)
 #'  }
 #'
-plot.model_feature_importance_explainer <- function(x, ..., max_vars = 10) {
+plot.feature_importance_explainer <- function(x, ..., max_vars = NULL) {
   dfl <- c(list(x), list(...))
 
   # combine all explainers in a single frame
@@ -64,20 +64,29 @@ plot.model_feature_importance_explainer <- function(x, ..., max_vars = 10) {
                                   ext_expl_df$dropout_loss.x - ext_expl_df$dropout_loss.y,
                                   mean)
 
+  # remove rows that starts with _
+  ext_expl_df <- ext_expl_df[!(substr(ext_expl_df$variable,1,1) == "_"),]
+
   # for each model leave only max_vars
-  trimmed_parts <- lapply(unique(ext_expl_df$label), function(label) {
-    tmp <- ext_expl_df[ext_expl_df$label == label, ]
-    tmp[tail(order(tmp$dropout_loss.x), max_vars), ]
-  })
-  ext_expl_df <- do.call(rbind, trimmed_parts)
+  if (!is.null(max_vars)) {
+    trimmed_parts <- lapply(unique(ext_expl_df$label), function(label) {
+      tmp <- ext_expl_df[ext_expl_df$label == label, ]
+      tmp[tail(order(tmp$dropout_loss.x), max_vars), ]
+    })
+    ext_expl_df <- do.call(rbind, trimmed_parts)
+  }
 
   variable <- dropout_loss.x <- dropout_loss.y <- NULL
 
   # plot it
   ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x)) +
     geom_errorbar() + coord_flip() +
-    facet_wrap(~label, ncol = 1, scales = "free_y") +
-    ylab("Drop-out loss") + xlab("")
+    facet_wrap(~label, ncol = 1, scales = "free_y") + theme_minimal(base_line_size = 0) +
+    theme(panel.border = element_blank(),
+          axis.line.y = element_line(color = "white"),
+          axis.ticks.y = element_line(color = "white"),
+          axis.text = element_text(size = 10)) +
+    ylab("Loss function") + xlab("")
 
 }
 

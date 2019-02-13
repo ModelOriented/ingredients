@@ -6,6 +6,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param selected_variables if not NULL then only `selected_variables` will be presented
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
+#' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @importFrom stats na.omit quantile
@@ -35,11 +36,20 @@
 #'
 #' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
 #' pdp_rf
+#'
+#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age",
+#'                              groups = "Sex")
+#' pdp_rf
+#' plot(cp_rf, selected_variables = "Age", color = "grey") +
+#'   show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+#'   show_aggreagated_profiles(pdp_rf, size = 3, color = "_label_")
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,
                       aggregate_function = mean,
                       only_numerical = TRUE,
+                      groups = NULL,
                       selected_variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -73,9 +83,16 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
   }
 
-  tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
-  aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = aggregate_function)
-  colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_yhat_")
+  if (is.null(groups)) {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = aggregate_function)
+    colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_yhat_")
+  } else {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp[,groups]), FUN = aggregate_function)
+    colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_groups_", "_yhat_")
+    aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
+  }
   aggregated_profiles$`_ids_` <- 0
 
   class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")

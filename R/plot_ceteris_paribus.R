@@ -99,7 +99,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     pl <- pl + geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
   }
 
-  pl <- pl + theme_classic() +
+  pl <- pl + theme_minimal(base_line_size = 0) +
     theme(panel.border = element_blank(),
           axis.line.y = element_line(color = "white"),
           axis.ticks.y = element_line(color = "white"),

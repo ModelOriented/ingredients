@@ -43,14 +43,11 @@
 #' plot(clust_rf, color = "_label_") +
 #'   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 #'
-#' plot(cp_rf, color = "grey") +
-#'   show_aggreagated_profiles(clust_rf, color = "_label_")
+#' plot(cp_rf, color = "grey", selected_variables = "Age") +
+#'   show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
 #'
 #' clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, selected_variables = "Age")
 #' clust_rf
-#'
-#' plot(clust_rf, color = "_label_") +
-#'   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 #' }
 #' @export
 cluster_profiles <- function(x, ...,

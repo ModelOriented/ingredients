@@ -10,7 +10,7 @@
 #' @param type character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}
 #' @param n_sample number of observations that should be sampled for calculation of variable importance. If negative then variable importance will be calculated on whole dataset (no sampling).
 #'
-#' @return An object of the class 'model_feature_importance'.
+#' @return An object of the class 'feature_importance'.
 #' It's a data frame with calculated average response.
 #'
 #' @export
@@ -21,14 +21,14 @@
 #' library("randomForest")
 #' HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 #' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
-#' vd_rf <- model_feature_importance(explainer_rf, type = "raw",
+#' vd_rf <- feature_importance(explainer_rf, type = "raw",
 #'                             loss_function = loss_cross_entropy)
 #' head(vd_rf)
 #' plot(vd_rf)
 #'
 #' HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 #' explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
-#' vd_glm <- model_feature_importance(explainer_glm, type = "raw",
+#' vd_glm <- feature_importance(explainer_glm, type = "raw",
 #'                         loss_function = loss_root_mean_square)
 #' head(vd_glm)
 #' plot(vd_glm)
@@ -41,24 +41,24 @@
 #' HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
 #' explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
 #'                      y = HR$status == "fired", label = "xgboost")
-#' vd_xgb <- model_feature_importance(explainer_xgb, type = "raw")
+#' vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(vd_xgb)
 #' plot(vd_xgb)
 #'  }
 #' @export
-#' @rdname model_feature_importance
-model_feature_importance <- function(x, ...)
-  UseMethod("model_feature_importance")
+#' @rdname feature_importance
+feature_importance <- function(x, ...)
+  UseMethod("feature_importance")
 
 #' @export
-#' @rdname model_feature_importance
-model_feature_importance.explainer <- function(x,
+#' @rdname feature_importance
+feature_importance.explainer <- function(x,
                                              loss_function = loss_root_mean_square,
                                              ...,
                                              type = "raw",
                                              n_sample = 1000) {
-  if (is.null(x$data)) stop("The model_feature_importance() function requires explainers created with specified 'data' parameter.")
-  if (is.null(x$y)) stop("The model_feature_importance() function requires explainers created with specified 'y' parameter.")
+  if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
+  if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
@@ -66,7 +66,7 @@ model_feature_importance.explainer <- function(x,
   label <- x$label
   y <- x$y
 
-  model_feature_importance.default(model, data, y, predict_function,
+  feature_importance.default(model, data, y, predict_function,
                                    loss_function = loss_function,
                                    label = label,
                                    type = type,
@@ -75,8 +75,8 @@ model_feature_importance.explainer <- function(x,
 }
 
 #' @export
-#' @rdname model_feature_importance
-model_feature_importance.default <- function(x, data, y, predict_function,
+#' @rdname feature_importance
+feature_importance.default <- function(x, data, y, predict_function,
                               loss_function = loss_root_mean_square,
                               ...,
                               label = class(x)[1],
@@ -113,7 +113,7 @@ model_feature_importance.default <- function(x, data, y, predict_function,
     res$dropout_loss = res$dropout_loss - loss_0
   }
 
-  class(res) <- c("model_feature_importance_explainer", "data.frame")
+  class(res) <- c("feature_importance_explainer", "data.frame")
   res$label <- label
   res
 }
