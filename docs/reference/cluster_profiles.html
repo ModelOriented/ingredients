@@ -198,8 +198,8 @@
 #&gt; 6     Age    RF_1 5.00         1 0.5173818     0</div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
   <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
+  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>clust_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_ _cluster_  _yhat_ _ids_
@@ -208,9 +208,7 @@
 #&gt; 3     Age    RF_1 2.00         1 0.55564     0
 #&gt; 4     Age    RF_1 3.00         1 0.57584     0
 #&gt; 5     Age    RF_1 4.00         1 0.54024     0
-#&gt; 6     Age    RF_1 5.00         1 0.54064     0</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-3.png' alt='' width='700' height='433' /></div></pre>
+#&gt; 6     Age    RF_1 5.00         1 0.54064     0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

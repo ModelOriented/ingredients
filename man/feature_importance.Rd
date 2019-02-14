@@ -10,11 +10,11 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(x,
   loss_function = loss_root_mean_square, ..., type = "raw",
-  n_sample = 1000)
+  n_sample = NULL)
 
 \method{feature_importance}{default}(x, data, y, predict_function,
   loss_function = loss_root_mean_square, ..., label = class(x)[1],
-  type = "raw", n_sample = 1000)
+  type = "raw", n_sample = NULL)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -25,7 +25,7 @@ feature_importance(x, ...)
 
 \item{type}{character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}}
 
-\item{n_sample}{number of observations that should be sampled for calculation of variable importance. If negative then variable importance will be calculated on whole dataset (no sampling).}
+\item{n_sample}{number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
