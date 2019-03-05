@@ -25,10 +25,8 @@
 #' titanic_small <- na.omit(titanic_small)
 #' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
 #'                          data = titanic_small)
-#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
 #' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF",
-#'                         predict_function = predict_rf_fuction)
+#'                         y = titanic_small$Survived == "1", label = "RF")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
@@ -37,12 +35,12 @@
 #' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
 #' pdp_rf
 #'
-#' plot(cp_rf, selected_variables = "Age", color = "grey") +
-#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+#' plot(cp_rf, selected_variables = "Age") +
+#' show_observations(cp_rf, selected_variables = "Age") +
 #'   show_rugs(cp_rf, selected_variables = "Age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'   show_aggreagated_profiles(pdp_rf, size = 2)
 #'
-#' plot(pdp_rf, selected_variables = "Age", color = "grey")
+#' plot(pdp_rf, selected_variables = "Age")
 #'
 #' }
 #' @export
@@ -74,11 +72,7 @@ plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
     res <- res +
       geom_line(aes(y = `_yhat_`), size = size, alpha = alpha, color = color)
   }
-  res + theme_minimal(base_line_size = 0) +
-    theme(panel.border = element_blank(),
-          axis.line.y = element_line(color = "white"),
-          axis.ticks.y = element_line(color = "white"),
-          axis.text = element_text(size = 10)) +
+  res + theme_drwhy() +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }
 

@@ -44,10 +44,8 @@
 show_observations <- function(x, ...,
                               size = 2,
                               alpha = 1,
-                              color = "black",
-
+                              color = "#371ea3",
                               only_numerical = TRUE,
-
                               selected_variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame

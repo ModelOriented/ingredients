@@ -5,7 +5,7 @@
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
 show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
-  color = "black", selected_variables = NULL)
+  color = "#371ea3", selected_variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}

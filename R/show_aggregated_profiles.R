@@ -48,8 +48,7 @@
 show_aggreagated_profiles <- function(x, ...,
                       size = 0.5,
                       alpha = 1,
-                      color = "black",
-
+                      color = "#371ea3",
                       selected_variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame

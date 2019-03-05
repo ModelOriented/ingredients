@@ -4,9 +4,9 @@
 \alias{plot.ceteris_paribus_explainer}
 \title{Plots Individual Variable Profile Explanations}
 \usage{
-\method{plot}{ceteris_paribus_explainer}(x, ..., size = 0.5,
-  alpha = 0.8, color = "black", only_numerical = TRUE,
-  facet_ncol = NULL, selected_variables = NULL)
+\method{plot}{ceteris_paribus_explainer}(x, ..., size = 1, alpha = 1,
+  color = "#46bac2", only_numerical = TRUE, facet_ncol = NULL,
+  selected_variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -46,17 +46,15 @@ titanic_small$Embarked <- factor(titanic_small$Embarked)
 titanic_small <- na.omit(titanic_small)
 rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
                          data = titanic_small)
-predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
 explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF",
-                        predict_function = predict_rf_fuction)
+                        y = titanic_small$Survived == "1", label = "RF")
 
 selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, selected_variables = "Age", color = "grey") +
-show_observations(cp_rf, selected_variables = "Age", color = "grey") +
+plot(cp_rf, selected_variables = "Age") +
+show_observations(cp_rf, selected_variables = "Age") +
   show_rugs(cp_rf, selected_variables = "Age", color = "red")
 
 }

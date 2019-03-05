@@ -4,7 +4,7 @@
 \alias{show_observations}
 \title{Adds a Layer with Observations to a Profile Plot}
 \usage{
-show_observations(x, ..., size = 2, alpha = 1, color = "black",
+show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
   only_numerical = TRUE, selected_variables = NULL)
 }
 \arguments{

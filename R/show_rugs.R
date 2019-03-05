@@ -45,11 +45,9 @@
 show_rugs <- function(x, ...,
                       size = 0.5,
                       alpha = 1,
-                      color = "black",
-
+                      color = "#371ea3",
                       only_numerical = TRUE,
                       sides = "b",
-
                       selected_variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame
