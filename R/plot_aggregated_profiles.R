@@ -45,9 +45,9 @@
 #' }
 #' @export
 plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
-                                                      size = 0.5,
+                                                      size = 1,
                                                       alpha = 1,
-                                                      color = "black",
+                                                      color = "#371ea3",
                                                       facet_ncol = NULL,
                                                       selected_variables = NULL) {
 

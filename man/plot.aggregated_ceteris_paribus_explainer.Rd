@@ -4,8 +4,8 @@
 \alias{plot.aggregated_ceteris_paribus_explainer}
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
-\method{plot}{aggregated_ceteris_paribus_explainer}(x, ..., size = 0.5,
-  alpha = 1, color = "black", facet_ncol = NULL,
+\method{plot}{aggregated_ceteris_paribus_explainer}(x, ..., size = 1,
+  alpha = 1, color = "#371ea3", facet_ncol = NULL,
   selected_variables = NULL)
 }
 \arguments{
