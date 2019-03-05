@@ -143,10 +143,9 @@
 <span class='no'>predict_fuction</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"prob"</span>)[,<span class='fl'>2</span>]
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>,
-                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)
-
+                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)</div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF", predict_function = predict_rf_fuction): object 'predict_rf_fuction' not found</span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
 #&gt; 792          0      2   male  16     0     0  26.0000        S  0.056 Survived
@@ -179,7 +178,7 @@
 #&gt; 441     4
 #&gt; 576     5
 #&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_  _yhat_ _ids_
 #&gt; 1     Age      RF 0.42 0.64654     0
@@ -197,9 +196,9 @@
 #&gt; 5     Age    RF_1 4.00         1 0.5148364     0
 #&gt; 6     Age    RF_1 5.00         1 0.5173818     0</div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>clust_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_ _cluster_  _yhat_ _ids_

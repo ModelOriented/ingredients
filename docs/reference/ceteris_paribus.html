@@ -88,14 +88,14 @@ For each observation it calculates Individual Variable Profiles for selected var
 For this reason it is also called 'Local Profile Plot'.</p>
     
 
-    <pre class="usage"><span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+<span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
   <span class='no'>new_observation</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
   <span class='no'>...</span>)</pre>
@@ -166,18 +166,17 @@ It's a data frame with calculated average responses.</p>
 <span class='no'>predict_fuction</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"prob"</span>)[,<span class='fl'>2</span>]
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>,
-                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)
-
+                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)</div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF", predict_function = predict_rf_fuction): object 'predict_rf_fuction' not found</span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.050 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.050 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.904 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.904 Survived
-#&gt; 641          0      3   male  20     0     0   7.8542        S  0.000 Survived
-#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.000 Survived
+#&gt; 792          0      2   male  16     0     0  26.0000        S  0.056 Survived
+#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.056 Survived
+#&gt; 342          0      1 female  24     3     2 263.0000        S  0.892 Survived
+#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.892 Survived
+#&gt; 641          0      3   male  20     0     0   7.8542        S  0.002 Survived
+#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.002 Survived
 #&gt;       _ids_ _label_
 #&gt; 792     792      RF
 #&gt; 792.1   792      RF
@@ -189,12 +188,12 @@ It's a data frame with calculated average responses.</p>
 #&gt; 
 #&gt; Top observations:
 #&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.050      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.904      RF
-#&gt; 641        0      3   male  20     0     0   7.8542        S  0.000      RF
+#&gt; 792        0      2   male  16     0     0  26.0000        S  0.056      RF
+#&gt; 342        1      1 female  24     3     2 263.0000        S  0.892      RF
+#&gt; 641        0      3   male  20     0     0   7.8542        S  0.002      RF
 #&gt; 441        1      2 female  45     1     1  26.2500        S  0.898      RF
-#&gt; 576        0      3   male  19     0     0  14.5000        S  0.006      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.158      RF
+#&gt; 576        0      3   male  19     0     0  14.5000        S  0.016      RF
+#&gt; 571        1      2   male  62     0     0  10.5000        S  0.148      RF
 #&gt;     _ids_
 #&gt; 792     1
 #&gt; 342     2

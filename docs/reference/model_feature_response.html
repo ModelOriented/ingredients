@@ -157,13 +157,13 @@ Please note that the argument <code>type</code> must be set to <code>'factor'</c
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 <span class='no'>expl_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>model_feature_response</span>(<span class='no'>explainer_glm</span>, <span class='st'>"age"</span>, <span class='st'>"pdp"</span>)
-<span class='fu'>head</span>(<span class='no'>expl_glm</span>)</div><div class='output co'>#&gt;          x          y var type label
-#&gt; 1 20.00389 -0.8414339 age  pdp    lm
-#&gt; 2 20.80378 -0.8426364 age  pdp    lm
-#&gt; 3 21.60368 -0.8438389 age  pdp    lm
-#&gt; 4 22.40357 -0.8450414 age  pdp    lm
-#&gt; 5 23.20346 -0.8462439 age  pdp    lm
-#&gt; 6 24.00336 -0.8474464 age  pdp    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_glm</span>)</div><div class='img'><img src='model_feature_response-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>head</span>(<span class='no'>expl_glm</span>)</div><div class='output co'>#&gt;          x         y var type label
+#&gt; 1 20.00389 0.3690356 age  pdp    lm
+#&gt; 2 20.80378 0.3688270 age  pdp    lm
+#&gt; 3 21.60368 0.3686184 age  pdp    lm
+#&gt; 4 22.40357 0.3684098 age  pdp    lm
+#&gt; 5 23.20346 0.3682013 age  pdp    lm
+#&gt; 6 24.00336 0.3679928 age  pdp    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>expl_glm</span>)</div><div class='img'><img src='model_feature_response-1.png' alt='' width='700' height='433' /></div><div class='input'>
  </div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)

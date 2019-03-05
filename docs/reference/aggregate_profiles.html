@@ -138,16 +138,15 @@
 <span class='no'>predict_fuction</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"prob"</span>)[,<span class='fl'>2</span>]
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>,
-                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)
-
+                        <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)</div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF", predict_function = predict_rf_fuction): object 'predict_rf_fuction' not found</span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_profile.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.070 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.070 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.924 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.924 Survived
+#&gt; 792          0      2   male  16     0     0  26.0000        S  0.056 Survived
+#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.056 Survived
+#&gt; 342          0      1 female  24     3     2 263.0000        S  0.892 Survived
+#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.892 Survived
 #&gt; 641          0      3   male  20     0     0   7.8542        S  0.002 Survived
 #&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.002 Survived
 #&gt;       _ids_ _label_
@@ -161,12 +160,12 @@
 #&gt; 
 #&gt; Top observations:
 #&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.070      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.924      RF
+#&gt; 792        0      2   male  16     0     0  26.0000        S  0.056      RF
+#&gt; 342        1      1 female  24     3     2 263.0000        S  0.892      RF
 #&gt; 641        0      3   male  20     0     0   7.8542        S  0.002      RF
-#&gt; 441        1      2 female  45     1     1  26.2500        S  0.924      RF
-#&gt; 576        0      3   male  19     0     0  14.5000        S  0.012      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.146      RF
+#&gt; 441        1      2 female  45     1     1  26.2500        S  0.898      RF
+#&gt; 576        0      3   male  19     0     0  14.5000        S  0.016      RF
+#&gt; 571        1      2   male  62     0     0  10.5000        S  0.148      RF
 #&gt;     _ids_
 #&gt; 792     1
 #&gt; 342     2
@@ -177,25 +176,25 @@
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_  _yhat_ _ids_
-#&gt; 1     Age      RF 0.42 0.65586     0
-#&gt; 2     Age      RF 1.00 0.64756     0
-#&gt; 3     Age      RF 2.00 0.62406     0
-#&gt; 4     Age      RF 3.00 0.64204     0
-#&gt; 5     Age      RF 4.00 0.64190     0
-#&gt; 6     Age      RF 5.00 0.64398     0</div><div class='input'>
+#&gt; 1     Age      RF 0.42 0.64654     0
+#&gt; 2     Age      RF 1.00 0.63604     0
+#&gt; 3     Age      RF 2.00 0.61224     0
+#&gt; 4     Age      RF 3.00 0.63180     0
+#&gt; 5     Age      RF 4.00 0.62196     0
+#&gt; 6     Age      RF 5.00 0.62424     0</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>,
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"Sex"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_   _label_  _x_ _groups_    _yhat_ _ids_
-#&gt; 1     Age RF_female 0.42   female 0.7678065     0
-#&gt; 2     Age RF_female 1.00   female 0.7614194     0
-#&gt; 3     Age RF_female 2.00   female 0.7386452     0
-#&gt; 4     Age RF_female 3.00   female 0.7553548     0
-#&gt; 5     Age RF_female 4.00   female 0.7938065     0
-#&gt; 6     Age RF_female 5.00   female 0.7984516     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
+#&gt; 1     Age RF_female 0.42   female 0.7600000     0
+#&gt; 2     Age RF_female 1.00   female 0.7564516     0
+#&gt; 3     Age RF_female 2.00   female 0.7285161     0
+#&gt; 4     Age RF_female 3.00   female 0.7514839     0
+#&gt; 5     Age RF_female 4.00   female 0.7874194     0
+#&gt; 6     Age RF_female 5.00   female 0.7933548     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div></pre>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
