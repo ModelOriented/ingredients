@@ -89,7 +89,8 @@ Variables are sorted in the same order in all panels. The order depends on the a
     
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -105,6 +106,10 @@ Variables are sorted in the same order in all panels. The order depends on the a
     <tr>
       <th>max_vars</th>
       <td><p>maximum number of variables that shall be presented for for each model. By default NULL what means all variables</p></td>
+    </tr>
+    <tr>
+      <th>bar_width</th>
+      <td><p>width of bars. By default 10</p></td>
     </tr>
     </table>
     
@@ -155,8 +160,8 @@ Variables are sorted in the same order in all panels. The order depends on the a
 #&gt; 3   evaluation    0.3393777 xgboost
 #&gt; 4 genderfemale    0.3921319 xgboost
 #&gt; 5          age    0.4025249 xgboost
-#&gt; 6       salary    0.4174909 xgboost</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_xgb</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_glm</span>, <span class='no'>vd_xgb</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>
+#&gt; 6       salary    0.4174909 xgboost</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_glm</span>, <span class='no'>vd_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
