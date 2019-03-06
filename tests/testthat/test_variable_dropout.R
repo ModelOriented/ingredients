@@ -7,7 +7,7 @@ test_that("Output glm",{
 })
 
 test_that("Output rf",{
-  vd_rf <- feature_importance(explainer_rf,
+  vd_rf <- feature_importance(explainer_HR_rf,
                                      loss_function = loss_cross_entropy)
   expect_true("feature_importance_explainer" %in% class(vd_rf))
 })

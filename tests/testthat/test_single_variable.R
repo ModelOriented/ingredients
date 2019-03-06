@@ -1,24 +1,27 @@
-context("Check model_feature_response_explainer() function")
+context("Check aggregate_profiles() function")
 
-test_that("test age",{
-  expl_glm <- model_feature_response(explainer_glm, "age", "pdp")
-  expect_true("model_feature_response_explainer" %in% class(expl_glm))
+test_that("test plot",{
 
-  expl_rf <- model_feature_response(explainer_rf, "age", "pdp")
-  expect_true("model_feature_response_explainer" %in% class(expl_rf))
+  selected_passangers <- select_sample(titanic_small, n = 100)
+ cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+
+   pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+  pl <- plot(cp_rf, selected_variables = "Age") +
+     show_observations(cp_rf, selected_variables = "Age") +
+     show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+     show_aggreagated_profiles(pdp_rf, size = 2)
+
+  expect_true("gg" %in% class(pl))
 })
 
-test_that("test ale",{
-  expl_glm <- model_feature_response(explainer_glm, "age", "ale")
-  expect_true("model_feature_response_explainer" %in% class(expl_glm))
+test_that("test ceteris_paribus",{
+
+  selected_passangers <- select_sample(titanic_small, n = 100)
+  cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+  pl <- plot(cp_rf, selected_variables = "Age") +
+   show_observations(cp_rf, selected_variables = "Age") +
+     show_rugs(cp_rf, selected_variables = "Age", color = "red")
+
+  expect_true("gg" %in% class(pl))
 })
 
-test_that("test gender", {
-  expl_glm <- model_feature_response(explainer_glm, "gender", which_class = 1)
-  expl_glm <- model_feature_response(explainer_glm, "gender")
-  expl_glm <- model_feature_response(explainer_glm, "gender", "factor")
-  expect_true("model_feature_response_explainer" %in% class(expl_glm))
-
-  expl_rf <- model_feature_response(explainer_rf, "gender", "factor")
-  expect_true("factorMerger_list" %in% class(expl_rf))
-})

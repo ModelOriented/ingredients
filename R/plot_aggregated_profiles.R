@@ -72,7 +72,7 @@ plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
     res <- res +
       geom_line(aes(y = `_yhat_`), size = size, alpha = alpha, color = color)
   }
-  res + theme_drwhy() +
+  res + theme_drwhy() + ylab("average prediction") + xlab("") +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }
 
