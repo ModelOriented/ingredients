@@ -4,7 +4,8 @@
 \alias{plot.feature_importance_explainer}
 \title{Plots Global Model Explanations (Variable Importance)}
 \usage{
-\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL)
+\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL,
+  bar_width = 10)
 }
 \arguments{
 \item{x}{a variable dropout exlainer produced with the 'variable_dropout' function}
@@ -12,6 +13,8 @@
 \item{...}{other explainers that shall be plotted together}
 
 \item{max_vars}{maximum number of variables that shall be presented for for each model. By default NULL what means all variables}
+
+\item{bar_width}{width of bars. By default 10}
 }
 \value{
 a ggplot2 object
@@ -51,9 +54,8 @@ explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
                      y = HR$status == "fired", label = "xgboost")
 vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(vd_xgb)
-plot(vd_xgb)
 
-plot(vd_glm, vd_xgb)
+plot(vd_glm, vd_xgb, bar_width = 5)
  }
 
 }

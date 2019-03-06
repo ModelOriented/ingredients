@@ -71,6 +71,6 @@ explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
                      y = HR$status == "fired", label = "xgboost")
 vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(vd_xgb)
-plot(vd_xgb)
+plot(vd_xgb, vd_glm)
  }
 }

@@ -43,7 +43,7 @@
 #'                      y = HR$status == "fired", label = "xgboost")
 #' vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(vd_xgb)
-#' plot(vd_xgb)
+#' plot(vd_xgb, vd_glm)
 #'  }
 #' @export
 #' @rdname feature_importance

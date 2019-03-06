@@ -7,6 +7,7 @@
 #' @param x a variable dropout exlainer produced with the 'variable_dropout' function
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model. By default NULL what means all variables
+#' @param bar_width width of bars. By default 10
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
@@ -44,12 +45,11 @@
 #'                      y = HR$status == "fired", label = "xgboost")
 #' vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(vd_xgb)
-#' plot(vd_xgb)
 #'
-#' plot(vd_glm, vd_xgb)
+#' plot(vd_glm, vd_xgb, bar_width = 5)
 #'  }
 #'
-plot.feature_importance_explainer <- function(x, ..., max_vars = NULL) {
+plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width = 10) {
   dfl <- c(list(x), list(...))
 
   # combine all explainers in a single frame
@@ -77,16 +77,16 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL) {
   }
 
   variable <- dropout_loss.x <- dropout_loss.y <- NULL
+  nlabels <- length(unique(bestFits$label))
 
   # plot it
-  ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x)) +
-    geom_errorbar() + coord_flip() +
-    facet_wrap(~label, ncol = 1, scales = "free_y") + theme_minimal(base_line_size = 0) +
-    theme(panel.border = element_blank(),
-          axis.line.y = element_line(color = "white"),
-          axis.ticks.y = element_line(color = "white"),
-          axis.text = element_text(size = 10)) +
-    ylab("Loss function") + xlab("")
+  ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x, color = label)) +
+    geom_hline(data = bestFits, aes(yintercept = dropout_loss, color = label), lty= 3) +
+    geom_linerange(size = bar_width) + coord_flip() +
+    scale_color_manual(values = theme_drwhy_colors(nlabels)) +
+    facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
+    theme(legend.position = "none") +
+    ylab("Loss-drop after perturbations") + xlab("")
 
 }
 
