@@ -10,7 +10,7 @@
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @importFrom stats na.omit quantile
-#' @return a 'aggregated_ceteris_paribus_explainer' layer
+#' @return an 'aggregated_ceteris_paribus_explainer' layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
@@ -98,3 +98,4 @@ aggregate_profiles <- function(x, ...,
   class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")
   aggregated_profiles
 }
+

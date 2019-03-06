@@ -1,7 +1,8 @@
 ingredients 0.2
 ----------------------------------------------------------------
 * `cluster_profiles` helps to identify interactions
-* `aggregate_profiles` calculates partial dependency plots
+* `partial_dependency` calculates partial dependency plots
+* `aggregate_profiles` calculates partial dependency plots and much more
 
 ingredients 0.1
 ----------------------------------------------------------------

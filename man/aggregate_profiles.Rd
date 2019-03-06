@@ -21,7 +21,7 @@ aggregate_profiles(x, ..., aggregate_function = mean,
 \item{selected_variables}{if not NULL then only `selected_variables` will be presented}
 }
 \value{
-a 'aggregated_ceteris_paribus_explainer' layer
+an 'aggregated_ceteris_paribus_explainer' layer
 }
 \description{
 Function 'aggregate_profiles' calculates aggregate of ceteris paribus profiles

@@ -69,6 +69,7 @@ ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = 
                              label = label,
                              variables = variables,
                              grid_points = grid_points,
+                             variable_splits = variable_splits,
                              y = y,
                              ...)
 }
