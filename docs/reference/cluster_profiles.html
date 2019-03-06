@@ -129,85 +129,29 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"titanic"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"titanic"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'>c</span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
                                    <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]
-<span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic_small</span>)
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
+<span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)
+<span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)
+<span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic_small</span>)
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
                          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)
-<span class='no'>predict_fuction</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>) <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"prob"</span>)[,<span class='fl'>2</span>]
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
+<span class='no'>predict_fuction</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>,<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"prob"</span>)[,<span class='fl'>2</span>]
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>,
                         <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict_rf_fuction</span>)</div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF", predict_function = predict_rf_fuction): object 'predict_rf_fuction' not found</span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.056 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.056 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.892 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.892 Survived
-#&gt; 641          0      3   male  20     0     0   7.8542        S  0.002 Survived
-#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.002 Survived
-#&gt;       _ids_ _label_
-#&gt; 792     792      RF
-#&gt; 792.1   792      RF
-#&gt; 342     342      RF
-#&gt; 342.1   342      RF
-#&gt; 641     641      RF
-#&gt; 641.1   641      RF
-#&gt; 
-#&gt; 
-#&gt; Top observations:
-#&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.056      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.892      RF
-#&gt; 641        0      3   male  20     0     0   7.8542        S  0.002      RF
-#&gt; 441        1      2 female  45     1     1  26.2500        S  0.898      RF
-#&gt; 576        0      3   male  19     0     0  14.5000        S  0.016      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.148      RF
-#&gt;     _ids_
-#&gt; 792     1
-#&gt; 342     2
-#&gt; 641     3
-#&gt; 441     4
-#&gt; 576     5
-#&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
-<span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;   _vname_ _label_  _x_  _yhat_ _ids_
-#&gt; 1     Age      RF 0.42 0.64654     0
-#&gt; 2     Age      RF 1.00 0.63604     0
-#&gt; 3     Age      RF 2.00 0.61224     0
-#&gt; 4     Age      RF 3.00 0.63180     0
-#&gt; 5     Age      RF 4.00 0.62196     0
-#&gt; 6     Age      RF 5.00 0.62424     0</div><div class='input'><span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
-<span class='no'>clust_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;   _vname_ _label_  _x_ _cluster_    _yhat_ _ids_
-#&gt; 1     Age    RF_1 0.42         1 0.5671273     0
-#&gt; 2     Age    RF_1 1.00         1 0.5528000     0
-#&gt; 3     Age    RF_1 2.00         1 0.5259273     0
-#&gt; 4     Age    RF_1 3.00         1 0.5471273     0
-#&gt; 5     Age    RF_1 4.00         1 0.5148364     0
-#&gt; 6     Age    RF_1 5.00         1 0.5173818     0</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
-<span class='no'>clust_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;   _vname_ _label_  _x_ _cluster_  _yhat_ _ids_
-#&gt; 1     Age    RF_1 0.42         1 0.59512     0
-#&gt; 2     Age    RF_1 1.00         1 0.58140     0
-#&gt; 3     Age    RF_1 2.00         1 0.55564     0
-#&gt; 4     Age    RF_1 3.00         1 0.57584     0
-#&gt; 5     Age    RF_1 4.00         1 0.54024     0
-#&gt; 6     Age    RF_1 5.00         1 0.54064     0</div></pre>
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ceteris_paribus(explainer_rf, selected_passangers): object 'explainer_rf' not found</span></div><div class='input'><span class='no'>cp_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'cp_rf' not found</span></div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in aggregate_profiles(cp_rf, selected_variables = "Age"): object 'cp_rf' not found</span></div><div class='input'><span class='no'>pdp_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'pdp_rf' not found</span></div><div class='input'><span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in cluster_profiles(cp_rf, k = 3, selected_variables = "Age"): object 'cp_rf' not found</span></div><div class='input'><span class='no'>clust_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'clust_rf' not found</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(clust_rf, color = "_label_"): object 'clust_rf' not found</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(cp_rf, color = "grey", selected_variables = "Age"): object 'cp_rf' not found</span></div><div class='input'>
+<span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in cluster_profiles(cp_rf, k = 3, center = TRUE, selected_variables = "Age"): object 'cp_rf' not found</span></div><div class='input'><span class='no'>clust_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'clust_rf' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
