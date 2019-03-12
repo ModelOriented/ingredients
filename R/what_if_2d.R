@@ -1,13 +1,13 @@
-#' What-If 2D Plot
+#' Ceteris Paribus 2D plot
 #'
-#' This function calculates what if scores for grid of values spanned by two variables.
+#' This function calculates ceteris paribus profiles for grid of values spanned by two variables.
 #'
 #' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
 #' @param observation a new observarvation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
 #' @param selected_variables if specified, then only these variables will be explained
 #'
-#' @return An object of the class 'what_if_2d_explainer'.
+#' @return An object of the class 'ceteris_paribus_2d_explainer'.
 #' It's a data frame with calculated average responses.
 #' @export
 #'
@@ -29,12 +29,12 @@
 #' new_apartment <- apartmentsTest[1, ]
 #' new_apartment
 #'
-#' wi_rf_2d <- what_if_2d(explainer_rf, observation = new_apartment,
+#' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
 #'          selected_variables = c("surface", "floor", "no.rooms"))
-#' wi_rf_2d
+#' head(wi_rf_2d)
 #' plot(wi_rf_2d)
 #' }
-what_if_2d <- function(explainer, observation, grid_points = 101, selected_variables = NULL) {
+ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, selected_variables = NULL) {
   if (!("explainer" %in% class(explainer)))
       stop("The what_if() function requires an object created with explain() function.")
   if (is.null(explainer$data))
@@ -71,7 +71,7 @@ what_if_2d <- function(explainer, observation, grid_points = 101, selected_varia
   new_y_hat <- predict_function(model, observation)
 
   attr(all_responses, "prediction") <- list(observation = observation, new_y_hat = new_y_hat)
-  class(all_responses) = c("what_if_2d_explainer", "data.frame")
+  class(all_responses) = c("ceteris_paribus_2d_explainer", "data.frame")
   all_responses
 }
 

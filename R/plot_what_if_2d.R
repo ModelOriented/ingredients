@@ -1,8 +1,8 @@
-#' Plot What If 2D Explanations
+#' Plot Ceteris Paribus 2D Explanations
 #'
-#' Function 'plot.what_if_2d_explainer' plots What-If Plots for a single prediction / observation.
+#' Function 'ceteris_paribus_2d_explainer' plots What-If Plots for a single prediction / observation.
 #'
-#' @param x a ceteris paribus explainer produced with the 'what_if_2d' function
+#' @param x a ceteris paribus explainer produced with the 'ceteris_paribus_2d' function
 #' @param ... currently will be ignored
 #' @param split_ncol number of columns for the 'facet_wrap'
 #' @param add_raster if TRUE then `geom_raster` will be added to present levels with diverging colors
@@ -28,8 +28,8 @@
 #' new_apartment <- apartmentsTest[1, ]
 #' new_apartment
 #'
-#' wi_rf_2d <- what_if_2d(explainer_rf, observation = new_apartment)
-#' wi_rf_2d
+#' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment)
+#' head(wi_rf_2d)
 #'
 #' plot(wi_rf_2d)
 #' plot(wi_rf_2d, add_contour = FALSE)
@@ -46,12 +46,12 @@
 #' new_emp <- HR[1, ]
 #' new_emp
 #'
-#' wi_rf_2d <- what_if_2d(explainer_rf_fired, observation = new_emp)
-#' wi_rf_2d
+#' wi_rf_2d <- ceteris_paribus_2d(explainer_rf_fired, observation = new_emp)
+#' head(wi_rf_2d)
 #'
 #' plot(wi_rf_2d)
 #' }
-plot.what_if_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TRUE, add_contour = TRUE, add_observation = TRUE, bins = 3) {
+plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TRUE, add_contour = TRUE, add_observation = TRUE, bins = 3) {
   all_responses <- x
   class(all_responses) <- "data.frame"
 
@@ -67,11 +67,13 @@ plot.what_if_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TR
 
   pl <- ggplot(all_responses, aes(new_x1, new_x2, fill = y_hat, z = y_hat)) +
     facet_wrap(vname1 ~ vname2, scales = "free", ncol = split_ncol) +
-    xlab("") + ylab("")
+    xlab("") + ylab("") +
+    scale_fill_gradient2(name = 'Prediction', midpoint = midpoint,
+                         low = "#371ea3", high = "#f05a71", mid = "#dfeab0")
+  # or use scale_fill_gradient with midpoint
 
   if (add_raster) {
-    pl <- pl + geom_raster() +
-      scale_fill_gradient2(midpoint = midpoint)
+    pl <- pl + geom_raster()
   }
 
   if (add_contour) {
@@ -81,5 +83,5 @@ plot.what_if_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TR
   if (add_observation) {
     pl <- pl + geom_point(data = observation, fill = "black", pch = "+", size = 6)
   }
-  pl
+  pl + theme_drwhy_blank()
 }

@@ -4,12 +4,14 @@
 \alias{plot.ceteris_paribus_oscillations}
 \title{Plot Ceteris Paribus Oscillations}
 \usage{
-\method{plot}{ceteris_paribus_oscillations}(x, ...)
+\method{plot}{ceteris_paribus_oscillations}(x, ..., bar_width = 10)
 }
 \arguments{
 \item{x}{a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`}
 
 \item{...}{other explainers that shall be plotted together}
+
+\item{bar_width}{width of bars. By default 10}
 }
 \value{
 a ggplot2 object

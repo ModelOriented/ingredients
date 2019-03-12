@@ -4,11 +4,12 @@
 #'
 #' @param x a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`
 #' @param ... other explainers that shall be plotted together
+#' @param bar_width width of bars. By default 10
 #'
 #' @return a ggplot2 object
 #' @export
 #' @importFrom stats reorder
-#' 
+#'
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
@@ -30,17 +31,20 @@
 #' vips
 #' plot(vips)
 #' }
-plot.ceteris_paribus_oscillations <- function(x, ...) {
+plot.ceteris_paribus_oscillations <- function(x, ..., bar_width = 10) {
 
   x <- as.data.frame(x)
   x$`_vname_` <- reorder(x$`_vname_`, x$oscillations, mean, na.rm = TRUE)
   x$`_ids_` <- paste0("ID: ",x$`_ids_`)
 
   # plot it
-  `_vname_` <- oscillations <- NULL
-  ggplot(x, aes(`_vname_`, ymin = 0, ymax = oscillations)) +
-    geom_errorbar() + coord_flip() +
+  nlabels <- length(unique(x$`_ids_`))
+  `_ids_` <- `_vname_` <- oscillations <- NULL
+  ggplot(x, aes(`_vname_`, ymin = 0, ymax = oscillations, color = `_ids_`)) +
+    geom_linerange(size = bar_width) + coord_flip() +
     facet_wrap(~`_ids_`, scales = "free_y") +
-    ylab("Ceteris Paribus Oscillations") + xlab("") +
-    theme_mi2()
+    ylab("Oscillations") + xlab("") + theme_drwhy_vertical() +
+    theme(legend.position = "none") +
+    scale_color_manual(values = theme_drwhy_colors(nlabels))
+
 }
