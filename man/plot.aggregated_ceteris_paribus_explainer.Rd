@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{aggregated_ceteris_paribus_explainer}(x, ..., size = 1,
   alpha = 1, color = "#371ea3", facet_ncol = NULL,
-  selected_variables = NULL)
+  variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -21,7 +21,7 @@
 
 \item{facet_ncol}{number of columns for the `facet_wrap()`}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 a ggplot2 layer
@@ -50,15 +50,15 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 pdp_rf
 
-plot(cp_rf, selected_variables = "Age") +
-show_observations(cp_rf, selected_variables = "Age") +
-  show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+plot(cp_rf, variables = "Age") +
+show_observations(cp_rf, variables = "Age") +
+  show_rugs(cp_rf, variables = "Age", color = "red") +
   show_aggreagated_profiles(pdp_rf, size = 2)
 
-plot(pdp_rf, selected_variables = "Age")
+plot(pdp_rf, variables = "Age")
 
 }
 }

@@ -5,7 +5,7 @@
 \title{Adds a Layer with Observations to a Profile Plot}
 \usage{
 show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
-  only_numerical = TRUE, selected_variables = NULL)
+  only_numerical = TRUE, variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -20,7 +20,7 @@ show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
 
 \item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 a ggplot2 layer
@@ -43,18 +43,16 @@ titanic_small$Embarked <- factor(titanic_small$Embarked)
 titanic_small <- na.omit(titanic_small)
 rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
                          data = titanic_small)
-predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
 explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF",
-                        predict_function = predict_rf_fuction)
+                        y = titanic_small$Survived == "1", label = "RF")
 
 selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, selected_variables = "Age", color = "grey") +
-show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-  show_rugs(cp_rf, selected_variables = "Age", color = "red")
+plot(cp_rf, variables = "Age", color = "grey") +
+show_observations(cp_rf, variables = "Age", color = "grey") +
+  show_rugs(cp_rf, variables = "Age", color = "red")
 
 }
 }

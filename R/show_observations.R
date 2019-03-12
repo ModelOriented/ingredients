@@ -8,7 +8,7 @@
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
-#' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param variables if not NULL then only `variables` will be presented
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @return a ggplot2 layer
@@ -26,18 +26,16 @@
 #' titanic_small <- na.omit(titanic_small)
 #' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
 #'                          data = titanic_small)
-#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
 #' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF",
-#'                         predict_function = predict_rf_fuction)
+#'                         y = titanic_small$Survived == "1", label = "RF")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' plot(cp_rf, selected_variables = "Age", color = "grey") +
-#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-#'   show_rugs(cp_rf, selected_variables = "Age", color = "red")
+#' plot(cp_rf, variables = "Age", color = "grey") +
+#' show_observations(cp_rf, variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, variables = "Age", color = "red")
 #'
 #' }
 #' @export
@@ -46,7 +44,7 @@ show_observations <- function(x, ...,
                               alpha = 1,
                               color = "#371ea3",
                               only_numerical = TRUE,
-                              selected_variables = NULL) {
+                              variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -59,9 +57,9 @@ show_observations <- function(x, ...,
 
   # variables to use
   all_variables <- grep(colnames(all_observations), pattern = "^[^_]", value = TRUE)
-  if (!is.null(selected_variables)) {
-    all_variables <- intersect(all_variables, selected_variables)
-    if (length(all_variables) == 0) stop(paste0("selected_variables do not overlap with ", paste(all_variables, collapse = ", ")))
+  if (!is.null(variables)) {
+    all_variables <- intersect(all_variables, variables)
+    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_observations[, all_variables, drop = FALSE], is.numeric)

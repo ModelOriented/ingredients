@@ -8,7 +8,7 @@
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param facet_ncol number of columns for the `facet_wrap()`
-#' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param variables if not NULL then only `variables` will be presented
 #'
 #' @return a ggplot2 layer
 #' @examples
@@ -32,15 +32,15 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 #' pdp_rf
 #'
-#' plot(cp_rf, selected_variables = "Age") +
-#' show_observations(cp_rf, selected_variables = "Age") +
-#'   show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+#' plot(cp_rf, variables = "Age") +
+#' show_observations(cp_rf, variables = "Age") +
+#'   show_rugs(cp_rf, variables = "Age", color = "red") +
 #'   show_aggreagated_profiles(pdp_rf, size = 2)
 #'
-#' plot(pdp_rf, selected_variables = "Age")
+#' plot(pdp_rf, variables = "Age")
 #'
 #' }
 #' @export
@@ -49,7 +49,7 @@ plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
                                                       alpha = 1,
                                                       color = "#371ea3",
                                                       facet_ncol = NULL,
-                                                      selected_variables = NULL) {
+                                                      variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -57,9 +57,9 @@ plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
   class(aggregated_profiles) <- "data.frame"
 
   all_variables <- unique(aggregated_profiles$`_vname_`)
-  if (!is.null(selected_variables)) {
-    all_variables <- intersect(all_variables, selected_variables)
-    if (length(all_variables) == 0) stop(paste0("selected_variables do not overlap with ", paste(all_variables, collapse = ", ")))
+  if (!is.null(variables)) {
+    all_variables <- intersect(all_variables, variables)
+    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
 

@@ -5,7 +5,7 @@
 \title{Adds a Layer with Rugs to a Profile Plot}
 \usage{
 show_rugs(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
-  only_numerical = TRUE, sides = "b", selected_variables = NULL)
+  only_numerical = TRUE, sides = "b", variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -22,7 +22,7 @@ show_rugs(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
 
 \item{sides}{a string containing any of "trbl", for top, right, bottom, and left. Passed to geom rug.}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 a ggplot2 layer
@@ -54,9 +54,9 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, selected_variables = "Age", color = "grey") +
-show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-  show_rugs(cp_rf, selected_variables = "Age", color = "red")
+plot(cp_rf, variables = "Age", color = "grey") +
+show_observations(cp_rf, variables = "Age", color = "grey") +
+  show_rugs(cp_rf, variables = "Age", color = "red")
 
 }
 }

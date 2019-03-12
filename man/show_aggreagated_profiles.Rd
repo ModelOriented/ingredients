@@ -5,7 +5,7 @@
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
 show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
-  color = "#371ea3", selected_variables = NULL)
+  color = "#371ea3", variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -18,7 +18,7 @@ show_aggreagated_profiles(x, ..., size = 0.5, alpha = 1,
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 a ggplot2 layer
@@ -49,15 +49,15 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 pdp_rf
 
-plot(cp_rf, selected_variables = "Age", color = "grey") +
-show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-  show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+plot(cp_rf, variables = "Age", color = "grey") +
+show_observations(cp_rf, variables = "Age", color = "grey") +
+  show_rugs(cp_rf, variables = "Age", color = "red") +
   show_aggreagated_profiles(pdp_rf, size = 3)
 
-plot(pdp_rf, selected_variables = "Age", color = "grey")
+plot(pdp_rf, variables = "Age", color = "grey")
 
 }
 }

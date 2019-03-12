@@ -9,7 +9,7 @@
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param facet_ncol number of columns for the `facet_wrap()`
-#' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param variables if not NULL then only `variables` will be presented
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @return a ggplot2 object
@@ -38,9 +38,9 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' plot(cp_rf, selected_variables = "Age") +
-#' show_observations(cp_rf, selected_variables = "Age") +
-#'   show_rugs(cp_rf, selected_variables = "Age", color = "red")
+#' plot(cp_rf, variables = "Age") +
+#' show_observations(cp_rf, variables = "Age") +
+#'   show_rugs(cp_rf, variables = "Age", color = "red")
 #'
 #' }
 #' @export
@@ -49,7 +49,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    alpha = 1,
    color = "#46bac2",
    only_numerical = TRUE,
-   facet_ncol = NULL, selected_variables = NULL) {
+   facet_ncol = NULL, variables = NULL) {
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -60,9 +60,9 @@ plot.ceteris_paribus_explainer <- function(x, ...,
 
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
-  if (!is.null(selected_variables)) {
-    all_variables <- intersect(all_variables, selected_variables)
-    if (length(all_variables) == 0) stop(paste0("selected_variables do not overlap with ", paste(all_variables, collapse = ", ")))
+  if (!is.null(variables)) {
+    all_variables <- intersect(all_variables, variables)
+    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   # is color a variable or literal?
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
