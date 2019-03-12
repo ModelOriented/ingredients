@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Ceteris Paribus Oscillations — plot.ceteris_paribus_oscillations • ingredients</title>
+<title>Ceteris Paribus 2D plot — ceteris_paribus_2d • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Plot Ceteris Paribus Oscillations</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Ceteris Paribus 2D plot</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -79,36 +79,41 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Ceteris Paribus Oscillations</h1>
+    <h1>Ceteris Paribus 2D plot</h1>
     </div>
 
     
-    <p>Function 'plot.ceteris_paribus_oscillations' plots variable importance plots.</p>
+    <p>This function calculates ceteris paribus profiles for grid of values spanned by two variables.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for ceteris_paribus_oscillations</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer</span>, <span class='no'>observation</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`</p></td>
+      <th>explainer</th>
+      <td><p>a model to be explained, preprocessed by the 'DALEX::explain' function</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>other explainers that shall be plotted together</p></td>
+      <th>observation</th>
+      <td><p>a new observarvation for which predictions need to be explained</p></td>
     </tr>
     <tr>
-      <th>bar_width</th>
-      <td><p>width of bars. By default 10</p></td>
+      <th>grid_points</th>
+      <td><p>number of points used for response path. Will be used for both variables</p></td>
+    </tr>
+    <tr>
+      <th>selected_variables</th>
+      <td><p>if specified, then only these variables will be explained</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a ggplot2 object</p>
+    <p>An object of the class 'ceteris_paribus_2d_explainer'.
+It's a data frame with calculated average responses.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -119,26 +124,20 @@
       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
-      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
+      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
 
-<span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,]
-
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>vips</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_oscillations.html'>calculate_oscillations</a></span>(<span class='no'>cp_rf</span>)
-<span class='no'>vips</span></div><div class='output co'>#&gt;              _vname_ _ids_ oscillations
-#&gt; 11          district  1001   1103.42482
-#&gt; 12          district  1002    506.15312
-#&gt; 5            surface  1001    289.45155
-#&gt; 8              floor  1002    273.54138
-#&gt; 7              floor  1001    243.95950
-#&gt; 6            surface  1002    233.95688
-#&gt; 10          no.rooms  1002    205.08003
-#&gt; 4  construction.year  1002    155.70748
-#&gt; 9           no.rooms  1001    153.95825
-#&gt; 3  construction.year  1001     51.99319
-#&gt; 1           m2.price  1001      0.00000
-#&gt; 2           m2.price  1002      0.00000</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>, ]
+<span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+#&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
+<span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>,
+         <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2  vname1 vname2        label
+#&gt; 1001   4851.829     20   1.00 surface  floor randomForest
+#&gt; 1001.1 4851.829     20   1.09 surface  floor randomForest
+#&gt; 1001.2 4851.829     20   1.18 surface  floor randomForest
+#&gt; 1001.3 4851.829     20   1.27 surface  floor randomForest
+#&gt; 1001.4 4851.829     20   1.36 surface  floor randomForest
+#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

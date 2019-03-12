@@ -1,3 +1,8 @@
+ingredients 0.3
+----------------------------------------------------------------
+* `ceteris_paribus_2d` extends classical ceteris paribus profiles
+* `ceteris_paribus_oscillations` calculates oscilations for ceteris paribus profiles
+
 ingredients 0.2
 ----------------------------------------------------------------
 * `cluster_profiles` helps to identify interactions
