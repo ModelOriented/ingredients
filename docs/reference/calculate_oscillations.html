@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prints Individual Variable Explainer Summary — print.ceteris_paribus_explainer • ingredients</title>
+<title>Calculate Oscillations for Ceteris Paribus Explainer — calculate_oscillations • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -48,7 +48,7 @@
 	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
         <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Prints Individual Variable Explainer Summary</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Calculate Oscillations for Ceteris Paribus Explainer</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -79,26 +79,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prints Individual Variable Explainer Summary</h1>
+    <h1>Calculate Oscillations for Ceteris Paribus Explainer</h1>
     </div>
 
     
-    <p>Prints Individual Variable Explainer Summary</p>
+    <p>Calculate Oscillations for Ceteris Paribus Explainer</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>calculate_oscillations</span>(<span class='no'>x</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an individual variable profile explainer produced with the `ceteris_paribus()` function</p></td>
+      <td><p>a ceteris_paribus explainer produced with the `ceteris_paribus()` function</p></td>
+    </tr>
+    <tr>
+      <th>sort</th>
+      <td><p>a logical value. If TRUE then rows are sorted along the oscillations</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments that will be passed to `head()`</p></td>
+      <td><p>other arguments</p></td>
     </tr>
     </table>
     
@@ -111,43 +114,18 @@
       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
-      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
+      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
 
-<span class='no'>apartments_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>apartmentsTest</span>, <span class='fl'>10</span>)
+<span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,]
 
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_small</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        construction.year surface floor no.rooms district   _yhat_
-#&gt; 8946                1920     123     8        4     Wola 2871.626
-#&gt; 8946.1              1921     123     8        4     Wola 2896.045
-#&gt; 8946.2              1922     123     8        4     Wola 2901.677
-#&gt; 8946.3              1923     123     8        4     Wola 2891.101
-#&gt; 8946.4              1924     123     8        4     Wola 2890.361
-#&gt; 8946.5              1925     123     8        4     Wola 2891.720
-#&gt;                  _vname_ _ids_      _label_
-#&gt; 8946   construction.year  8946 randomForest
-#&gt; 8946.1 construction.year  8946 randomForest
-#&gt; 8946.2 construction.year  8946 randomForest
-#&gt; 8946.3 construction.year  8946 randomForest
-#&gt; 8946.4 construction.year  8946 randomForest
-#&gt; 8946.5 construction.year  8946 randomForest
-#&gt; 
-#&gt; 
-#&gt; Top observations:
-#&gt;      construction.year surface floor no.rooms    district   _yhat_      _label_
-#&gt; 8946              1959     123     8        4        Wola 2386.002 randomForest
-#&gt; 4458              1927      68     8        2      Ochota 4222.164 randomForest
-#&gt; 7384              1929      95     5        3 Srodmiescie 4646.023 randomForest
-#&gt; 5450              1982     124    10        5      Ochota 3062.748 randomForest
-#&gt; 6744              1982     143     9        6     Ursynow 2171.529 randomForest
-#&gt; 6688              1938      75     7        3        Wola 3045.947 randomForest
-#&gt;      _ids_
-#&gt; 8946     1
-#&gt; 4458     2
-#&gt; 7384     3
-#&gt; 5450     4
-#&gt; 6744     5
-#&gt; 6688     6</div></pre>
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
+<span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;             _vname_ _ids_ oscillations
+#&gt; 6          district  1001   1103.42482
+#&gt; 3           surface  1001    289.45155
+#&gt; 4             floor  1001    243.95950
+#&gt; 5          no.rooms  1001    153.95825
+#&gt; 2 construction.year  1001     51.99319
+#&gt; 1          m2.price  1001      0.00000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -54,18 +54,16 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="ingredients" class="section level1">
+    <div id="ingredients-effects-and-importances-of-model-ingredients" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ingredients" class="anchor"></a>ingredients</h1></div>
-<p>Model ingredients - model level feature effects and feature importance</p>
-<p><a href="https://cran.r-project.org/package=ingredients"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a> <a href="https://travis-ci.org/ModelOriented/ingredients"><img src="https://api.travis-ci.org/pbiecek/ingredients.png" alt="Build Status"></a> <a href="https://codecov.io/github/ModelOriented/ingredients?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg" alt="Coverage Status"></a></p>
-<p>ingredients: Effects and Importances of Model Ingredients</p>
-<p>Here we port functions <code>model_feature_importance</code> and <code>model_feature_response</code> from DALEX. Additionaly they support multidimensional model responses (multilabel classess).</p>
+<a href="#ingredients-effects-and-importances-of-model-ingredients" class="anchor"></a>ingredients: Effects and Importances of Model Ingredients</h1></div>
+
+<p>Collection of tools for assessment of feature importance and feature effects. Part of the <code>DrWhy</code> universe. Key functions are: <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for the what-if analysis, it creates ceteris paribus profiles, <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus profiles, this way you can calculate Partial Dependency Plots and much more, <code><a href="reference/feature_importance.html">feature_importance()</a></code> for assessment of batch level feature importance.</p>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
 <p>From GitHub</p>
-<pre class="{r}"><code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/ingredients")</a></code></pre>
+<pre class="{r}"><code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/ingredients")</a></code></pre>
 </div>
 </div>
   </div>
@@ -92,11 +90,19 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=ingredients"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://travis-ci.org/ModelOriented/ingredients.svg?branch=master"><img src="https://travis-ci.org/ModelOriented/ingredients.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/github/ModelOriented/ingredients?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg" alt="Coverage Status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
