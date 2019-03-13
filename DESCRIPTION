@@ -23,6 +23,8 @@ Suggests: gbm,
   titanic,
   xgboost,
   testthat,
-  dplyr
+  dplyr,
+  r2d3,
+  jsonlite
 URL: https://ModelOriented.github.io/ingredients/
 BugReports: https://github.com/ModelOriented/ingredients/issues
