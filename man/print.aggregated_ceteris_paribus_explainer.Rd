@@ -35,7 +35,7 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 pdp_rf
 
 }

@@ -30,7 +30,7 @@
 #' explainer_rf <- explain(rf_model, data = titanic_small,
 #'                         y = titanic_small$Survived == "1", label = "RF")
 #'
-#' pdp_rf <- partial_dependency(explainer_rf, selected_variables = "Age")
+#' pdp_rf <- partial_dependency(explainer_rf, variables = "Age")
 #' pdp_rf
 #'
 #' plot(pdp_rf)
@@ -88,6 +88,6 @@ partial_dependency.default <- function(x, data, predict_function = predict,
                             variable_splits = variable_splits,
                             label = label, ...)
 
-  aggregate_profiles(cp, selected_variables = variables)
+  aggregate_profiles(cp, variables = variables)
 }
 

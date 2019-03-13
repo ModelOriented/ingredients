@@ -4,7 +4,7 @@
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
-#' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param variables if not NULL then only `variables` will be presented
 #' @param k number of clusters for the hclust function
 #' @param center shall profiles be centered before clustering
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
@@ -35,18 +35,18 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 #' pdp_rf
-#' clust_rf <- cluster_profiles(cp_rf, k = 3, selected_variables = "Age")
+#' clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "Age")
 #' clust_rf
 #'
 #' plot(clust_rf, color = "_label_") +
 #'   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 #'
-#' plot(cp_rf, color = "grey", selected_variables = "Age") +
+#' plot(cp_rf, color = "grey", variables = "Age") +
 #'   show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
 #'
-#' clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, selected_variables = "Age")
+#' clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 #' clust_rf
 #' }
 #' @export
@@ -55,7 +55,7 @@ cluster_profiles <- function(x, ...,
                                only_numerical = TRUE,
                                center = FALSE,
                                k = 3,
-                               selected_variables = NULL) {
+                               variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -65,9 +65,9 @@ cluster_profiles <- function(x, ...,
 
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
-  if (!is.null(selected_variables)) {
-    all_variables <- intersect(all_variables, selected_variables)
-    if (length(all_variables) == 0) stop(paste0("selected_variables do not overlap with ", paste(all_variables, collapse = ", ")))
+  if (!is.null(variables)) {
+    all_variables <- intersect(all_variables, variables)
+    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)

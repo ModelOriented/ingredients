@@ -87,7 +87,7 @@
     
 
     <pre class="usage"><span class='fu'>aggregate_profiles</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>aggregate_function</span> <span class='kw'>=</span> <span class='no'>mean</span>,
-  <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,8 +113,8 @@
       <td><p>a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated</p></td>
     </tr>
     <tr>
-      <th>selected_variables</th>
-      <td><p>if not NULL then only `selected_variables` will be presented</p></td>
+      <th>variables</th>
+      <td><p>if not NULL then only `variables` will be presented</p></td>
     </tr>
     </table>
     
@@ -172,7 +172,7 @@
 #&gt; 441     4
 #&gt; 576     5
 #&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_  _yhat_ _ids_
 #&gt; 1     Age      RF 0.42 0.65586     0
@@ -181,7 +181,7 @@
 #&gt; 4     Age      RF 3.00 0.64204     0
 #&gt; 5     Age      RF 4.00 0.64190     0
 #&gt; 6     Age      RF 5.00 0.64398     0</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>,
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>,
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"Sex"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_   _label_  _x_ _groups_    _yhat_ _ids_
@@ -190,10 +190,10 @@
 #&gt; 3     Age RF_female 2.00   female 0.7386452     0
 #&gt; 4     Age RF_female 3.00   female 0.7553548     0
 #&gt; 5     Age RF_female 4.00   female 0.7938065     0
-#&gt; 6     Age RF_female 5.00   female 0.7984516     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='error'>Error in plot.ceteris_paribus_explainer(cp_rf, selected_variables = "Age",     color = "grey"): There are no numerical variables</span></div></pre>
+#&gt; 6     Age RF_female 5.00   female 0.7984516     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
+  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

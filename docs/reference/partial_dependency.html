@@ -158,15 +158,15 @@
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)
 
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explainer_rf</span>, <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explainer_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_   _yhat_ _ids_
-#&gt; 1   SibSp      RF 0.00 0.375812     0
-#&gt; 2   Parch      RF 0.00 0.351848     0
-#&gt; 3    Fare      RF 0.00 0.328304     0
-#&gt; 4     Age      RF 0.42 0.638476     0
-#&gt; 5   Parch      RF 0.49 0.351848     0
-#&gt; 6   SibSp      RF 0.58 0.371608     0</div><div class='input'>
+#&gt; 1     Age      RF 0.42 0.638476     0
+#&gt; 2     Age      RF 1.00 0.628636     0
+#&gt; 3     Age      RF 2.00 0.598596     0
+#&gt; 4     Age      RF 3.00 0.622772     0
+#&gt; 5     Age      RF 4.00 0.624516     0
+#&gt; 6     Age      RF 5.00 0.626440     0</div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explainer_rf</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 

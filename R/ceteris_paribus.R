@@ -43,9 +43,9 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' plot(cp_rf, selected_variables = "Age", color = "grey") +
-#' show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-#'   show_rugs(cp_rf, selected_variables = "Age", color = "red")
+#' plot(cp_rf, variables = "Age", color = "grey") +
+#' show_observations(cp_rf, variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, variables = "Age", color = "red")
 #'
 #' }
 #' @export

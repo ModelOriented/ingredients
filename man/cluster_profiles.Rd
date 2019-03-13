@@ -5,8 +5,7 @@
 \title{Cluster Ceteris Paribus}
 \usage{
 cluster_profiles(x, ..., aggregate_function = mean,
-  only_numerical = TRUE, center = FALSE, k = 3,
-  selected_variables = NULL)
+  only_numerical = TRUE, center = FALSE, k = 3, variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -21,7 +20,7 @@ cluster_profiles(x, ..., aggregate_function = mean,
 
 \item{k}{number of clusters for the hclust function}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 a 'aggregated_ceteris_paribus_explainer' layer
@@ -52,18 +51,18 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 pdp_rf
-clust_rf <- cluster_profiles(cp_rf, k = 3, selected_variables = "Age")
+clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "Age")
 clust_rf
 
 plot(clust_rf, color = "_label_") +
   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 
-plot(cp_rf, color = "grey", selected_variables = "Age") +
+plot(cp_rf, color = "grey", variables = "Age") +
   show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
 
-clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, selected_variables = "Age")
+clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 clust_rf
 }
 }
