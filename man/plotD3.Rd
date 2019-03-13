@@ -42,5 +42,8 @@ fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
 fi_svm <- feature_importance(explainer_svm, loss_function = loss_root_mean_square)
 
 plotD3(fi_rf, fi_svm)
+plotD3(fi_rf, fi_svm, scaleHeight = TRUE)
+plotD3(fi_rf, fi_svm, label = FALSE)
+plotD3(fi_rf, fi_svm, label = FALSE, scaleHeight = TRUE)
 }
 }

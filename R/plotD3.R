@@ -24,11 +24,11 @@
 #' fi_svm <- feature_importance(explainer_svm, loss_function = loss_root_mean_square)
 #'
 #' plotD3(fi_rf, fi_svm)
+#' plotD3(fi_rf, fi_svm, scaleHeight = TRUE)
+#' plotD3(fi_rf, fi_svm, label = FALSE)
+#' plotD3(fi_rf, fi_svm, label = FALSE, scaleHeight = TRUE)
 #' }
 #' @export
-#'
-#' @importFrom jsonlite toJSON
-#' @importFrom r2d3 r2d3
 #' @rdname plotD3
 
 plotD3 <- function(x, ...)
@@ -68,13 +68,13 @@ plotD3.feature_importance_explainer <-  function(x, ..., label = TRUE, scaleHeig
 
       colnames(df) <- c("label","variable","dropout_loss")
       temp <- split(df[perm,2:3], f = df$label)
-      temp <- toJSON(temp)
+      temp <- jsonlite::toJSON(temp)
 
       # n - number of models, m - number of features
       options["n"] <- n
       options["m"] <- m
 
-      r2d3(data = temp, script = system.file("featureImportance.js", package = "ingredients"),
+      r2d3::r2d3(data = temp, script = system.file("featureImportance.js", package = "ingredients"),
            d3_version = 4,
            options = options)
 
@@ -84,13 +84,13 @@ plotD3.feature_importance_explainer <-  function(x, ..., label = TRUE, scaleHeig
       colnames(df) <- c("label","variable","dropout_loss")
       temp <- split(df[,c(1,3)], f = df$variable)
       temp <- temp[perm$Category[order(-perm$x)]]
-      temp <- toJSON(temp)
+      temp <- jsonlite::toJSON(temp)
 
       # n - number of features, m - number of models
       options["n"] <- m
       options["m"] <- n
 
-      r2d3(data = temp, script = system.file("featureImportance2.js", package = "ingredients"),
+      r2d3::r2d3(data = temp, script = system.file("featureImportance2.js", package = "ingredients"),
            d3_version = 4,
            options = options)
     }

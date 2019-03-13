@@ -16,15 +16,15 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: DALEX,
     ggplot2,
-    ggpubr,
-    r2d3,
-    jsonlite
+    ggpubr
 Suggests: gbm,
   gower,
   randomForest,
   titanic,
   xgboost,
   testthat,
-  dplyr
+  dplyr,
+  r2d3,
+  jsonlite
 URL: https://ModelOriented.github.io/ingredients/
 BugReports: https://github.com/ModelOriented/ingredients/issues
