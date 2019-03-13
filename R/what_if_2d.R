@@ -5,7 +5,7 @@
 #' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
 #' @param observation a new observarvation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
-#' @param selected_variables if specified, then only these variables will be explained
+#' @param variables if specified, then only these variables will be explained
 #'
 #' @return An object of the class 'ceteris_paribus_2d_explainer'.
 #' It's a data frame with calculated average responses.
@@ -30,11 +30,11 @@
 #' new_apartment
 #'
 #' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
-#'          selected_variables = c("surface", "floor", "no.rooms"))
+#'          variables = c("surface", "floor", "no.rooms"))
 #' head(wi_rf_2d)
 #' plot(wi_rf_2d)
 #' }
-ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, selected_variables = NULL) {
+ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variables = NULL) {
   if (!("explainer" %in% class(explainer)))
       stop("The what_if() function requires an object created with explain() function.")
   if (is.null(explainer$data))
@@ -46,8 +46,8 @@ ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, select
   var_to_present <- which(sapply(data, is.numeric))
   names_to_present <- colnames(data)[var_to_present]
 
-  if (!is.null(selected_variables)) {
-    names_to_present <- intersect(names_to_present, selected_variables)
+  if (!is.null(variables)) {
+    names_to_present <- intersect(names_to_present, variables)
   }
 
   # generate all pairs of names_to_present

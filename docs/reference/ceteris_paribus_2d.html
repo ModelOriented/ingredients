@@ -87,7 +87,7 @@
     
 
     <pre class="usage"><span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer</span>, <span class='no'>observation</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
-  <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -105,7 +105,7 @@
       <td><p>number of points used for response path. Will be used for both variables</p></td>
     </tr>
     <tr>
-      <th>selected_variables</th>
+      <th>variables</th>
       <td><p>if specified, then only these variables will be explained</p></td>
     </tr>
     </table>
@@ -130,7 +130,7 @@ It's a data frame with calculated average responses.</p>
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>,
-         <span class='kw'>selected_variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
+         <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
 <span class='fu'>head</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2  vname1 vname2        label
 #&gt; 1001   4851.829     20   1.00 surface  floor randomForest
 #&gt; 1001.1 4851.829     20   1.09 surface  floor randomForest
