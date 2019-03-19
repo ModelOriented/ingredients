@@ -26,10 +26,8 @@
 #' titanic_small <- na.omit(titanic_small)
 #' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
 #'                          data = titanic_small)
-#' predict_fuction <- function(m,x) predict(m, x, type="prob")[,2]
 #' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF",
-#'                         predict_function = predict_rf_fuction)
+#'                         y = titanic_small$Survived == "1", label = "RF")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
