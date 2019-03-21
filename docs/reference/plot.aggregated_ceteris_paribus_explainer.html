@@ -178,12 +178,20 @@
 #&gt; 441     4
 #&gt; 576     5
 #&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='error'>Error in aggregate_profiles(cp_rf, variables = "Age"): There are no numerical variables</span></div><div class='input'><span class='no'>pdp_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'pdp_rf' not found</span></div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_ _label_  _x_  _yhat_ _ids_
+#&gt; 1     Age      RF 0.42 0.63896     0
+#&gt; 2     Age      RF 1.00 0.63124     0
+#&gt; 3     Age      RF 2.00 0.61602     0
+#&gt; 4     Age      RF 3.00 0.63190     0
+#&gt; 5     Age      RF 4.00 0.62994     0
+#&gt; 6     Age      RF 5.00 0.63388     0</div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
 <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_aggreagated_profiles(pdp_rf, size = 2): object 'pdp_rf' not found</span></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(pdp_rf, variables = "Age"): object 'pdp_rf' not found</span></div><div class='input'>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='plot.aggregated_ceteris_paribus_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='img'><img src='plot.aggregated_ceteris_paribus_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

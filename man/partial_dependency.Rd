@@ -57,7 +57,7 @@ rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + 
 explainer_rf <- explain(rf_model, data = titanic_small,
                         y = titanic_small$Survived == "1", label = "RF")
 
-pdp_rf <- partial_dependency(explainer_rf, selected_variables = "Age")
+pdp_rf <- partial_dependency(explainer_rf, variables = "Age")
 pdp_rf
 
 plot(pdp_rf)

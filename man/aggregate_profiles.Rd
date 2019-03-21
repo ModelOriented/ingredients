@@ -5,7 +5,7 @@
 \title{Aggregate Ceteris Paribus into Partial Dependency Plots}
 \usage{
 aggregate_profiles(x, ..., aggregate_function = mean,
-  only_numerical = TRUE, groups = NULL, selected_variables = NULL)
+  only_numerical = TRUE, groups = NULL, variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -18,7 +18,7 @@ aggregate_profiles(x, ..., aggregate_function = mean,
 
 \item{groups}{a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated}
 
-\item{selected_variables}{if not NULL then only `selected_variables` will be presented}
+\item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
 an 'aggregated_ceteris_paribus_explainer' layer
@@ -47,15 +47,15 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 pdp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age",
+pdp_rf <- aggregate_profiles(cp_rf, variables = "Age",
                              groups = "Sex")
 pdp_rf
-plot(cp_rf, selected_variables = "Age", color = "grey") +
-  show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-  show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+plot(cp_rf, variables = "Age", color = "grey") +
+  show_observations(cp_rf, variables = "Age", color = "grey") +
+  show_rugs(cp_rf, variables = "Age", color = "red") +
   show_aggreagated_profiles(pdp_rf, size = 3, color = "_label_")
 }
 }

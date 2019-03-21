@@ -5,7 +5,7 @@
 \title{Ceteris Paribus 2D plot}
 \usage{
 ceteris_paribus_2d(explainer, observation, grid_points = 101,
-  selected_variables = NULL)
+  variables = NULL)
 }
 \arguments{
 \item{explainer}{a model to be explained, preprocessed by the 'DALEX::explain' function}
@@ -14,7 +14,7 @@ ceteris_paribus_2d(explainer, observation, grid_points = 101,
 
 \item{grid_points}{number of points used for response path. Will be used for both variables}
 
-\item{selected_variables}{if specified, then only these variables will be explained}
+\item{variables}{if specified, then only these variables will be explained}
 }
 \value{
 An object of the class 'ceteris_paribus_2d_explainer'.
@@ -39,7 +39,7 @@ new_apartment <- apartmentsTest[1, ]
 new_apartment
 
 wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
-         selected_variables = c("surface", "floor", "no.rooms"))
+         variables = c("surface", "floor", "no.rooms"))
 head(wi_rf_2d)
 plot(wi_rf_2d)
 }

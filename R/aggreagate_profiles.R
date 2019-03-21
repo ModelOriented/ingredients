@@ -4,7 +4,7 @@
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
-#' @param selected_variables if not NULL then only `selected_variables` will be presented
+#' @param variables if not NULL then only `variables` will be presented
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
 #' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
@@ -32,15 +32,15 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age")
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
 #' pdp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, selected_variables = "Age",
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age",
 #'                              groups = "Sex")
 #' pdp_rf
-#' plot(cp_rf, selected_variables = "Age", color = "grey") +
-#'   show_observations(cp_rf, selected_variables = "Age", color = "grey") +
-#'   show_rugs(cp_rf, selected_variables = "Age", color = "red") +
+#' plot(cp_rf, variables = "Age", color = "grey") +
+#'   show_observations(cp_rf, variables = "Age", color = "grey") +
+#'   show_rugs(cp_rf, variables = "Age", color = "red") +
 #'   show_aggreagated_profiles(pdp_rf, size = 3, color = "_label_")
 #' }
 #' @export
@@ -48,7 +48,7 @@ aggregate_profiles <- function(x, ...,
                       aggregate_function = mean,
                       only_numerical = TRUE,
                       groups = NULL,
-                      selected_variables = NULL) {
+                      variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -58,9 +58,9 @@ aggregate_profiles <- function(x, ...,
 
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
-  if (!is.null(selected_variables)) {
-    all_variables <- intersect(all_variables, selected_variables)
-    if (length(all_variables) == 0) stop(paste0("selected_variables do not overlap with ", paste(all_variables, collapse = ", ")))
+  if (!is.null(variables)) {
+    all_variables <- intersect(all_variables, variables)
+    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)

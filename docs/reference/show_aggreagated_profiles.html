@@ -143,12 +143,12 @@
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.056 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.056 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.892 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.892 Survived
-#&gt; 641          0      3   male  20     0     0   7.8542        S  0.002 Survived
-#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.002 Survived
+#&gt; 792          0      2   male  16     0     0  26.0000        S  0.064 Survived
+#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.064 Survived
+#&gt; 342          0      1 female  24     3     2 263.0000        S  0.912 Survived
+#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.912 Survived
+#&gt; 641          0      3   male  20     0     0   7.8542        S  0.000 Survived
+#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.000 Survived
 #&gt;       _ids_ _label_
 #&gt; 792     792      RF
 #&gt; 792.1   792      RF
@@ -160,12 +160,12 @@
 #&gt; 
 #&gt; Top observations:
 #&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.056      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.892      RF
-#&gt; 641        0      3   male  20     0     0   7.8542        S  0.002      RF
-#&gt; 441        1      2 female  45     1     1  26.2500        S  0.898      RF
+#&gt; 792        0      2   male  16     0     0  26.0000        S  0.064      RF
+#&gt; 342        1      1 female  24     3     2 263.0000        S  0.912      RF
+#&gt; 641        0      3   male  20     0     0   7.8542        S  0.000      RF
+#&gt; 441        1      2 female  45     1     1  26.2500        S  0.920      RF
 #&gt; 576        0      3   male  19     0     0  14.5000        S  0.016      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.148      RF
+#&gt; 571        1      2   male  62     0     0  10.5000        S  0.192      RF
 #&gt;     _ids_
 #&gt; 792     1
 #&gt; 342     2
@@ -173,12 +173,20 @@
 #&gt; 441     4
 #&gt; 576     5
 #&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: invalid factor level, NA generated</span></div><div class='output co'>#&gt; <span class='error'>Error in aggregate_profiles(cp_rf, variables = "Age"): There are no numerical variables</span></div><div class='input'><span class='no'>pdp_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'pdp_rf' not found</span></div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_ _label_  _x_  _yhat_ _ids_
+#&gt; 1     Age      RF 0.42 0.61886     0
+#&gt; 2     Age      RF 1.00 0.61008     0
+#&gt; 3     Age      RF 2.00 0.58818     0
+#&gt; 4     Age      RF 3.00 0.60736     0
+#&gt; 5     Age      RF 4.00 0.61560     0
+#&gt; 6     Age      RF 5.00 0.61848     0</div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
 <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_aggreagated_profiles(pdp_rf, size = 3): object 'pdp_rf' not found</span></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(pdp_rf, variables = "Age", color = "grey"): object 'pdp_rf' not found</span></div><div class='input'>
+  <span class='fu'>show_aggreagated_profiles</span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='show_aggreagated_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>)</div><div class='img'><img src='show_aggreagated_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
