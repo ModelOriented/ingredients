@@ -14,5 +14,5 @@ test_that("plot calculate_oscillations",{
 
   cp_rf <- ceteris_paribus(explainer_rf, apartment)
   pl <- calculate_oscillations(cp_rf)
-  expect_true("ceteris_paribus_explainer" %in% class(pl))
+  expect_true("ceteris_paribus_oscillations" %in% class(pl))
 })
