@@ -13,8 +13,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## Not run:
-#' set.seed(59)
 #' library("DALEX")
 #' library("ingredients")
 #' library("caret")
