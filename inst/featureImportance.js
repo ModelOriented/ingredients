@@ -1,6 +1,3 @@
-/*
-TODO:add all css stuff
-*/
 var minValue = options.xmin;
 var maxValue = options.xmax;
 var n = options.n;
@@ -8,19 +5,18 @@ var m = options.m;
 var ticksMargin = options.ticksMargin;
 
 var plotHeight;
-var margin = {top: 80, right: 30, bottom: 60, left: 120, inner: 40};
-var labelsMargin = 94; var ticksMargin;
+var margin = {top: 98, right: 30, bottom: 71, left: 80, inner: 42};
+var ticksMargin;
 var w = width - margin.left - margin.right;
 var h = height - margin.top- margin.bottom;
-var labelsMargin = margin.left - 6;
+var labelsMargin = margin.left - 8;
 var plotTop = margin.top;
 
 if (options.scaleHeight === true) {
   plotHeight = (h-(n-1)*margin.inner)/n;
 } else {
-  plotHeight = m*25;
+  plotHeight = 2*10 + m*12 + (m-1)*6;
 }
-
 var plotBottom = margin.top + plotHeight;
 
 featureImportance(data);
@@ -33,17 +29,15 @@ var tooltip = d3.select("body").append("div")
           .style("width", "100px")
           .style("height", "38px")
           .style("padding", "2px")
-          .style("background", "lightsteelblue")
+          .style("color", "white")
+          .style("background", "#371ea3")
+          .style("opacity", "0.5")
           .style("border", "0px")
           .style("border-radius", "8px")
           .style("pointer-events", "none")
           .style("visibility", "hidden");
 
-svg.selectAll(".grid").selectAll(".tick line")
-    .style("stroke", "lightgrey")
-    .style("stroke-opacity", "0.7")
-    .style("shape-rendering", "crispEdges");
-svg.selectAll(".fullModel").style("font-weight", "bold");
+svg.selectAll(".fullModel").style("font-weight", "700");
 
 // plot function
 function featureImportance(data) {
@@ -59,7 +53,7 @@ function featureImportance(data) {
 
 function singleFeatureImportance(modelName, modelData, i) {
 
-    var colors = ["#4378bf", "#46bac2", "#371ea3", "#8bdcbe", "#ae2c87", "#ffa58c", "#f05a71"];
+    var colors = getColors(n, "bar");
 
     var x = d3.scaleLinear()
         .range([margin.left, w + margin.left])
@@ -70,25 +64,13 @@ function singleFeatureImportance(modelName, modelData, i) {
       plotBottom += margin.inner + plotHeight;
     }
 
-    if (i == 1){
-      // title
-        svg.append("text")
-          .attr("x", margin.left )
-          .attr("y", 40)
-          .style("font-size", "20px")
-          .style("font-weight", "bold")
-          .style("text-anchor", "left")
-          .text("Feature importance");
-    }
-
     if (i == n){
       // xaxis
         svg.append("text")
           .attr("transform",
-                "translate(" + (width/2) + " ," +
+                "translate(" + (w/2) + " ," +
                                (margin.top + n*(margin.inner+plotHeight)) + ")")
-          .style("font-size", "16px")
-          .style("text-anchor", "left")
+          .attr("class", "axisTitle")
           .text("Drop-out loss");
 
         var xAxis = d3.axisBottom(x)
@@ -96,9 +78,8 @@ function singleFeatureImportance(modelName, modelData, i) {
                     .tickSize(0);
 
         xAxis = svg.append("g")
-          .attr("class", "xAxis")
+          .attr("class", "axisLabel")
           .attr("transform", "translate(0," + plotBottom + ")")
-          .style("font-size", "13px")
           .call(xAxis)
           .call(g => g.select(".domain").remove());
     }
@@ -110,15 +91,6 @@ function singleFeatureImportance(modelName, modelData, i) {
              return d.variable;
         }));
 
-    // modelname
-    svg.append("text")
-        .attr("x", margin.left )
-        .attr("y", plotTop - 10)
-        .style("font-size", "16px")
-        .style("font-weight", "bold")
-        .style("text-anchor", "left")
-        .text(modelName);
-
     // grid
     var xGrid = svg.append("g")
          .attr("class", "grid")
@@ -129,11 +101,17 @@ function singleFeatureImportance(modelName, modelData, i) {
                 .tickFormat("")
         ).call(g => g.select(".domain").remove());
 
+    // effort to make grid endings clean
+    let str = xGrid.select('.tick:first-child').attr('transform');
+    var yGridStart = str.substring(str.indexOf("(")+1,str.indexOf(","));
+    str = xGrid.select('.tick:last-child').attr('transform');
+    var yGridEnd = str.substring(str.indexOf("(")+1,str.indexOf(","));
+
     var yGrid = svg.append("g")
          .attr("class", "grid")
-         .attr("transform", "translate(" + margin.left + ",0)")
+         .attr("transform", "translate(" + yGridStart + ",0)")
          .call(d3.axisLeft(y)
-                .tickSize(-w)
+                .tickSize(-(yGridEnd-yGridStart))
                 .tickFormat("")
         ).call(g => g.select(".domain").remove());
 
@@ -142,9 +120,8 @@ function singleFeatureImportance(modelName, modelData, i) {
         .tickSize(0);
 
     yAxis = svg.append("g")
-        .attr("class", "yAxis")
-        .attr("transform","translate(" + labelsMargin + ",0)")
-        .style("font-size", "13px")
+        .attr("class", "axisLabel")
+        .attr("transform","translate(" + (yGridStart-8) + ",0)")
         .call(yAxis)
         .call(g => g.select(".domain").remove());
 
@@ -155,6 +132,22 @@ function singleFeatureImportance(modelName, modelData, i) {
         }
       });
 
+    // modelname
+    svg.append("text")
+        .attr("x", yGridStart)
+        .attr("y", plotTop - 15)
+        .attr("class", "smallTitle")
+        .text(modelName);
+
+    if (i == 1){
+      // title
+        svg.append("text")
+          .attr("x", yGridStart)
+          .attr("y", 42)
+          .attr("class", "bigTitle")
+          .text("Feature importance");
+    }
+
     // bars
     var bars = svg.selectAll()
         .data(modelData)
@@ -162,32 +155,28 @@ function singleFeatureImportance(modelName, modelData, i) {
         .append("g");
 
     // find full model dropout_loss value
-    var barStart;
+    var fullModel;
     modelData.forEach((item) => {
-      if(item.variable==="_full_model_") barStart = x(item.dropout_loss);
+      if(item.variable==="_full_model_") fullModel = item.dropout_loss;
       });
 
     bars.append("rect")
         .attr("class", modelName)
-        .attr("fill", colors[i])
+        .attr("fill", colors[i-1])
         .attr("y", function (d) {
             return y(d.variable);
         })
         .attr("height", y.bandwidth())
         .attr("x", function (d) {
           // start ploting the bar left to full model line
-          if (x(d.dropout_loss) < barStart) {
+          if (x(d.dropout_loss) < x(fullModel)) {
             return x(d.dropout_loss);
           } else {
-            return barStart;
+            return x(fullModel);
           }
         })
         .attr("width", function (d) {
-            return  Math.abs(x(d.dropout_loss) - barStart);
-        });
-
-    var barMin = d3.min(modelData, function (d) {
-            return d.dropout_loss;
+            return  Math.abs(x(d.dropout_loss) - x(fullModel));
         });
 
     // tooltip functions
@@ -195,13 +184,23 @@ function singleFeatureImportance(modelName, modelData, i) {
             tooltip.style("visibility", "visible");
         })
         .on("mousemove", function(d) {
-            tooltip .html(
+          if (d.dropout_loss > fullModel) {
+             tooltip .html(
+                Math.round(d.dropout_loss * 100)/100
+                + "</br>" + "+"
+                + Math.round((d.dropout_loss-fullModel) * 100)/100
+              )
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+          } else {
+             tooltip .html(
               Math.round(d.dropout_loss * 100)/100
-              + "</br>" + "+"
-              + Math.round((d.dropout_loss-barMin) * 100)/100
+              + "</br>"
+              + Math.round((d.dropout_loss-fullModel) * 100)/100
             )
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
+          }
         })
         .on("mouseout", function(d) {
             tooltip.style("visibility", "hidden");
@@ -220,9 +219,9 @@ function singleFeatureImportance(modelName, modelData, i) {
     });
 
     svg.append("line")
-        .style("stroke", "red")
-        .attr("x1", barStart)
+        .attr("class", "interceptLine")
+        .attr("x1", x(fullModel))
         .attr("y1", minimumY)
-        .attr("x2", barStart)
+        .attr("x2", x(fullModel))
         .attr("y2", maximumY + y.bandwidth());
 }

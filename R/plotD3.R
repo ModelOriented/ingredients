@@ -84,6 +84,8 @@ plotD3.feature_importance_explainer <-  function(x, ..., split = "model", scale_
       options["m"] <- m
 
       r2d3::r2d3(data = temp, script = system.file("featureImportance.js", package = "ingredients"),
+                 dependencies = system.file("colorsDrWhy.js", package = "ingredients"),
+                 css = system.file("themeDrWhy.css", package = "ingredients"),
            d3_version = 4,
            options = options)
 
@@ -100,6 +102,8 @@ plotD3.feature_importance_explainer <-  function(x, ..., split = "model", scale_
       options["m"] <- n
 
       r2d3::r2d3(data = temp, script = system.file("featureImportanceSplit.js", package = "ingredients"),
+                 dependencies = system.file("colorsDrWhy.js", package = "ingredients"),
+                 css = system.file("themeDrWhy.css", package = "ingredients"),
            d3_version = 4,
            options = options)
     }
