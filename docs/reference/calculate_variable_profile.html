@@ -61,6 +61,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -130,10 +142,25 @@ you should overload it.</p>
 <span class='fu'>set.seed</span>(<span class='fl'>59</span>)
 <span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
                                       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"n.rooms"</span>, <span class='st'>"district"</span>)
-<span class='no'>variable_splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_variable_split.html'>calculate_variable_split</a></span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(data, , var): undefined columns selected</span></div><div class='input'><span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
+<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
+<span class='no'>variable_splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_variable_split.html'>calculate_variable_split</a></span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)
+<span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
 <span class='no'>profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>new_apartment</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in calculate_variable_profile.default(new_apartment, variable_splits,     apartments_rf_model): object 'variable_splits' not found</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>profiles</span>)</div><div class='output co'>#&gt; <span class='error'>Error in head(profiles): object 'profiles' not found</span></div><div class='input'>
+                               <span class='no'>apartments_rf_model</span>)
+<span class='fu'>head</span>(<span class='no'>profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
+#&gt; 1001       4644              1920     131     3        5 Srodmiescie 4255.354
+#&gt; 1001.1     4644              1921     131     3        5 Srodmiescie 4300.702
+#&gt; 1001.2     4644              1922     131     3        5 Srodmiescie 4301.926
+#&gt; 1001.3     4644              1923     131     3        5 Srodmiescie 4305.352
+#&gt; 1001.4     4644              1924     131     3        5 Srodmiescie 4267.723
+#&gt; 1001.5     4644              1925     131     3        5 Srodmiescie 4264.109
+#&gt;                  _vname_ _ids_
+#&gt; 1001   construction.year  1001
+#&gt; 1001.1 construction.year  1001
+#&gt; 1001.2 construction.year  1001
+#&gt; 1001.3 construction.year  1001
+#&gt; 1001.4 construction.year  1001
+#&gt; 1001.5 construction.year  1001</div><div class='input'>
 <span class='co'># only subset of observations</span>
 <span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>apartmentsTest</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>small_apartments</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
@@ -147,7 +174,21 @@ you should overload it.</p>
 #&gt; 1902     2672              1977      98     6        3       Ursus
 #&gt; 5925     3916              1924      33     7        1      Bemowo
 #&gt; 4293     3474              1979     113     5        4     Mokotow</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in calculate_variable_profile.default(small_apartments, variable_splits,     apartments_rf_model): object 'variable_splits' not found</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt; <span class='error'>Error in head(small_profiles): object 'small_profiles' not found</span></div><div class='input'>
+                               <span class='no'>apartments_rf_model</span>)
+<span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms district   _yhat_
+#&gt; 8946       2174              1920     123     8        4     Wola 2871.626
+#&gt; 8946.1     2174              1921     123     8        4     Wola 2896.045
+#&gt; 8946.2     2174              1922     123     8        4     Wola 2901.677
+#&gt; 8946.3     2174              1923     123     8        4     Wola 2891.101
+#&gt; 8946.4     2174              1924     123     8        4     Wola 2890.361
+#&gt; 8946.5     2174              1925     123     8        4     Wola 2891.720
+#&gt;                  _vname_ _ids_
+#&gt; 8946   construction.year  8946
+#&gt; 8946.1 construction.year  8946
+#&gt; 8946.2 construction.year  8946
+#&gt; 8946.3 construction.year  8946
+#&gt; 8946.4 construction.year  8946
+#&gt; 8946.5 construction.year  8946</div><div class='input'>
 <span class='co'># neighbors for a selected observation</span>
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments</span>[<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>6</span>]
 <span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_neighbours.html'>select_neighbours</a></span>(<span class='no'>apartmentsTest</span>, <span class='no'>new_apartment</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
@@ -162,8 +203,22 @@ you should overload it.</p>
 #&gt; 6647     5952              1938      30     2        1 Srodmiescie
 #&gt; 4027     6457              1926      29     3        1 Srodmiescie
 #&gt; 2655     5596              1950      25     6        1 Srodmiescie</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)</div><div class='output co'>#&gt; <span class='error'>Error in calculate_variable_profile.default(small_apartments, variable_splits,     apartments_rf_model): object 'variable_splits' not found</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>new_apartment</span>)</div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
-#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt; <span class='error'>Error in head(small_profiles): object 'small_profiles' not found</span></div></pre>
+                               <span class='no'>apartments_rf_model</span>)
+<span class='fu'>head</span>(<span class='no'>new_apartment</span>)</div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
+#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
+#&gt; 2285       5875              1920      27     3        1 Srodmiescie 5438.443
+#&gt; 2285.1     5875              1921      27     3        1 Srodmiescie 5478.624
+#&gt; 2285.2     5875              1922      27     3        1 Srodmiescie 5477.707
+#&gt; 2285.3     5875              1923      27     3        1 Srodmiescie 5494.789
+#&gt; 2285.4     5875              1924      27     3        1 Srodmiescie 5501.781
+#&gt; 2285.5     5875              1925      27     3        1 Srodmiescie 5468.007
+#&gt;                  _vname_ _ids_
+#&gt; 2285   construction.year  2285
+#&gt; 2285.1 construction.year  2285
+#&gt; 2285.2 construction.year  2285
+#&gt; 2285.3 construction.year  2285
+#&gt; 2285.4 construction.year  2285
+#&gt; 2285.5 construction.year  2285</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

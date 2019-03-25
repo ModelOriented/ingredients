@@ -1,4 +1,4 @@
-#' Model Level Variable Importance - Drop in Loss after Variable Dropout
+#' Model Level Feature Importance - Drop in Loss after Variable Dropout
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer

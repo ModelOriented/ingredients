@@ -6,7 +6,7 @@
 Status](https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg)](https://codecov.io/github/ModelOriented/ingredients?branch=master)
 
 Collection of tools for assessment of feature importance and feature effects. 
-Part of the `DrWhy` universe. Key functions are: 
+Part of the `DrWhy.AI` universe. Key functions are: 
 `ceteris_paribus()` for the what-if analysis,  it creates ceteris paribus profiles, 
 `aggregate_profiles()` and `cluster_profiles()` for aggregation of Ceteris Paribus profiles, this way you can calculate Partial Dependency Plots and much more, 
 `feature_importance()` for assessment of batch level feature importance.
