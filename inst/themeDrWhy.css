@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,600');
+
+text {
+    font-family: "Fira Sans", sans-serif !important;
+    fill: #371ea3;
+    color: #371ea3;
+    text-rendering: geometricPrecision;
+}
+
+.bigTitle {
+    font-weight: 700; /*should be 600*/
+    font-size: 20px;  /*should be 18*/
+    text-align: left;
+}
+
+.smallTitle{
+    font-weight: 700; /*should be 600*/
+    font-size: 16px;  /*should be 13*/
+    text-align: left;
+}
+
+.axisTitle{
+    font-weight: 700; /*should be 600*/
+    font-size: 16px;  /*should be 13*/
+    text-align: center;
+}
+
+.axisLabel{
+    font-weight:500; /*should be 400*/
+    font-size: 13px; /*should be 11*/
+}
+
+.legendTitle{
+    font-weight: 500; /*should be 400*/
+    font-size: 13px;
+    text-align: left;
+}
+
+.interceptLine{
+    stroke: #371ea3;
+	stroke-width: 0.5px;
+}
+
+.grid .tick line{
+    stroke: #f0f0f4;
+    stroke-width: 1px
+}
