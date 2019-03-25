@@ -20,7 +20,7 @@
 #' set.seed(59)
 #' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
 #'                                       no.rooms + district, data = apartments)
-#' vars <- c("construction.year", "surface", "floor", "n.rooms", "district")
+#' vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
 #' variable_splits <- calculate_variable_split(apartments, vars)
 #' new_apartment <- apartmentsTest[1:10, ]
 #' profiles <- calculate_variable_profile(new_apartment, variable_splits,

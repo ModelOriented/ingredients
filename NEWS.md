@@ -2,6 +2,7 @@ ingredients 0.3
 ----------------------------------------------------------------
 * `ceteris_paribus_2d` extends classical ceteris paribus profiles
 * `ceteris_paribus_oscillations` calculates oscilations for ceteris paribus profiles
+* fixed examples and file names
 
 ingredients 0.2
 ----------------------------------------------------------------
