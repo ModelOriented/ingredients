@@ -7,8 +7,10 @@
 #' @param split_ncol number of columns for the 'facet_wrap'
 #' @param add_raster if TRUE then `geom_raster` will be added to present levels with diverging colors
 #' @param add_contour if TRUE then `geom_contour` will be added to present contours
-#' @param add_observation if TRUE then `geom_point` will be added to present observation that is explained
 #' @param bins number of contours to be added
+#' @param add_observation if TRUE then `geom_point` will be added to present observation that is explained
+#' @param pch character, symbol used to plot observations
+#' @param size numeric, size of individual datapoints
 #'
 #' @return a ggplot2 object
 #' @export
@@ -51,37 +53,44 @@
 #'
 #' plot(wi_rf_2d)
 #' }
-plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TRUE, add_contour = TRUE, add_observation = TRUE, bins = 3) {
+plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TRUE,
+                                              add_contour = TRUE, bins = 3, add_observation = TRUE,
+                                              pch = "+", size = 6) {
   all_responses <- x
   class(all_responses) <- "data.frame"
 
-  midpoint <- mean(all_responses$y_hat)
+  midpoint <- mean(all_responses$y_hat, na.rm = TRUE)
   new_x1 <- y_hat <- new_x2 <- NULL
 
   pred <- attr(x, "prediction")$observation
-  tmp <- unique(all_responses[,c("vname1","vname2")])
-  observation <- data.frame(tmp,
-    new_x1 = unlist(pred[as.character(tmp$vname1)]),
-    new_x2 = unlist(pred[as.character(tmp$vname2)]),
-    y_hat = midpoint)
+  all_pairs <- unique(all_responses[,c("vname1","vname2")])
+  observations <- lapply(1:nrow(all_pairs), function(i) {
+    pair <- all_pairs[i,]
+    data.frame(vname1 = pair$vname1,
+               vname2 = pair$vname2,
+               new_x1 = pred[,as.character(pair$vname1)],
+               new_x2 = pred[,as.character(pair$vname2)],
+               y_hat = midpoint)
+  })
+  observation <- do.call(rbind, observations)
 
   pl <- ggplot(all_responses, aes(new_x1, new_x2, fill = y_hat, z = y_hat)) +
     facet_wrap(vname1 ~ vname2, scales = "free", ncol = split_ncol) +
     xlab("") + ylab("") +
     scale_fill_gradient2(name = 'Prediction', midpoint = midpoint,
-                         low = "#371ea3", high = "#f05a71", mid = "#dfeab0")
+                         low = "#2cd9dd", high = "#ff4940", mid = "#f0f0f4")
   # or use scale_fill_gradient with midpoint
 
   if (add_raster) {
-    pl <- pl + geom_raster()
+    pl <- pl + geom_raster(data = all_responses)
   }
 
   if (add_contour) {
-    pl <- pl + geom_contour(color = "white", alpha = 0.5, bins = bins)
+    pl <- pl + geom_contour(data = all_responses, color = "white", alpha = 0.5, bins = bins)
   }
 
   if (add_observation) {
-    pl <- pl + geom_point(data = observation, fill = "black", pch = "+", size = 6)
+    pl <- pl + geom_point(data = observation, fill = "black", pch = pch, size = size)
   }
   pl + theme_drwhy_blank()
 }

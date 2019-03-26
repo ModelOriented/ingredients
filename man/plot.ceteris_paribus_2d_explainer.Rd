@@ -5,8 +5,8 @@
 \title{Plot Ceteris Paribus 2D Explanations}
 \usage{
 \method{plot}{ceteris_paribus_2d_explainer}(x, ..., split_ncol = NULL,
-  add_raster = TRUE, add_contour = TRUE, add_observation = TRUE,
-  bins = 3)
+  add_raster = TRUE, add_contour = TRUE, bins = 3,
+  add_observation = TRUE, pch = "+", size = 6)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with the 'ceteris_paribus_2d' function}
@@ -19,9 +19,13 @@
 
 \item{add_contour}{if TRUE then `geom_contour` will be added to present contours}
 
+\item{bins}{number of contours to be added}
+
 \item{add_observation}{if TRUE then `geom_point` will be added to present observation that is explained}
 
-\item{bins}{number of contours to be added}
+\item{pch}{character, symbol used to plot observations}
+
+\item{size}{numeric, size of individual datapoints}
 }
 \value{
 a ggplot2 object
