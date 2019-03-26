@@ -100,8 +100,8 @@
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_2d_explainer</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>split_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
+  <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,12 +127,20 @@
       <td><p>if TRUE then `geom_contour` will be added to present contours</p></td>
     </tr>
     <tr>
+      <th>bins</th>
+      <td><p>number of contours to be added</p></td>
+    </tr>
+    <tr>
       <th>add_observation</th>
       <td><p>if TRUE then `geom_point` will be added to present observation that is explained</p></td>
     </tr>
     <tr>
-      <th>bins</th>
-      <td><p>number of contours to be added</p></td>
+      <th>pch</th>
+      <td><p>character, symbol used to plot observations</p></td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td><p>numeric, size of individual datapoints</p></td>
     </tr>
     </table>
     

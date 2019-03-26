@@ -95,33 +95,35 @@
     </div>
 
     
-    <p>Plot Feature Importance Objects in D3 with r2d3 package.</p>
+    <p>Function <code>plotD3.feature_importance_explainer</code> plots dropouts for variables used in the model.
+It uses output from <code>feature_importance</code> function that corresponds to permutation based measure of feature importance.
+Variables are sorted in the same order in all panels. The order depends on the average drop out loss. In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
     
 
     <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>scaleHeight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"model"</span>,
+  <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>the model model of `feature_importance_explainer` class.</p></td>
+      <td><p>a feature importance explainer produced with the 'feature_importance' function</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters.</p></td>
+      <td><p>other explainers that shall be plotted together</p></td>
     </tr>
     <tr>
-      <th>label</th>
-      <td><p>default TRUE</p></td>
+      <th>split</th>
+      <td><p>either <code>"model"</code> or <code>"feature"</code> determines the plot layout</p></td>
     </tr>
     <tr>
-      <th>scaleHeight</th>
-      <td><p>default FALSE</p></td>
+      <th>scale_height</th>
+      <td><p>should the height of plot scale with window size? By default it's FALSE</p></td>
     </tr>
     </table>
     
@@ -131,24 +133,39 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run:</span>
-<span class='fu'>set.seed</span>(<span class='fl'>59</span>)
-<span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
-<span class='fu'>library</span>(<span class='st'>"caret"</span>)
-
-<span class='no'>regr_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>regr_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"svmLinear"</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>regr_rf</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
-<span class='no'>explainer_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>regr_svm</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"svm"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='fu'>library</span>(<span class='st'>"ingredients"</span>)
+<span class='fu'>library</span>(<span class='st'>"caret"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    margin</span></div><div class='input'>
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
+
+<span class='fu'>head</span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+#&gt; 1      _full_model_     159.8051    rf
+#&gt; 2          no.rooms     168.3657    rf
+#&gt; 3 construction.year     364.8350    rf
+#&gt; 4             floor     414.5422    rf
+#&gt; 5           surface     597.0644    rf
+#&gt; 6          district     974.0049    rf</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>)
+
+<span class='no'>svm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"svmLinear"</span>)
+<span class='no'>explainer_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>svm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"svm"</span>)
 <span class='no'>fi_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_svm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>)
-<span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>scaleHeight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scaleHeight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+<span class='fu'>head</span>(<span class='no'>fi_svm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+#&gt; 1      _full_model_     301.5889   svm
+#&gt; 2 construction.year     301.5897   svm
+#&gt; 3          no.rooms     318.1765   svm
+#&gt; 4             floor     503.5945   svm
+#&gt; 5           surface     608.9336   svm
+#&gt; 6          district    1007.3110   svm</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>)
+
+<span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

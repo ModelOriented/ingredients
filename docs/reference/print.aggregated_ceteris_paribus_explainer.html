@@ -134,12 +134,12 @@
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.048 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.048 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.922 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.922 Survived
-#&gt; 641          0      3   male  20     0     0   7.8542        S  0.002 Survived
-#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.002 Survived
+#&gt; 792          0      2   male  16     0     0  26.0000        S  0.054 Survived
+#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.054 Survived
+#&gt; 342          0      1 female  24     3     2 263.0000        S  0.916 Survived
+#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.916 Survived
+#&gt; 641          0      3   male  20     0     0   7.8542        S  0.004 Survived
+#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.004 Survived
 #&gt;       _ids_ _label_
 #&gt; 792     792      RF
 #&gt; 792.1   792      RF
@@ -151,12 +151,12 @@
 #&gt; 
 #&gt; Top observations:
 #&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.048      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.922      RF
-#&gt; 641        0      3   male  20     0     0   7.8542        S  0.002      RF
-#&gt; 441        1      2 female  45     1     1  26.2500        S  0.908      RF
-#&gt; 576        0      3   male  19     0     0  14.5000        S  0.008      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.164      RF
+#&gt; 792        0      2   male  16     0     0  26.0000        S  0.054      RF
+#&gt; 342        1      1 female  24     3     2 263.0000        S  0.916      RF
+#&gt; 641        0      3   male  20     0     0   7.8542        S  0.004      RF
+#&gt; 441        1      2 female  45     1     1  26.2500        S  0.898      RF
+#&gt; 576        0      3   male  19     0     0  14.5000        S  0.016      RF
+#&gt; 571        1      2   male  62     0     0  10.5000        S  0.154      RF
 #&gt;     _ids_
 #&gt; 792     1
 #&gt; 342     2
@@ -167,12 +167,12 @@
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
 <span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_  _x_  _yhat_ _ids_
-#&gt; 1     Age      RF 0.42 0.65568     0
-#&gt; 2     Age      RF 1.00 0.64320     0
-#&gt; 3     Age      RF 2.00 0.61606     0
-#&gt; 4     Age      RF 3.00 0.63220     0
-#&gt; 5     Age      RF 4.00 0.62764     0
-#&gt; 6     Age      RF 5.00 0.63018     0</div><div class='input'>
+#&gt; 1     Age      RF 0.42 0.64812     0
+#&gt; 2     Age      RF 1.00 0.63992     0
+#&gt; 3     Age      RF 2.00 0.61248     0
+#&gt; 4     Age      RF 3.00 0.63360     0
+#&gt; 5     Age      RF 4.00 0.62868     0
+#&gt; 6     Age      RF 5.00 0.63084     0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
