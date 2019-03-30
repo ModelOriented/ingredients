@@ -2,22 +2,25 @@ var minValue = options.xmin;
 var maxValue = options.xmax;
 var n = options.n;
 var m = options.m;
-var ticksMargin = options.ticksMargin;
+var barWidth = options.barWidth;
 
-var plotHeight;
-var margin = {top: 98, right: 30, bottom: 71, left: 80, inner: 42};
-var ticksMargin;
+var margin = {top: 98, right: 30, bottom: 71, left: 120, inner: 42};
 var w = width - margin.left - margin.right;
 var h = height - margin.top- margin.bottom;
 var labelsMargin = margin.left - 8;
 var plotTop = margin.top;
+var plotHeight = m*barWidth + (m+1)*barWidth/2;
+var plotBottom = margin.top + plotHeight;
 
 if (options.scaleHeight === true) {
-  plotHeight = (h-(n-1)*margin.inner)/n;
-} else {
-  plotHeight = 2*10 + m*12 + (m-1)*6;
+  if (h > n*plotHeight + (n-1)*margin.inner) {
+    var temp = h - n*plotHeight - (n-1)*margin.inner;
+    plotTop += temp/2;
+    plotBottom += temp/2;
+  }
 }
-var plotBottom = margin.top + plotHeight;
+
+var colors = getColors(n, "bar");
 
 featureImportance(data);
 
@@ -26,18 +29,19 @@ var tooltip = d3.select("body").append("div")
           .attr("class", "tooltip")
           .style("position", "absolute")
           .style("text-align", "center")
-          .style("width", "100px")
-          .style("height", "38px")
+          .style("width", "300px")
+          .style("height", "80px")
           .style("padding", "2px")
           .style("color", "white")
           .style("background", "#371ea3")
-          .style("opacity", "0.5")
+          .style("opacity", "1")
           .style("border", "0px")
           .style("border-radius", "8px")
           .style("pointer-events", "none")
           .style("visibility", "hidden");
 
-svg.selectAll(".fullModel").style("font-weight", "700");
+svg.selectAll("text")
+  .style('font-family', 'Fira Sans, sans-serif');
 
 // plot function
 function featureImportance(data) {
@@ -53,11 +57,9 @@ function featureImportance(data) {
 
 function singleFeatureImportance(modelName, modelData, i) {
 
-    var colors = getColors(n, "bar");
-
     var x = d3.scaleLinear()
         .range([margin.left, w + margin.left])
-        .domain([minValue - ticksMargin, maxValue + ticksMargin]);
+        .domain([minValue, maxValue]);
 
     if (i != 1){
       plotTop += margin.inner + plotHeight;
@@ -68,8 +70,8 @@ function singleFeatureImportance(modelName, modelData, i) {
       // xaxis
         svg.append("text")
           .attr("transform",
-                "translate(" + (w/2) + " ," +
-                               (margin.top + n*(margin.inner+plotHeight)) + ")")
+                "translate(" + (width/2) + " ," +
+                               (plotBottom + 45) + ")")
           .attr("class", "axisTitle")
           .text("Drop-out loss");
 
@@ -86,7 +88,7 @@ function singleFeatureImportance(modelName, modelData, i) {
 
     var y = d3.scaleBand()
         .rangeRound([plotBottom, plotTop])
-        .padding(0.35)
+        .padding(0.33)
         .domain(modelData.map(function (d) {
              return d.variable;
         }));
@@ -125,13 +127,6 @@ function singleFeatureImportance(modelName, modelData, i) {
         .call(yAxis)
         .call(g => g.select(".domain").remove());
 
-    // tag full model to later make it bold
-    yAxis.selectAll("text").each(function() {
-        if(this.textContent === "_full_model_") {
-          this.classList.add("fullModel");
-        }
-      });
-
     // modelname
     svg.append("text")
         .attr("x", yGridStart)
@@ -143,7 +138,7 @@ function singleFeatureImportance(modelName, modelData, i) {
       // title
         svg.append("text")
           .attr("x", yGridStart)
-          .attr("y", 42)
+          .attr("y", plotTop - 60)
           .attr("class", "bigTitle")
           .text("Feature importance");
     }
@@ -155,10 +150,7 @@ function singleFeatureImportance(modelName, modelData, i) {
         .append("g");
 
     // find full model dropout_loss value
-    var fullModel;
-    modelData.forEach((item) => {
-      if(item.variable==="_full_model_") fullModel = item.dropout_loss;
-      });
+    var fullModel = modelData[0].full_model;
 
     bars.append("rect")
         .attr("class", modelName)
@@ -185,19 +177,11 @@ function singleFeatureImportance(modelName, modelData, i) {
         })
         .on("mousemove", function(d) {
           if (d.dropout_loss > fullModel) {
-             tooltip .html(
-                Math.round(d.dropout_loss * 100)/100
-                + "</br>" + "+"
-                + Math.round((d.dropout_loss-fullModel) * 100)/100
-              )
+             tooltip .html( tooltipHtml(modelName,d,"+") )
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
           } else {
-             tooltip .html(
-              Math.round(d.dropout_loss * 100)/100
-              + "</br>"
-              + Math.round((d.dropout_loss-fullModel) * 100)/100
-            )
+             tooltip .html(tooltipHtml(modelName,d,""))
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
           }
@@ -224,4 +208,15 @@ function singleFeatureImportance(modelName, modelData, i) {
         .attr("y1", minimumY)
         .attr("x2", x(fullModel))
         .attr("y2", maximumY + y.bandwidth());
+}
+
+function tooltipHtml(modelName, d, sign){
+    var temp ="Model: " + modelName
+      + "</br>" +
+      "Model loss after feature " + d.variable
+      + "</br>" +
+      " is permuted: " +  Math.round(d.dropout_loss * 1000)/1000
+      + "</br>" +
+      "Drop-out loss change: "  + sign + Math.round((d.dropout_loss - d.full_model) * 1000)/1000 ;
+    return temp;
 }

@@ -6,8 +6,11 @@
 #'
 #' @param x a feature importance explainer produced with the 'feature_importance' function
 #' @param ... other explainers that shall be plotted together
+#' @param max_vars maximum number of variables that shall be presented for for each model. By default NULL what means all variables
+#' @param bar_width width of bars in px. By default 12px
 #' @param split either \code{"model"} or \code{"feature"} determines the plot layout
 #' @param scale_height should the height of plot scale with window size? By default it's FALSE
+#' @param margin extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.15
 #'
 #' @return an `r2d3` object.
 #'
@@ -34,6 +37,10 @@
 #' plotD3(fi_rf, fi_svm)
 #'
 #' plotD3(fi_rf, fi_svm, split = "feature")
+#'
+#' plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, scale_height = TRUE)
+#' plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, split = "feature", scale_height = TRUE)
+#' plotD3(fi_rf, margin = 0.2)
 #' }
 #' @export
 #' @rdname plotD3
@@ -43,39 +50,53 @@ plotD3 <- function(x, ...)
 
 #' @export
 #' @rdname plotD3
-plotD3.feature_importance_explainer <-  function(x, ..., split = "model", scale_height = FALSE){
+plotD3.feature_importance_explainer <-  function(x, ...,  max_vars = NULL, bar_width = 12, split = "model", scale_height = FALSE, margin = 0.15){
     if (!(split %in% c("model", "feature"))){
       stop("The plotD3.feature_importance_explainer() function requires split to be model or feature.")
     }
 
     n <- length(list(...)) + 1
-    m <- dim(x)[1]
+    m <- dim(x)[1] - 2
 
     dfl <- c(list(x), list(...))
     df <- do.call(rbind, dfl)
 
-    xmax <- max(df$dropout_loss)
+    xmax <- max(df[df$variable!="_baseline_",]$dropout_loss)
     xmin <- min(df$dropout_loss)
 
-    ticksMargin <- round(abs(xmin-xmax)*0.1);
+    ticksMargin <- abs(xmin-xmax)*margin;
 
     bestFits <- df[df$variable == "_full_model_", ]
     df <- merge(df, bestFits[,c("label", "dropout_loss")], by = "label")
 
+    # remove rows that starts with _
+    df <- df[!(substr(df$variable,1,1) == "_"),]
+
     perm <- aggregate(df$dropout_loss.x, by = list(Category=df$variable), FUN = mean)
 
-    options <- list(xmin = xmin, xmax = xmax, ticksMargin = ticksMargin, scaleHeight = scale_height)
+    options <- list(barWidth = bar_width, xmin = xmin-ticksMargin, xmax = xmax+ticksMargin, scaleHeight = scale_height)
 
     if (split == "model"){
       # one plot for each model
 
+      # for each model leave only max_vars
+      if (!is.null(max_vars) && max_vars < m) {
+        m <- max_vars
+
+        trimmed_parts <- lapply(unique(df$label), function(label) {
+          tmp <- df[df$label == label, ]
+          tmp[tail(order(tmp$dropout_loss.x), max_vars), ]
+        })
+        df <- do.call(rbind, trimmed_parts)
+      }
+
       # sorting bars in groups
-      perm <- perm$Category[order(perm$x)]
-      df$variable <- factor(as.character(df$variable), levels = as.character(perm))
+      perm <- as.character(perm$Category[order(perm$x)])
+      df$variable <- factor(as.character(df$variable), levels = perm)
       df <- df[order(df$label, df$variable),]
 
-      colnames(df) <- c("label","variable","dropout_loss")
-      temp <- split(df[,2:3], f = df$label)
+      colnames(df) <- c("label","variable","dropout_loss", "full_model")
+      temp <- split(df[,2:4], f = df$label)
       temp <- jsonlite::toJSON(temp)
 
       # n - number of models, m - number of features
@@ -91,9 +112,16 @@ plotD3.feature_importance_explainer <-  function(x, ..., split = "model", scale_
     } else if (split == "feature"){
       # one plot for each feature
 
-      colnames(df) <- c("label","variable","dropout_loss")
-      temp <- split(df[,c(1,3)], f = df$variable)
-      temp <- temp[perm$Category[order(-perm$x)]]
+      colnames(df) <- c("label","variable","dropout_loss", "full_model")
+      temp <- split(df[,c(1,3,4)], f = as.character(df$variable))
+
+      # sorting plots, leave only max_vars of features
+      temp <- temp[as.character(perm$Category)[order(-perm$x)]]
+      if (!is.null(max_vars) && max_vars < m) {
+        m <- max_vars
+
+        temp <- temp[1:max_vars]
+      }
       temp <- jsonlite::toJSON(temp)
 
       # n - number of features, m - number of models
