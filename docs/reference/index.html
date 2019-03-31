@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -45,8 +54,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class = "navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src = "https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
+	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
       <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
@@ -93,7 +102,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.3.0</small>
+        <small>version&nbsp;0.3.1</small>
       </h1>
     </div>
 
@@ -113,6 +122,12 @@
           </th>
         </tr>
         <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="accumulated_profiles.html">accumulated_profiles()</a></code> </p>
+          </td>
+          <td><p>Accumulated Local Effects Profiles</p></td>
+        </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="aggregate_profiles.html">aggregate_profiles()</a></code> </p>
@@ -157,15 +172,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="conditional_profiles.html">conditional_profiles()</a></code> </p>
+          </td>
+          <td><p>Conditional / Marginal Profiles</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="feature_importance.html">feature_importance()</a></code> </p>
           </td>
           <td><p>Model Level Feature Importance - Drop in Loss after Variable Dropout</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="partial_dependency.html">partial_dependency()</a></code> </p>
+            <p><code><a href="partial_profiles.html">partial_profiles()</a></code> </p>
           </td>
-          <td><p>Partial Dependency Plots</p></td>
+          <td><p>Partial Dependency Profiles</p></td>
         </tr><tr>
           <!--  -->
           <td>

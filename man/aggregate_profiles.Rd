@@ -4,19 +4,19 @@
 \alias{aggregate_profiles}
 \title{Aggregate Ceteris Paribus into Partial Dependency Plots}
 \usage{
-aggregate_profiles(x, ..., aggregate_function = mean,
-  only_numerical = TRUE, groups = NULL, variables = NULL)
+aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
+  type = "partial", variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
 
 \item{...}{other explainers that shall be plotted together}
 
-\item{aggregate_function}{a function for profile aggregation. By default it's 'mean'}
-
 \item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
 
 \item{groups}{a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated}
+
+\item{type}{either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
 
 \item{variables}{if not NULL then only `variables` will be presented}
 }
@@ -47,8 +47,13 @@ selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
-pdp_rf
+pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
+pdp_rf_p$`_label_` <- "RF_partial"
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
+pdp_rf_c$`_label_` <- "RF_conditional"
+pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
+pdp_rf_a$`_label_` <- "RF_accumulated"
+plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
 pdp_rf <- aggregate_profiles(cp_rf, variables = "Age",
                              groups = "Sex")

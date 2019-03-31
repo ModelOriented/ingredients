@@ -75,10 +75,26 @@ Such univariate relation can be calculated with `partial_dependency()`.
 
 Kids 5 years old and younger have much higher survival probability.
 
+### Partial Dependency Profiles
+
 ```{r}
-vr_age  <- partial_dependency(explain_titanic_rf, variables =  c("age", "fare"))
-head(vr_age)
-plot(vr_age)
+pp_age  <- partial_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+head(pp_age)
+plot(pp_age)
+```
+
+### Conditional / Marginal Profiles
+
+```{r}
+cp_age  <- conditional_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+plot(cp_age)
+```
+
+### Accumulated Local Effect Profiles
+
+```{r}
+ap_age  <- accumulated_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+plot(ap_age)
 ```
 
 # Instance level explanations

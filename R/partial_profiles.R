@@ -1,8 +1,10 @@
-#' Partial Dependency Plots
+#' Partial Dependency Profiles
 #'
-#' Function 'partial_dependency' calles 'ceteris_paribus' and then 'aggregate_profiles'
+#' Partial Dependency Profiles are averages from Ceteris Paribus Prfiles.
+#' Function 'partial_profiles' calles 'ceteris_paribus' and then 'aggregate_profiles'.
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Partial Profiles at PM VEE}.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
+#' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, will be extracted from `x` if it's an explainer
 #' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
@@ -30,24 +32,20 @@
 #' explainer_rf <- explain(rf_model, data = titanic_small,
 #'                         y = titanic_small$Survived == "1", label = "RF")
 #'
-#' pdp_rf <- partial_dependency(explainer_rf, variables = "Age")
-#' pdp_rf
-#'
+#' pdp_rf <- partial_profiles(explainer_rf, variables = "Age")
 #' plot(pdp_rf)
 #'
-#' pdp_rf <- partial_dependency(explainer_rf)
-#' pdp_rf
-#'
+#' pdp_rf <- partial_profiles(explainer_rf)
 #' plot(pdp_rf)
 #' }
 #' @export
-#' @rdname partial_dependency
-partial_dependency <- function(x, ...)
-  UseMethod("partial_dependency")
+#' @rdname partial_profiles
+partial_profiles <- function(x, ...)
+  UseMethod("partial_profiles")
 
 #' @export
-#' @rdname partial_dependency
-partial_dependency.explainer <- function(x, variables = NULL, N = 500,
+#' @rdname partial_profiles
+partial_profiles.explainer <- function(x, variables = NULL, N = 500,
                                       variable_splits = NULL, grid_points = 101,
                                       ...) {
   # extracts model, data and predict function from the explainer
@@ -56,7 +54,7 @@ partial_dependency.explainer <- function(x, variables = NULL, N = 500,
   predict_function <- x$predict_function
   label <- x$label
 
-  partial_dependency.default(model, data, predict_function,
+  partial_profiles.default(model, data, predict_function,
                           label = label,
                           variables = variables,
                           grid_points = grid_points,
@@ -67,8 +65,8 @@ partial_dependency.explainer <- function(x, variables = NULL, N = 500,
 
 
 #' @export
-#' @rdname partial_dependency
-partial_dependency.default <- function(x, data, predict_function = predict,
+#' @rdname partial_profiles
+partial_profiles.default <- function(x, data, predict_function = predict,
                            label = class(x)[1],
                            variables = NULL,
                            grid_points = grid_points,
@@ -88,6 +86,15 @@ partial_dependency.default <- function(x, data, predict_function = predict,
                             variable_splits = variable_splits,
                             label = label, ...)
 
-  aggregate_profiles(cp, variables = variables)
+  aggregate_profiles(cp, variables = variables, type = "partial")
+}
+
+
+
+#' @export
+#' @rdname partial_profiles
+partial_profiles.ceteris_paribus_explainer <- function(x, ...,
+                           variables = NULL) {
+  aggregate_profiles(x, ..., type = "partial", variables = variables)
 }
 

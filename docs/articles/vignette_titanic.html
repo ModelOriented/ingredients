@@ -12,7 +12,13 @@
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Google analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 </head>
 <body>
     <div class="container template-article">
@@ -24,8 +30,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-mi2logo" href="http://mi2.mini.pw.edu.pl/">
-        <img src="https://github.com/mi2-warsaw/MI2template/blob/master/inst/pkgdown/assets/MI2logo.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
+	  <a class="navbar-mi2logo" href="http://DrWhy.AI/">
+        <img src="https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt="MI2" height="46" title="MI2"></a>
       <a class="navbar-brand navbar-mi2" href="../index.html"></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -70,7 +76,7 @@
       <h1>Survival on the RMS Titanic</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2019-03-26</h4>
+            <h4 class="date">2019-03-31</h4>
       
       
       <div class="hidden name"><code>vignette_titanic.Rmd</code></div>
@@ -110,8 +116,8 @@
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;           Mean of squared residuals: 0.1432248
-#&gt;                     % Var explained: 34.65</code></pre>
+#&gt;           Mean of squared residuals: 0.1425524
+#&gt;                     % Var explained: 34.96</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -132,12 +138,12 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">fi_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/feature_importance.html">feature_importance</a></span>(explain_titanic_rf)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">head</span>(fi_rf)</a></code></pre></div>
 <pre><code>#&gt;       variable dropout_loss            label
-#&gt; 1 _full_model_    0.3341377 Random Forest v7
-#&gt; 2      country    0.3341377 Random Forest v7
-#&gt; 3        parch    0.3445729 Random Forest v7
-#&gt; 4        sibsp    0.3463299 Random Forest v7
-#&gt; 5     embarked    0.3501580 Random Forest v7
-#&gt; 6         fare    0.3727847 Random Forest v7</code></pre>
+#&gt; 1 _full_model_    0.3333899 Random Forest v7
+#&gt; 2      country    0.3333899 Random Forest v7
+#&gt; 3        parch    0.3441052 Random Forest v7
+#&gt; 4        sibsp    0.3454823 Random Forest v7
+#&gt; 5     embarked    0.3492424 Random Forest v7
+#&gt; 6         fare    0.3751561 Random Forest v7</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">plot</span>(fi_rf)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -150,67 +156,85 @@
 <h2 class="hasAnchor">
 <a href="#age" class="anchor"></a>age</h2>
 <p>Kids 5 years old and younger have much higher survival probability.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">vr_age  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/partial_dependency.html">partial_dependency</a></span>(explain_titanic_rf, <span class="dt">variables =</span>  <span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"fare"</span>))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">head</span>(vr_age)</a></code></pre></div>
+<div id="partial-dependency-profiles" class="section level3">
+<h3 class="hasAnchor">
+<a href="#partial-dependency-profiles" class="anchor"></a>Partial Dependency Profiles</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pp_age  &lt;-<span class="st"> </span><span class="kw">partial_profiles</span>(explain_titanic_rf, <span class="dt">variables =</span>  <span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"fare"</span>))</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">head</span>(pp_age)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_          _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7 0.0000000 0.3159682     0
-#&gt; 2     age Random Forest v7 0.1666667 0.5425666     0
-#&gt; 3     age Random Forest v7 2.0000000 0.5679665     0
-#&gt; 4     age Random Forest v7 4.0000000 0.5697256     0
-#&gt; 5    fare Random Forest v7 6.1904000 0.3022990     0
-#&gt; 6     age Random Forest v7 7.0000000 0.5277445     0</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(vr_age)</a></code></pre></div>
+#&gt; 1    fare Random Forest v7 0.0000000 0.3158502     0
+#&gt; 2     age Random Forest v7 0.1666667 0.5070157     0
+#&gt; 3     age Random Forest v7 2.0000000 0.5601328     0
+#&gt; 4     age Random Forest v7 4.0000000 0.5644367     0
+#&gt; 5    fare Random Forest v7 6.1904000 0.2959661     0
+#&gt; 6     age Random Forest v7 7.0000000 0.5223143     0</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(pp_age)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+<div id="conditional-marginal-profiles" class="section level3">
+<h3 class="hasAnchor">
+<a href="#conditional-marginal-profiles" class="anchor"></a>Conditional / Marginal Profiles</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">cp_age  &lt;-<span class="st"> </span><span class="kw">conditional_profiles</span>(explain_titanic_rf, <span class="dt">variables =</span>  <span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"fare"</span>))</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">plot</span>(cp_age)</a></code></pre></div>
+<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div id="accumulated-local-effect-profiles" class="section level3">
+<h3 class="hasAnchor">
+<a href="#accumulated-local-effect-profiles" class="anchor"></a>Accumulated Local Effect Profiles</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">ap_age  &lt;-<span class="st"> </span><span class="kw">accumulated_profiles</span>(explain_titanic_rf, <span class="dt">variables =</span>  <span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"fare"</span>))</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">plot</span>(ap_age)</a></code></pre></div>
+<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
 </div>
 </div>
 <div id="instance-level-explanations" class="section level1">
 <h1 class="hasAnchor">
 <a href="#instance-level-explanations" class="anchor"></a>Instance level explanations</h1>
 <p>Let’s see break down explanation for model predictions for 8 years old male from 1st class that embarked from port C.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">new_passanger &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="st">"1st"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"1st"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"deck crew"</span>, <span class="st">"engineering crew"</span>, <span class="st">"restaurant staff"</span>, <span class="st">"victualling crew"</span>)),</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">  <span class="dt">gender =</span> <span class="kw">factor</span>(<span class="st">"male"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>)),</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">  <span class="dt">age =</span> <span class="dv">8</span>,</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">  <span class="dt">sibsp =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">  <span class="dt">parch =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">  <span class="dt">fare =</span> <span class="dv">72</span>,</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">  <span class="dt">embarked =</span> <span class="kw">factor</span>(<span class="st">"Southampton"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"Belfast"</span>, <span class="st">"Cherbourg"</span>, <span class="st">"Queenstown"</span>, <span class="st">"Southampton"</span>))</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">)</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">sp_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(explain_titanic_rf, new_passanger)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw">plot</span>(sp_rf) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/show_observations.html">show_observations</a></span>(sp_rf)</a></code></pre></div>
-<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">new_passanger &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="dt">class =</span> <span class="kw">factor</span>(<span class="st">"1st"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"1st"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"deck crew"</span>, <span class="st">"engineering crew"</span>, <span class="st">"restaurant staff"</span>, <span class="st">"victualling crew"</span>)),</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">  <span class="dt">gender =</span> <span class="kw">factor</span>(<span class="st">"male"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"female"</span>, <span class="st">"male"</span>)),</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">  <span class="dt">age =</span> <span class="dv">8</span>,</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">  <span class="dt">sibsp =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">  <span class="dt">parch =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">  <span class="dt">fare =</span> <span class="dv">72</span>,</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">  <span class="dt">embarked =</span> <span class="kw">factor</span>(<span class="st">"Southampton"</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"Belfast"</span>, <span class="st">"Cherbourg"</span>, <span class="st">"Queenstown"</span>, <span class="st">"Southampton"</span>))</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">sp_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(explain_titanic_rf, new_passanger)</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="kw">plot</span>(sp_rf) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="../reference/show_observations.html">show_observations</a></span>(sp_rf)</a></code></pre></div>
+<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>It looks like the most important feature for this passenger is <code>age</code> and <code>sex</code>. After all his odds for survival are higher than for the average passenger. Mainly because of the young age and despite of being a male.</p>
 </div>
 <div id="profile-clustering" class="section level1">
 <h1 class="hasAnchor">
 <a href="#profile-clustering" class="anchor"></a>Profile clustering</h1>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">passangers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_sample.html">select_sample</a></span>(titanic, <span class="dt">n =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">sp_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(explain_titanic_rf, passangers)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">clust_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cluster_profiles.html">cluster_profiles</a></span>(sp_rf, <span class="dt">k =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">clust_rf</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">passangers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_sample.html">select_sample</a></span>(titanic, <span class="dt">n =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">sp_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(explain_titanic_rf, passangers)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">clust_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cluster_profiles.html">cluster_profiles</a></span>(sp_rf, <span class="dt">k =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">clust_rf</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_            _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.7462682     0
-#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.8662803     0
-#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.8238715     0
-#&gt; 4     age Random Forest v7_1 0.1666667         1 0.8110439     0
-#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.8238715     0
-#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.8211126     0</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">plot</span>(sp_rf, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/show_aggreagated_profiles.html">show_aggreagated_profiles</a></span>(clust_rf, <span class="dt">color =</span> <span class="st">"_label_"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.7474899     0
+#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.8903111     0
+#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.8489633     0
+#&gt; 4     age Random Forest v7_1 0.1666667         1 0.8114830     0
+#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.8492710     0
+#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.8305463     0</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">plot</span>(sp_rf, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/show_aggreagated_profiles.html">show_aggreagated_profiles</a></span>(clust_rf, <span class="dt">color =</span> <span class="st">"_label_"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="vignette_titanic_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>#&gt; R version 3.5.0 (2018-04-23)
 #&gt; Platform: x86_64-apple-darwin15.6.0 (64-bit)
-#&gt; Running under: macOS  10.14.2
+#&gt; Running under: macOS  10.14.4
 #&gt; 
 #&gt; Matrix products: default
 #&gt; BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -223,7 +247,7 @@
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] ingredients_0.3.0   randomForest_4.6-14 DALEX_0.3.0        
+#&gt; [1] ingredients_0.3.0   randomForest_4.6-14 DALEX_0.3.1        
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_1.0.1       compiler_3.5.0   pillar_1.3.1     plyr_1.8.4      

@@ -5,11 +5,11 @@
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
 #' @param variables if not NULL then only `variables` will be presented
-#' @param aggregate_function a function for profile aggregation. By default it's 'mean'
+#' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
-#' @importFrom stats na.omit quantile
+#' @importFrom stats na.omit quantile weighted.mean
 #' @return an 'aggregated_ceteris_paribus_explainer' layer
 #' @examples
 #' library("DALEX")
@@ -32,8 +32,13 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 #' cp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
-#' pdp_rf
+#' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
+#' pdp_rf_p$`_label_` <- "RF_partial"
+#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
+#' pdp_rf_c$`_label_` <- "RF_conditional"
+#' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
+#' pdp_rf_a$`_label_` <- "RF_accumulated"
+#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 #'
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age",
 #'                              groups = "Sex")
@@ -45,9 +50,9 @@
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,
-                      aggregate_function = mean,
                       only_numerical = TRUE,
                       groups = NULL,
+                      type = 'partial',
                       variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -81,19 +86,187 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
   }
 
+  #
+  # stardard partial profiles
+  # just average
+  if (type == 'partial')
+    aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
+  if (type == 'conditional')
+    aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
+  if (type == 'accumulated')
+    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
+
+  class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")
+  aggregated_profiles
+}
+
+aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
+
+  all_profiles$`_orginal_` <- 0
+  observations <- attr(all_profiles, "observations")
+  for (i in 1:nrow(all_profiles)) {
+    all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                as.character(all_profiles$`_vname_`[i])]
+  }
+
+  # split all_profiles into groups
+  if (is.null(groups)) {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_","_orginal_")]
+    split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
+
+    # calculate for each group
+    chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
+
+      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+      diffsd <- sqrt(mean(diffs^2))
+
+      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+
+      #  diffs
+      per_points <- split(split_profile, split_profile$`_ids_`)
+      chunks <- lapply(per_points, function(per_point) {
+        per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
+        per_point
+      })
+      split_profile <- do.call(rbind, chunks)
+
+      # weighed means
+      per_points <- split(split_profile, split_profile$`_x_`)
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_")]
+        res$`_yhat_` <- avg
+        res
+      })
+      par_profile <- do.call(rbind, chunks)
+      par_profile$`_yhat_` <- cumsum(par_profile$`_yhat_`)
+      par_profile
+    })
+    aggregated_profiles <- do.call(rbind, chunks)
+
+  } else {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
+    split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
+
+    # calculate for each group
+    chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
+
+      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+      diffsd <- sqrt(mean(diffs^2))
+
+      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+
+      #  diffs
+      per_points <- split(split_profile, split_profile$`_ids_`)
+      chunks <- lapply(per_points, function(per_point) {
+        per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
+        per_point
+      })
+      split_profile <- do.call(rbind, chunks)
+
+      # weighed means
+      per_points <- split(split_profile, split_profile[, c("_x_", groups)])
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
+        res$`_yhat_` <- avg
+        res
+      })
+
+      par_profile <- do.call(rbind, chunks)
+      # cumsum per group
+      per_points <- split(split_profile, split_profile[, groups])
+      chunks <- lapply(per_points, function(per_point) {
+        per_point$`_yhat_` <- cumsum(per_point$`_yhat_`)
+        per_point
+      })
+
+      par_profile <- do.call(rbind, per_points)
+      par_profile
+    })
+    aggregated_profiles <- do.call(rbind, chunks)
+    colnames(aggregated_profiles)[5] = "_groups_"
+  }
+  aggregated_profiles$`_ids_` <- 0
+  aggregated_profiles
+}
+
+aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
   if (is.null(groups)) {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
-    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = aggregate_function)
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = mean)
     colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_yhat_")
   } else {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
-    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp[,groups]), FUN = aggregate_function)
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp[,groups]), FUN = mean)
     colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_groups_", "_yhat_")
     aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
   }
   aggregated_profiles$`_ids_` <- 0
+  aggregated_profiles
+}
 
-  class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")
+aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
+  all_profiles$`_orginal_` <- 0
+  observations <- attr(all_profiles, "observations")
+  for (i in 1:nrow(all_profiles)) {
+    all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                as.character(all_profiles$`_vname_`[i])]
+  }
+
+  # split all_profiles into groups
+  if (is.null(groups)) {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_","_orginal_")]
+    split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
+
+    # calculate for each group
+    chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
+
+      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+      diffsd <- sqrt(mean(diffs^2))
+
+      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+
+      per_points <- split(split_profile, split_profile$`_x_`)
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_")]
+        res$`_yhat_` <- avg
+        res
+      })
+      do.call(rbind, chunks)
+    })
+    aggregated_profiles <- do.call(rbind, chunks)
+
+  } else {
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
+    split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
+
+    # calculate for each group
+    chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
+
+      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+      diffsd <- sqrt(mean(diffs^2))
+
+      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+
+      per_points <- split(split_profile, split_profile[, c("_x_", groups)])
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
+        res$`_yhat_` <- avg
+        res
+      })
+      do.call(rbind, chunks)
+    })
+    aggregated_profiles <- do.call(rbind, chunks)
+    colnames(aggregated_profiles)[5] = "_groups_"
+  }
+  aggregated_profiles$`_ids_` <- 0
   aggregated_profiles
 }
 
