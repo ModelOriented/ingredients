@@ -7,17 +7,24 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{feature_importance_explainer}(x, ..., split = "model",
-  scale_height = FALSE)
+\method{plotD3}{feature_importance_explainer}(x, ..., max_vars = NULL,
+  bar_width = 12, split = "model", scale_height = FALSE,
+  margin = 0.15)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the 'feature_importance' function}
 
 \item{...}{other explainers that shall be plotted together}
 
+\item{max_vars}{maximum number of variables that shall be presented for for each model. By default NULL what means all variables}
+
+\item{bar_width}{width of bars in px. By default 12px}
+
 \item{split}{either \code{"model"} or \code{"feature"} determines the plot layout}
 
 \item{scale_height}{should the height of plot scale with window size? By default it's FALSE}
+
+\item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.15}
 }
 \value{
 an `r2d3` object.
@@ -50,5 +57,9 @@ head(fi_svm)
 plotD3(fi_rf, fi_svm)
 
 plotD3(fi_rf, fi_svm, split = "feature")
+
+plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, scale_height = TRUE)
+plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, split = "feature", scale_height = TRUE)
+plotD3(fi_rf, margin = 0.2)
 }
 }
