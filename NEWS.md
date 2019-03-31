@@ -1,3 +1,8 @@
+ingredients 0.3.1
+----------------------------------------------------------------
+* added references to PM VEE
+* `partial_profiles()`, `accumulated_profiles()` and `conditional_profiles` for variable effects
+
 ingredients 0.3
 ----------------------------------------------------------------
 * `ceteris_paribus_2d` extends classical ceteris paribus profiles
