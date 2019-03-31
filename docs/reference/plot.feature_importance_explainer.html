@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plots Global Model Explanations (Variable Importance) — plot.feature_importance_explainer • ingredients</title>
+<title>Plots Variable Importance — plot.feature_importance_explainer • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Plots Global Model Explanations (Variable Importance)</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Plots Variable Importance</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -100,13 +100,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plots Global Model Explanations (Variable Importance)</h1>
+    <h1>Plots Variable Importance</h1>
     </div>
 
     
-    <p>Function <code>plot.variable_dropout_explainer</code> plots dropouts for variables used in the model.
-It uses output from <code>variable_dropout</code> function that corresponds to permutation based measure of variable importance.
-Variables are sorted in the same order in all panels. The order depends on the average drop out loss. In different panels variable contributions may not look like sorted if variable importance is different in different in different mdoels.</p>
+    <p>Function <code>plot.feature_importance_explainer</code> plots variable importance calculated as
+changes in the loss function after variable drops.
+It uses output from <code>feature_importance</code> function that corresponds to permutation based measure of variable importance.
+Variables are sorted in the same order in all panels.
+The order depends on the average drop out loss.
+In different panels variable contributions may not look like sorted if variable importance is different in different in different models.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
@@ -118,7 +121,7 @@ Variables are sorted in the same order in all panels. The order depends on the a
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a variable dropout exlainer produced with the 'variable_dropout' function</p></td>
+      <td><p>a variable dropout explainer produced with the 'feature_importance' function</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -138,34 +141,58 @@ Variables are sorted in the same order in all panels. The order depends on the a
 
     <p>a ggplot2 object</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Find more details in the <a href='https://pbiecek.github.io/PM_VEE/variableImportance.html'>Feature Importance Chapter</a>.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
- </div><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
-<span class='fu'>library</span>(<span class='st'>"breakDown"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='co'># Toy examples, because CRAN angels ask for them</span>
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
+<span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
+<span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+ </div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+
+ <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
+
+<span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_rf</span>)
+<span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>)
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
 <span class='fu'>head</span>(<span class='no'>vd_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
-#&gt; 1 _full_model_     1964.878 randomForest
-#&gt; 2       status     1964.878 randomForest
-#&gt; 3       gender     3842.025 randomForest
-#&gt; 4          age     4986.725 randomForest
-#&gt; 5       salary     5555.751 randomForest
-#&gt; 6   evaluation     8211.484 randomForest</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1 _full_model_     2003.216 randomForest
+#&gt; 2       status     2003.216 randomForest
+#&gt; 3       gender     3806.184 randomForest
+#&gt; 4          age     5007.366 randomForest
+#&gt; 5       salary     5506.605 randomForest
+#&gt; 6   evaluation     8087.311 randomForest</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
 <span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                         <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 <span class='fu'>head</span>(<span class='no'>vd_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
 #&gt; 1 _full_model_    0.4148305    lm
-#&gt; 2          age    0.4148237    lm
-#&gt; 3       status    0.4148305    lm
-#&gt; 4       salary    0.4148748    lm
-#&gt; 5       gender    0.4148796    lm
-#&gt; 6   evaluation    0.4306228    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 2       status    0.4148305    lm
+#&gt; 3       salary    0.4148558    lm
+#&gt; 4       gender    0.4148768    lm
+#&gt; 5          age    0.4148938    lm
+#&gt; 6   evaluation    0.4329440    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>library</span>(<span class='st'>"xgboost"</span>)
 <span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'>model.matrix</span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
 <span class='no'>data_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/xgboost/topics/xgb.DMatrix'>xgb.DMatrix</a></span>(<span class='no'>model_martix_train</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
@@ -178,11 +205,11 @@ Variables are sorted in the same order in all panels. The order depends on the a
 <span class='fu'>head</span>(<span class='no'>vd_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
 #&gt; 1 _full_model_    0.3142729 xgboost
 #&gt; 2   gendermale    0.3142729 xgboost
-#&gt; 3   evaluation    0.3400146 xgboost
-#&gt; 4 genderfemale    0.3929363 xgboost
-#&gt; 5          age    0.4015685 xgboost
-#&gt; 6       salary    0.4137083 xgboost</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>vd_glm</span>, <span class='no'>vd_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>
+#&gt; 3   evaluation    0.3401847 xgboost
+#&gt; 4 genderfemale    0.3937621 xgboost
+#&gt; 5          age    0.4006677 xgboost
+#&gt; 6       salary    0.4146221 xgboost</div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>vd_glm</span>, <span class='no'>vd_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -191,6 +218,10 @@ Variables are sorted in the same order in all panels. The order depends on the a
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

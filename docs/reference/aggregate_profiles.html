@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Aggregate Ceteris Paribus into Partial Dependency Plots — aggregate_profiles • ingredients</title>
+<title>Aggregate Ceteris Paribus Profiles — aggregate_profiles • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Aggregate Ceteris Paribus into Partial Dependency Plots</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Aggregate Ceteris Paribus Profiles</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -100,11 +100,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Aggregate Ceteris Paribus into Partial Dependency Plots</h1>
+    <h1>Aggregate Ceteris Paribus Profiles</h1>
     </div>
 
     
-    <p>Function 'aggregate_profiles' calculates aggregate of ceteris paribus profiles</p>
+    <p>The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
+Local Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
+Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).</p>
     
 
     <pre class="usage"><span class='fu'>aggregate_profiles</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -131,7 +134,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects</p></td>
+      <td><p>either 'partial'/'local'/'accumulated' for parital dependence, conditional profiles of accumulated local effects</p></td>
     </tr>
     <tr>
       <th>variables</th>
@@ -141,77 +144,85 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an 'aggregated_ceteris_paribus_explainer' layer</p>
+    <p>an 'aggregated_profiles_explainer' layer</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"titanic"</span>)
-<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+ <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
+ <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt;  randomForest(formula = survived ~ gender + age + class + embarked +      fare + sibsp + parch, data = titanic) 
+#&gt;                Type of random forest: classification
+#&gt;                      Number of trees: 500
+#&gt; No. of variables tried at each split: 2
+#&gt; 
+#&gt;         OOB estimate of  error rate: 19.25%
+#&gt; Confusion matrix:
+#&gt;       no yes class.error
+#&gt; no  1318 100  0.07052186
+#&gt; yes  304 377  0.44640235</div><div class='input'>
+ <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>)
 
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'>c</span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
-                                   <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]
-<span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic_small</span>)
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)
-
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;       Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_  _vname_
-#&gt; 792          0      2   male  16     0     0  26.0000        S  0.050 Survived
-#&gt; 792.1        1      2   male  16     0     0  26.0000        S  0.050 Survived
-#&gt; 342          0      1 female  24     3     2 263.0000        S  0.928 Survived
-#&gt; 342.1        1      1 female  24     3     2 263.0000        S  0.928 Survived
-#&gt; 641          0      3   male  20     0     0   7.8542        S  0.004 Survived
-#&gt; 641.1        1      3   male  20     0     0   7.8542        S  0.004 Survived
-#&gt;       _ids_ _label_
-#&gt; 792     792      RF
-#&gt; 792.1   792      RF
-#&gt; 342     342      RF
-#&gt; 342.1   342      RF
-#&gt; 641     641      RF
-#&gt; 641.1   641      RF
+<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='fu'>head</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked country   fare sibsp parch
+#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
+#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
+#&gt;        _yhat_ _vname_ _ids_      _label_
+#&gt; 1960    0.000  gender  1960 randomForest
+#&gt; 1960.1  0.892  gender  1960 randomForest
+#&gt; 883     0.004  gender   883 randomForest
+#&gt; 883.1   0.456  gender   883 randomForest
+#&gt; 1594    0.000  gender  1594 randomForest
+#&gt; 1594.1  0.954  gender  1594 randomForest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;     Survived Pclass    Sex Age SibSp Parch     Fare Embarked _yhat_ _label_
-#&gt; 792        0      2   male  16     0     0  26.0000        S  0.050      RF
-#&gt; 342        1      1 female  24     3     2 263.0000        S  0.928      RF
-#&gt; 641        0      3   male  20     0     0   7.8542        S  0.004      RF
-#&gt; 441        1      2 female  45     1     1  26.2500        S  0.914      RF
-#&gt; 576        0      3   male  19     0     0  14.5000        S  0.010      RF
-#&gt; 571        1      2   male  62     0     0  10.5000        S  0.196      RF
-#&gt;     _ids_
-#&gt; 792     1
-#&gt; 342     2
-#&gt; 641     3
-#&gt; 441     4
-#&gt; 576     5
-#&gt; 571     6</div><div class='input'>
-<span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)
+#&gt;      gender age            class    embarked country   fare sibsp parch _yhat_
+#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0  0.892
+#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0  0.004
+#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0  0.000
+#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0  0.002
+#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0  0.002
+#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0  0.000
+#&gt;           _label_ _ids_
+#&gt; 1960 randomForest     1
+#&gt; 883  randomForest     2
+#&gt; 1594 randomForest     3
+#&gt; 1131 randomForest     4
+#&gt; 1445 randomForest     5
+#&gt; 1432 randomForest     6</div><div class='input'>
+<span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)
 <span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
-<span class='no'>pdp_rf_c</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"conditional"</span>)
+<span class='no'>pdp_rf_c</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"local"</span>)
 <span class='no'>pdp_rf_c</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_conditional"</span>
-<span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
+<span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 <span class='fu'>plot</span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>,
-                             <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"Sex"</span>)
-<span class='no'>pdp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;   _vname_   _label_  _x_ _groups_    _yhat_ _ids_
-#&gt; 1     Age RF_female 0.42   female 0.7538710     0
-#&gt; 2     Age RF_female 1.00   female 0.7507742     0
-#&gt; 3     Age RF_female 2.00   female 0.7323871     0
-#&gt; 4     Age RF_female 3.00   female 0.7581290     0
-#&gt; 5     Age RF_female 4.00   female 0.7951613     0
-#&gt; 6     Age RF_female 5.00   female 0.7995484     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>,
+                             <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
+<span class='fu'>head</span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_             _label_        _x_ _groups_    _yhat_ _ids_
+#&gt; 1     age randomForest_female  0.1666667   female 0.7610000     0
+#&gt; 2     age randomForest_female  2.0000000   female 0.7462727     0
+#&gt; 3     age randomForest_female  4.0000000   female 0.7898182     0
+#&gt; 4     age randomForest_female  7.0000000   female 0.7720000     0
+#&gt; 5     age randomForest_female  9.0000000   female 0.7770000     0
+#&gt; 6     age randomForest_female 13.0000000   female 0.7958182     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -220,6 +231,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
