@@ -2,7 +2,7 @@
 % Please edit documentation in R/cluster_profiles.R
 \name{cluster_profiles}
 \alias{cluster_profiles}
-\title{Cluster Ceteris Paribus}
+\title{Cluster Ceteris Paribus Profiles}
 \usage{
 cluster_profiles(x, ..., aggregate_function = mean,
   only_numerical = TRUE, center = FALSE, k = 3, variables = NULL)
@@ -23,30 +23,29 @@ cluster_profiles(x, ..., aggregate_function = mean,
 \item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
-a 'aggregated_ceteris_paribus_explainer' layer
+a 'aggregated_profiles_explainer' layer
 }
 \description{
-Function 'cluster_profiles' calculates aggregate of ceteris paribus profiles
+Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+hierarchical clustering.
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.htm}{Clustering Profiles Chapter}.
 }
 \examples{
 library("DALEX")
  \dontrun{
-library("titanic")
-library("randomForest")
+ library("randomForest")
+ titanic <- na.omit(titanic)
+ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+                                    fare + sibsp + parch,  data = titanic)
+ model_titanic_rf
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-                                   "SibSp", "Parch", "Fare", "Embarked")]
-titanic_small$Survived <- factor(titanic_small$Survived)
-titanic_small$Sex <- factor(titanic_small$Sex)
-titanic_small$Embarked <- factor(titanic_small$Embarked)
-titanic_small <- na.omit(titanic_small)
-rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-                         data = titanic_small)
-explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF")
+ explain_titanic_rf <- explain(model_titanic_rf,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes",
+                           label = "Random Forest v7")
 
-selected_passangers <- select_sample(titanic_small, n = 100)
-cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+selected_passangers <- select_sample(titanic, n = 100)
+cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
 pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
@@ -63,4 +62,7 @@ plot(cp_rf, color = "grey", variables = "Age") +
 clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 clust_rf
 }
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

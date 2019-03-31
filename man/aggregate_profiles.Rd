@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggreagate_profiles.R
 \name{aggregate_profiles}
 \alias{aggregate_profiles}
-\title{Aggregate Ceteris Paribus into Partial Dependency Plots}
+\title{Aggregate Ceteris Paribus Profiles}
 \usage{
 aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
   type = "partial", variables = NULL)
@@ -16,15 +16,18 @@ aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
 
 \item{groups}{a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated}
 
-\item{type}{either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
+\item{type}{either 'partial'/'local'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
 
 \item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
-an 'aggregated_ceteris_paribus_explainer' layer
+an 'aggregated_profiles_explainer' layer
 }
 \description{
-Function 'aggregate_profiles' calculates aggregate of ceteris paribus profiles
+The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
+Local Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
+Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 }
 \examples{
 library("DALEX")
@@ -49,7 +52,7 @@ cp_rf
 
 pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
-pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "local")
 pdp_rf_c$`_label_` <- "RF_conditional"
 pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
@@ -63,4 +66,7 @@ plot(cp_rf, variables = "Age", color = "grey") +
   show_rugs(cp_rf, variables = "Age", color = "red") +
   show_aggreagated_profiles(pdp_rf, size = 3, color = "_label_")
 }
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

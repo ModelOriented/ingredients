@@ -72,3 +72,6 @@ head(wi_rf_2d)
 plot(wi_rf_2d)
 }
 }
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+}

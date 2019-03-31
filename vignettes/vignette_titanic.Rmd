@@ -78,22 +78,22 @@ Kids 5 years old and younger have much higher survival probability.
 ### Partial Dependency Profiles
 
 ```{r}
-pp_age  <- partial_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+pp_age  <- partial_dependency(explain_titanic_rf, variables =  c("age", "fare"))
 head(pp_age)
 plot(pp_age)
 ```
 
-### Conditional / Marginal Profiles
+### Local Dependency Profiles
 
 ```{r}
-cp_age  <- conditional_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+cp_age  <- local_dependency(explain_titanic_rf, variables =  c("age", "fare"))
 plot(cp_age)
 ```
 
 ### Accumulated Local Effect Profiles
 
 ```{r}
-ap_age  <- accumulated_profiles(explain_titanic_rf, variables =  c("age", "fare"))
+ap_age  <- accumulated_dependency(explain_titanic_rf, variables =  c("age", "fare"))
 plot(ap_age)
 ```
 

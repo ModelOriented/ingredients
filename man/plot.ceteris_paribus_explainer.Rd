@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_ceteris_paribus_explainer.R
 \name{plot.ceteris_paribus_explainer}
 \alias{plot.ceteris_paribus_explainer}
-\title{Plots Individual Variable Profile Explanations}
+\title{Plots Ceteris Paribus Profiles}
 \usage{
 \method{plot}{ceteris_paribus_explainer}(x, ..., size = 1, alpha = 1,
   color = "#46bac2", only_numerical = TRUE, facet_ncol = NULL,
@@ -31,26 +31,24 @@ a ggplot2 object
 \description{
 Function 'plot.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
+Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
  \dontrun{
-library("titanic")
-library("randomForest")
+ library("randomForest")
+ titanic <- na.omit(titanic)
+ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+                                    fare + sibsp + parch,  data = titanic)
+ model_titanic_rf
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-                                   "SibSp", "Parch", "Fare", "Embarked")]
-titanic_small$Survived <- factor(titanic_small$Survived)
-titanic_small$Sex <- factor(titanic_small$Sex)
-titanic_small$Embarked <- factor(titanic_small$Embarked)
-titanic_small <- na.omit(titanic_small)
-rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-                         data = titanic_small)
-explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF")
+ explain_titanic_rf <- explain(model_titanic_rf,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes",
+                           label = "Random Forest v7")
 
-selected_passangers <- select_sample(titanic_small, n = 100)
-cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+selected_passangers <- select_sample(titanic, n = 100)
+cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
 plot(cp_rf, variables = "Age") +
@@ -58,4 +56,7 @@ show_observations(cp_rf, variables = "Age") +
   show_rugs(cp_rf, variables = "Age", color = "red")
 
 }
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

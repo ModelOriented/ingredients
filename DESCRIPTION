@@ -1,14 +1,16 @@
 Package: ingredients
 Title: Effects and Importances of Model Ingredients
 Version: 0.3.1
-Authors@R: person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", 
-    role = c("aut", "cre"),
-    comment = c(ORCID = "0000-0001-8423-1823"))
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", 
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0001-8423-1823")),
+              person("Hubert","Baniecki", role = "ctb"))
 Description: Collection of tools for assessment of feature importance and feature effects.
-    Part of the `DrWhy.AI` universe. Key functions are: `ceteris_paribus()` for the what-if analysis, 
-    it creates ceteris paribus profiles, `aggregate_profiles()` and `cluster_profiles()` for aggregation 
-    of Ceteris Paribus profiles, this way you can calculate Partial Dependency Plots and much more, 
-    and `feature_importance()` for assessment of batch level feature importance.
+    Key functions are: `feature_importance()` for assessment 
+    of batch level feature importance, `ceteris_paribus()` for the what-if analysis. 
+    It creates Ceteris Paribus profiles, `aggregate_profiles()` and `cluster_profiles()` for aggregation 
+    of Ceteris Paribus profiles. This way you can calculate Partial Dependency Profiles,
+    Accumulated Local Effects Profiles and much more.
     The package 'ingredients' is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.0)
 License: GPL

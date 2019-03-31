@@ -60,3 +60,6 @@ head(new_apartment)
 head(small_profiles)
 }
 }
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+}

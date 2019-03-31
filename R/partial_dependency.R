@@ -1,8 +1,8 @@
 #' Partial Dependency Profiles
 #'
-#' Partial Dependency Profiles are averages from Ceteris Paribus Prfiles.
-#' Function 'partial_profiles' calles 'ceteris_paribus' and then 'aggregate_profiles'.
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Partial Profiles at PM VEE}.
+#' Partial Dependency Profiles are averages from Ceteris Paribus Profiles.
+#' Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
@@ -14,38 +14,37 @@
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
-#' @return an 'aggregated_ceteris_paribus_explainer' layer
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
+#' @return an 'aggregated_profiles_explainer' layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
-#' library("randomForest")
+#'  library("randomForest")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
 #'
-#' pdp_rf <- partial_profiles(explainer_rf, variables = "Age")
+#' pdp_rf <- partial_dependency(explain_titanic_rf, variables = "Age")
 #' plot(pdp_rf)
 #'
-#' pdp_rf <- partial_profiles(explainer_rf)
+#' pdp_rf <- partial_dependency(explain_titanic_rf)
 #' plot(pdp_rf)
 #' }
 #' @export
-#' @rdname partial_profiles
-partial_profiles <- function(x, ...)
-  UseMethod("partial_profiles")
+#' @rdname partial_dependency
+partial_dependency <- function(x, ...)
+  UseMethod("partial_dependency")
 
 #' @export
-#' @rdname partial_profiles
-partial_profiles.explainer <- function(x, variables = NULL, N = 500,
+#' @rdname partial_dependency
+partial_dependency.explainer <- function(x, variables = NULL, N = 500,
                                       variable_splits = NULL, grid_points = 101,
                                       ...) {
   # extracts model, data and predict function from the explainer
@@ -54,7 +53,7 @@ partial_profiles.explainer <- function(x, variables = NULL, N = 500,
   predict_function <- x$predict_function
   label <- x$label
 
-  partial_profiles.default(model, data, predict_function,
+  partial_dependency.default(model, data, predict_function,
                           label = label,
                           variables = variables,
                           grid_points = grid_points,
@@ -65,8 +64,8 @@ partial_profiles.explainer <- function(x, variables = NULL, N = 500,
 
 
 #' @export
-#' @rdname partial_profiles
-partial_profiles.default <- function(x, data, predict_function = predict,
+#' @rdname partial_dependency
+partial_dependency.default <- function(x, data, predict_function = predict,
                            label = class(x)[1],
                            variables = NULL,
                            grid_points = grid_points,
@@ -92,8 +91,8 @@ partial_profiles.default <- function(x, data, predict_function = predict,
 
 
 #' @export
-#' @rdname partial_profiles
-partial_profiles.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname partial_dependency
+partial_dependency.ceteris_paribus_explainer <- function(x, ...,
                            variables = NULL) {
   aggregate_profiles(x, ..., type = "partial", variables = variables)
 }

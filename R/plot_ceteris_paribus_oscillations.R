@@ -1,10 +1,13 @@
 #' Plot Ceteris Paribus Oscillations
 #'
-#' Function 'plot.ceteris_paribus_oscillations' plots variable importance plots.
+#' Function 'plot.ceteris_paribus_oscillations' plots local variable importance plots
+#' calculated as oscillations in the Ceteris Paribus Profiles.
 #'
 #' @param x a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`
 #' @param ... other explainers that shall be plotted together
 #' @param bar_width width of bars. By default 10
+#'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return a ggplot2 object
 #' @export

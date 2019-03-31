@@ -22,7 +22,7 @@ test_that("plot cluster_profiles",{
   pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
   clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "Age")
 
-  expect_true("aggregated_ceteris_paribus_explainer" %in% class(clust_rf))
+  expect_true("aggregated_profiles_explainer" %in% class(clust_rf))
 
   pl1 <- plot(clust_rf, color = "_label_") +
     show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
@@ -32,7 +32,7 @@ test_that("plot cluster_profiles",{
 
   clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 
-  expect_true("aggregated_ceteris_paribus_explainer" %in% class(clust_rf))
+  expect_true("aggregated_profiles_explainer" %in% class(clust_rf))
   expect_true("gg" %in% class(pl1))
   expect_true("gg" %in% class(pl2))
 })

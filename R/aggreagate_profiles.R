@@ -1,16 +1,21 @@
-#' Aggregate Ceteris Paribus into Partial Dependency Plots
+#' Aggregate Ceteris Paribus Profiles
 #'
-#' Function 'aggregate_profiles' calculates aggregate of ceteris paribus profiles
+#' The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+#' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
+#' Local Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
+#' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
 #' @param variables if not NULL then only `variables` will be presented
-#' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
+#' @param type either 'partial'/'local'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @importFrom stats na.omit quantile weighted.mean
-#' @return an 'aggregated_ceteris_paribus_explainer' layer
+#' @return an 'aggregated_profiles_explainer' layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
@@ -34,7 +39,7 @@
 #'
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
 #' pdp_rf_p$`_label_` <- "RF_partial"
-#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
+#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "local")
 #' pdp_rf_c$`_label_` <- "RF_conditional"
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
@@ -91,12 +96,12 @@ aggregate_profiles <- function(x, ...,
   # just average
   if (type == 'partial')
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
-  if (type == 'conditional')
+  if (type == 'local')
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
   if (type == 'accumulated')
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
 
-  class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")
+  class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
   aggregated_profiles
 }
 

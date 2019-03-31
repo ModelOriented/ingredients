@@ -2,6 +2,7 @@ ingredients 0.3.1
 ----------------------------------------------------------------
 * added references to PM VEE
 * `partial_profiles()`, `accumulated_profiles()` and `conditional_profiles` for variable effects
+* major changes in function names and file names
 
 ingredients 0.3
 ----------------------------------------------------------------

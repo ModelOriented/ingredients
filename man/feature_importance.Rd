@@ -4,7 +4,7 @@
 \alias{feature_importance}
 \alias{feature_importance.explainer}
 \alias{feature_importance.default}
-\title{Model Level Feature Importance - Drop in Loss after Variable Dropout}
+\title{Feature Importance Plots}
 \usage{
 feature_importance(x, ...)
 
@@ -40,13 +40,25 @@ An object of the class 'feature_importance'.
 It's a data frame with calculated average response.
 }
 \description{
-Model Level Feature Importance - Drop in Loss after Variable Dropout
+This function calculated variable importance based on the drop in the Loss function after single-variable-perturbations.
+For this reason it is also called the Variable Dropout Plot.
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
 }
 \examples{
  \dontrun{
 library("DALEX")
-library("breakDown")
 library("randomForest")
+
+ titanic <- na.omit(titanic)
+ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+                                    fare + sibsp + parch,  data = titanic)
+ explain_titanic_rf <- explain(model_titanic_rf,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+vd_rf <- feature_importance(explain_titanic_rf)
+plot(vd_rf)
+
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
 vd_rf <- feature_importance(explainer_rf, type = "raw",
@@ -73,4 +85,7 @@ vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(vd_xgb)
 plot(vd_xgb, vd_glm)
  }
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

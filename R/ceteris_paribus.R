@@ -1,12 +1,14 @@
-#' Calculates Individual Variable Profiles aka Ceteris Paribus Profiles
+#' Calculates Ceteris Paribus Profiles aka Individual Variable Profiles
 #'
 #' This explainer works for individual observations.
-#' For each observation it calculates Individual Variable Profiles for selected variables.
-#' For this reason it is also called 'Local Profile Plot'.
+#' For each observation it calculates Ceteris Paribus Profiles for selected variables.
+#' Such profiles can be used to hypothesize about model results if selected variable is changed.
+#' For this reason it is also called 'What-If Profiles'.
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
-#' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer
-#' @param predict_function predict function, will be extracted from `x` if it's an explainer
+#' @param x a model to be explained, or an explainer created with the `DALEX::explain()` function.
+#' @param data validation dataset. It will be extracted from `x` if it's an explainer
+#' @param predict_function predict function. It will be extracted from `x` if it's an explainer
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
 #' @param y true labels for `new_observation`. If specified then will be added to ceteris paribus plots.
 #' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
@@ -15,6 +17,7 @@
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return An object of the class 'ceteris_paribus_explainer'.
 #' It's a data frame with calculated average responses.
@@ -23,26 +26,24 @@
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
-#' library("randomForest")
+#'  library("randomForest")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic_small, n = 100)
-#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' # select few passangers
+#' selected_passangers <- select_sample(titanic, n = 20)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
-#' plot(cp_rf, variables = "Age", color = "grey") +
-#' show_observations(cp_rf, variables = "Age", color = "grey") +
+#' plot(cp_rf, variables = "Age") +
+#' show_observations(cp_rf, variables = "Age") +
 #'   show_rugs(cp_rf, variables = "Age", color = "red")
 #'
 #' }
@@ -88,7 +89,6 @@ ceteris_paribus.default <- function(x, data, predict_function = predict,
     new_observation <- new_observation[, common_variables, drop = FALSE]
     data <- data[,common_variables, drop = FALSE]
   }
-  p <- ncol(data)
 
   # calculate splits
   # if splits are not provided, then will be calculated

@@ -1,6 +1,8 @@
-#' Cluster Ceteris Paribus
+#' Cluster Ceteris Paribus Profiles
 #'
-#' Function 'cluster_profiles' calculates aggregate of ceteris paribus profiles
+#' Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+#' hierarchical clustering.
+#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.htm}{Clustering Profiles Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
@@ -10,27 +12,26 @@
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @importFrom stats as.dist cutree hclust
-#' @return a 'aggregated_ceteris_paribus_explainer' layer
+#' @return a 'aggregated_profiles_explainer' layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
-#' library("randomForest")
+#'  library("randomForest")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic_small, n = 100)
-#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' selected_passangers <- select_sample(titanic, n = 100)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
@@ -49,11 +50,11 @@
 #' }
 #' @export
 cluster_profiles <- function(x, ...,
-                               aggregate_function = mean,
-                               only_numerical = TRUE,
-                               center = FALSE,
-                               k = 3,
-                               variables = NULL) {
+                       aggregate_function = mean,
+                       only_numerical = TRUE,
+                       center = FALSE,
+                       k = 3,
+                       variables = NULL) {
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -119,6 +120,6 @@ cluster_profiles <- function(x, ...,
   aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_cluster_`, sep = "_")
   aggregated_profiles$`_ids_` <- 0
 
-  class(aggregated_profiles) = c("aggregated_ceteris_paribus_explainer", "data.frame")
+  class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
   aggregated_profiles
 }

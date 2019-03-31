@@ -2,13 +2,13 @@
 % Please edit documentation in R/plot_feature_importance_explainer.R
 \name{plot.feature_importance_explainer}
 \alias{plot.feature_importance_explainer}
-\title{Plots Global Model Explanations (Variable Importance)}
+\title{Plots Variable Importance}
 \usage{
 \method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL,
   bar_width = 10)
 }
 \arguments{
-\item{x}{a variable dropout exlainer produced with the 'variable_dropout' function}
+\item{x}{a variable dropout exlainer produced with the 'feature_importance' function}
 
 \item{...}{other explainers that shall be plotted together}
 
@@ -20,16 +20,30 @@
 a ggplot2 object
 }
 \description{
-Function \code{plot.variable_dropout_explainer} plots dropouts for variables used in the model.
-It uses output from \code{variable_dropout} function that corresponds to permutation based measure of variable importance.
-Variables are sorted in the same order in all panels. The order depends on the average drop out loss. In different panels variable contributions may not look like sorted if variable importance is different in different in different mdoels.
+Function \code{plot.feature_importance_explainer} plots variable importance calculated as
+changes in the loss function after variable drops.
+It uses output from \code{feature_importance} function that corresponds to permutation based measure of variable importance.
+Variables are sorted in the same order in all panels.
+The order depends on the average drop out loss.
+In different panels variable contributions may not look like sorted if variable importance is different in different in different mdoels.
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 
  \dontrun{
 library("DALEX")
-library("breakDown")
 library("randomForest")
+
+ titanic <- na.omit(titanic)
+ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+                                    fare + sibsp + parch,  data = titanic)
+ explain_titanic_rf <- explain(model_titanic_rf,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+vd_rf <- feature_importance(explain_titanic_rf)
+plot(vd_rf)
+
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
 vd_rf <- feature_importance(explainer_rf, type = "raw",
@@ -58,4 +72,7 @@ head(vd_xgb)
 plot(vd_glm, vd_xgb, bar_width = 5)
  }
 
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

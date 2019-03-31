@@ -10,26 +10,25 @@
 #' @param facet_ncol number of columns for the `facet_wrap()`
 #' @param variables if not NULL then only `variables` will be presented
 #'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @return a ggplot2 layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
-#' library("randomForest")
+#'  library("randomForest")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic_small, n = 100)
-#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' selected_passangers <- select_sample(titanic, n = 100)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
@@ -50,7 +49,7 @@
 #'
 #' }
 #' @export
-plot.aggregated_ceteris_paribus_explainer <- function(x, ...,
+plot.aggregated_profiles_explainer <- function(x, ...,
                                                       size = 1,
                                                       alpha = 1,
                                                       color = "#371ea3",

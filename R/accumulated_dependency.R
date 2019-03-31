@@ -1,8 +1,8 @@
-#' Conditional / Marginal Profiles
+#' Accumulated Local Effects Profiles aka Accumulated Dependency Profiles
 #'
-#' Conditional / Marginal Profiles average localy Ceteris Paribus Profiles.
-#' Function 'conditional_profiles' calles 'ceteris_paribus' and then 'aggregate_profiles'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Conditional Profiles at PM VEE}.
+#' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
+#' Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'
+#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
@@ -14,35 +14,35 @@
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
-#' @return an 'aggregated_ceteris_paribus_explainer' layer
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
+#' @return an 'aggregated_profiles_explainer' layer
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
 #' library("randomForest")
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' pdp_rf <- conditional_profiles(explainer_rf)
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
+#'
+#' pdp_rf <- accumulated_dependency(explain_titanic_rf)
 #' plot(pdp_rf)
 #' }
 #' @export
-#' @rdname conditional_profiles
-conditional_profiles <- function(x, ...)
-  UseMethod("conditional_profiles")
+#' @rdname accumulated_dependency
+accumulated_dependency <- function(x, ...)
+  UseMethod("accumulated_dependency")
 
 #' @export
-#' @rdname conditional_profiles
-conditional_profiles.explainer <- function(x, variables = NULL, N = 500,
+#' @rdname accumulated_dependency
+accumulated_dependency.explainer <- function(x, variables = NULL, N = 500,
                                          variable_splits = NULL, grid_points = 101,
                                          ...) {
   # extracts model, data and predict function from the explainer
@@ -51,7 +51,7 @@ conditional_profiles.explainer <- function(x, variables = NULL, N = 500,
   predict_function <- x$predict_function
   label <- x$label
 
-  conditional_profiles.default(model, data, predict_function,
+  accumulated_dependency.default(model, data, predict_function,
                              label = label,
                              variables = variables,
                              grid_points = grid_points,
@@ -62,8 +62,8 @@ conditional_profiles.explainer <- function(x, variables = NULL, N = 500,
 
 
 #' @export
-#' @rdname conditional_profiles
-conditional_profiles.default <- function(x, data, predict_function = predict,
+#' @rdname accumulated_dependency
+accumulated_dependency.default <- function(x, data, predict_function = predict,
                                        label = class(x)[1],
                                        variables = NULL,
                                        grid_points = grid_points,
@@ -83,15 +83,16 @@ conditional_profiles.default <- function(x, data, predict_function = predict,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  conditional_profiles.ceteris_paribus_explainer(cp, variables = variables)
+  accumulated_dependency.ceteris_paribus_explainer(cp, variables = variables)
 }
 
 
+
 #' @export
-#' @rdname conditional_profiles
-conditional_profiles.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname accumulated_dependency
+accumulated_dependency.ceteris_paribus_explainer <- function(x, ...,
                                                          variables = NULL) {
 
-  aggregate_profiles(x, ..., type = "conditional", variables = variables)
+  aggregate_profiles(x, ..., type = "accumulated", variables = variables)
 }
 

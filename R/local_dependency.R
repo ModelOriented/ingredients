@@ -1,8 +1,8 @@
-#' Accumulated Local Effects Profiles
+#' Local Dependency Profiles
 #'
-#' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-#' Function 'accumulated_profiles' calles 'ceteris_paribus' and then 'aggregate_profiles'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Profiles at PM VEE}.
+#' Local Dependency Profiles (aka Conditional Profiles) average localy Ceteris Paribus Profiles.
+#' Function 'local_dependency' calles 'ceteris_paribus' and then 'aggregate_profiles'
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Conditional Profiles at PM VEE}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
@@ -13,6 +13,8 @@
 #' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
+#'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return an 'aggregated_ceteris_paribus_explainer' layer
 #' @examples
@@ -32,17 +34,17 @@
 #' explainer_rf <- explain(rf_model, data = titanic_small,
 #'                         y = titanic_small$Survived == "1", label = "RF")
 #'
-#' pdp_rf <- accumulated_profiles(explainer_rf)
+#' pdp_rf <- local_dependency(explainer_rf)
 #' plot(pdp_rf)
 #' }
 #' @export
-#' @rdname accumulated_profiles
-accumulated_profiles <- function(x, ...)
-  UseMethod("accumulated_profiles")
+#' @rdname local_dependency
+local_dependency <- function(x, ...)
+  UseMethod("local_dependency")
 
 #' @export
-#' @rdname accumulated_profiles
-accumulated_profiles.explainer <- function(x, variables = NULL, N = 500,
+#' @rdname local_dependency
+local_dependency.explainer <- function(x, variables = NULL, N = 500,
                                          variable_splits = NULL, grid_points = 101,
                                          ...) {
   # extracts model, data and predict function from the explainer
@@ -51,7 +53,7 @@ accumulated_profiles.explainer <- function(x, variables = NULL, N = 500,
   predict_function <- x$predict_function
   label <- x$label
 
-  accumulated_profiles.default(model, data, predict_function,
+  local_dependency.default(model, data, predict_function,
                              label = label,
                              variables = variables,
                              grid_points = grid_points,
@@ -62,8 +64,8 @@ accumulated_profiles.explainer <- function(x, variables = NULL, N = 500,
 
 
 #' @export
-#' @rdname accumulated_profiles
-accumulated_profiles.default <- function(x, data, predict_function = predict,
+#' @rdname local_dependency
+local_dependency.default <- function(x, data, predict_function = predict,
                                        label = class(x)[1],
                                        variables = NULL,
                                        grid_points = grid_points,
@@ -83,16 +85,15 @@ accumulated_profiles.default <- function(x, data, predict_function = predict,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  accumulated_profiles.ceteris_paribus_explainer(cp, variables = variables)
+  local_dependency.ceteris_paribus_explainer(cp, variables = variables)
 }
 
 
-
 #' @export
-#' @rdname accumulated_profiles
-accumulated_profiles.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname local_dependency
+local_dependency.ceteris_paribus_explainer <- function(x, ...,
                                                          variables = NULL) {
 
-  aggregate_profiles(x, ..., type = "accumulated", variables = variables)
+  aggregate_profiles(x, ..., type = "local", variables = variables)
 }
 

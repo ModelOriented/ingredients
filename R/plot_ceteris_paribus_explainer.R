@@ -1,7 +1,8 @@
-#' Plots Individual Variable Profile Explanations
+#' Plots Ceteris Paribus Profiles
 #'
 #' Function 'plot.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
@@ -17,25 +18,24 @@
 #' @import ggplot2
 #' @importFrom stats aggregate
 #'
+#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#'
 #' @examples
 #' library("DALEX")
 #'  \dontrun{
-#' library("titanic")
-#' library("randomForest")
+#'  library("randomForest")
+#'  titanic <- na.omit(titanic)
+#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes",
+#'                            label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic_small, n = 100)
-#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' selected_passangers <- select_sample(titanic, n = 100)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
 #' plot(cp_rf, variables = "Age") +
@@ -86,7 +86,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   }
 
   # prepare plot
-  `_x_` <- `_y_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
+  `_x_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
   pl <- ggplot(all_profiles, aes(`_x_`, `_yhat_`, group = paste(`_ids_`, `_label_`))) +
       facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 

@@ -17,7 +17,8 @@
 a ggplot2 object
 }
 \description{
-Function 'plot.ceteris_paribus_oscillations' plots variable importance plots.
+Function 'plot.ceteris_paribus_oscillations' plots local variable importance plots
+calculated as oscillations in the Ceteris Paribus Profiles.
 }
 \examples{
 library("DALEX")
@@ -40,4 +41,7 @@ vips <- calculate_oscillations(cp_rf)
 vips
 plot(vips)
 }
+}
+\references{
+Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }
