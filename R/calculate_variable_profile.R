@@ -12,7 +12,7 @@
 #' @param model a model that will be passed to the \code{predict_function}
 #' @param ... other parameters that will be passed to the \code{predict_function}
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return a data frame with profiles for selected variables and selected observations
 #' @examples

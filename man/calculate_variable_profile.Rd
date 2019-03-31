@@ -61,5 +61,5 @@ head(small_profiles)
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

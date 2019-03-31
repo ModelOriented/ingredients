@@ -5,7 +5,7 @@
 \alias{accumulated_dependency.explainer}
 \alias{accumulated_dependency.default}
 \alias{accumulated_dependency.ceteris_paribus_explainer}
-\title{Accumulated Local Effects Profiles aka Accumulated Dependency Profiles}
+\title{Accumulated Local Effects Profiles aka ALEPlots}
 \usage{
 accumulated_dependency(x, ...)
 
@@ -33,39 +33,51 @@ accumulated_dependency(x, ...)
 
 \item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset Will be extracted from `x` if it's an explainer}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function Will be extracted from `x` if it's an explainer}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
-an 'aggregated_profiles_explainer' layer
+an 'aggregated_profiles_explainer' geom
 }
 \description{
 Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'
+Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+}
+\details{
 Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+pdp_glm <- accumulated_dependency(explain_titanic_glm, N = 50, variables = c("age", "fare"))
+head(pdp_glm)
+plot(pdp_glm)
+
  \dontrun{
 library("randomForest")
-
- titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+ model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)
  model_titanic_rf
 
  explain_titanic_rf <- explain(model_titanic_rf,
                            data = titanic[,-9],
-                           y = titanic$survived == "yes",
-                           label = "Random Forest v7")
+                           y = titanic$survived)
 
 pdp_rf <- accumulated_dependency(explain_titanic_rf)
 plot(pdp_rf)
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

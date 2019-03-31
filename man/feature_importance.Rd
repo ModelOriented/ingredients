@@ -40,13 +40,26 @@ An object of the class 'feature_importance'.
 It's a data frame with calculated average response.
 }
 \description{
-This function calculated variable importance based on the drop in the Loss function after single-variable-perturbations.
+This function calculates variable importance based on the drop in the Loss function after single-variable-perturbations.
 For this reason it is also called the Variable Dropout Plot.
+}
+\details{
 Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
 }
 \examples{
- \dontrun{
 library("DALEX")
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+vd_rf <- feature_importance(explain_titanic_glm)
+plot(vd_rf)
+
+ \dontrun{
 library("randomForest")
 
  titanic <- na.omit(titanic)
@@ -87,5 +100,5 @@ plot(vd_xgb, vd_glm)
  }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

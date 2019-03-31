@@ -2,6 +2,7 @@
 #'
 #' Function 'plot.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
+#'
 #' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
@@ -18,13 +19,24 @@
 #' @import ggplot2
 #' @importFrom stats aggregate
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @examples
 #' library("DALEX")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
+#' cp_rf
+#' plot(cp_rf, variables = "age")
+#'
 #'  \dontrun{
 #'  library("randomForest")
-#'  titanic <- na.omit(titanic)
 #'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)
 #'  model_titanic_rf
@@ -38,9 +50,9 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
-#' plot(cp_rf, variables = "Age") +
-#' show_observations(cp_rf, variables = "Age") +
-#'   show_rugs(cp_rf, variables = "Age", color = "red")
+#' plot(cp_rf, variables = "age") +
+#' show_observations(cp_rf, variables = "age") +
+#'   show_rugs(cp_rf, variables = "age", color = "red")
 #'
 #' }
 #' @export

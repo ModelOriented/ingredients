@@ -4,7 +4,7 @@
 \alias{ceteris_paribus}
 \alias{ceteris_paribus.explainer}
 \alias{ceteris_paribus.default}
-\title{Calculates Ceteris Paribus Profiles aka Individual Variable Profiles}
+\title{Ceteris Paribus Profiles aka Individual Variable Profiles}
 \usage{
 ceteris_paribus(x, ...)
 
@@ -46,20 +46,33 @@ This explainer works for individual observations.
 For each observation it calculates Ceteris Paribus Profiles for selected variables.
 Such profiles can be used to hypothesize about model results if selected variable is changed.
 For this reason it is also called 'What-If Profiles'.
+}
+\details{
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
- \dontrun{
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
+cp_rf
+plot(cp_rf, variables = "age")
+
+\dontrun{
  library("randomForest")
- titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+ model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)
  model_titanic_rf
 
  explain_titanic_rf <- explain(model_titanic_rf,
                            data = titanic[,-9],
-                           y = titanic$survived == "yes",
+                           y = titanic$survived,
                            label = "Random Forest v7")
 
 # select few passangers
@@ -67,12 +80,12 @@ selected_passangers <- select_sample(titanic, n = 20)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, variables = "Age") +
-show_observations(cp_rf, variables = "Age") +
-  show_rugs(cp_rf, variables = "Age", color = "red")
+plot(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age") +
+  show_rugs(cp_rf, variables = "age", color = "red")
 
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

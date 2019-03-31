@@ -1,8 +1,9 @@
 #' Local Dependency Profiles
 #'
 #' Local Dependency Profiles (aka Conditional Profiles) average localy Ceteris Paribus Profiles.
-#' Function 'local_dependency' calles 'ceteris_paribus' and then 'aggregate_profiles'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Conditional Profiles at PM VEE}.
+#' Function 'local_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+#'
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Local Dependency Profiles Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
 #' @param data validation dataset, will be extracted from `x` if it's an explainer
@@ -14,11 +15,23 @@
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return an 'aggregated_ceteris_paribus_explainer' layer
+#' @return an 'aggregated_profile_explainer' layer
 #' @examples
 #' library("DALEX")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#'
+#' pdp_rf <- local_dependency(explain_titanic_glm, N = 50)
+#' plot(pdp_rf)
+#'
 #'  \dontrun{
 #' library("titanic")
 #' library("randomForest")

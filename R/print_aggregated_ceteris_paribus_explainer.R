@@ -7,27 +7,35 @@
 #'
 #' @examples
 #' library("DALEX")
-#'  \dontrun{
-#' library("titanic")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#' selected_passangers <- select_sample(titanic, n = 100)
+#' cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
+#' head(cp_rf)
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
+#' head(pdp_rf)
+#'
+#' \dontrun{
 #' library("randomForest")
+#'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'  model_titanic_rf
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
-#' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-#'                          data = titanic_small)
-#' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'  explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived)
 #'
-#' selected_passangers <- select_sample(titanic_small, n = 100)
-#' cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
-#' pdp_rf
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
+#' head(pdp_rf)
 #'
 #' }
 print.aggregated_ceteris_paribus_explainer <- function(x, ...) {

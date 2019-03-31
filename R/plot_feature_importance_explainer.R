@@ -5,10 +5,11 @@
 #' It uses output from \code{feature_importance} function that corresponds to permutation based measure of variable importance.
 #' Variables are sorted in the same order in all panels.
 #' The order depends on the average drop out loss.
-#' In different panels variable contributions may not look like sorted if variable importance is different in different in different mdoels.
-#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
+#' In different panels variable contributions may not look like sorted if variable importance is different in different in different models.
 #'
-#' @param x a variable dropout exlainer produced with the 'feature_importance' function
+#' Find more details in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
+#'
+#' @param x a variable dropout explainer produced with the 'feature_importance' function
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model. By default NULL what means all variables
 #' @param bar_width width of bars. By default 10
@@ -19,15 +20,24 @@
 #' @return a ggplot2 object
 #' @export
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @examples
+#' library("DALEX")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#' vd_rf <- feature_importance(explain_titanic_glm)
+#' plot(vd_rf)
 #'
 #'  \dontrun{
-#' library("DALEX")
 #' library("randomForest")
 #'
-#'  titanic <- na.omit(titanic)
 #'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)
 #'  explain_titanic_rf <- explain(model_titanic_rf,

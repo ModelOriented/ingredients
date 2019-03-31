@@ -39,15 +39,29 @@ local_dependency(x, ...)
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
-an 'aggregated_ceteris_paribus_explainer' layer
+an 'aggregated_profile_explainer' layer
 }
 \description{
 Local Dependency Profiles (aka Conditional Profiles) average localy Ceteris Paribus Profiles.
-Function 'local_dependency' calles 'ceteris_paribus' and then 'aggregate_profiles'
-Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Conditional Profiles at PM VEE}.
+Function 'local_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+}
+\details{
+Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Local Dependency Profiles Chapter}.
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+pdp_rf <- local_dependency(explain_titanic_glm, N = 50)
+plot(pdp_rf)
+
  \dontrun{
 library("titanic")
 library("randomForest")
@@ -68,5 +82,5 @@ plot(pdp_rf)
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

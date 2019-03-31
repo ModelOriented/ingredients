@@ -28,13 +28,26 @@ a 'aggregated_profiles_explainer' layer
 \description{
 Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering.
-Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.htm}{Clustering Profiles Chapter}.
+}
+\details{
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
 }
 \examples{
 library("DALEX")
- \dontrun{
+titanic <- na.omit(titanic)
+selected_passangers <- select_sample(titanic, n = 100)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
+clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
+plot(clust_rf)
+
+\dontrun{
  library("randomForest")
- titanic <- na.omit(titanic)
  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)
  model_titanic_rf
@@ -44,25 +57,24 @@ library("DALEX")
                            y = titanic$survived == "yes",
                            label = "Random Forest v7")
 
-selected_passangers <- select_sample(titanic, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, variables = "Age")
-pdp_rf
-clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "Age")
-clust_rf
+pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
+head(pdp_rf)
+clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
+head(clust_rf)
 
 plot(clust_rf, color = "_label_") +
   show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
 
-plot(cp_rf, color = "grey", variables = "Age") +
+plot(cp_rf, color = "grey", variables = "age") +
   show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
 
-clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
-clust_rf
+clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "age")
+head(clust_rf)
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

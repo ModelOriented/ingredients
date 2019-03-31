@@ -1,6 +1,7 @@
 #' Ceteris Paribus 2D plot
 #'
 #' This function calculates ceteris paribus profiles for grid of values spanned by two variables.
+#' It may be useful to identify or present interactions between two variables.
 #'
 #' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
 #' @param observation a new observarvation for which predictions need to be explained

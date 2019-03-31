@@ -1,12 +1,13 @@
-#' Accumulated Local Effects Profiles aka Accumulated Dependency Profiles
+#' Accumulated Local Effects Profiles aka ALEPlots
 #'
 #' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-#' Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'
+#' Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+#'
 #' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.
-#' @param data validation dataset, will be extracted from `x` if it's an explainer
-#' @param predict_function predict function, will be extracted from `x` if it's an explainer
+#' @param data validation dataset Will be extracted from `x` if it's an explainer
+#' @param predict_function predict function Will be extracted from `x` if it's an explainer
 #' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
 #' @param N number of observations used for calculation of partial dependency profiles. By default 500.
 #' @param ... other parameters
@@ -14,23 +15,33 @@
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
+#' Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return an 'aggregated_profiles_explainer' layer
+#' @return an 'aggregated_profiles_explainer' geom
 #' @examples
 #' library("DALEX")
+#' # Toy examples, because CRAN angels ask for them
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#' pdp_glm <- accumulated_dependency(explain_titanic_glm, N = 50, variables = c("age", "fare"))
+#' head(pdp_glm)
+#' plot(pdp_glm)
+#'
 #'  \dontrun{
 #' library("randomForest")
-#'
-#'  titanic <- na.omit(titanic)
-#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)
 #'  model_titanic_rf
 #'
 #'  explain_titanic_rf <- explain(model_titanic_rf,
 #'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes",
-#'                            label = "Random Forest v7")
+#'                            y = titanic$survived)
 #'
 #' pdp_rf <- accumulated_dependency(explain_titanic_rf)
 #' plot(pdp_rf)

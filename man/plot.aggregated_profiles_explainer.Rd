@@ -31,6 +31,24 @@ Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.c
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+pdp_rf_p <- partial_dependency(explain_titanic_glm, N = 50)
+pdp_rf_p$`_label_` <- "RF_partial"
+pdp_rf_l <- local_dependency(explain_titanic_glm, N = 50)
+pdp_rf_l$`_label_` <- "RF_local"
+pdp_rf_a<- accumulated_dependency(explain_titanic_glm, N = 50)
+pdp_rf_a$`_label_` <- "RF_accumulated"
+head(pdp_rf_p)
+plot(pdp_rf_p, pdp_rf_l, pdp_rf_a, color = "_label_")
+
  \dontrun{
  library("randomForest")
  titanic <- na.omit(titanic)
@@ -47,24 +65,24 @@ selected_passangers <- select_sample(titanic, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
-pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
+pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
-pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "local")
 pdp_rf_c$`_label_` <- "RF_conditional"
-pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
+pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
-pdp_rf_p
+head(pdp_rf_p)
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
-plot(cp_rf, variables = "Age") +
-show_observations(cp_rf, variables = "Age") +
-  show_rugs(cp_rf, variables = "Age", color = "red") +
+plot(cp_rf, variables = "age") +
+show_observations(cp_rf, variables = "age") +
+  show_rugs(cp_rf, variables = "age", color = "red") +
   show_aggreagated_profiles(pdp_rf, size = 2)
 
-plot(pdp_rf, variables = "Age")
+plot(pdp_rf, variables = "age")
 
 }
 }
 \references{
-Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

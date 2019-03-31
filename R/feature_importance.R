@@ -1,7 +1,8 @@
 #' Feature Importance Plots
 #'
-#' This function calculated variable importance based on the drop in the Loss function after single-variable-perturbations.
+#' This function calculates variable importance based on the drop in the Loss function after single-variable-perturbations.
 #' For this reason it is also called the Variable Dropout Plot.
+#'
 #' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with function `DALEX::explain()`.
@@ -14,15 +15,26 @@
 #' @param type character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}
 #' @param n_sample number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).
 #'
-#' @references Predictive Models: Visualisal Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return An object of the class 'feature_importance'.
 #' It's a data frame with calculated average response.
 #'
 #' @export
 #' @examples
-#'  \dontrun{
 #' library("DALEX")
+#' titanic <- na.omit(titanic)
+#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#'                        data = titanic, family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                            data = titanic[,-9],
+#'                            y = titanic$survived == "yes")
+#'
+#' vd_rf <- feature_importance(explain_titanic_glm)
+#' plot(vd_rf)
+#'
+#'  \dontrun{
 #' library("randomForest")
 #'
 #'  titanic <- na.omit(titanic)

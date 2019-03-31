@@ -18,8 +18,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: DALEX,
-    ggplot2,
-    ggpubr
+    ggplot2
 Suggests: gbm,
   gower,
   randomForest,
@@ -28,6 +27,7 @@ Suggests: gbm,
   testthat,
   dplyr,
   r2d3,
+  ggpubr,
   jsonlite
 URL: https://ModelOriented.github.io/ingredients/
 BugReports: https://github.com/ModelOriented/ingredients/issues

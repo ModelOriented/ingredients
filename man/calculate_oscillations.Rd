@@ -14,10 +14,22 @@ calculate_oscillations(x, sort = TRUE, ...)
 \item{...}{other arguments}
 }
 \description{
-Calculate Oscillations for Ceteris Paribus Explainer
+Oscillations are proxies for local feature importance at the instance level.
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+set.seed(1313)
+titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic_small, family = "binomial")
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic_small[,-9],
+                           y = titanic_small$survived == "yes")
+cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1, ])
+calculate_oscillations(cp_rf)
+
  \dontrun{
 library("randomForest")
 set.seed(59)
@@ -33,4 +45,7 @@ apartment <- apartmentsTest[1,]
 cp_rf <- ceteris_paribus(explainer_rf, apartment)
 calculate_oscillations(cp_rf)
 }
+}
+\references{
+Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

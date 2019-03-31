@@ -33,25 +33,45 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+selected_passangers <- select_sample(titanic, n = 100)
+
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+
+cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
+pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
+plot(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age") +
+  show_aggreagated_profiles(pdp_rf, size = 3)
+
  \dontrun{
- library("randomForest")
- titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+library("randomForest")
+ model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)
  model_titanic_rf
 
  explain_titanic_rf <- explain(model_titanic_rf,
                            data = titanic[,-9],
-                           y = titanic$survived == "yes",
-                           label = "Random Forest v7")
+                           y = titanic$survived)
 
-selected_passangers <- select_sample(titanic, n = 100)
-cp_rf <- ceteris_paribus(explain_titanic_rf , selected_passangers)
+cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, variables = "Age") +
-  show_observations(cp_rf, variables = "Age") +
-  show_rugs(cp_rf, variables = "Age", color = "red")
+pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
+head(pdp_rf)
+
+plot(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age") +
+  show_rugs(cp_rf, variables = "age", color = "red") +
+  show_aggreagated_profiles(pdp_rf, size = 3)
+
+plot(pdp_rf, variables = "age", color = "grey")
 
 }
 }

@@ -22,6 +22,7 @@ It's a data frame with calculated average responses.
 }
 \description{
 This function calculates ceteris paribus profiles for grid of values spanned by two variables.
+It may be useful to identify or present interactions between two variables.
 }
 \examples{
 library("DALEX")
