@@ -33,7 +33,7 @@
 #' head(pdp_rf_p)
 #' plot(pdp_rf_p, pdp_rf_l, pdp_rf_a, color = "_label_")
 #'
-#'  \dontrun{
+#'  \donttest{
 #'  library("randomForest")
 #'  titanic <- na.omit(titanic)
 #'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +

@@ -32,7 +32,7 @@
 #' pdp_rf <- partial_dependency(explain_titanic_glm, N = 50)
 #' plot(pdp_rf)
 #'
-#' \dontrun{
+#' \donttest{
 #'  library("randomForest")
 #'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)

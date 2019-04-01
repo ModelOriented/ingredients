@@ -167,9 +167,9 @@
 
 <span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependency.html'>partial_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
-<span class='no'>pdp_rf_l</span> <span class='kw'>&lt;-</span> <span class='fu'>local_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='no'>pdp_rf_l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='local_dependency.html'>local_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_l</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_local"</span>
-<span class='no'>pdp_rf_a</span><span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='no'>pdp_rf_a</span><span class='kw'>&lt;-</span> <span class='fu'><a href='accumulated_dependency.html'>accumulated_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 <span class='fu'>head</span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt;   _vname_    _label_       _x_    _yhat_ _ids_
 #&gt; 1    fare RF_partial 0.0000000 0.3487080     0
@@ -245,8 +245,8 @@
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
 <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_aggreagated_profiles(pdp_rf, size = 2): object 'pdp_rf' not found</span></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(pdp_rf, variables = "age"): object 'pdp_rf' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

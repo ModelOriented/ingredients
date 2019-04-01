@@ -63,7 +63,7 @@ pdp_glm <- accumulated_dependency(explain_titanic_glm, N = 50, variables = c("ag
 head(pdp_glm)
 plot(pdp_glm)
 
- \dontrun{
+ \donttest{
 library("randomForest")
  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)

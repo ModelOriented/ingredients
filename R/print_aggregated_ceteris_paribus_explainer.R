@@ -21,7 +21,7 @@
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
 #' head(pdp_rf)
 #'
-#' \dontrun{
+#' \donttest{
 #' library("randomForest")
 #'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)

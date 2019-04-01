@@ -31,7 +31,7 @@
 #' clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
 #' plot(clust_rf)
 #'
-#' \dontrun{
+#' \donttest{
 #'  library("randomForest")
 #'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)

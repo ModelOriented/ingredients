@@ -31,7 +31,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 }
 \examples{
 library("DALEX")
- \dontrun{
+ \donttest{
 library("randomForest")
  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)

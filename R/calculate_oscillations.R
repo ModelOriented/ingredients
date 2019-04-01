@@ -24,7 +24,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1, ])
 #' calculate_oscillations(cp_rf)
 #'
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'

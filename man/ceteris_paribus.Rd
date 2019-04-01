@@ -64,7 +64,7 @@ cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
 cp_rf
 plot(cp_rf, variables = "age")
 
-\dontrun{
+\donttest{
  library("randomForest")
  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic)

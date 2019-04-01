@@ -18,7 +18,7 @@
 #' @return an 'aggregated_profiles_explainer' layer
 #' @examples
 #' library("DALEX")
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)

@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' library("DALEX")
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'

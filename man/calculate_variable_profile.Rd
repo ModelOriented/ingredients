@@ -31,7 +31,7 @@ you should overload it.
 }
 \examples{
 library("DALEX")
- \dontrun{
+ \donttest{
 library("randomForest")
 set.seed(59)
 apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +

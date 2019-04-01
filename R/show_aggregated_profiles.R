@@ -29,7 +29,7 @@
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_aggreagated_profiles(pdp_rf, size = 3)
 #'
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)

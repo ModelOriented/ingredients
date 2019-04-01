@@ -35,7 +35,7 @@ Function 'ceteris_paribus_2d_explainer' plots What-If Plots for a single predict
 }
 \examples{
 library("DALEX")
- \dontrun{
+ \donttest{
 library("randomForest")
 set.seed(59)
 

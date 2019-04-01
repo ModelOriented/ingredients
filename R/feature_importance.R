@@ -34,7 +34,7 @@
 #' vd_rf <- feature_importance(explain_titanic_glm)
 #' plot(vd_rf)
 #'
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #'
 #'  titanic <- na.omit(titanic)

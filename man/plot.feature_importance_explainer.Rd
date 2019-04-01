@@ -43,7 +43,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 vd_rf <- feature_importance(explain_titanic_glm)
 plot(vd_rf)
 
- \dontrun{
+ \donttest{
 library("randomForest")
 
  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +

@@ -26,7 +26,7 @@ It may be useful to identify or present interactions between two variables.
 }
 \examples{
 library("DALEX")
- \dontrun{
+ \donttest{
 library("randomForest")
 set.seed(59)
 

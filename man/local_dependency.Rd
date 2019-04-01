@@ -62,7 +62,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 pdp_rf <- local_dependency(explain_titanic_glm, N = 50)
 plot(pdp_rf)
 
- \dontrun{
+ \donttest{
 library("titanic")
 library("randomForest")
 

@@ -17,7 +17,7 @@
 #' @return a data frame with profiles for selected variables and selected observations
 #' @examples
 #' library("DALEX")
-#'  \dontrun{
+#'  \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +

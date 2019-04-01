@@ -22,7 +22,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.
 }
 \examples{
 library("DALEX")
- \dontrun{
+ \donttest{
 library("randomForest")
 set.seed(59)
 
