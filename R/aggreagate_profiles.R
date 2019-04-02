@@ -2,13 +2,13 @@
 #'
 #' The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
 #' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
-#' Local Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
+#' Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 #' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
 #' @param variables if not NULL then only `variables` will be presented
-#' @param type either 'partial'/'local'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
+#' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
 #' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
@@ -34,7 +34,7 @@
 #'
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 #' pdp_rf_p$`_label_` <- "RF_partial"
-#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "local")
+#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
 #' pdp_rf_c$`_label_` <- "RF_conditional"
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
@@ -91,7 +91,7 @@ aggregate_profiles <- function(x, ...,
   # just average
   if (type == 'partial')
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
-  if (type == 'local')
+  if (type == 'conditional')
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
   if (type == 'accumulated')
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)

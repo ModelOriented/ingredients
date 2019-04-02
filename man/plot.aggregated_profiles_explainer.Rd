@@ -42,7 +42,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 
 pdp_rf_p <- partial_dependency(explain_titanic_glm, N = 50)
 pdp_rf_p$`_label_` <- "RF_partial"
-pdp_rf_l <- local_dependency(explain_titanic_glm, N = 50)
+pdp_rf_l <- conditional_dependency(explain_titanic_glm, N = 50)
 pdp_rf_l$`_label_` <- "RF_local"
 pdp_rf_a<- accumulated_dependency(explain_titanic_glm, N = 50)
 pdp_rf_a$`_label_` <- "RF_accumulated"
@@ -67,7 +67,7 @@ cp_rf
 
 pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
-pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "local")
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
 pdp_rf_c$`_label_` <- "RF_conditional"
 pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"

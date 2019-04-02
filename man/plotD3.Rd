@@ -3,7 +3,7 @@
 \name{plotD3}
 \alias{plotD3}
 \alias{plotD3.feature_importance_explainer}
-\title{Plot Feature Importance Objects in D3 with r2d3 package.}
+\title{Plot Feature Importance Objects in D3 with r2d3 Package.}
 \usage{
 plotD3(x, ...)
 

@@ -1,4 +1,4 @@
-#' Plot Feature Importance Objects in D3 with r2d3 package.
+#' Plot Feature Importance Objects in D3 with r2d3 Package.
 #'
 #' Function \code{plotD3.feature_importance_explainer} plots dropouts for variables used in the model.
 #' It uses output from \code{feature_importance} function that corresponds to permutation based measure of feature importance.
@@ -103,9 +103,9 @@ plotD3.feature_importance_explainer <-  function(x, ...,  max_vars = NULL, bar_w
       options["n"] <- n
       options["m"] <- m
 
-      r2d3::r2d3(data = temp, script = system.file("featureImportance.js", package = "ingredients"),
-                 dependencies = system.file("colorsDrWhy.js", package = "ingredients"),
-                 css = system.file("themeDrWhy.css", package = "ingredients"),
+      r2d3::r2d3(data = temp, script = system.file("d3js/featureImportance.js", package = "ingredients"),
+                 dependencies = system.file("d3js/colorsDrWhy.js", package = "ingredients"),
+                 css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
            d3_version = 4,
            options = options)
 
@@ -128,9 +128,9 @@ plotD3.feature_importance_explainer <-  function(x, ...,  max_vars = NULL, bar_w
       options["n"] <- m
       options["m"] <- n
 
-      r2d3::r2d3(data = temp, script = system.file("featureImportanceSplit.js", package = "ingredients"),
-                 dependencies = system.file("colorsDrWhy.js", package = "ingredients"),
-                 css = system.file("themeDrWhy.css", package = "ingredients"),
+      r2d3::r2d3(data = temp, script = system.file("d3js/featureImportanceSplit.js", package = "ingredients"),
+                 dependencies = system.file("d3js/colorsDrWhy.js", package = "ingredients"),
+                 css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
            d3_version = 4,
            options = options)
     }

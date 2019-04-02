@@ -2,7 +2,7 @@
 % Please edit documentation in R/ceteris_paribus_2d.R
 \name{ceteris_paribus_2d}
 \alias{ceteris_paribus_2d}
-\title{Ceteris Paribus 2D plot}
+\title{Ceteris Paribus 2D Plot}
 \usage{
 ceteris_paribus_2d(explainer, observation, grid_points = 101,
   variables = NULL)
@@ -26,6 +26,17 @@ It may be useful to identify or present interactions between two variables.
 }
 \examples{
 library("DALEX")
+# Toy examples, because CRAN angels ask for them
+titanic <- na.omit(titanic)
+model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+                       data = titanic, family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                           data = titanic[,-9],
+                           y = titanic$survived == "yes")
+cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
+head(cp_rf)
+plot(cp_rf)
  \donttest{
 library("randomForest")
 set.seed(59)

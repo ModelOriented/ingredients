@@ -6,7 +6,7 @@
 \alias{theme_drwhy_blank}
 \alias{theme_drwhy_colors}
 \alias{theme_drwhy_colors_gradient}
-\title{DrWhy Theme for ggplot objects}
+\title{DrWhy Theme for ggplot Objects}
 \usage{
 theme_drwhy()
 
@@ -25,5 +25,5 @@ theme_drwhy_colors_gradient()
 theme for ggplot2 objects
 }
 \description{
-DrWhy Theme for ggplot objects
+DrWhy Theme for ggplot Objects
 }

@@ -1,7 +1,7 @@
-#' Local Dependency Profiles
+#' Conditional Dependency Profiles
 #'
-#' Local Dependency Profiles (aka Conditional Profiles) average localy Ceteris Paribus Profiles.
-#' Function 'local_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+#' Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
+#' Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 #'
 #' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Local Dependency Profiles Chapter}.
 #'
@@ -29,7 +29,7 @@
 #'                            data = titanic[,-9],
 #'                            y = titanic$survived == "yes")
 #'
-#' pdp_rf <- local_dependency(explain_titanic_glm, N = 50)
+#' pdp_rf <- conditional_dependency(explain_titanic_glm, N = 50)
 #' plot(pdp_rf)
 #'
 #'  \donttest{
@@ -47,17 +47,17 @@
 #' explainer_rf <- explain(rf_model, data = titanic_small,
 #'                         y = titanic_small$Survived == "1", label = "RF")
 #'
-#' pdp_rf <- local_dependency(explainer_rf)
+#' pdp_rf <- conditional_dependency(explainer_rf)
 #' plot(pdp_rf)
 #' }
 #' @export
-#' @rdname local_dependency
-local_dependency <- function(x, ...)
-  UseMethod("local_dependency")
+#' @rdname conditional_dependency
+conditional_dependency <- function(x, ...)
+  UseMethod("conditional_dependency")
 
 #' @export
-#' @rdname local_dependency
-local_dependency.explainer <- function(x, variables = NULL, N = 500,
+#' @rdname conditional_dependency
+conditional_dependency.explainer <- function(x, variables = NULL, N = 500,
                                          variable_splits = NULL, grid_points = 101,
                                          ...) {
   # extracts model, data and predict function from the explainer
@@ -66,7 +66,7 @@ local_dependency.explainer <- function(x, variables = NULL, N = 500,
   predict_function <- x$predict_function
   label <- x$label
 
-  local_dependency.default(model, data, predict_function,
+  conditional_dependency.default(model, data, predict_function,
                              label = label,
                              variables = variables,
                              grid_points = grid_points,
@@ -77,8 +77,8 @@ local_dependency.explainer <- function(x, variables = NULL, N = 500,
 
 
 #' @export
-#' @rdname local_dependency
-local_dependency.default <- function(x, data, predict_function = predict,
+#' @rdname conditional_dependency
+conditional_dependency.default <- function(x, data, predict_function = predict,
                                        label = class(x)[1],
                                        variables = NULL,
                                        grid_points = grid_points,
@@ -98,15 +98,18 @@ local_dependency.default <- function(x, data, predict_function = predict,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  local_dependency.ceteris_paribus_explainer(cp, variables = variables)
+  conditional_dependency.ceteris_paribus_explainer(cp, variables = variables)
 }
 
 
 #' @export
-#' @rdname local_dependency
-local_dependency.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname conditional_dependency
+conditional_dependency.ceteris_paribus_explainer <- function(x, ...,
                                                          variables = NULL) {
 
-  aggregate_profiles(x, ..., type = "local", variables = variables)
+  aggregate_profiles(x, ..., type = "conditional", variables = variables)
 }
 
+#' @export
+#' @rdname conditional_dependency
+local_dependency <- conditional_dependency

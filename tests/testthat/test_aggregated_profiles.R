@@ -21,7 +21,7 @@ test_that("plot aggregate_profiles",{
 
   pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
   pdp_rf_p$`_label_` <- "RF_partial"
-  pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "local")
+  pdp_rf_c <- aggregate_profiles(cp_rf, variables = "Age", type = "conditional")
   pdp_rf_c$`_label_` <- "RF_conditional"
   pdp_rf_a <- aggregate_profiles(cp_rf, variables = "Age", type = "accumulated")
   pdp_rf_a$`_label_` <- "RF_accumulated"
@@ -31,7 +31,7 @@ test_that("plot aggregate_profiles",{
 
   pdp_rf_p <- partial_dependency(explainer_rf, variables = "Age")
   pdp_rf_p$`_label_` <- "RF_partial"
-  pdp_rf_c <- local_dependency(explainer_rf, variables = "Age")
+  pdp_rf_c <- conditional_dependency(explainer_rf, variables = "Age")
   pdp_rf_c$`_label_` <- "RF_conditional"
   pdp_rf_a <- accumulated_dependency(explainer_rf, variables = "Age")
   pdp_rf_a$`_label_` <- "RF_accumulated"

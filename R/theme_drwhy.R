@@ -1,4 +1,4 @@
-#' DrWhy Theme for ggplot objects
+#' DrWhy Theme for ggplot Objects
 #'
 #' @param n number of colors for color palette
 #'
@@ -15,6 +15,8 @@ theme_drwhy <- function() {
           axis.line.y = element_line(color = "white"),
           axis.ticks.y = element_line(color = "white"),
           #axis.line = element_line(color = "#371ea3", size = 0.5, linetype = 1),
+          plot.title = element_text(color = "#371ea3", size = 16),
+          plot.subtitle = element_text(color = "#371ea3", size = 14),
           axis.title = element_text(color = "#371ea3"),
           axis.text = element_text(color = "#371ea3", size = 10),
           strip.text = element_text(color = "#371ea3", size = 12, hjust = 0, margin = margin(0, 0, 1, 0)),
@@ -34,6 +36,8 @@ theme_drwhy_vertical <- function() {
           legend.direction = "horizontal", legend.position = "top",
           axis.line.x = element_line(color = "white"),
           axis.ticks.x = element_line(color = "white"),
+          plot.title = element_text(color = "#371ea3", size = 16),
+          plot.subtitle = element_text(color = "#371ea3", size = 14),
           #axis.line = element_line(color = "#371ea3", size = 0.5, linetype = 1),
           axis.title = element_text(color = "#371ea3"),
           axis.text = element_text(color = "#371ea3", size = 10),
@@ -52,6 +56,8 @@ theme_drwhy_blank <- function() {
           panel.border = element_blank(), strip.background = element_blank(),
           plot.background = element_blank(), complete = TRUE,
           legend.direction = "horizontal", legend.position = "top",
+          plot.title = element_text(color = "#371ea3", size = 16),
+          plot.subtitle = element_text(color = "#371ea3", size = 14),
           axis.line.x = element_line(color = "white"),
           axis.ticks.x = element_line(color = "white"),
           axis.title = element_text(color = "#371ea3"),
