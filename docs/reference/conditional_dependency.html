@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Partial Dependency Profiles — partial_dependency • ingredients</title>
+<title>Conditional Dependency Profiles — conditional_dependency • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Partial Dependency Profiles</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Conditional Dependency Profiles</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -100,28 +100,31 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Partial Dependency Profiles</h1>
+    <h1>Conditional Dependency Profiles</h1>
     </div>
 
     
-    <p>Partial Dependency Profiles are averages from Ceteris Paribus Profiles.
-Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.</p>
+    <p>Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
+Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.</p>
     
 
-    <pre class="usage"><span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
+<span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='no'>grid_points</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='no'>variable_splits</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
+<span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='no'>grid_points</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='no'>variable_splits</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>local_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -166,11 +169,11 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an 'aggregated_profiles_explainer' layer</p>
+    <p>an 'aggregated_profile_explainer' layer</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Find more detailes in the <a href='https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html'>Partial Dependence Profiles Chapter</a>.</p>
+    <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/conditionalProfiles.html'>Local Dependency Profiles Chapter</a>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -188,32 +191,24 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
 
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div><div class='input'> <span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
- <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt;  randomForest(formula = survived ~ gender + age + class + embarked +      fare + sibsp + parch, data = titanic) 
-#&gt;                Type of random forest: classification
-#&gt;                      Number of trees: 500
-#&gt; No. of variables tried at each split: 2
-#&gt; 
-#&gt;         OOB estimate of  error rate: 19.2%
-#&gt; Confusion matrix:
-#&gt;       no yes class.error
-#&gt; no  1319  99  0.06981664
-#&gt; yes  304 377  0.44640235</div><div class='input'>
- <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+ </div><div class='input'><span class='fu'>library</span>(<span class='st'>"titanic"</span>)
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_rf</span>)
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependency-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'>c</span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
+                                   <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]
+<span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)
+<span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)
+<span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic_small</span>)
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)
+
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explainer_rf</span>)
+<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

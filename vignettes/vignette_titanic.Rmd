@@ -65,7 +65,7 @@ head(fi_rf)
 plot(fi_rf)
 
 library("r2d3")
-print(plotD3(fi_rf))
+plotD3(fi_rf)
 ```
 
 # Feature effects
