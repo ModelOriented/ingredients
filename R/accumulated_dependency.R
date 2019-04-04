@@ -9,7 +9,7 @@
 #' @param data validation dataset Will be extracted from `x` if it's an explainer
 #' @param predict_function predict function Will be extracted from `x` if it's an explainer
 #' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependency profiles. By default 500.
+#' @param N number of observations used for calculation of partial dependency profiles. By default, 500 observations will be chosen randomly.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
