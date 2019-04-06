@@ -27,7 +27,7 @@ accumulated_dependency(x, ...)
 
 \item{variables}{names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.}
 
-\item{N}{number of observations used for calculation of partial dependency profiles. By default 500.}
+\item{N}{number of observations used for calculation of partial dependency profiles. By default, 500 observations will be chosen randomly.}
 
 \item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.}
 

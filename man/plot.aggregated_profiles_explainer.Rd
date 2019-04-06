@@ -4,9 +4,8 @@
 \alias{plot.aggregated_profiles_explainer}
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
-\method{plot}{aggregated_profiles_explainer}(x, ..., size = 1,
-  alpha = 1, color = "#371ea3", facet_ncol = NULL,
-  variables = NULL)
+plot.aggregated_profiles_explainer(x, ..., size = 1, alpha = 1,
+  color = "#371ea3", facet_ncol = NULL, variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}

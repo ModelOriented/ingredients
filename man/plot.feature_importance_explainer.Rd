@@ -4,7 +4,7 @@
 \alias{plot.feature_importance_explainer}
 \title{Plots Variable Importance}
 \usage{
-\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL,
+plot.feature_importance_explainer(x, ..., max_vars = NULL,
   bar_width = 10)
 }
 \arguments{
