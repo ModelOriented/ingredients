@@ -91,10 +91,10 @@ describe_factor_variable <- function(original_x, x_part, vname) {
   if (median(x_part$`_yhat_`) < head(original_x$`_yhat_`,1)) {
     # x is higher than average, show average
     levs <- rev(as.character(sorted_x_part[1:(sorted_id - 1), vname]))
-    sufix <- paste0("Model results higher values for: ", paste(levs, collapse = ", "), " \n")
+    sufix <- paste0("Model results *lower* values for: ", paste(levs, collapse = ", "), " \n")
   } else {
     levs <- as.character(sorted_x_part[(sorted_id+1):nrow(sorted_x_part), vname])
-    sufix <- paste0("Model results higher values for: ", paste(levs, collapse = ", "), " \n")
+    sufix <- paste0("Model results *higher* values for: ", paste(levs, collapse = ", "), " \n")
   }
   sufix
 }
@@ -103,14 +103,14 @@ describe_numeric_variable <- function(original_x, x_part, cutpoint, vname) {
   # selected point is on the left from cutpoint
   if (original_x[1, vname] <= x_part[cutpoint, vname]) {
     # point is higher than the average
-    if (mean(x_part[1:cutpoint, vname]) > mean(x_part[, vname])) {
+    if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
       sufix = paste0("Model responses are *lower* for *higher* values of ", vname, " \n")
     } else {
       sufix = paste0("Model responses are *higher* for *higher* values of ", vname, " \n")
     }
   } else {
     # point is higher than the average
-    if (mean(x_part[1:cutpoint, vname]) > mean(x_part[, vname])) {
+    if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
       sufix = paste0("Model responses are *higher* for *lower* values of ", vname, " \n")
     } else {
       sufix = paste0("Model responses are *lower* for *lower* values of ", vname, " \n")

@@ -164,19 +164,19 @@ Note that currently only first observation is being described.</p>
 #&gt; 1   male  42   3rd Southampton United States 7.11     0     0 0.1857672      lm
 #&gt;   _ids_
 #&gt; 1     1</div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; For gender = male the model response is 0.19
-#&gt;  Model results higher values for: female 
+#&gt;  Model results *higher* values for: female 
 #&gt;  
 #&gt; For age = 42 the model response is 0.19
-#&gt;  Model responses are *lower* for *lower* values of age 
+#&gt;  Model responses are *higher* for *lower* values of age 
 #&gt;  
 #&gt; For class = 3rd the model response is 0.19
-#&gt;  Model results higher values for: 2nd, 1st, engineering crew, victualling crew, restaurant staff, deck crew 
+#&gt;  Model results *higher* values for: 2nd, 1st, engineering crew, victualling crew, restaurant staff, deck crew 
 #&gt;  
 #&gt; For embarked = Southampton the model response is 0.19
-#&gt;  Model results higher values for: Cherbourg, Queenstown, Belfast 
+#&gt;  Model results *higher* values for: Cherbourg, Queenstown, Belfast 
 #&gt;  
 #&gt; For country = United States the model response is 0.19
-#&gt;  Model results higher values for: England, Norway, France, Lebanon, Finland, Sweden, Argentina, Canada, Denmark, Bulgaria, Switzerland, Channel Islands, Bosnia, Hungary, Ireland, Italy, India, Wales, South Africa, Croatia (Modern), Scotland, Siam, Uruguay, Belgium, Poland, Australia, Peru, Spain, Egypt, Japan, Syria, Russia, Slovenia, Greece, Turkey, China/Hong Kong, Austria, Latvia, Yugoslavia, Slovakia (Modern day), Germany, Croatia, Cuba, Mexico, Northern Ireland, Guyana, Netherlands 
+#&gt;  Model results *higher* values for: England, Norway, France, Lebanon, Finland, Sweden, Argentina, Canada, Denmark, Bulgaria, Switzerland, Channel Islands, Bosnia, Hungary, Ireland, Italy, India, Wales, South Africa, Croatia (Modern), Scotland, Siam, Uruguay, Belgium, Poland, Australia, Peru, Spain, Egypt, Japan, Syria, Russia, Slovenia, Greece, Turkey, China/Hong Kong, Austria, Latvia, Yugoslavia, Slovakia (Modern day), Germany, Croatia, Cuba, Mexico, Northern Ireland, Guyana, Netherlands 
 #&gt;  
 #&gt; For fare = 7.11 the model response is 0.19
 #&gt;  Model responses are *higher* for *higher* values of fare 
@@ -227,28 +227,28 @@ Note that currently only first observation is being described.</p>
 #&gt; 1960 female  36 victualling crew Southampton England    0     0     0 0.7757158
 #&gt;               _label_ _ids_
 #&gt; 1960 Random Forest v7     1</div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; For gender = female the model response is 0.78
-#&gt;  Model results higher values for: male 
+#&gt;  Model results *lower* values for: male 
 #&gt;  
 #&gt; For age = 36 the model response is 0.78
 #&gt;  Model responses are *lower* for *lower* values of age 
 #&gt;  
 #&gt; For class = victualling crew the model response is 0.78
-#&gt;  Model results higher values for: restaurant staff, deck crew, 3rd, engineering crew 
+#&gt;  Model results *lower* values for: restaurant staff, deck crew, 3rd, engineering crew 
 #&gt;  
 #&gt; For embarked = Southampton the model response is 0.78
-#&gt;  Model results higher values for: Belfast, Queenstown 
+#&gt;  Model results *lower* values for: Belfast, Queenstown 
 #&gt;  
 #&gt; For country = England the model response is 0.78
-#&gt;  Model results higher values for: Norway, France, Lebanon, Finland, Sweden, Argentina, Canada, Denmark, Bulgaria, Switzerland, Channel Islands, Bosnia, Hungary, Ireland, Italy, India, Wales, South Africa, Croatia (Modern), Scotland, Siam, Uruguay, Belgium, Poland, Australia, Peru, Spain, Egypt, Japan, Syria, Russia, Slovenia, Greece, Turkey, China/Hong Kong, Austria, Latvia, Yugoslavia, Slovakia (Modern day), Germany, Croatia, Cuba, Mexico, Northern Ireland, Guyana, Netherlands 
+#&gt;  Model results *higher* values for: Norway, France, Lebanon, Finland, Sweden, Argentina, Canada, Denmark, Bulgaria, Switzerland, Channel Islands, Bosnia, Hungary, Ireland, Italy, India, Wales, South Africa, Croatia (Modern), Scotland, Siam, Uruguay, Belgium, Poland, Australia, Peru, Spain, Egypt, Japan, Syria, Russia, Slovenia, Greece, Turkey, China/Hong Kong, Austria, Latvia, Yugoslavia, Slovakia (Modern day), Germany, Croatia, Cuba, Mexico, Northern Ireland, Guyana, Netherlands 
 #&gt;  
 #&gt; For fare = 0 the model response is 0.78
-#&gt;  Model responses are *higher* for *higher* values of fare 
+#&gt;  Model responses are *lower* for *higher* values of fare 
 #&gt;  
 #&gt; For sibsp = 0 the model response is 0.78
-#&gt;  Model responses are *higher* for *higher* values of sibsp 
+#&gt;  Model responses are *lower* for *higher* values of sibsp 
 #&gt;  
 #&gt; For parch = 0 the model response is 0.78
-#&gt;  Model responses are *higher* for *higher* values of parch 
+#&gt;  Model responses are *lower* for *higher* values of parch 
 #&gt;  </div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'> </div></pre>
