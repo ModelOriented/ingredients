@@ -203,53 +203,43 @@ Note that currently only first observation is being described.</p>
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
                            <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
 
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country   fare sibsp parch
-#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
-#&gt;           _yhat_ _vname_ _ids_          _label_
-#&gt; 1960   0.1594853  gender  1960 Random Forest v7
-#&gt; 1960.1 0.7757158  gender  1960 Random Forest v7
-#&gt; 883    0.1116716  gender   883 Random Forest v7
-#&gt; 883.1  0.4732402  gender   883 Random Forest v7
-#&gt; 1594   0.1427213  gender  1594 Random Forest v7
-#&gt; 1594.1 0.8678876  gender  1594 Random Forest v7
+#&gt;          gender        age            class    embarked country fare sibsp
+#&gt; 1960       male 36.0000000 victualling crew Southampton England    0     0
+#&gt; 1960.1   female 36.0000000 victualling crew Southampton England    0     0
+#&gt; 19601    female  0.1666667 victualling crew Southampton England    0     0
+#&gt; 1960.110 female  2.0000000 victualling crew Southampton England    0     0
+#&gt; 1960.2   female  4.0000000 victualling crew Southampton England    0     0
+#&gt; 1960.3   female  7.0000000 victualling crew Southampton England    0     0
+#&gt;          parch    _yhat_ _vname_ _ids_          _label_
+#&gt; 1960         0 0.1594853  gender  1960 Random Forest v7
+#&gt; 1960.1       0 0.7757158  gender  1960 Random Forest v7
+#&gt; 19601        0 0.6638888     age  1960 Random Forest v7
+#&gt; 1960.110     0 0.6599568     age  1960 Random Forest v7
+#&gt; 1960.2       0 0.6716528     age  1960 Random Forest v7
+#&gt; 1960.3       0 0.6637726     age  1960 Random Forest v7
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked country   fare sibsp parch
-#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0
-#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0
-#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0
-#&gt;          _yhat_          _label_ _ids_
-#&gt; 1960 0.77571584 Random Forest v7     1
-#&gt; 883  0.11167162 Random Forest v7     2
-#&gt; 1594 0.14272134 Random Forest v7     3
-#&gt; 1131 0.08213823 Random Forest v7     4
-#&gt; 1445 0.22178858 Random Forest v7     5
-#&gt; 1432 0.16293492 Random Forest v7     6</div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: numerical expression has 100 elements: only the first used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: numerical expression has 94 elements: only the first used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: numerical expression has 83 elements: only the first used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt; <span class='warning'>Warning: numerical expression has 104 elements: only the first used</span></div><div class='output co'>#&gt; For gender = female the model response is 0.78
+#&gt;      gender age            class    embarked country fare sibsp parch    _yhat_
+#&gt; 1960 female  36 victualling crew Southampton England    0     0     0 0.7757158
+#&gt;               _label_ _ids_
+#&gt; 1960 Random Forest v7     1</div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; For gender = female the model response is 0.78
 #&gt;  Model results higher values for: male 
 #&gt;  
 #&gt; For age = 36 the model response is 0.78
-#&gt;  Model responses are *higher* for *higher* values of age 
+#&gt;  Model responses are *lower* for *lower* values of age 
 #&gt;  
 #&gt; For class = victualling crew the model response is 0.78
-#&gt;  Model results higher values for: restaurant staff, restaurant staff, restaurant staff, restaurant staff, 2nd, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, restaurant staff, 3rd, restaurant staff, restaurant staff, 2nd, restaurant staff, restaurant staff, restaurant staff 
+#&gt;  Model results higher values for: restaurant staff, deck crew, 3rd, engineering crew 
 #&gt;  
 #&gt; For embarked = Southampton the model response is 0.78
-#&gt;  Model results higher values for: Southampton 
+#&gt;  Model results higher values for: Belfast, Queenstown 
 #&gt;  
 #&gt; For country = England the model response is 0.78
-#&gt;  Model results higher values for: Denmark, Canada, Argentina, Sweden, Finland, Lebanon, France, Norway, England, United States 
+#&gt;  Model results higher values for: Norway, France, Lebanon, Finland, Sweden, Argentina, Canada, Denmark, Bulgaria, Switzerland, Channel Islands, Bosnia, Hungary, Ireland, Italy, India, Wales, South Africa, Croatia (Modern), Scotland, Siam, Uruguay, Belgium, Poland, Australia, Peru, Spain, Egypt, Japan, Syria, Russia, Slovenia, Greece, Turkey, China/Hong Kong, Austria, Latvia, Yugoslavia, Slovakia (Modern day), Germany, Croatia, Cuba, Mexico, Northern Ireland, Guyana, Netherlands 
 #&gt;  
 #&gt; For fare = 0 the model response is 0.78
 #&gt;  Model responses are *higher* for *higher* values of fare 
@@ -261,8 +251,7 @@ Note that currently only first observation is being described.</p>
 #&gt;  Model responses are *higher* for *higher* values of parch 
 #&gt;  </div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>,) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_observations(cp_rf, ): argument is missing, with no default</span></div><div class='input'> </div></pre>
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'> </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

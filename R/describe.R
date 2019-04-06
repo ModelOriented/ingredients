@@ -34,13 +34,13 @@
 #'                            y = titanic$survived == "yes",
 #'                            label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic, n = 100)
+#' selected_passangers <- select_sample(titanic, n = 1)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #' describe(cp_rf)
 #'
 #' plot(cp_rf) +
-#'   show_observations(cp_rf,)
+#'   show_observations(cp_rf)
 #'  }
 #' @export
 #' @rdname describe
@@ -87,8 +87,8 @@ find_optimal_cutpoint <- function(x) {
 
 describe_factor_variable <- function(original_x, x_part, vname) {
   sorted_x_part <- x_part[order(x_part$`_yhat_`),]
-  sorted_id <- which(sorted_x_part[,vname] == as.character(original_x[,vname]))
-  if (median(x_part$`_yhat_`) < original_x$`_yhat_`) {
+  sorted_id <- head(which(sorted_x_part[,vname] == as.character(original_x[,vname])), 1)
+  if (median(x_part$`_yhat_`) < head(original_x$`_yhat_`,1)) {
     # x is higher than average, show average
     levs <- rev(as.character(sorted_x_part[1:(sorted_id - 1), vname]))
     sufix <- paste0("Model results higher values for: ", paste(levs, collapse = ", "), " \n")

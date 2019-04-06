@@ -47,13 +47,12 @@ plot(cp_rf)
                            y = titanic$survived == "yes",
                            label = "Random Forest v7")
 
-selected_passangers <- select_sample(titanic, n = 100)
+selected_passangers <- select_sample(titanic, n = 1)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 describe(cp_rf)
 
 plot(cp_rf) +
-  show_observations(cp_rf,) +
-  show_rugs(cp_rf, color = "red")
+  show_observations(cp_rf)
  }
 }
