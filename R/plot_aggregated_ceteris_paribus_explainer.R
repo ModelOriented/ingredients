@@ -56,21 +56,20 @@
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #' head(pdp_rf_p)
-#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+#' plot(pdp_rf_p)
+#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
 #'
 #' plot(cp_rf, variables = "age") +
-#' show_observations(cp_rf, variables = "age") +
+#'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf, size = 2)
-#'
-#' plot(pdp_rf, variables = "age")
+#'   show_aggreagated_profiles(pdp_rf_p, size = 2)
 #'
 #' }
 #' @export
 plot.aggregated_profiles_explainer <- function(x, ...,
                                                       size = 1,
                                                       alpha = 1,
-                                                      color = "#371ea3",
+                                                      color = "_label_",
                                                       facet_ncol = NULL,
                                                       variables = NULL) {
 
@@ -89,8 +88,11 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   `_x_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
   res <- ggplot(data = aggregated_profiles, aes(`_x_`, group = paste(`_ids_`, `_label_`)))
   if (is_color_a_variable) {
+    nlabels <- length(unique(aggregated_profiles$`_label_`))
+
     res <- res +
-      geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha)
+      geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
+      scale_color_manual(name = "", values = theme_drwhy_colors(nlabels))
   } else {
     res <- res +
       geom_line(aes(y = `_yhat_`), size = size, alpha = alpha, color = color)

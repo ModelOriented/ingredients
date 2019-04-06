@@ -5,7 +5,7 @@
 \title{Adds a Layer with Aggregated Profiles}
 \usage{
 \method{plot}{aggregated_profiles_explainer}(x, ..., size = 1,
-  alpha = 1, color = "#371ea3", facet_ncol = NULL,
+  alpha = 1, color = "_label_", facet_ncol = NULL,
   variables = NULL)
 }
 \arguments{
@@ -72,14 +72,13 @@ pdp_rf_c$`_label_` <- "RF_conditional"
 pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
 head(pdp_rf_p)
-plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+plot(pdp_rf_p)
+plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
 
 plot(cp_rf, variables = "age") +
-show_observations(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red") +
-  show_aggreagated_profiles(pdp_rf, size = 2)
-
-plot(pdp_rf, variables = "age")
+  show_aggreagated_profiles(pdp_rf_p, size = 2)
 
 }
 }

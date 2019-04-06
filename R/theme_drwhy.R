@@ -69,7 +69,8 @@ theme_drwhy_blank <- function() {
 #' @export
 #' @rdname theme_drwhy
 theme_drwhy_colors <- function(n = 2) {
-  if (n == 1) return("#4378bf")
+  if (n == 1) return("#371ea3")
+#  if (n == 1) return("#4378bf")
   if (n == 2) return(c( "#4378bf", "#8bdcbe"))
   if (n == 3) return(c( "#4378bf", "#f05a71", "#8bdcbe"))
   if (n == 4) return(c( "#4378bf", "#f05a71", "#8bdcbe", "#ffa58c"))

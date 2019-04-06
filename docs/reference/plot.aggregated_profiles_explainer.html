@@ -109,7 +109,7 @@
 
     <pre class="usage"><span class='co'># S3 method for aggregated_profiles_explainer</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#371ea3"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -241,12 +241,11 @@
 #&gt; 3     age RF_partial  4.0000000 0.5815934     0
 #&gt; 4     age RF_partial  7.0000000 0.5527687     0
 #&gt; 5     age RF_partial  9.0000000 0.5497517     0
-#&gt; 6     age RF_partial 13.0000000 0.5047613     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6     age RF_partial 13.0000000 0.5047613     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-<span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_aggreagated_profiles(pdp_rf, size = 2): object 'pdp_rf' not found</span></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(pdp_rf, variables = "age"): object 'pdp_rf' not found</span></div><div class='input'>
+  <span class='fu'><a href='show_aggreagated_profiles.html'>show_aggreagated_profiles</a></span>(<span class='no'>pdp_rf_p</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
