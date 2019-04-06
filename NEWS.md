@@ -1,3 +1,7 @@
+ingredients 0.3.2
+----------------------------------------------------------------
+* added new functions `describe()` and `print.ceteris_paribus_descriptions()` for text based descriptions of Ceteris Paribus explainers
+
 ingredients 0.3.1
 ----------------------------------------------------------------
 * added references to PM VEE

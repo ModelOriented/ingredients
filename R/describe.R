@@ -7,7 +7,7 @@
 #' @param ... other explainers that shall be plotted together
 #'
 #' @return an `ceteris_paribus_descriptions` object.
-#'
+#' @importFrom stats median
 #' @examples
 #' library("DALEX")
 #' # Toy examples, because CRAN angels ask for them
@@ -21,8 +21,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
 #' cp_rf
 #' describe(cp_rf)
-#'
-#' plot(cp_rf, variables = "age")
+#' plot(cp_rf)
 #'
 #'  \donttest{
 #'  library("randomForest")
@@ -40,9 +39,8 @@
 #' cp_rf
 #' describe(cp_rf)
 #'
-#' plot(cp_rf, variables = "age") +
-#' show_observations(cp_rf, variables = "age") +
-#'   show_rugs(cp_rf, variables = "age", color = "red")
+#' plot(cp_rf) +
+#'   show_observations(cp_rf,)
 #'  }
 #' @export
 #' @rdname describe

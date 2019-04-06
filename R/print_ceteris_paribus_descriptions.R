@@ -18,8 +18,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
 #' cp_rf
 #' describe(cp_rf)
-#'
-#' plot(cp_rf, variables = "age")
+#' plot(cp_rf)
 #'
 #'  \donttest{
 #'  library("randomForest")
@@ -36,10 +35,9 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #' describe(cp_rf)
-#'
-#' plot(cp_rf, variables = "age") +
-#' show_observations(cp_rf, variables = "age") +
-#'   show_rugs(cp_rf, variables = "age", color = "red")
+#' plot(cp_rf) +
+#'   show_observations(cp_rf) +
+#'   show_rugs(cp_rf, color = "red")
 #'  }
 #'
 print.ceteris_paribus_descriptions <- function(x, ...) {
