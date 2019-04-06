@@ -4,7 +4,7 @@
 \alias{plot.ceteris_paribus_oscillations}
 \title{Plot Ceteris Paribus Oscillations}
 \usage{
-plot.ceteris_paribus_oscillations(x, ..., bar_width = 10)
+\method{plot}{ceteris_paribus_oscillations}(x, ..., bar_width = 10)
 }
 \arguments{
 \item{x}{a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`}

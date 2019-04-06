@@ -4,7 +4,7 @@
 \alias{plot.ceteris_paribus_2d_explainer}
 \title{Plot Ceteris Paribus 2D Explanations}
 \usage{
-plot.ceteris_paribus_2d_explainer(x, ..., split_ncol = NULL,
+\method{plot}{ceteris_paribus_2d_explainer}(x, ..., split_ncol = NULL,
   add_raster = TRUE, add_contour = TRUE, bins = 3,
   add_observation = TRUE, pch = "+", size = 6)
 }

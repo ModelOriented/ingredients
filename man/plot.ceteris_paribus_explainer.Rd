@@ -4,7 +4,7 @@
 \alias{plot.ceteris_paribus_explainer}
 \title{Plots Ceteris Paribus Profiles}
 \usage{
-plot.ceteris_paribus_explainer(x, ..., size = 1, alpha = 1,
+\method{plot}{ceteris_paribus_explainer}(x, ..., size = 1, alpha = 1,
   color = "#46bac2", only_numerical = TRUE, facet_ncol = NULL,
   variables = NULL)
 }
