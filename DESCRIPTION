@@ -8,14 +8,14 @@ Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com
 Description: Collection of tools for assessment of feature importance and feature effects.
     Key functions are: 
     feature_importance() for assessment of global level feature importance, 
-    ceteris_paribus() for calculation of the What-If Plots,
-    partial_dependency() for Partial Dependency Plots,
-    coditional_dependency() for Conditional Dependency Plots also called M Plots,
-    accumulated_dependency() for Accumulated Local Effects Plots,
-    aggregate_profiles() and cluster_profiles() for aggregation of Ceteris Paribus Profiles,
-    theme_drwhy() with a ggplot2 skin for all plots,
+    ceteris_paribus() for calculation of the what-if plots,
+    partial_dependency() for partial dependency plots,
+    conditional_dependency() for conditional dependency plots,
+    accumulated_dependency() for accumulated local effects plots,
+    aggregate_profiles() and cluster_profiles() for aggregation of ceteris paribus profiles,
+    theme_drwhy() with a 'ggplot2' skin for all plots,
     generic print() and plot() for better usability of selected explainers.
-    The package ingredients is a part of the DrWhy.AI universe (Biecek 2018) <arXiv:1806.08915>.
+    The package 'ingredients' is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.0)
 License: GPL
 Encoding: UTF-8
