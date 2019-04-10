@@ -30,9 +30,12 @@ test_that("plot cluster_profiles",{
   pl2 <- plot(cp_rf, color = "grey", variables = "Age") +
     show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
 
+  pl3 <- plot(cp_rf, variables = "Embarked", only_numerical = FALSE)
+
   clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 
   expect_true("aggregated_profiles_explainer" %in% class(clust_rf))
   expect_true("gg" %in% class(pl1))
   expect_true("gg" %in% class(pl2))
+  expect_true("gg" %in% class(pl3))
 })

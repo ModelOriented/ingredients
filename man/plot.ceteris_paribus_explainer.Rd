@@ -19,7 +19,7 @@
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
+\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only selected variables will be plotted as bars.}
 
 \item{facet_ncol}{number of columns for the `facet_wrap()`}
 
@@ -65,8 +65,21 @@ cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
 plot(cp_rf, variables = "age") +
-show_observations(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red")
+
+selected_passangers <- select_sample(titanic, n = 1)
+cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
+
+plot(cp_rf) +
+  show_observations(cp_rf)
+
+plot(cp_rf, variables = "age") +
+  show_observations(cp_rf, variables = "age")
+
+plot(cp_rf, variables = "class")
+plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1)
+plot(cp_rf, variables = c("class", "embarked", "gender", "sibsp"), only_numerical = FALSE)
 
 }
 }

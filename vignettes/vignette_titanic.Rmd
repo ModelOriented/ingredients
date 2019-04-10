@@ -104,6 +104,8 @@ plot(ap_age)
 
 Let's see break down explanation for model predictions for 8 years old male from 1st class that embarked from port C.
 
+First Ceteris Paribus Profiles for numerical variables
+
 ```{r}
 new_passanger <- data.frame(
   class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew", "restaurant staff", "victualling crew")),
@@ -118,6 +120,14 @@ new_passanger <- data.frame(
 sp_rf <- ceteris_paribus(explain_titanic_rf, new_passanger)
 plot(sp_rf) +
   show_observations(sp_rf)
+```
+
+And for selected categorical variables. Note, that sibsp is numerical but here is presented as a categorical variable.
+
+```{r}
+plot(sp_rf, 
+     variables = c("class", "embarked", "gender", "sibsp"), 
+     only_numerical = FALSE)
 ```
 
 It looks like the most important feature for this passenger is `age` and `sex`. After all his odds for survival are higher than for the average passenger. Mainly because of the young age and despite of being a male.
