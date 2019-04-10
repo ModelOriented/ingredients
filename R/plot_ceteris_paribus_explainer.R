@@ -56,6 +56,7 @@
 #'   show_rugs(cp_rf, variables = "age", color = "red")
 #'
 #' selected_passangers <- select_sample(titanic, n = 1)
+#' selected_passangers
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #'
 #' plot(cp_rf) +
