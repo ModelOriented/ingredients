@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -139,9 +130,9 @@ you should overload it.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartmentsTest</span>)
-<span class='fu'>head</span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 8946     2174              1959     123     8        4        Wola
 #&gt; 4458     4319              1927      68     8        2      Ochota
 #&gt; 7384     5501              1929      95     5        3 Srodmiescie

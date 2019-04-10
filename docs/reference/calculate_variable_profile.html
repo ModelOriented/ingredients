@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -151,16 +142,16 @@ you should overload it.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='fu'>set.seed</span>(<span class='fl'>59</span>)
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
                                       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
+<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
 <span class='no'>variable_splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_variable_split.html'>calculate_variable_split</a></span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
 <span class='no'>profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>new_apartment</span>, <span class='no'>variable_splits</span>,
                                <span class='no'>apartments_rf_model</span>)
-<span class='fu'>head</span>(<span class='no'>profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
 #&gt; 1001       4644              1920     131     3        5 Srodmiescie 4255.354
 #&gt; 1001.1     4644              1921     131     3        5 Srodmiescie 4300.702
 #&gt; 1001.2     4644              1922     131     3        5 Srodmiescie 4301.926
@@ -188,7 +179,7 @@ you should overload it.</p>
 #&gt; 5925     3916              1924      33     7        1      Bemowo
 #&gt; 4293     3474              1979     113     5        4     Mokotow</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
                                <span class='no'>apartments_rf_model</span>)
-<span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms district   _yhat_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms district   _yhat_
 #&gt; 8946       2174              1920     123     8        4     Wola 2871.626
 #&gt; 8946.1     2174              1921     123     8        4     Wola 2896.045
 #&gt; 8946.2     2174              1922     123     8        4     Wola 2901.677
@@ -217,8 +208,8 @@ you should overload it.</p>
 #&gt; 4027     6457              1926      29     3        1 Srodmiescie
 #&gt; 2655     5596              1950      25     6        1 Srodmiescie</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
                                <span class='no'>apartments_rf_model</span>)
-<span class='fu'>head</span>(<span class='no'>new_apartment</span>)</div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
-#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='fu'>head</span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>new_apartment</span>)</div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
+#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
 #&gt; 2285       5875              1920      27     3        1 Srodmiescie 5438.443
 #&gt; 2285.1     5875              1921      27     3        1 Srodmiescie 5478.624
 #&gt; 2285.2     5875              1922      27     3        1 Srodmiescie 5477.707
