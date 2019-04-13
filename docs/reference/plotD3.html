@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -146,37 +155,35 @@ Variables are sorted in the same order in all panels. The order depends on the a
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ingredients"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"caret"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    margin</span></div><div class='input'>
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+<span class='fu'>library</span>(<span class='st'>"ingredients"</span>)
+<span class='fu'>library</span>(<span class='st'>"caret"</span>)
+
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
-#&gt; 1      _full_model_     159.6260    rf
-#&gt; 2          no.rooms     169.6482    rf
-#&gt; 3 construction.year     368.1726    rf
-#&gt; 4             floor     417.9736    rf
-#&gt; 5           surface     592.5975    rf
-#&gt; 6          district     960.6579    rf</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>)
+<span class='fu'>head</span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+#&gt; 1      _full_model_     157.8401    rf
+#&gt; 2          no.rooms     165.1408    rf
+#&gt; 3 construction.year     369.3096    rf
+#&gt; 4             floor     418.9614    rf
+#&gt; 5           surface     602.1783    rf
+#&gt; 6          district     961.8930    rf</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>)
 
-<span class='no'>svm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"svmLinear"</span>)
-<span class='no'>explainer_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>svm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+<span class='no'>svm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"svmLinear"</span>)
+<span class='no'>explainer_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>svm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"svm"</span>)
 <span class='no'>fi_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_svm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_svm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+<span class='fu'>head</span>(<span class='no'>fi_svm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
 #&gt; 1      _full_model_     301.5889   svm
-#&gt; 2 construction.year     301.6034   svm
-#&gt; 3          no.rooms     316.6314   svm
-#&gt; 4             floor     498.8596   svm
-#&gt; 5           surface     610.8330   svm
-#&gt; 6          district     995.0613   svm</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>)
+#&gt; 2 construction.year     301.5907   svm
+#&gt; 3          no.rooms     317.8417   svm
+#&gt; 4             floor     502.6867   svm
+#&gt; 5           surface     615.7759   svm
+#&gt; 6          district    1008.2428   svm</div><div class='input'><span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>)
 
 <span class='fu'>plotD3</span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
 

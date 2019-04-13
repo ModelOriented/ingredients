@@ -15,6 +15,7 @@ calculate_oscillations(x, sort = TRUE, ...)
 }
 \description{
 Oscillations are proxies for local feature importance at the instance level.
+Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
 }
 \examples{
 library("DALEX")

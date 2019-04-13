@@ -31,6 +31,15 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Google analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-5650686-14');
+</script>
 
   </head>
 
@@ -130,43 +139,43 @@ It's a data frame with calculated average responses.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>,])
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;         y_hat    new_x1    new_x2 vname1 vname2 label
+<span class='fu'>head</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;         y_hat    new_x1    new_x2 vname1 vname2 label
 #&gt; 1   0.2363934 0.1666667  0.000000    age   fare    lm
 #&gt; 1.1 0.2427361 0.1666667  5.120607    age   fare    lm
 #&gt; 1.2 0.2491935 0.1666667 10.241214    age   fare    lm
 #&gt; 1.3 0.2557647 0.1666667 15.361821    age   fare    lm
 #&gt; 1.4 0.2624486 0.1666667 20.482428    age   fare    lm
-#&gt; 1.5 0.2692439 0.1666667 25.603035    age   fare    lm</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: all z values are equal</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not possible to generate contour data</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
+#&gt; 1.5 0.2692439 0.1666667 25.603035    age   fare    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: all z values are equal</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not possible to generate contour data</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'> </div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='fu'>set.seed</span>(<span class='fl'>59</span>)
 
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
 
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>, ]
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>,
-         <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2  vname1 vname2        label
+         <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
+<span class='fu'>head</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2  vname1 vname2        label
 #&gt; 1001   4851.829     20   1.00 surface  floor randomForest
 #&gt; 1001.1 4851.829     20   1.09 surface  floor randomForest
 #&gt; 1001.2 4851.829     20   1.18 surface  floor randomForest
 #&gt; 1001.3 4851.829     20   1.27 surface  floor randomForest
 #&gt; 1001.4 4851.829     20   1.36 surface  floor randomForest
-#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>)</div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

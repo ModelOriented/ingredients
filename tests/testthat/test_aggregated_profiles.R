@@ -16,8 +16,14 @@ test_that("plot aggregate_profiles",{
   explainer_rf <- explain(rf_model, data = titanic_small,
                           y = titanic_small$Survived == "1", label = "RF")
 
+  selected_passangers_10 <- select_neighbours(titanic_small, titanic_small[1,], n = 10)
+
   selected_passangers <- select_sample(titanic_small, n = 100)
+
   cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
+
+  pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial", groups = "Sex")
+  invisible(print(pdp_rf_p))
 
   pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
   pdp_rf_p$`_label_` <- "RF_partial"

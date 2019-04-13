@@ -15,9 +15,11 @@ test_that("plot plotD3",{
   p2 <- plotD3(fi_rf, scaleHeight = TRUE)
   p3 <- plotD3(fi_rf, label = FALSE)
   p4 <- plotD3(fi_rf, label = FALSE, scaleHeight = TRUE)
+  p5 <- plotD3(fi_rf, max_vars = 2, split = "feature")
 
   expect_true("r2d3" %in% class(p1))
   expect_true("r2d3" %in% class(p2))
   expect_true("r2d3" %in% class(p3))
   expect_true("r2d3" %in% class(p4))
+  expect_true("r2d3" %in% class(p5))
 })

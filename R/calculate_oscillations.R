@@ -1,6 +1,7 @@
 #' Calculate Oscillations for Ceteris Paribus Explainer
 #'
 #' Oscillations are proxies for local feature importance at the instance level.
+#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
 #'
 #' @param x a ceteris_paribus explainer produced with the `ceteris_paribus()` function
 #' @param sort a logical value. If TRUE then rows are sorted along the oscillations
