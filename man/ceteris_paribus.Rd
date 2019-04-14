@@ -27,7 +27,7 @@ ceteris_paribus(x, ...)
 
 \item{variables}{names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.}
 
-\item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.}
+\item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data available in the `explainer`.}
 
 \item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
 
@@ -48,7 +48,7 @@ Such profiles can be used to hypothesize about model results if selected variabl
 For this reason it is also called 'What-If Profiles'.
 }
 \details{
-Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")

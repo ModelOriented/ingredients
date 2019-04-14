@@ -12,7 +12,8 @@ Key functions are:
 
 * `feature_importance()` for assessment of global level feature importance, 
 * `ceteris_paribus()` for calculation of the Ceteris Paribus / What-If Profiles (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus.html),
-* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html)
+* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html),
+* `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html),
 * `partial_dependency()` for Partial Dependency Plots,
 * `conditional_dependency()` for Conditional Dependency Plots also called M Plots,
 * `accumulated_dependency()` for Accumulated Local Effects Plots,

@@ -5,7 +5,7 @@
 #' Such profiles can be used to hypothesize about model results if selected variable is changed.
 #' For this reason it is also called 'What-If Profiles'.
 #'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a model to be explained, or an explainer created with the `DALEX::explain()` function.
 #' @param data validation dataset. It will be extracted from `x` if it's an explainer
@@ -14,7 +14,7 @@
 #' @param y true labels for `new_observation`. If specified then will be added to ceteris paribus plots.
 #' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
 #' @param ... other parameters
-#' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.
+#' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data available in the `explainer`.
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
 #'
@@ -67,8 +67,8 @@ ceteris_paribus <- function(x, ...)
 #' @export
 #' @rdname ceteris_paribus
 ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = NULL,
-                                    variable_splits = NULL, grid_points = 101,
-                                    ...) {
+                                      variable_splits = NULL, grid_points = 101,
+                                      ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
@@ -76,23 +76,23 @@ ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = 
   label <- x$label
 
   ceteris_paribus.default(model, data, predict_function,
-                             new_observation = new_observation,
-                             label = label,
-                             variables = variables,
-                             grid_points = grid_points,
-                             variable_splits = variable_splits,
-                             y = y,
-                             ...)
+                          new_observation = new_observation,
+                          label = label,
+                          variables = variables,
+                          grid_points = grid_points,
+                          variable_splits = variable_splits,
+                          y = y,
+                          ...)
 }
 
 
 #' @export
 #' @rdname ceteris_paribus
 ceteris_paribus.default <- function(x, data, predict_function = predict,
-                                      new_observation, y = NULL, variables = NULL,
-                                      variable_splits = NULL,
-                                      grid_points = 101,
-                                      label = class(x)[1], ...) {
+                                    new_observation, y = NULL, variables = NULL,
+                                    variable_splits = NULL,
+                                    grid_points = 101,
+                                    label = class(x)[1], ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -117,7 +117,7 @@ ceteris_paribus.default <- function(x, data, predict_function = predict,
 
   # calculate profiles
   profiles <- calculate_variable_profile(new_observation,
-                                 variable_splits, x, predict_function)
+                                         variable_splits, x, predict_function)
 
   # if there is more then one collumn with `_yhat_`
   # then we need to convert it to a single collumn

@@ -10,7 +10,7 @@ ceteris_paribus_2d(explainer, observation, grid_points = 101,
 \arguments{
 \item{explainer}{a model to be explained, preprocessed by the 'DALEX::explain' function}
 
-\item{observation}{a new observarvation for which predictions need to be explained}
+\item{observation}{a new observation for which predictions need to be explained}
 
 \item{grid_points}{number of points used for response path. Will be used for both variables}
 
@@ -23,6 +23,9 @@ It's a data frame with calculated average responses.
 \description{
 This function calculates ceteris paribus profiles for grid of values spanned by two variables.
 It may be useful to identify or present interactions between two variables.
+}
+\details{
+Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
 }
 \examples{
 library("DALEX")

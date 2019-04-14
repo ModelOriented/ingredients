@@ -3,8 +3,10 @@
 #' This function calculates ceteris paribus profiles for grid of values spanned by two variables.
 #' It may be useful to identify or present interactions between two variables.
 #'
+#' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
+#'
 #' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
-#' @param observation a new observarvation for which predictions need to be explained
+#' @param observation a new observation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
 #' @param variables if specified, then only these variables will be explained
 #'
@@ -48,7 +50,7 @@
 #' }
 ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variables = NULL) {
   if (!("explainer" %in% class(explainer)))
-      stop("The what_if() function requires an object created with explain() function.")
+    stop("The what_if() function requires an object created with explain() function.")
   if (is.null(explainer$data))
     stop("The what_if() function requires explainers created with specified 'data' parameter.")
 
@@ -86,4 +88,5 @@ ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variab
   class(all_responses) = c("ceteris_paribus_2d_explainer", "data.frame")
   all_responses
 }
+
 
