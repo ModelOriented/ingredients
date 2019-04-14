@@ -37,8 +37,8 @@ select_neighbours.default <- function(data, observation, variables = NULL, dista
    n <- ceiling(nrow(data)*frac)
  }
 
-  distances <- distance(observation[,variables],
-                          data[,variables])
+  distances <- distance(observation[,variables, drop = FALSE],
+                          data[,variables, drop = FALSE])
   selected_points <- head(order(distances), n)
   data[selected_points, ]
 }
