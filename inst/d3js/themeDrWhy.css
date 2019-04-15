@@ -27,6 +27,10 @@ text {
     font-size: 11px;
 }
 
+.axisLabel .domain{
+    stroke: #371ea3;
+}
+
 .legendTitle{
     font-weight: 400;
     font-size: 13px;

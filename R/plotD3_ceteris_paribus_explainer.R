@@ -39,22 +39,17 @@
 #' selected_passangers <- select_sample(titanic, n = 10)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #'
-#' plotD3CeterisParibus(cp_rf, variables = c("age","parch","fare","sibsp"),
-#'                     facet_ncol = 2, scale_plot = TRUE)
+#' plotD3(cp_rf, variables = c("age","parch","fare","sibsp"),
+#'      facet_ncol = 2, scale_plot = TRUE)
 #'
 #' selected_passanger <- select_sample(titanic, n = 1)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 #'
-#' plotD3CeterisParibus(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
-#'                     facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE)
+#' plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
+#'      facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE)
 #' }
-#'
 #' @export
 #' @rdname plotD3_ceteris_paribus
-
-plotD3 <- function(x, ...)
-  UseMethod("plotD3")
-
 plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
                                  color = "#371ea3", only_numerical = TRUE,
                                  facet_ncol = 2, scale_plot = FALSE,

@@ -43,13 +43,7 @@
 #' plotD3(fi_rf, margin = 0.2)
 #' }
 #' @export
-#' @rdname plotD3
-
-plotD3 <- function(x, ...)
-  UseMethod("plotD3")
-
-#' @export
-#' @rdname plotD3
+#' @rdname plotD3_feature_importance
 plotD3.feature_importance_explainer <-  function(x, ...,  max_vars = NULL, bar_width = 12, split = "model", scale_height = FALSE, margin = 0.15){
     if (!(split %in% c("model", "feature"))){
       stop("The plotD3.feature_importance_explainer() function requires split to be model or feature.")
