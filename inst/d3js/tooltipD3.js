@@ -52,24 +52,27 @@ d3.tip = function() {
 
     while(i--) nodel.classed(directions[i], false)
     coords = direction_callbacks[dir].apply(this)
-    
-    ////////////////////////////////////////////////////////// changes
-    var temp, temp2;
-    if(coords.top < 0) { 
-      temp = 10; 
-      temp2 = coords.left - 100;
-      if(temp2 < 0) {
-        temp2 += 200;
-      }
-    } else { 
-      temp = coords.top;
-      temp2 = coords.left;
+
+    ////////////////////////////////::::::::://///////////////////////////////////////////
+
+    var divDim = node.getBoundingClientRect(),
+        svgDim = svg.getBBox();
+
+    if (d3.event.pageY + divDim.height > svgDim.height) {
+      nodel.classed(dir, true).style('top', (d3.event.pageY - divDim.height - 10) + scrollTop  + 'px');
+    } else {
+      nodel.classed(dir, true).style('top', (d3.event.pageY + 10) + scrollTop  + 'px');
     }
-    nodel.classed(dir, true)
-      .style('top', (temp +  poffset[0]) + scrollTop  + 'px')
-      .style('left', (temp2 + poffset[1]) + scrollLeft + 'px')
-    /////////////////////////////////////////////////////////// changes
-    
+
+    if (d3.event.pageX + divDim.width/2 > svgDim.width) {
+      nodel.classed(dir, true).style('left', (d3.event.pageX - divDim.width - 10) + scrollLeft + 'px');
+    } else if (d3.event.pageX - divDim.width/2 < 5) {
+      nodel.classed(dir, true).style('left', (d3.event.pageX + divDim.width + 10) + scrollLeft + 'px');
+    } else {
+      nodel.classed(dir, true).style('left', (d3.event.pageX - divDim.width/2) + scrollLeft + 'px');
+    }
+
+    ////////////////////////////////::::::::://///////////////////////////////////////////
     return tip
   }
 
@@ -270,6 +273,7 @@ d3.tip = function() {
 
     return node.node()
   }
+
 
   function getSVGNode(el) {
     el = el.node()
