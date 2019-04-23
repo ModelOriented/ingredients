@@ -30,7 +30,7 @@
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'   show_aggregated_profiles(pdp_rf, size = 3)
 #'
 #'  \donttest{
 #' library("randomForest")
@@ -51,7 +51,7 @@
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'   show_aggregated_profiles(pdp_rf, size = 3)
 #'
 #' plot(pdp_rf, variables = "age", color = "grey")
 #'

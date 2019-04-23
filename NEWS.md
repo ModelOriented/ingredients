@@ -1,6 +1,7 @@
 ingredients 0.3.3
 ----------------------------------------------------------------
 * `show_profiles` and `show_residuals` functions extend Ceteris Paribus Plots.
+* `show_aggreagated_profiles` is renamed to `show_aggregated_profiles`
 
 ingredients 0.3.2
 ----------------------------------------------------------------

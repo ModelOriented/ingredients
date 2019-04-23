@@ -1,6 +1,6 @@
 #' Adds a Layer with Aggregated Profiles
 #'
-#' Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+#' Function 'show_aggregated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
@@ -27,7 +27,7 @@
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'   show_aggregated_profiles(pdp_rf, size = 3)
 #'
 #'  \donttest{
 #' library("randomForest")
@@ -48,13 +48,13 @@
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3)
+#'   show_aggregated_profiles(pdp_rf, size = 3)
 #'
 #' plot(pdp_rf, variables = "age", color = "grey")
 #'
 #' }
 #' @export
-show_aggreagated_profiles <- function(x, ...,
+show_aggregated_profiles <- function(x, ...,
                       size = 0.5,
                       alpha = 1,
                       color = "#371ea3",

@@ -27,7 +27,7 @@
 a ggplot2 layer
 }
 \description{
-Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+Function 'show_aggregated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
 }
 \examples{
 library("DALEX")
@@ -78,7 +78,7 @@ plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
 plot(cp_rf, variables = "age") +
   show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red") +
-  show_aggreagated_profiles(pdp_rf_p, size = 2)
+  show_aggregated_profiles(pdp_rf_p, size = 2)
 
 }
 }
