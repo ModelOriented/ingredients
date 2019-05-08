@@ -84,7 +84,8 @@ feature_importance.explainer <- function(x,
                                              loss_function = loss_root_mean_square,
                                              ...,
                                              type = "raw",
-                                             n_sample = NULL) {
+                                             n_sample = NULL,
+                                         variable_grouping = NULL) {
   if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
   if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
   # extracts model, data and predict function from the explainer
@@ -99,6 +100,7 @@ feature_importance.explainer <- function(x,
                                    label = label,
                                    type = type,
                                    n_sample = n_sample,
+                                   variable_grouping = variable_grouping,
                                    ...)
 }
 
@@ -109,10 +111,25 @@ feature_importance.default <- function(x, data, y, predict_function,
                               ...,
                               label = class(x)[1],
                               type = "raw",
-                              n_sample = NULL) {
+                              n_sample = NULL,
+                              variable_grouping = NULL) {
+
+  if (!is.null(variable_grouping) && !inherits(variable_grouping, "list")) stop("Variable_grouping should be of class list")
+#  if (!is.null(variable_grouping) && all(variable_grouping %in% colnames(data))) stop("You have passed wrong variables names in variable_grouping argument")
+
   if (!(type %in% c("difference", "ratio", "raw"))) stop("Type shall be one of 'difference', 'ratio', 'raw'")
 
-  variables <- colnames(data)
+
+  #TODO: Dodać uzupełnianie nazw zmiennych
+
+  if (is.null(variable_grouping)) {
+    variables <- colnames(data)
+    names(variables) <- colnames(data)
+  } else {
+    variables <- variable_grouping
+  }
+
+  #variables <- colnames(data)
   if (!is.null(n_sample)) {
     sampled_rows <- sample.int(nrow(data), n_sample, replace = TRUE)
   } else {
@@ -125,12 +142,19 @@ feature_importance.default <- function(x, data, y, predict_function,
                           predict_function(x, sampled_data))
   loss_full <- loss_function(sample(observed),
                           predict_function(x, sampled_data))
-  res <- sapply(variables, function(variable) {
+
+  res <- sapply(variables, function(variables_set) {
     ndf <- sampled_data
-    ndf[,variable] <- sample(ndf[,variable])
+
+
+    for (variable in variables_set) {
+      ndf[,variable] <- sample(ndf[,variable])
+    }
+
     predicted <- predict_function(x, ndf)
     loss_function(observed, predicted)
   })
+
   res <- sort(res)
   res <- data.frame(variable = c("_full_model_",names(res), "_baseline_"),
                     dropout_loss = c(loss_0, res, loss_full))
