@@ -66,10 +66,10 @@ clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
 head(clust_rf)
 
 plot(clust_rf, color = "_label_") +
-  show_aggreagated_profiles(pdp_rf, color = "black", size = 3)
+  show_aggregated_profiles(pdp_rf, color = "black", size = 3)
 
 plot(cp_rf, color = "grey", variables = "age") +
-  show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
+  show_aggregated_profiles(clust_rf, color = "_label_", size = 2)
 
 clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "age")
 head(clust_rf)

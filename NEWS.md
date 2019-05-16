@@ -1,3 +1,9 @@
+ingredients 0.3.3
+----------------------------------------------------------------
+* `show_profiles` and `show_residuals` functions extend Ceteris Paribus Plots.
+* `show_aggreagated_profiles` is renamed to `show_aggregated_profiles`
+* centering of ggplot2 title
+
 ingredients 0.3.2
 ----------------------------------------------------------------
 * added new functions `describe()` and `print.ceteris_paribus_descriptions()` for text based descriptions of Ceteris Paribus explainers
