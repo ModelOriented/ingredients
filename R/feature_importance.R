@@ -14,7 +14,8 @@
 #' @param ... other parameters
 #' @param type character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}
 #' @param n_sample number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).
-#' @param variable_grouping list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested afor each variable separately. By default NULL
+#' @param variables vector of variables. If NULL then variable importance will be tested for each variable from the `data` separately. By default NULL
+#' @param variable_groups list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -36,16 +37,22 @@
 #' plot(vd_rf)
 #'
 #' vd_rf_joint <- feature_importance(explain_titanic_glm,
-#'                    variable_grouping = list("demographics" = c("gender", "age"),
+#'                    variable_groups = list("demographics" = c("gender", "age"),
 #'                    "ticket_type" = c("fare"))
 #' )
 #'
 #' plot(vd_rf_joint)
 #'
+#' vd_rf_joint <- feature_importance(explain_titanic_glm,
+#'                    variable_groups = list("demographics" = c("gender", "age"),
+#'                    "wealth" = c("fare", "class"),
+#'                    "family" = c("sibsp", "parch"),
+#'                    "embarked" = "embarked")
+#' )
+#'
+#' plot(vd_rf_joint)
+#'
 #' explain_titanic_glm
-#'
-#'
-#'
 #'
 #'
 #'  \donttest{
@@ -59,6 +66,14 @@
 #'                            y = titanic$survived == "yes")
 #'
 #' vd_rf <- feature_importance(explain_titanic_rf)
+#' plot(vd_rf)
+#'
+#' vd_rf <- feature_importance(explain_titanic_rf,
+#'                    variable_groups = list("demographics" = c("gender", "age"),
+#'                    "wealth" = c("fare", "class"),
+#'                    "family" = c("sibsp", "parch"),
+#'                    "embarked" = "embarked")
+#' )
 #' plot(vd_rf)
 #'
 #' HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
@@ -99,7 +114,8 @@ feature_importance.explainer <- function(x,
                                          ...,
                                          type = "raw",
                                          n_sample = NULL,
-                                         variable_grouping = NULL) {
+                                         variables = NULL,
+                                         variable_groups = NULL) {
   if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
   if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
 
@@ -118,7 +134,8 @@ feature_importance.explainer <- function(x,
                              label = label,
                              type = type,
                              n_sample = n_sample,
-                             variable_grouping = variable_grouping,
+                             variables = variables,
+                             variable_groups = variable_groups,
                              ...
   )
 }
@@ -134,17 +151,18 @@ feature_importance.default <- function(x,
                                        label = class(x)[1],
                                        type = "raw",
                                        n_sample = NULL,
-                                       variable_grouping = NULL) {
-  if (!is.null(variable_grouping)) {
-    if (!inherits(variable_grouping, "list")) stop("Variable_grouping should be of class list")
+                                       variables = NULL,
+                                       variable_groups = NULL) {
+  if (!is.null(variable_groups)) {
+    if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
 
-    wrong_names <- !all(sapply(variable_grouping, function(variable_set) {
+    wrong_names <- !all(sapply(variable_groups, function(variable_set) {
         all(variable_set %in% names(data))
       }))
 
-    if (wrong_names) stop("You have passed wrong variables names in variable_grouping argument")
-    if (!all(sapply(variable_grouping, class) == "character")) stop("Elements of variable_grouping argument should be of class character")
-    if (is.null(names(variable_grouping))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.")
+    if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
+    if (!all(sapply(variable_groups, class) == "character")) stop("Elements of variable_groups argument should be of class character")
+    if (is.null(names(variable_groups))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.")
 
   }
 
@@ -154,18 +172,21 @@ feature_importance.default <- function(x,
 
 
   # Adding variable set name when not specified
-  if (!is.null(variable_grouping) && is.null(names(variable_grouping))) {
-    names(variable_grouping) <- sapply(variable_grouping, function(variable_set) {
+  if (!is.null(variable_groups) && is.null(names(variable_groups))) {
+    names(variable_groups) <- sapply(variable_groups, function(variable_set) {
       paste0(variable_set, collapse = "; ")
     })
   }
 
-
-  if (is.null(variable_grouping)) {
-    variables <- colnames(data)
-    names(variables) <- colnames(data)
+  # if `variable_groups` are not specified, then extract from `variables`
+  if (is.null(variable_groups)) {
+    # if `variables` are not specified, then extract from data
+    if (is.null(variables)) {
+      variables <- colnames(data)
+      names(variables) <- colnames(data)
+    }
   } else {
-    variables <- variable_grouping
+    variables <- variable_groups
   }
 
   #variables <- colnames(data)
@@ -184,11 +205,8 @@ feature_importance.default <- function(x,
 
   res <- sapply(variables, function(variables_set) {
     ndf <- sampled_data
-
-
-    for (variable in variables_set) {
-      ndf[, variable] <- sample(ndf[, variable])
-    }
+    # sample variables in variables_set
+    ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
 
     predicted <- predict_function(x, ndf)
     loss_function(observed, predicted)

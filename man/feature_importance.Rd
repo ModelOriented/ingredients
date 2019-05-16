@@ -10,11 +10,12 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(x,
   loss_function = loss_root_mean_square, ..., type = "raw",
-  n_sample = NULL, variable_grouping = NULL)
+  n_sample = NULL, variables = NULL, variable_groups = NULL)
 
 \method{feature_importance}{default}(x, data, y, predict_function,
   loss_function = loss_root_mean_square, ..., label = class(x)[1],
-  type = "raw", n_sample = NULL, variable_grouping = NULL)
+  type = "raw", n_sample = NULL, variables = NULL,
+  variable_groups = NULL)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -27,7 +28,9 @@ feature_importance(x, ...)
 
 \item{n_sample}{number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).}
 
-\item{variable_grouping}{list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested afor each variable separately. By default NULL}
+\item{variables}{vector of variables. If NULL then variable importance will be tested for each variable from the `data` separately. By default NULL}
+
+\item{variable_groups}{list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`}
 
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
@@ -62,16 +65,22 @@ vd_rf <- feature_importance(explain_titanic_glm)
 plot(vd_rf)
 
 vd_rf_joint <- feature_importance(explain_titanic_glm,
-                   variable_grouping = list("demographics" = c("gender", "age"),
+                   variable_groups = list("demographics" = c("gender", "age"),
                    "ticket_type" = c("fare"))
 )
 
 plot(vd_rf_joint)
 
+vd_rf_joint <- feature_importance(explain_titanic_glm,
+                   variable_groups = list("demographics" = c("gender", "age"),
+                   "wealth" = c("fare", "class"),
+                   "family" = c("sibsp", "parch"),
+                   "embarked" = "embarked")
+)
+
+plot(vd_rf_joint)
+
 explain_titanic_glm
-
-
-
 
 
  \donttest{
@@ -85,6 +94,14 @@ library("randomForest")
                            y = titanic$survived == "yes")
 
 vd_rf <- feature_importance(explain_titanic_rf)
+plot(vd_rf)
+
+vd_rf <- feature_importance(explain_titanic_rf,
+                   variable_groups = list("demographics" = c("gender", "age"),
+                   "wealth" = c("fare", "class"),
+                   "family" = c("sibsp", "parch"),
+                   "embarked" = "embarked")
+)
 plot(vd_rf)
 
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)

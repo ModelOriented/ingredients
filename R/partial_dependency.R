@@ -80,8 +80,8 @@ partial_dependency.explainer <- function(x, variables = NULL, N = 500,
 partial_dependency.default <- function(x, data, predict_function = predict,
                            label = class(x)[1],
                            variables = NULL,
-                           grid_points = grid_points,
-                           variable_splits = variable_splits,
+                           grid_points = 101,
+                           variable_splits = NULL,
                            N = 500,
                            ...) {
   if (N < nrow(data)) {

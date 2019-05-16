@@ -13,8 +13,8 @@ partial_dependency(x, ...)
   variable_splits = NULL, grid_points = 101, ...)
 
 \method{partial_dependency}{default}(x, data, predict_function = predict,
-  label = class(x)[1], variables = NULL, grid_points = grid_points,
-  variable_splits = variable_splits, N = 500, ...)
+  label = class(x)[1], variables = NULL, grid_points = 101,
+  variable_splits = NULL, N = 500, ...)
 
 \method{partial_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
