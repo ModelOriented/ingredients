@@ -142,7 +142,7 @@ sp_rf <- ceteris_paribus(explain_titanic_rf, passangers)
 clust_rf <- cluster_profiles(sp_rf, k = 3)
 head(clust_rf)
 plot(sp_rf, alpha = 0.1) +
-  show_aggreagated_profiles(clust_rf, color = "_label_", size = 2)
+  show_aggregated_profiles(clust_rf, color = "_label_", size = 2)
 ```
 
 

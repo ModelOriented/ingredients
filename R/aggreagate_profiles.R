@@ -46,7 +46,7 @@
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf, size = 3, color = "_label_")
+#'   show_aggregated_profiles(pdp_rf, size = 3, color = "_label_")
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,

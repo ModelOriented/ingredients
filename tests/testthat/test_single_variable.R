@@ -9,7 +9,7 @@ test_that("test plot",{
   pl <- plot(cp_rf, variables = "Age") +
      show_observations(cp_rf, variables = "Age") +
      show_rugs(cp_rf, variables = "Age", color = "red") +
-     show_aggreagated_profiles(pdp_rf, size = 2)
+     show_aggregated_profiles(pdp_rf, size = 2)
 
   expect_true("gg" %in% class(pl))
 })

@@ -1,6 +1,6 @@
 #' Adds a Layer with Aggregated Profiles
 #'
-#' Function 'show_aggreagated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+#' Function 'show_aggregated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
 #' @param ... other explainers that shall be plotted together
@@ -62,7 +62,7 @@
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
-#'   show_aggreagated_profiles(pdp_rf_p, size = 2)
+#'   show_aggregated_profiles(pdp_rf_p, size = 2)
 #'
 #' }
 #' @export
