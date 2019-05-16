@@ -24,12 +24,13 @@ test_that("plot plotD3",{
   expect_true("r2d3" %in% class(p5))
 
   titanic <- na.omit(titanic)
-  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+  titanic$survived <- as.integer(as.factor(titanic$survived))
+  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                      fare + sibsp + parch,  data = titanic)
   explainer_titanic_rf <- explain(model_titanic_rf,
-                                data = titanic[,-9],
-                                y = titanic$survived == "yes",
-                                label = "rf")
+                                  data = titanic[,-9],
+                                  y = titanic$survived,
+                                  label = "rf")
 
   selected_passanger <- select_sample(titanic, n = 10)
   cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
