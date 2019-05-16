@@ -113,7 +113,8 @@ For this reason it is also called the Variable Dropout Plot.</p>
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>feature_importance</span>(<span class='no'>x</span>,
   <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
-  <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>feature_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='no'>y</span>, <span class='no'>predict_function</span>,
@@ -153,6 +154,10 @@ For this reason it is also called the Variable Dropout Plot.</p>
       <td><p>list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`</p></td>
     </tr>
     <tr>
+      <th>label</th>
+      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
+    </tr>
+    <tr>
       <th>data</th>
       <td><p>validation dataset, will be extracted from `x` if it's an explainer</p></td>
     </tr>
@@ -163,10 +168,6 @@ For this reason it is also called the Variable Dropout Plot.</p>
     <tr>
       <th>predict_function</th>
       <td><p>predict function, will be extracted from `x` if it's an explainer</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
     </tr>
     </table>
     
@@ -198,7 +199,8 @@ It's a data frame with calculated average response.</p>
 <span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vd_rf_joint1</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_glm</span>,
                    <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"demographics"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
-                   <span class='st'>"ticket_type"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fare"</span>))
+                   <span class='st'>"ticket_type"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fare"</span>)),
+                   <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"lm 2 groups"</span>,
 )
 
 <span class='fu'>plot</span>(<span class='no'>vd_rf_joint1</span>)</div><div class='img'><img src='feature_importance-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -206,7 +208,8 @@ It's a data frame with calculated average response.</p>
                    <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"demographics"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                    <span class='st'>"wealth"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fare"</span>, <span class='st'>"class"</span>),
                    <span class='st'>"family"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
-                   <span class='st'>"embarked"</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>)
+                   <span class='st'>"embarked"</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>),
+                   <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"lm 5 groups"</span>,
 )
 
 <span class='fu'>plot</span>(<span class='no'>vd_rf_joint2</span>, <span class='no'>vd_rf_joint1</span>)</div><div class='img'><img src='feature_importance-3.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -231,7 +234,8 @@ It's a data frame with calculated average response.</p>
                    <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"demographics"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                    <span class='st'>"wealth"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fare"</span>, <span class='st'>"class"</span>),
                    <span class='st'>"family"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
-                   <span class='st'>"embarked"</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>)
+                   <span class='st'>"embarked"</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>),
+                   <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"rf 4 groups"</span>,
 )
 <span class='fu'>plot</span>(<span class='no'>vd_rf_group</span>, <span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
