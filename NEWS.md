@@ -1,9 +1,13 @@
+ingredients 0.3.4
+----------------------------------------------------------------
+* `plotD3` now supports Ceteris Paribus Profiles.
+* `feature_importance` now can take `variable_grouping` argument that assess importance of group of features
+
 ingredients 0.3.3
 ----------------------------------------------------------------
 * `show_profiles` and `show_residuals` functions extend Ceteris Paribus Plots.
 * `show_aggreagated_profiles` is renamed to `show_aggregated_profiles`
 * centering of ggplot2 title
-* `feature_importance` now can take `variable_grouping` argument that assess importance of group of features
 
 ingredients 0.3.2
 ----------------------------------------------------------------
