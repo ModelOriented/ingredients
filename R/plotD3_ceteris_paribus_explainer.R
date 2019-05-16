@@ -1,5 +1,6 @@
-#' Plots Ceteris Paribus Profiles in D3 with r2d3 Package.
+#' @title Plots Ceteris Paribus Profiles in D3 with r2d3 Package.
 #'
+#' @description
 #' Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 #'
@@ -62,8 +63,6 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
                                  variables = NULL, chartTitle = NULL, label_margin = 60,
                                  show_observations = TRUE, show_rugs = TRUE) {
 
-  #:# modified plot.ceteris_paribus_explainer code
-
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -78,7 +77,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
 
   # is color a variable or literal?
   # is_color_a_variable <- color %in% c(all_variables, "_label_")
-  # only numerical or only factors?
+
+  # only numerical or only factor?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
 
   if (only_numerical) {
@@ -100,6 +100,7 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     vnames <- variables
   }
 
+  # prepare clean observations data for tooltips
   all_observations <- list()
 
   all_observations <- lapply(dfl, function(tmp) {
@@ -111,8 +112,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   all_observations <- all_observations[,c(m,m-1,m-2,1:(m-3))]
   all_observations$observation.id <- rownames(all_observations)
 
-  #:#
 
+  # prepare profiles data
   all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
   all_profiles$`_vname_` <- droplevels(all_profiles$`_vname_`)
   rownames(all_profiles) <- NULL
@@ -124,6 +125,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   all_profiles_list <- split(all_profiles, all_profiles$`_vname_`)
 
   min_max_list <- list()
+
+  # line plot or bar plot?
   if (only_numerical) {
     all_profiles_list <- lapply(all_profiles_list, function(x){
       name <- as.character(head(x$`_vname_`,1))
@@ -143,7 +146,7 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     })
 
   } else {
-    if (dim(attr(x, "observations"))[1] > 1) stop("Please pick one passanger.")
+    if (dim(attr(x, "observations"))[1] > 1) stop("Please pick one observation.")
 
     all_profiles_list <- lapply(all_profiles_list, function(x){
       name <- as.character(head(x$`_vname_`,1))

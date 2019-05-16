@@ -45,8 +45,7 @@ an `r2d3` object.
 \description{
 Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
-}
-\details{
+
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
