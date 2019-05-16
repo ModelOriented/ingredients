@@ -38,7 +38,8 @@
 #'
 #' vd_rf_joint1 <- feature_importance(explain_titanic_glm,
 #'                    variable_groups = list("demographics" = c("gender", "age"),
-#'                    "ticket_type" = c("fare"))
+#'                    "ticket_type" = c("fare")),
+#'                    label = "lm 2 groups",
 #' )
 #'
 #' plot(vd_rf_joint1)
@@ -47,7 +48,8 @@
 #'                    variable_groups = list("demographics" = c("gender", "age"),
 #'                    "wealth" = c("fare", "class"),
 #'                    "family" = c("sibsp", "parch"),
-#'                    "embarked" = "embarked")
+#'                    "embarked" = "embarked"),
+#'                    label = "lm 5 groups",
 #' )
 #'
 #' plot(vd_rf_joint2, vd_rf_joint1)
@@ -72,7 +74,8 @@
 #'                    variable_groups = list("demographics" = c("gender", "age"),
 #'                    "wealth" = c("fare", "class"),
 #'                    "family" = c("sibsp", "parch"),
-#'                    "embarked" = "embarked")
+#'                    "embarked" = "embarked"),
+#'                    label = "rf 4 groups",
 #' )
 #' plot(vd_rf_group, vd_rf)
 #'
@@ -115,7 +118,8 @@ feature_importance.explainer <- function(x,
                                          type = "raw",
                                          n_sample = NULL,
                                          variables = NULL,
-                                         variable_groups = NULL) {
+                                         variable_groups = NULL,
+                                         label = NULL) {
   if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
   if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
 
@@ -123,7 +127,9 @@ feature_importance.explainer <- function(x,
   model <- x$model
   data <- x$data
   predict_function <- x$predict_function
-  label <- x$label
+  if (is.null(label)) {
+    label <- x$label
+  }
   y <- x$y
 
   feature_importance.default(model,

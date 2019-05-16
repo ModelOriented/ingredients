@@ -10,7 +10,8 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(x,
   loss_function = loss_root_mean_square, ..., type = "raw",
-  n_sample = NULL, variables = NULL, variable_groups = NULL)
+  n_sample = NULL, variables = NULL, variable_groups = NULL,
+  label = NULL)
 
 \method{feature_importance}{default}(x, data, y, predict_function,
   loss_function = loss_root_mean_square, ..., label = class(x)[1],
@@ -32,13 +33,13 @@ feature_importance(x, ...)
 
 \item{variable_groups}{list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`}
 
+\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
 \item{y}{true labels for `data`, will be extracted from `x` if it's an explainer}
 
 \item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
-
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
 An object of the class 'feature_importance'.
@@ -66,7 +67,8 @@ plot(vd_rf)
 
 vd_rf_joint1 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
-                   "ticket_type" = c("fare"))
+                   "ticket_type" = c("fare")),
+                   label = "lm 2 groups",
 )
 
 plot(vd_rf_joint1)
@@ -75,7 +77,8 @@ vd_rf_joint2 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "wealth" = c("fare", "class"),
                    "family" = c("sibsp", "parch"),
-                   "embarked" = "embarked")
+                   "embarked" = "embarked"),
+                   label = "lm 5 groups",
 )
 
 plot(vd_rf_joint2, vd_rf_joint1)
@@ -100,7 +103,8 @@ vd_rf_group <- feature_importance(explain_titanic_rf,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "wealth" = c("fare", "class"),
                    "family" = c("sibsp", "parch"),
-                   "embarked" = "embarked")
+                   "embarked" = "embarked"),
+                   label = "rf 4 groups",
 )
 plot(vd_rf_group, vd_rf)
 
