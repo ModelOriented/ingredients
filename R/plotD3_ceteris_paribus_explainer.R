@@ -17,7 +17,7 @@
 #' @param chartTitle a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins, when only_numerical is FALSE
 #' @param show_observations a logcal. Adds observations layer to a plot. By default it's TRUE
-#' @param show_rugs a logcal. Adds rugs layer to a plot. By default it's FALSE
+#' @param show_rugs a logcal. Adds rugs layer to a plot. By default it's TRUE
 #'
 #' @return an `r2d3` object.
 #'
@@ -60,7 +60,7 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
                                  color = "#46bac2", only_numerical = TRUE,
                                  facet_ncol = 2, scale_plot = FALSE,
                                  variables = NULL, chartTitle = NULL, label_margin = 60,
-                                 show_observations = TRUE, show_rugs = FALSE) {
+                                 show_observations = TRUE, show_rugs = TRUE) {
 
   #:# modified plot.ceteris_paribus_explainer code
 
@@ -143,6 +143,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     })
 
   } else {
+    if (dim(attr(x, "observations"))[1] > 1) stop("Please pick one passanger.")
+
     all_profiles_list <- lapply(all_profiles_list, function(x){
       name <- as.character(head(x$`_vname_`,1))
       ret <- x[, c(name, "_yhat_", "_vname_")]

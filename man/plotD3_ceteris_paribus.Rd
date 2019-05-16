@@ -10,7 +10,7 @@ plotD3(x, ...)
 \method{plotD3}{ceteris_paribus_explainer}(x, ..., size = 2, alpha = 1,
   color = "#46bac2", only_numerical = TRUE, facet_ncol = 2,
   scale_plot = FALSE, variables = NULL, chartTitle = NULL,
-  label_margin = 60, show_observations = TRUE, show_rugs = FALSE)
+  label_margin = 60, show_observations = TRUE, show_rugs = TRUE)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -37,7 +37,7 @@ plotD3(x, ...)
 
 \item{show_observations}{a logcal. Adds observations layer to a plot. By default it's TRUE}
 
-\item{show_rugs}{a logcal. Adds rugs layer to a plot. By default it's FALSE}
+\item{show_rugs}{a logcal. Adds rugs layer to a plot. By default it's TRUE}
 }
 \value{
 an `r2d3` object.

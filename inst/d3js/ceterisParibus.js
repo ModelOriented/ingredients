@@ -49,14 +49,14 @@ function ceterisParibus(data){
 
   // lines or bars?
   if (onlyNumerical) {
-    for (var i=0; i<n; i++){
-      var variableName = variableNames[i];
+    for (let i=0; i<n; i++){
+      let variableName = variableNames[i];
       numericalPlot(variableName, profData[variableName],
       minMaxData[variableName], obsData, i+1);
     }
   } else {
-    for (var i=0; i<n; i++){
-      var variableName = variableNames[i];
+    for (let i=0; i<n; i++){
+      let variableName = variableNames[i];
       categoricalPlot(variableName, profData[variableName], obsData, i+1);
     }
   }
