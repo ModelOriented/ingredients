@@ -46,5 +46,10 @@ function getColors(n, type){
           }
           return ret;
       }
+    } else if (type == "point") {
+      switch(n){
+        default:
+          return ["#371ea3", "#46bac2", "#ceced9"];
+      }    
     }
 }
