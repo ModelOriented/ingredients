@@ -10,11 +10,11 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(x,
   loss_function = loss_root_mean_square, ..., type = "raw",
-  n_sample = NULL)
+  n_sample = NULL, variable_grouping = NULL)
 
 \method{feature_importance}{default}(x, data, y, predict_function,
   loss_function = loss_root_mean_square, ..., label = class(x)[1],
-  type = "raw", n_sample = NULL)
+  type = "raw", n_sample = NULL, variable_grouping = NULL)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -26,6 +26,8 @@ feature_importance(x, ...)
 \item{type}{character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}}
 
 \item{n_sample}{number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).}
+
+\item{variable_grouping}{list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested afor each variable separately. By default NULL}
 
 \item{data}{validation dataset, will be extracted from `x` if it's an explainer}
 
@@ -58,6 +60,19 @@ explain_titanic_glm <- explain(model_titanic_glm,
 
 vd_rf <- feature_importance(explain_titanic_glm)
 plot(vd_rf)
+
+vd_rf_joint <- feature_importance(explain_titanic_glm,
+                   variable_grouping = list("demographics" = c("gender", "age"),
+                   "ticket_type" = c("fare"))
+)
+
+plot(vd_rf_joint)
+
+explain_titanic_glm
+
+
+
+
 
  \donttest{
 library("randomForest")
