@@ -157,11 +157,8 @@ Variables are sorted in the same order in all panels. The order depends on the a
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 <span class='fu'>library</span>(<span class='st'>"ingredients"</span>)
-<span class='fu'>library</span>(<span class='st'>"caret"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘ggplot2’ was built under R version 3.5.2</span></div><div class='output co'>#&gt; <span class='message'>RStudio Community is a great place to get help:</span>
-#&gt; <span class='message'>https://community.rstudio.com/c/tidyverse.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    margin</span></div><div class='input'>
+<span class='fu'>library</span>(<span class='st'>"caret"</span>)
+
 <span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)

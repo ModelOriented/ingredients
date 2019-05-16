@@ -64,21 +64,21 @@ explain_titanic_glm <- explain(model_titanic_glm,
 vd_rf <- feature_importance(explain_titanic_glm)
 plot(vd_rf)
 
-vd_rf_joint <- feature_importance(explain_titanic_glm,
+vd_rf_joint1 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "ticket_type" = c("fare"))
 )
 
-plot(vd_rf_joint)
+plot(vd_rf_joint1)
 
-vd_rf_joint <- feature_importance(explain_titanic_glm,
+vd_rf_joint2 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "wealth" = c("fare", "class"),
                    "family" = c("sibsp", "parch"),
                    "embarked" = "embarked")
 )
 
-plot(vd_rf_joint)
+plot(vd_rf_joint2, vd_rf_joint1)
 
 explain_titanic_glm
 
@@ -96,13 +96,13 @@ library("randomForest")
 vd_rf <- feature_importance(explain_titanic_rf)
 plot(vd_rf)
 
-vd_rf <- feature_importance(explain_titanic_rf,
+vd_rf_group <- feature_importance(explain_titanic_rf,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "wealth" = c("fare", "class"),
                    "family" = c("sibsp", "parch"),
                    "embarked" = "embarked")
 )
-plot(vd_rf)
+plot(vd_rf_group, vd_rf)
 
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)

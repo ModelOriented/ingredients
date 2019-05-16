@@ -116,8 +116,8 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='no'>grid_points</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='no'>variable_splits</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>,
@@ -200,11 +200,11 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 19.15%
+#&gt;         OOB estimate of  error rate: 19.53%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1321  97  0.06840621
-#&gt; yes  305 376  0.44787078</div><div class='input'>
+#&gt; no  1315 103  0.07263752
+#&gt; yes  307 374  0.45080764</div><div class='input'>
  <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
