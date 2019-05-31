@@ -97,7 +97,6 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     vnames <- names(which(!is_numeric))
     # there are no numerical features
     if (length(vnames) == 0) stop("There are no non-numerical variables")
-    vnames <- variables
   }
 
   # prepare clean observations data for tooltips
@@ -159,7 +158,7 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
 
   if (is.null(chartTitle)) chartTitle = paste("Ceteris Paribus Profiles")
 
-  options <- list(variableNames = vnames, n = length(variables),
+  options <- list(variableNames = as.list(vnames), n = length(vnames),
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = only_numerical,
