@@ -2,6 +2,7 @@ ingredients 0.3.4
 ----------------------------------------------------------------
 * `plotD3` now supports Ceteris Paribus Profiles.
 * `feature_importance` now can take `variable_grouping` argument that assess importance of group of features
+* fix in ceteris_paribus, now it handles models with just one variable
 
 ingredients 0.3.3
 ----------------------------------------------------------------

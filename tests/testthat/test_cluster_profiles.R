@@ -39,3 +39,24 @@ test_that("plot cluster_profiles",{
   expect_true("gg" %in% class(pl2))
   expect_true("gg" %in% class(pl3))
 })
+
+
+test_that("plot cluster_profiles",{
+  set.seed(17)
+  x <- runif(1000, -8, 8)
+  y <- ifelse(x <= 1, (x + 3)^2 - 10 , -5*x + 11)
+  molnar <- data.frame(x = x, y = y)
+
+  true_model <- function(model, newdata) {
+    ifelse(newdata$x <= 1, (newdata$x + 3)^2 - 10 , -5*newdata$x + 11)
+  }
+
+  library(DALEX)
+  molnar_explainer <- explain(list(), molnar, y = y, predict_function = true_model)
+
+  profile <- ingredients::ceteris_paribus(molnar_explainer, new_observation = data.frame(x = -6),
+                               variables = "x",
+                               variable_splits = list(x = -10:10))
+
+  expect_true("ceteris_paribus_explainer" %in% class(profile))
+})
