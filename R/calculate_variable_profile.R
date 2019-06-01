@@ -61,7 +61,7 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
     } else {
       ids <- rep(rownames(data), each = length(split_points))
     }
-    new_data <- data[rep(1:nrow(data), each = length(split_points)),]
+    new_data <- data[rep(1:nrow(data), each = length(split_points)), , drop = FALSE]
     new_data[, variable] <- rep(split_points, nrow(data))
 
     yhat <- predict_function(model, new_data, ...)
