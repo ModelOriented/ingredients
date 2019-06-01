@@ -6,14 +6,15 @@
 \usage{
 \method{plotD3}{feature_importance_explainer}(x, ..., max_vars = NULL,
   bar_width = 12, split = "model", scale_height = FALSE,
-  margin = 0.15)
+  margin = 0.15, chartTitle = NULL)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the 'feature_importance' function}
 
 \item{...}{other explainers that shall be plotted together}
 
-\item{max_vars}{maximum number of variables that shall be presented for for each model. By default NULL what means all variables}
+\item{max_vars}{maximum number of variables that shall be presented for for each model.
+By default NULL what means all variables}
 
 \item{bar_width}{width of bars in px. By default 12px}
 
@@ -21,7 +22,10 @@
 
 \item{scale_height}{should the height of plot scale with window size? By default it's FALSE}
 
-\item{margin}{extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.15}
+\item{margin}{extend x axis domain range to adjust the plot.
+Usually value between 0.1 and 0.3, by default it's 0.15}
+
+\item{chartTitle}{a character. Set custom title}
 }
 \value{
 an `r2d3` object.
@@ -29,34 +33,35 @@ an `r2d3` object.
 \description{
 Function \code{plotD3.feature_importance_explainer} plots dropouts for variables used in the model.
 It uses output from \code{feature_importance} function that corresponds to permutation based measure of feature importance.
-Variables are sorted in the same order in all panels. The order depends on the average drop out loss. In different panels variable contributions may not look like sorted if variable importance is different in different models.
+Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
+In different panels variable contributions may not look like sorted if variable importance is different in different models.
 }
 \examples{
 \dontrun{
 library("DALEX")
 library("ingredients")
-library("caret")
 
-rf_model <- train(m2.price~., data = apartments, method="rf", ntree = 100)
-explainer_rf <- explain(rf_model, data = apartments_test[,2:6],
-                        y = apartments_test$m2.price, label="rf")
+lm_model <- lm(m2.price~., data = apartments)
+explainer_lm <- explain(lm_model, data = apartments[,2:6],
+                        y = apartments$m2.price, label="lm")
+fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
+
+head(fi_lm)
+plotD3(fi_lm)
+
+library("randomForest")
+rf_model <- randomForest(m2.price~., data = apartments)
+explainer_rf <- explain(rf_model, data = apartments[,2:6],
+                        y = apartments$m2.price, label="rf")
 fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
 
 head(fi_rf)
-plotD3(fi_rf)
+plotD3(fi_lm, fi_rf)
 
-svm_model <- train(m2.price~., data = apartments, method="svmLinear")
-explainer_svm <- explain(svm_model, data = apartments_test[,2:6],
-                        y = apartments_test$m2.price, label="svm")
-fi_svm <- feature_importance(explainer_svm, loss_function = loss_root_mean_square)
+plotD3(fi_lm, fi_rf, split = "feature")
 
-head(fi_svm)
-plotD3(fi_rf, fi_svm)
-
-plotD3(fi_rf, fi_svm, split = "feature")
-
-plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, scale_height = TRUE)
-plotD3(fi_rf, fi_svm, max_vars = 3, bar_width = 16, split = "feature", scale_height = TRUE)
-plotD3(fi_rf, margin = 0.2)
+plotD3(fi_lm, fi_rf, max_vars = 3, bar_width = 16, scale_height = TRUE)
+plotD3(fi_lm, fi_rf, max_vars = 3, bar_width = 16, split = "feature", scale_height = TRUE)
+plotD3(fi_lm, margin = 0.2)
 }
 }

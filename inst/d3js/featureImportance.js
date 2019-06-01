@@ -2,43 +2,47 @@ var minValue = options.xmin;
 var maxValue = options.xmax;
 var n = options.n;
 var m = options.m;
-var barWidth = options.barWidth;
+var barWidth = options.barWidth,
+    chartTitle = options.chartTitle;
 
-var margin = {top: 98, right: 30, bottom: 71, left: 120, inner: 42};
-var w = width - margin.left - margin.right;
-var h = height - margin.top- margin.bottom;
-var labelsMargin = margin.left - 8;
-var plotTop = margin.top;
-var plotHeight = m*barWidth + (m+1)*barWidth/2;
-var plotBottom = margin.top + plotHeight;
+// effort to make labels margin
+var temp = svg.selectAll()
+              .data(data[1])
+              .enter();
+
+var textWidth = [];
+
+temp.append("text")
+    .text(function(d) { return d;})
+    .style("font-size", "12px")
+    .style("font-weight", 400)
+    .each(function(d,i) {
+        var thisWidth = this.getComputedTextLength();
+        textWidth.push(thisWidth);
+    });
+
+svg.selectAll('text').remove();
+temp.remove();
+
+var maxLength = d3.max(textWidth)+15;
+////
+
+var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
+    w = width - margin.left - margin.right,
+    h = height - margin.top - margin.bottom,
+    plotTop = margin.top,
+    plotHeight = m*barWidth + (m+1)*barWidth/2;
 
 if (options.scaleHeight === true) {
   if (h > n*plotHeight + (n-1)*margin.inner) {
     var temp = h - n*plotHeight - (n-1)*margin.inner;
     plotTop += temp/2;
-    plotBottom += temp/2;
   }
 }
 
 var colors = getColors(n, "bar");
 
-featureImportance(data);
-
-// css
-var tooltip = d3.select("body").append("div")
-          .attr("class", "tooltip")
-          .style("position", "absolute")
-          .style("text-align", "center")
-          .style("width", "300px")
-          .style("height", "80px")
-          .style("padding", "2px")
-          .style("color", "white")
-          .style("background", "#371ea3")
-          .style("opacity", "1")
-          .style("border", "0px")
-          .style("border-radius", "8px")
-          .style("pointer-events", "none")
-          .style("visibility", "hidden");
+featureImportance(data[0]);
 
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
@@ -50,167 +54,152 @@ function featureImportance(data) {
     for (var j in data) {
       var modelName = j;
       var modelData = data[j];
-      singleFeatureImportance(modelName, modelData, i);
+      singlePlot(modelName, modelData, i);
       i += 1;
     }
 }
 
-function singleFeatureImportance(modelName, modelData, i) {
+function singlePlot(modelName, modelData, i) {
 
-    var x = d3.scaleLinear()
-        .range([margin.left, w + margin.left])
-        .domain([minValue, maxValue]);
+  var x = d3.scaleLinear()
+      .range([margin.left, margin.left + w])
+      .domain([minValue, maxValue]);
 
-    if (i != 1){
-      plotTop += margin.inner + plotHeight;
-      plotBottom += margin.inner + plotHeight;
-    }
+  if (i == n){
+    // xaxis
+      svg.append("text")
+        .attr("transform",
+              "translate(" + (width/2) + " ," +
+                             (plotTop + plotHeight + 45) + ")")
+        .attr("class", "axisTitle")
+        .text("Drop-out loss");
 
-    if (i == n){
-      // xaxis
-        svg.append("text")
-          .attr("transform",
-                "translate(" + (width/2) + " ," +
-                               (plotBottom + 45) + ")")
-          .attr("class", "axisTitle")
-          .text("Drop-out loss");
+      var xAxis = d3.axisBottom(x)
+                  .ticks(5)
+                  .tickSize(0);
 
-        var xAxis = d3.axisBottom(x)
-                    .ticks(5)
-                    .tickSize(0);
-
-        xAxis = svg.append("g")
-          .attr("class", "axisLabel")
-          .attr("transform", "translate(0," + plotBottom + ")")
-          .call(xAxis)
-          .call(g => g.select(".domain").remove());
-    }
-
-    var y = d3.scaleBand()
-        .rangeRound([plotBottom, plotTop])
-        .padding(0.33)
-        .domain(modelData.map(function (d) {
-             return d.variable;
-        }));
-
-    // grid
-    var xGrid = svg.append("g")
-         .attr("class", "grid")
-         .attr("transform", "translate(0," + plotBottom + ")")
-         .call(d3.axisBottom(x)
-                .ticks(10)
-                .tickSize(-plotHeight)
-                .tickFormat("")
-        ).call(g => g.select(".domain").remove());
-
-    // effort to make grid endings clean
-    let str = xGrid.select('.tick:first-child').attr('transform');
-    var yGridStart = str.substring(str.indexOf("(")+1,str.indexOf(","));
-    str = xGrid.select('.tick:last-child').attr('transform');
-    var yGridEnd = str.substring(str.indexOf("(")+1,str.indexOf(","));
-
-    var yGrid = svg.append("g")
-         .attr("class", "grid")
-         .attr("transform", "translate(" + yGridStart + ",0)")
-         .call(d3.axisLeft(y)
-                .tickSize(-(yGridEnd-yGridStart))
-                .tickFormat("")
-        ).call(g => g.select(".domain").remove());
-
-    // yaxis
-    var yAxis = d3.axisLeft(y)
-        .tickSize(0);
-
-    yAxis = svg.append("g")
+      xAxis = svg.append("g")
         .attr("class", "axisLabel")
-        .attr("transform","translate(" + (yGridStart-8) + ",0)")
-        .call(yAxis)
+        .attr("transform", "translate(0," + (plotTop + plotHeight) + ")")
+        .call(xAxis)
         .call(g => g.select(".domain").remove());
+  }
 
-    // modelname
-    svg.append("text")
+  var y = d3.scaleBand()
+      .rangeRound([plotTop + plotHeight, plotTop])
+      .padding(0.33)
+      .domain(modelData.map(function (d) {
+           return d.variable;
+      }));
+
+  // grid
+  var xGrid = svg.append("g")
+       .attr("class", "grid")
+       .attr("transform", "translate(0," + (plotTop + plotHeight) + ")")
+       .call(d3.axisBottom(x)
+              .ticks(10)
+              .tickSize(-plotHeight)
+              .tickFormat("")
+      ).call(g => g.select(".domain").remove());
+
+  // effort to make grid endings clean
+  let str = xGrid.select('.tick:first-child').attr('transform');
+  var yGridStart = str.substring(str.indexOf("(")+1,str.indexOf(","));
+  str = xGrid.select('.tick:last-child').attr('transform');
+  var yGridEnd = str.substring(str.indexOf("(")+1,str.indexOf(","));
+
+  var yGrid = svg.append("g")
+       .attr("class", "grid")
+       .attr("transform", "translate(" + yGridStart + ",0)")
+       .call(d3.axisLeft(y)
+              .tickSize(-(yGridEnd-yGridStart))
+              .tickFormat("")
+      ).call(g => g.select(".domain").remove());
+
+  // yaxis
+  var yAxis = d3.axisLeft(y)
+      .tickSize(0);
+
+  yAxis = svg.append("g")
+      .attr("class", "axisLabel")
+      .attr("transform","translate(" + (yGridStart-10) + ",0)")
+      .call(yAxis)
+      .call(g => g.select(".domain").remove());
+
+  if (i == 1){
+    // title
+      svg.append("text")
         .attr("x", yGridStart)
-        .attr("y", plotTop - 15)
-        .attr("class", "smallTitle")
-        .text(modelName);
+        .attr("y", plotTop - 60)
+        .attr("class", "bigTitle")
+        .text(chartTitle);
+  }
 
-    if (i == 1){
-      // title
-        svg.append("text")
-          .attr("x", yGridStart)
-          .attr("y", plotTop - 60)
-          .attr("class", "bigTitle")
-          .text("Feature importance");
+  // modelname
+  svg.append("text")
+      .attr("x", yGridStart)
+      .attr("y", plotTop - 15)
+      .attr("class", "smallTitle")
+      .text(modelName);
+
+  // tooltip
+  var tool_tip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([-8, 0])
+        .html(d => staticTooltipHtml(modelName,d));
+  svg.call(tool_tip);
+
+  // bars
+  var bars = svg.selectAll()
+      .data(modelData)
+      .enter()
+      .append("g");
+
+  // find full model dropout_loss value
+  var fullModel = modelData[0].full_model;
+
+  bars.append("rect")
+      .attr("class", modelName.replace(/\s/g,''))
+      .attr("fill", colors[i-1])
+      .attr("y", d => y(d.variable))
+      .attr("height", y.bandwidth())
+      .attr("x", function (d) {
+        // start ploting the bar left to full model line
+        if (x(d.dropout_loss) < x(fullModel)) {
+          return x(d.dropout_loss);
+        } else {
+          return x(fullModel);
+        }
+      })
+      .attr("width", d => Math.abs(x(d.dropout_loss) - x(fullModel)))
+      .on('mouseover', tool_tip.show)
+      .on('mouseout', tool_tip.hide);
+
+  // make line next to bars
+  var minimumY = Number.MAX_VALUE;
+  var maximumY = Number.MIN_VALUE;
+  bars.selectAll(".".concat(modelName.replace(/\s/g,''))).each(function() {
+    if(+this.getAttribute('y') < minimumY) {
+      minimumY = +this.getAttribute('y');
     }
+    if(+this.getAttribute('y') > maximumY) {
+      maximumY = +this.getAttribute('y');
+    }
+  });
 
-    // bars
-    var bars = svg.selectAll()
-        .data(modelData)
-        .enter()
-        .append("g");
+  svg.append("line")
+      .attr("class", "interceptLine")
+      .attr("x1", x(fullModel))
+      .attr("y1", minimumY)
+      .attr("x2", x(fullModel))
+      .attr("y2", maximumY + y.bandwidth());
 
-    // find full model dropout_loss value
-    var fullModel = modelData[0].full_model;
-
-    bars.append("rect")
-        .attr("class", modelName)
-        .attr("fill", colors[i-1])
-        .attr("y", function (d) {
-            return y(d.variable);
-        })
-        .attr("height", y.bandwidth())
-        .attr("x", function (d) {
-          // start ploting the bar left to full model line
-          if (x(d.dropout_loss) < x(fullModel)) {
-            return x(d.dropout_loss);
-          } else {
-            return x(fullModel);
-          }
-        })
-        .attr("width", function (d) {
-            return  Math.abs(x(d.dropout_loss) - x(fullModel));
-        });
-
-    // tooltip functions
-    bars.on("mouseover", function(){
-            tooltip.style("visibility", "visible");
-        })
-        .on("mousemove", function(d) {
-          if (d.dropout_loss > fullModel) {
-             tooltip .html( tooltipHtml(modelName,d,"+") )
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-          } else {
-             tooltip .html(tooltipHtml(modelName,d,""))
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-          }
-        })
-        .on("mouseout", function(d) {
-            tooltip.style("visibility", "hidden");
-        });
-
-    // make line next to bars
-    var minimumY = Number.MAX_VALUE;
-    var maximumY = Number.MIN_VALUE;
-    bars.selectAll(".".concat(modelName)).each(function() {
-      if(+this.getAttribute('y') < minimumY) {
-        minimumY = +this.getAttribute('y');
-      }
-      if(+this.getAttribute('y') > maximumY) {
-        maximumY = +this.getAttribute('y');
-      }
-    });
-
-    svg.append("line")
-        .attr("class", "interceptLine")
-        .attr("x1", x(fullModel))
-        .attr("y1", minimumY)
-        .attr("x2", x(fullModel))
-        .attr("y2", maximumY + y.bandwidth());
+  plotTop += (margin.inner + plotHeight);
 }
 
-function tooltipHtml(modelName, d, sign){
+function staticTooltipHtml(modelName, d){
+    let sign;
+    if (d.dropout_loss > d.full_model) sign = "+"; else sign = "";
     var temp ="Model: " + modelName
       + "</br>" +
       "Model loss after feature " + d.variable
