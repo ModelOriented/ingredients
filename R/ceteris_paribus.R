@@ -143,7 +143,7 @@ ceteris_paribus.default <- function(x, data, predict_function = predict,
     predict_obs <- predict_function(x, new_observation)
     new_observation_ext$`_yhat_` <- unlist(c(predict_obs))
     new_observation_ext$`_label_` <- paste0(label, rep(stripped_names, each = nrow(new_observation)))
-    new_observation_ext$`_ids_` <- rep(1:nrow(new_observation), each = nrow(new_observation))
+    new_observation_ext$`_ids_` <- rep(1:nrow(new_observation), each = length(col_yhat))
 
     # add y
     if (!is.null(y)) new_observation_ext$`_y_` <- rep(y, times = length(col_yhat))

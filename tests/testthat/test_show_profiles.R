@@ -52,3 +52,28 @@ test_that("plot show_residuals",{
  expect_true("gg" %in% class(pl2))
 
 })
+
+
+
+test_that("Multiple observatins",{
+  library("randomForest")
+  library("DALEX")
+
+  titanic <- na.omit(titanic)
+  # we predict embarked instead of survived for generating the bug
+  model_titanic_rf <- randomForest(embarked ~ gender + age + class + survived +
+                                     fare + sibsp + parch,  data = titanic)
+  model_titanic_rf
+
+  explain_titanic_rf <- explain(model_titanic_rf,
+                                data = titanic[,-4],
+                                y = titanic$survived,
+                                label = "Random Forest v7")
+
+  # select few passangers
+  selected_passangers <- select_sample(titanic, n = 20)
+  cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
+
+  expect_true("ceteris_paribus_explainer" %in% class(cp_rf))
+})
+
