@@ -1,8 +1,8 @@
 #' Aspect Importance
 #'
-#' This explainer calculates the feature groups importance (called aspects importance) for a given model.
+#' This explainer calculates the feature groups importance (called aspects importance) for a selected observation.
 #' Aspect Importance function takes a sample from a given dataset and modifies it.
-#' Modification is made by replacing part of its aspects by values from one observation.
+#' Modification is made by replacing part of its aspects by values from the observation.
 #' Then function is calculating the difference between the prediction made on modified sample and the original sample.
 #' Finally, it measures the impact of aspects on the change of prediction by using the linear model.
 #'
@@ -10,12 +10,15 @@
 #' @param model model created on data, it will be extracted from `x` if it's an explainer
 #' @param data dataset, it will be extracted from `x` if it's an explainer
 #' @param predict_function predict function, it will be extracted from `x` if it's an explainer
-#' @param new_observation a new observation with columns that corresponds to variables used in the model
-#' @param aspects_list list containg grouping of variables for importance shall be calculated
-#' @param B number of data rows to be sampled from data
+#' @param new_observation selected observation with columns that corresponds to variables used in the model
+#' @param aspects_list list containg grouping of features into aspects
+#' @param B number of rows to be sampled from data
 #'
 #' @return An object of the class 'aspect_importance'.
 #' Contains linear model describing aspects' importance.
+#'
+#' @importFrom stats lm
+#'
 #' @export
 #'
 #' @examples
@@ -61,8 +64,8 @@ aspect_importance <- function(x, ...)
 #' @export
 #' @rdname aspect_importance
 
-aspect_importance.explainer <- function(x, new_observation,
-                                        aspects_list, B = 100) {
+aspect_importance.explainer <- function(x, new_observation, aspects_list,
+                                        B = 100) {
 
   # extracts model, data and predict function from the explainer
   data <- x$data
@@ -94,14 +97,6 @@ aspect_importance.default <- function(model,data, predict_function = predict,
     stop("Different columns in new_observation and aspects list")
   }
 
-  # new_obs_vars <- colnames(new_observation)
-  # model_vars <- all.vars(model$call$formula)[-1]
-  #
-  # # print error if model has variables not present in new observation
-  # if (length(setdiff(model_vars,new_obs_vars)) > 0) {
-  #   stop("Model uses variable that do not exist in new observation")
-  # }
-
   # create empty matrix and data frames
   n_sample <- select_sample(data, n = B)
   n_sample_changed <- n_sample
@@ -130,14 +125,17 @@ aspect_importance.default <- function(model,data, predict_function = predict,
 
 #' Function for getting binary matrix
 #'
-#' This function creates binary matrix
-#' Either by using binomial distribution or by using sample() function
+#' This function creates binary matrix.
+#' It uses either binomial distribution or sample() function
 #'
 #' @param n number of rows
 #' @param m number of columns
 #' @param method sampling method
+#' @param p probability for binomial sampling
 #'
 #' @return a binary matrix
+#'
+#' @importFrom stats rbinom
 #'
 #' @examples
 #'  \dontrun{
@@ -145,15 +143,51 @@ aspect_importance.default <- function(model,data, predict_function = predict,
 #' }
 #' @export
 
-get_sample <- function(n, m, method = c("default","binom")) {
+get_sample <- function(n, m, method = c("default","binom"), p = 0.05) {
   method = match.arg(method)
   x <- matrix(0, n, m)
   if (method == "binom") {
-    x <- apply(x, 2, rbinom, 1, 0.5)
+     for (i in 1:n) {
+      while (sum(x[i, ]) == 0) {
+        x[i, ] <- rbinom(m, 1, prob = p/(n*m))
+      }
+    }
   } else {
     for (i in 1:n) {
       x[i, unique(sample(1:m, 2, replace = TRUE)) ] <- 1
     }
   }
   return(x)
+}
+
+#' Function for plotting aspect_importance results
+#'
+#' This function plots the results of aspect_importance
+#'
+#' @param x object of aspect_importance class
+#' @param bar_width bar width
+#'
+#' @return a ggplot2 object
+#' @export
+#'
+#' @import ggplot2
+#'
+#' @export
+
+plot.aspect_importance <- function(x, bar_width = 10) {
+
+  x_to_plot <- as.data.frame(names(x$coefficients))
+  x_to_plot$val <- unname(x$coefficients)
+  colnames(x_to_plot)[1] <- "aspects"
+  x_to_plot <- x_to_plot[!x_to_plot$aspects == "(Intercept)",]
+  x_to_plot$a_sign <- ifelse(x_to_plot$val > 0,"positive","negative")
+  x_to_plot$val <- abs(x_to_plot$val)
+
+  x_to_plot$aspects <- reorder(x_to_plot$aspects, x_to_plot$val, na.rm = TRUE)
+
+  # plot it
+  ggplot(x_to_plot, aes(aspects, ymin = 0, ymax = val, color = a_sign)) +
+    geom_linerange(size = bar_width) + coord_flip() +
+    ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
+    scale_color_discrete(name = "Type of contribution to the prediction:")
 }
