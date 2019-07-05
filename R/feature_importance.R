@@ -165,20 +165,16 @@ feature_importance.default <- function(x,
                                        variable_groups = NULL) {
   if (!is.null(variable_groups)) {
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
-
+    
     wrong_names <- !all(sapply(variable_groups, function(variable_set) {
-        all(variable_set %in% names(data))
-      }))
-
+      all(variable_set %in% names(data))
+    }))
+    
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
     if (!all(sapply(variable_groups, class) == "character")) stop("Elements of variable_groups argument should be of class character")
-    if (is.null(names(variable_groups))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.")
-
+    if (is.null(names(variable_groups))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.") 
   }
-
   type <- match.arg(type)
-  
-  # ensure number of permutation is an integer and larger than 1
   B <- max(1, round(B))
   
   # Adding variable set name when not specified
@@ -199,50 +195,49 @@ feature_importance.default <- function(x,
     variables <- variable_groups
   }
 
-  if (!is.null(n_sample)) {
-    sampled_rows <- sample.int(nrow(data), n_sample, replace = TRUE)
-  } else {
-    sampled_rows <- 1:nrow(data)
-  }
-  sampled_data <- data[sampled_rows, ]
-  observed <- y[sampled_rows]
-
-  loss_0 <- loss_function(observed, predict_function(x, sampled_data))
-
-  # one permutation round: permute variables and compute vector of losses
+  # one permutation round: subsample data, permute variables and compute losses
+  sampled_rows <- 1:nrow(data)
   loss_after_permutation <- function() {
-    singles <- sapply(variables, function(variables_set) {
+    if (!is.null(n_sample)) {
+      sampled_rows <- sample.int(nrow(data), n_sample, replace = TRUE)
+    }
+    sampled_data <- data[sampled_rows, ]
+    observed <- y[sampled_rows]
+    # loss on the full model or when outcomes are permuted
+    loss_full <- loss_function(observed, predict_function(x, sampled_data))
+    loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data))
+    # loss upon dropping single variables (or single groups)
+    loss_features <- sapply(variables, function(variables_set) {
       ndf <- sampled_data
       ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
       predicted <- predict_function(x, ndf)
       loss_function(observed, predicted)
     })
-    baseline <- loss_function(sample(observed), predict_function(x, sampled_data))
-    c(singles, "_baseline_" = baseline)
+    c("_full_model_" = loss_full, loss_features, "_baseline_" = loss_baseline)
   }
-  
   # permute B times, collect results into single matrix
   raw <- replicate(B, loss_after_permutation())
   
-  # main result df with dropout_loss averages, with _full_model_ first, _baseline_ last
+  # main result df with dropout_loss averages, with _full_model_ first and _baseline_ last
   res <- apply(raw, 1, mean)
   res_baseline <- res["_baseline_"]
-  res <- sort(res[names(res) != "_baseline_"])
+  res_full <- res["_full_model_"]
+  res <- sort(res[!names(res) %in% c("_full_model_", "_baseline_")])
   res <- data.frame(
     variable = c("_full_model_", names(res), "_baseline_"),
-    dropout_loss = c(loss_0, res, res_baseline),
+    dropout_loss = c(res_full, res, res_baseline),
     label = label,
     row.names = NULL
   )
   if (type == "ratio") {
-    res$dropout_loss = res$dropout_loss / loss_0
+    res$dropout_loss = res$dropout_loss / res_full
   }
   if (type == "difference") {
-    res$dropout_loss = res$dropout_loss - loss_0
+    res$dropout_loss = res$dropout_loss - res_full
   }
   class(res) <- c("feature_importance_explainer", "data.frame")
   
-  # record details of permutations work
+  # record details of permutations
   raw <- data.frame(
     variable = rep(rownames(raw), ncol(raw)),
     permutation = rep(seq_len(B), each = nrow(raw)),

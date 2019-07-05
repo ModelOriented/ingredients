@@ -1,7 +1,7 @@
 context("Check feature_importance() function")
 
 
-# Usability - tests with improper inputs
+# Basics - tests with improper and proper inputs
 
 test_that("feature_importance checks its inputs", {
   missing.data <- list()
@@ -20,15 +20,12 @@ test_that("feature_importance stops with incorrect type", {
 })
 
 
-
-
-# Correctness - tests with good inputs
-
 test_that("Output glm",{
   vd_glm <- feature_importance(explainer_glm, type = "raw",
                                      loss_function = loss_root_mean_square)
   expect_true("feature_importance_explainer" %in% class(vd_glm))
 })
+
 
 test_that("Output rf",{
   vd_rf <- feature_importance(explainer_HR_rf,
@@ -71,9 +68,22 @@ test_that("feature_importance records number of permutations", {
   expect_is(raw, "data.frame")
   # the raw permutations data frame will have:
   # - three columns: feature, permutation, dropout_loss
-  # - many rows: one per permutation and per feature plus outcome
-  n1 <- nrow(result) - 1
-  expect_equal(dim(raw), c(n1*2, 3))
+  # - many rows: one per permutation and per feature (plus baseline, plus full)
+  expect_equal(dim(raw), c(nrow(result)*2, 3))
+  # because there is no sub-sampling, all the full-model results should be equal
+  loss_full <- raw[raw$variable=="_full_model_",]
+  expect_equal(length(unique(loss_full$dropout_loss)), 1)
+})
+
+
+test_that("feature_importance with subsampling gives different full-model results ", {
+  result <- feature_importance(explainer_rf, B = 2, n_sample=200)
+  raw <- attr(result, "raw_permutations")
+  # the full model losses should be different in the first and second round
+  # because each round is based on different rows in the data...
+  # but in principle there is a tiny probability the two rounds are based on the same rows
+  loss_full <- raw[raw$variable=="_full_model_", ]
+  expect_equal(length(unique(loss_full$dropout_loss)), 2)
 })
 
 
