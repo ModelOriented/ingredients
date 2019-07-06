@@ -69,7 +69,7 @@ test_that("check get_sample function with binom",{
   expect_true(min(x) == 0)
 })
 
-test_that("check get_sample functionw with default sampling",{
+test_that("check get_sample function with default sampling",{
   library("DALEX")
   library("ingredients")
 

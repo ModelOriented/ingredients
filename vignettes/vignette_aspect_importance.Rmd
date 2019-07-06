@@ -67,10 +67,13 @@ We call aspect_importance() function and see that features that are included in 
 
 
 ```{r}
+library("ggplot2")
+library("ingredients")
+
 titanic_glm_ai <- aspect_importance(model_titanic_glm, titanic, predict, passenger, aspects, 100)
 
 titanic_glm_ai
-plot(titanic_glm_ai) + ggtitle("Aspect importance for the selected passenger (logistic regression)")
+plot(titanic_glm_ai) + ggtitle("Aspect importance for the selected passenger (logistic reg.)")
 ```
 
 
@@ -109,7 +112,7 @@ After calling aspect_importance() on the random forest model, we can observe tha
 titanic_rf_ai <- aspect_importance(model_titanic_rf, titanic, predict, passenger, aspects, 100)
 
 titanic_rf_ai
-plot(titanic_rf_ai) + ggtitle("Aspect importance for the selected passenger (random forest)")
+plot(titanic_rf_ai) + ggtitle("Aspect importance for the selected passenger (random for.)")
 ```
 
 # Session info
