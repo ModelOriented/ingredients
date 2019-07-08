@@ -90,12 +90,9 @@ aspect_importance.default <- function(model,data, predict_function = predict,
     data <- data[,common_variables, drop = FALSE]
   }
 
-  # print error if no common variables are found
-  if (length(common_variables) == 0) {
-    stop("No common variables in dataset and new observation")
-  } else if (length(setdiff(unlist(aspects_list),colnames(new_observation))) != 0) {
-    stop("Different columns in new_observation and aspects list")
-  }
+  # stop if no common variables are found
+  stopifnot(length(common_variables) > 0,
+            length(setdiff(unlist(aspects_list),colnames(new_observation))) == 0)
 
   # create empty matrix and data frames
   n_sample <- select_sample(data, n = B)
@@ -125,13 +122,16 @@ aspect_importance.default <- function(model,data, predict_function = predict,
 
 #' Function for getting binary matrix
 #'
-#' This function creates binary matrix.
-#' It uses either binomial distribution or sample() function
+#' Function creates binary matrix.
+#' It starts with a zero matrix. Then it replaces some zeros with ones.
+#' It either randomly replaces one or two zeros per row.
+#' Or replace random number of zeros per row - average number of replaced zeros can be controled by parameter f.
+#' Function doesn't allow the returned matrix to have rows with only zeros.
 #'
 #' @param n number of rows
-#' @param m number of columns
+#' @param p number of columns
 #' @param method sampling method
-#' @param p probability for binomial sampling
+#' @param f probability for binomial sampling
 #'
 #' @return a binary matrix
 #'
@@ -139,22 +139,22 @@ aspect_importance.default <- function(model,data, predict_function = predict,
 #'
 #' @examples
 #'  \dontrun{
-#'  get_sample(100,4,"binom")
+#'  get_sample(100,6,"binom",3)
 #' }
 #' @export
 
-get_sample <- function(n, m, method = c("default","binom"), p = 0.05) {
+get_sample <- function(n, p, method = c("default","binom"), f = 2) {
   method = match.arg(method)
-  x <- matrix(0, n, m)
+  stopifnot(n > 0, p > 0, f > 0)
+  x <- matrix(0, n, p)
   if (method == "binom") {
      for (i in 1:n) {
-      while (sum(x[i, ]) == 0) {
-        x[i, ] <- rbinom(m, 1, prob = p/(n*m))
+       n_of_changes <- pmax(rbinom(1, p, f/p),1)
+       x[i, unique(sample(1:p, n_of_changes, replace = TRUE)) ] <- 1
       }
-    }
   } else {
     for (i in 1:n) {
-      x[i, unique(sample(1:m, 2, replace = TRUE)) ] <- 1
+      x[i, unique(sample(1:p, 2, replace = TRUE)) ] <- 1
     }
   }
   return(x)
@@ -181,13 +181,12 @@ plot.aspect_importance <- function(x, bar_width = 10) {
   colnames(x_to_plot)[1] <- "aspects"
   x_to_plot <- x_to_plot[!x_to_plot$aspects == "(Intercept)",]
   x_to_plot$a_sign <- ifelse(x_to_plot$val > 0,"positive","negative")
-  x_to_plot$val <- abs(x_to_plot$val)
 
-  x_to_plot$aspects <- reorder(x_to_plot$aspects, x_to_plot$val, na.rm = TRUE)
+  x_to_plot$aspects <- reorder(x_to_plot$aspects, abs(x_to_plot$val), na.rm = TRUE)
 
   # plot it
   ggplot(x_to_plot, aes(aspects, ymin = 0, ymax = val, color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
-    scale_color_discrete(name = "Type of contribution to the prediction:")
+    theme(legend.position = "none")
 }

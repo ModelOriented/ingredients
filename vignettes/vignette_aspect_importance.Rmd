@@ -99,7 +99,7 @@ Secondly, we prepare random forest model for the *titanic* dataset.
 
 ```{r}
 library("randomForest")
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+model_titanic_rf <- randomForest(factor(survived) == "yes" ~ gender + age + class + embarked +
                                    fare + sibsp + parch,  data = titanic)
 
 ```
