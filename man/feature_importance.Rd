@@ -91,7 +91,6 @@ plot(vd_rf_joint2, vd_rf_joint1)
 
 explain_titanic_glm
 
-
  \donttest{
 library("randomForest")
 
@@ -103,6 +102,9 @@ library("randomForest")
                            y = titanic$survived == "yes")
 
 vd_rf <- feature_importance(explain_titanic_rf)
+plot(vd_rf)
+
+vd_rf <- feature_importance(explain_titanic_rf, B = 5) # 5 replications
 plot(vd_rf)
 
 vd_rf_group <- feature_importance(explain_titanic_rf,

@@ -1,10 +1,13 @@
+ingredients 0.3.5
+----------------------------------------------------------------
+* new feature [#29](https://github.com/ModelOriented/ingredients/issues/29). Feature importance now takes an argument `B` that replicates permutations `B` times and calculates average from drop loss.
+
 ingredients 0.3.4
 ----------------------------------------------------------------
 * `plotD3` now supports Ceteris Paribus Profiles.
 * `feature_importance` now can take `variable_grouping` argument that assess importance of group of features
 * fix in ceteris_paribus, now it handles models with just one variable
 * fix [#27](https://github.com/ModelOriented/ingredients/issues/27) for multiple rows 
-
 ingredients 0.3.3
 ----------------------------------------------------------------
 * `show_profiles` and `show_residuals` functions extend Ceteris Paribus Plots.

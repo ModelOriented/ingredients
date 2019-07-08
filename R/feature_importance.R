@@ -58,7 +58,6 @@
 #'
 #' explain_titanic_glm
 #'
-#'
 #'  \donttest{
 #' library("randomForest")
 #'
@@ -70,6 +69,9 @@
 #'                            y = titanic$survived == "yes")
 #'
 #' vd_rf <- feature_importance(explain_titanic_rf)
+#' plot(vd_rf)
+#'
+#' vd_rf <- feature_importance(explain_titanic_rf, B = 5) # 5 replications
 #' plot(vd_rf)
 #'
 #' vd_rf_group <- feature_importance(explain_titanic_rf,
@@ -169,18 +171,18 @@ feature_importance.default <- function(x,
                                        variable_groups = NULL) {
   if (!is.null(variable_groups)) {
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
-    
+
     wrong_names <- !all(sapply(variable_groups, function(variable_set) {
       all(variable_set %in% names(data))
     }))
-    
+
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
     if (!all(sapply(variable_groups, class) == "character")) stop("Elements of variable_groups argument should be of class character")
-    if (is.null(names(variable_groups))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.") 
+    if (is.null(names(variable_groups))) warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.")
   }
   type <- match.arg(type)
   B <- max(1, round(B))
-  
+
   # Adding variable set name when not specified
   if (!is.null(variable_groups) && is.null(names(variable_groups))) {
     names(variable_groups) <- sapply(variable_groups, function(variable_set) {
@@ -221,7 +223,7 @@ feature_importance.default <- function(x,
   }
   # permute B times, collect results into single matrix
   raw <- replicate(B, loss_after_permutation())
-  
+
   # main result df with dropout_loss averages, with _full_model_ first and _baseline_ last
   res <- apply(raw, 1, mean)
   res_baseline <- res["_baseline_"]
@@ -240,7 +242,7 @@ feature_importance.default <- function(x,
     res$dropout_loss = res$dropout_loss - res_full
   }
   class(res) <- c("feature_importance_explainer", "data.frame")
-  
+
   # record details of permutations
   attr(res, "B") <- B
   if (is.null(keep_raw_permutations)) {
@@ -254,7 +256,7 @@ feature_importance.default <- function(x,
       label = label
     )
   }
-  
+
   res
 }
 
