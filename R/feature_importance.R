@@ -15,6 +15,7 @@
 #' @param type character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}
 #' @param n_sample number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).
 #' @param B integer, number of permutation rounds to perform on each variable
+#' @param keep_raw_permutations logical or NULL, determines if output retains information for individual permutations; default is to omit for B=1 and keep otherwise
 #' @param variables vector of variables. If NULL then variable importance will be tested for each variable from the `data` separately. By default NULL
 #' @param variable_groups list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`
 #'
@@ -119,6 +120,7 @@ feature_importance.explainer <- function(x,
                                          type = c("raw", "ratio", "difference"),
                                          n_sample = NULL,
                                          B = 1,
+                                         keep_raw_permutations = NULL,
                                          variables = NULL,
                                          variable_groups = NULL,
                                          label = NULL) {
@@ -143,6 +145,7 @@ feature_importance.explainer <- function(x,
                              type = type,
                              n_sample = n_sample,
                              B = B,
+                             keep_raw_permutations = keep_raw_permutations,
                              variables = variables,
                              variable_groups = variable_groups,
                              ...
@@ -161,6 +164,7 @@ feature_importance.default <- function(x,
                                        type = c("raw", "ratio", "difference"),
                                        n_sample = NULL,
                                        B = 1,
+                                       keep_raw_permutations = NULL,
                                        variables = NULL,
                                        variable_groups = NULL) {
   if (!is.null(variable_groups)) {
@@ -238,13 +242,18 @@ feature_importance.default <- function(x,
   class(res) <- c("feature_importance_explainer", "data.frame")
   
   # record details of permutations
-  raw <- data.frame(
-    variable = rep(rownames(raw), ncol(raw)),
-    permutation = rep(seq_len(B), each = nrow(raw)),
-    dropout_loss = as.vector(raw)
-  )
   attr(res, "B") <- B
-  attr(res, "raw_permutations") <- raw
+  if (is.null(keep_raw_permutations)) {
+    keep_raw_permutations <- (B > 1)
+  }
+  if (keep_raw_permutations) {
+    attr(res, "raw_permutations") <- data.frame(
+      variable = rep(rownames(raw), ncol(raw)),
+      permutation = rep(seq_len(B), each = nrow(raw)),
+      dropout_loss = as.vector(raw),
+      label = label
+    )
+  }
   
   res
 }

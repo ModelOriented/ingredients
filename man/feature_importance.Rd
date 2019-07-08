@@ -10,13 +10,15 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(x,
   loss_function = loss_root_mean_square, ..., type = c("raw", "ratio",
-  "difference"), n_sample = NULL, B = 1, variables = NULL,
+  "difference"), n_sample = NULL, B = 1,
+  keep_raw_permutations = NULL, variables = NULL,
   variable_groups = NULL, label = NULL)
 
 \method{feature_importance}{default}(x, data, y, predict_function,
   loss_function = loss_root_mean_square, ..., label = class(x)[1],
   type = c("raw", "ratio", "difference"), n_sample = NULL, B = 1,
-  variables = NULL, variable_groups = NULL)
+  keep_raw_permutations = NULL, variables = NULL,
+  variable_groups = NULL)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
@@ -30,6 +32,8 @@ feature_importance(x, ...)
 \item{n_sample}{number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{B}{integer, number of permutation rounds to perform on each variable}
+
+\item{keep_raw_permutations}{logical or NULL, determines if output retains information for individual permutations; default is to omit for B=1 and keep otherwise}
 
 \item{variables}{vector of variables. If NULL then variable importance will be tested for each variable from the `data` separately. By default NULL}
 

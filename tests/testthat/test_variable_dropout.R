@@ -67,12 +67,30 @@ test_that("feature_importance records number of permutations", {
   raw <- attr(result, "raw_permutations")
   expect_is(raw, "data.frame")
   # the raw permutations data frame will have:
-  # - three columns: feature, permutation, dropout_loss
+  # - three columns: feature, permutation, dropout_loss, label
   # - many rows: one per permutation and per feature (plus baseline, plus full)
-  expect_equal(dim(raw), c(nrow(result)*2, 3))
+  expect_equal(dim(raw), c(nrow(result)*2, 4))
   # because there is no sub-sampling, all the full-model results should be equal
   loss_full <- raw[raw$variable=="_full_model_",]
   expect_equal(length(unique(loss_full$dropout_loss)), 1)
+})
+
+
+test_that("feature_importance avoids reporting permutations when only one performed", {
+  # by default, one permutation leads to no raw_permutations component
+  result_default <- feature_importance(explainer_rf, B = 1)
+  expect_true(is.null(attr(result_default, "raw_permutations")))
+  result_keep <- feature_importance(explainer_rf, B = 1, keep_raw_permutations = TRUE)
+  expect_false(is.null(attr(result_keep, "raw_permutations")))
+})
+
+
+test_that("feature_importance can avoid recording permutation details", {
+  result <- feature_importance(explainer_rf, B = 2, keep_raw_permutations = FALSE)
+  expect_true(is.null(attr(result, "raw_permutations")))
+  # when keep_raw_permutations is off, output should still signal number of permutations
+  expect_false(is.null(attr(result, "B")))
+  expect_equal(attr(result, "B"), 2)
 })
 
 
