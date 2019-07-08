@@ -109,10 +109,10 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
     
 
-    <pre class="usage"><span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+<span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>, <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>chartTitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -195,13 +195,13 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"age"</span>,<span class='st'>"parch"</span>,<span class='st'>"fare"</span>,<span class='st'>"sibsp"</span>),
+<span class='fu'>plotD3</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"age"</span>,<span class='st'>"parch"</span>,<span class='st'>"fare"</span>,<span class='st'>"sibsp"</span>),
      <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>selected_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>),
+<span class='fu'>plotD3</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>),
      <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'>
 </div></pre>
   </div>

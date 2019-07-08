@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Feature Importance Plots — feature_importance • ingredients</title>
+<title>Feature Importance — feature_importance • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -57,7 +57,7 @@
 	  <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
         <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
 	  </a>
-      <a class="navbar-brand navbar-mi2" href="../index.html">Feature Importance Plots</a>
+      <a class="navbar-brand navbar-mi2" href="../index.html">Feature Importance</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="navbar-mi2 nav navbar-nav">
@@ -100,7 +100,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Feature Importance Plots</h1>
+    <h1>Feature Importance</h1>
     </div>
 
     
@@ -112,14 +112,16 @@ For this reason it is also called the Variable Dropout Plot.</p>
 
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>feature_importance</span>(<span class='no'>x</span>,
-  <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
-  <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"raw"</span>, <span class='st'>"ratio"</span>,
+  <span class='st'>"difference"</span>), <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>keep_raw_permutations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>feature_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='no'>y</span>, <span class='no'>predict_function</span>,
   <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>, <span class='no'>...</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>, <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"raw"</span>, <span class='st'>"ratio"</span>, <span class='st'>"difference"</span>), <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>keep_raw_permutations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -144,6 +146,14 @@ For this reason it is also called the Variable Dropout Plot.</p>
     <tr>
       <th>n_sample</th>
       <td><p>number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).</p></td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td><p>integer, number of permutation rounds to perform on each variable</p></td>
+    </tr>
+    <tr>
+      <th>keep_raw_permutations</th>
+      <td><p>logical or NULL, determines if output retains information for individual permutations; default is to omit for B=1 and keep otherwise</p></td>
     </tr>
     <tr>
       <th>variables</th>
@@ -219,7 +229,6 @@ It's a data frame with calculated average response.</p>
 #&gt;   gender age class    embarked       country  fare sibsp parch
 #&gt; 1   male  42   3rd Southampton United States  7.11     0     0
 #&gt; 2   male  13   3rd Southampton United States 20.05     0     2</div><div class='input'>
-
  </div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
 
  <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
@@ -230,6 +239,8 @@ It's a data frame with calculated average response.</p>
 
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>)
 <span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='co'># 5 replications</span>
+<span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vd_rf_group</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>,
                    <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"demographics"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                    <span class='st'>"wealth"</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fare"</span>, <span class='st'>"class"</span>),
@@ -237,18 +248,17 @@ It's a data frame with calculated average response.</p>
                    <span class='st'>"embarked"</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>),
                    <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"rf 4 groups"</span>,
 )
-<span class='fu'>plot</span>(<span class='no'>vd_rf_group</span>, <span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>vd_rf_group</span>, <span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>)
-<span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
+<span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>)</div><div class='output co'>#&gt; <span class='message'>Please note that 'y' is a factor. The default loss functions assume numerical outputs (e.g. scores, probabilities, rates). Consider changing the y to the logical or numerical (0-1) vector.</span></div><div class='input'><span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
 <span class='fu'>head</span>(<span class='no'>vd_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
-#&gt; 1 _full_model_     1957.756 randomForest
-#&gt; 2       status     1957.756 randomForest
-#&gt; 3       gender     3853.250 randomForest
-#&gt; 4          age     5024.339 randomForest
-#&gt; 5       salary     5579.211 randomForest
-#&gt; 6   evaluation     8076.995 randomForest</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-6.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1 _full_model_     1979.355 randomForest
+#&gt; 2       status     1979.355 randomForest
+#&gt; 3       gender     3939.093 randomForest
+#&gt; 4          age     5020.552 randomForest
+#&gt; 5       salary     5466.391 randomForest
+#&gt; 6   evaluation     7864.602 randomForest</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
 <span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
@@ -256,10 +266,10 @@ It's a data frame with calculated average response.</p>
 <span class='fu'>head</span>(<span class='no'>vd_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
 #&gt; 1 _full_model_    0.4148305    lm
 #&gt; 2       status    0.4148305    lm
-#&gt; 3       gender    0.4148425    lm
-#&gt; 4          age    0.4148614    lm
-#&gt; 5       salary    0.4149080    lm
-#&gt; 6   evaluation    0.4301613    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-7.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 3       salary    0.4148317    lm
+#&gt; 4          age    0.4148416    lm
+#&gt; 5       gender    0.4148630    lm
+#&gt; 6   evaluation    0.4308254    lm</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>library</span>(<span class='st'>"xgboost"</span>)
 <span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'>model.matrix</span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
 <span class='no'>data_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/xgboost/topics/xgb.DMatrix'>xgb.DMatrix</a></span>(<span class='no'>model_martix_train</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
@@ -272,10 +282,10 @@ It's a data frame with calculated average response.</p>
 <span class='fu'>head</span>(<span class='no'>vd_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
 #&gt; 1 _full_model_    0.3142729 xgboost
 #&gt; 2   gendermale    0.3142729 xgboost
-#&gt; 3   evaluation    0.3382584 xgboost
-#&gt; 4 genderfemale    0.3950657 xgboost
-#&gt; 5          age    0.3999260 xgboost
-#&gt; 6       salary    0.4132624 xgboost</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_xgb</span>, <span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-8.png' alt='' width='700' height='433' /></div><div class='input'> </div></pre>
+#&gt; 3   evaluation    0.3388909 xgboost
+#&gt; 4 genderfemale    0.3920586 xgboost
+#&gt; 5          age    0.3963048 xgboost
+#&gt; 6       salary    0.4121895 xgboost</div><div class='input'><span class='fu'>plot</span>(<span class='no'>vd_xgb</span>, <span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-9.png' alt='' width='700' height='433' /></div><div class='input'> </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

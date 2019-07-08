@@ -200,16 +200,15 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 19.53%
+#&gt;         OOB estimate of  error rate: 19.06%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1315 103  0.07263752
-#&gt; yes  307 374  0.45080764</div><div class='input'>
+#&gt; no  1319  99  0.06981664
+#&gt; yes  301 380  0.44199706</div><div class='input'>
  <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
-
+                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; <span class='message'>Please note that 'y' is a factor. The default loss functions assume numerical outputs (e.g. scores, probabilities, rates). Consider changing the y to the logical or numerical (0-1) vector.</span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
 <span class='fu'>plot</span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_rf</span>)

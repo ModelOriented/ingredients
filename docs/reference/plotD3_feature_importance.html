@@ -106,13 +106,14 @@
     
     <p>Function <code>plotD3.feature_importance_explainer</code> plots dropouts for variables used in the model.
 It uses output from <code>feature_importance</code> function that corresponds to permutation based measure of feature importance.
-Variables are sorted in the same order in all panels. The order depends on the average drop out loss. In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
+Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
+In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"model"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.15</span>)</pre>
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>chartTitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,7 +128,8 @@ Variables are sorted in the same order in all panels. The order depends on the a
     </tr>
     <tr>
       <th>max_vars</th>
-      <td><p>maximum number of variables that shall be presented for for each model. By default NULL what means all variables</p></td>
+      <td><p>maximum number of variables that shall be presented for for each model.
+By default NULL what means all variables</p></td>
     </tr>
     <tr>
       <th>bar_width</th>
@@ -143,7 +145,12 @@ Variables are sorted in the same order in all panels. The order depends on the a
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>extend x axis domain range to adjust the plot. Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
+      <td><p>extend x axis domain range to adjust the plot.
+Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
+    </tr>
+    <tr>
+      <th>chartTitle</th>
+      <td><p>a character. Set custom title</p></td>
     </tr>
     </table>
     
@@ -155,39 +162,39 @@ Variables are sorted in the same order in all panels. The order depends on the a
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
 <span class='fu'>library</span>(<span class='st'>"ingredients"</span>)
-<span class='fu'>library</span>(<span class='st'>"caret"</span>)
 
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rf"</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>lm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"lm"</span>)
+<span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
+
+<span class='fu'>head</span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+#&gt; 1      _full_model_     279.3262    lm
+#&gt; 2 construction.year     279.1979    lm
+#&gt; 3          no.rooms     288.7652    lm
+#&gt; 4             floor     498.8014    lm
+#&gt; 5           surface     603.5279    lm
+#&gt; 6          district     992.5898    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
+
+<span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
 <span class='fu'>head</span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
-#&gt; 1      _full_model_     154.7823    rf
-#&gt; 2          no.rooms     167.6198    rf
-#&gt; 3 construction.year     368.7383    rf
-#&gt; 4             floor     416.4059    rf
-#&gt; 5           surface     585.8223    rf
-#&gt; 6          district     959.0899    rf</div><div class='input'><span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>)
+#&gt; 1      _full_model_     192.5765    rf
+#&gt; 2          no.rooms     363.1937    rf
+#&gt; 3 construction.year     366.0378    rf
+#&gt; 4             floor     413.9383    rf
+#&gt; 5           surface     449.4348    rf
+#&gt; 6          district     803.9825    rf</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
 
-<span class='no'>svm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/caret/topics/train'>train</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"svmLinear"</span>)
-<span class='no'>explainer_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>svm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"svm"</span>)
-<span class='no'>fi_svm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_svm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
 
-<span class='fu'>head</span>(<span class='no'>fi_svm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
-#&gt; 1      _full_model_     301.5889   svm
-#&gt; 2 construction.year     301.5946   svm
-#&gt; 3          no.rooms     317.9110   svm
-#&gt; 4             floor     502.9272   svm
-#&gt; 5           surface     612.7758   svm
-#&gt; 6          district     994.6825   svm</div><div class='input'><span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>)
-
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
-
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>, <span class='no'>fi_svm</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='plotD3.html'>plotD3</a></span>(<span class='no'>fi_rf</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
