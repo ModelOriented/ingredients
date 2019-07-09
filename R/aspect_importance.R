@@ -13,6 +13,7 @@
 #' @param new_observation selected observation with columns that corresponds to variables used in the model
 #' @param aspects_list list containg grouping of features into aspects
 #' @param B number of rows to be sampled from data
+#' @param method sampling method in get_sample()
 #'
 #' @return An object of the class 'aspect_importance'.
 #' Contains dataframe that describes aspects' importance.
@@ -65,7 +66,7 @@ aspect_importance <- function(x, ...)
 #' @rdname aspect_importance
 
 aspect_importance.explainer <- function(x, new_observation, aspects_list,
-                                        B = 100) {
+                                        B = 100, method = "default") {
 
   # extracts model, data and predict function from the explainer
   data <- x$data
@@ -74,7 +75,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects_list,
 
   # calls target function
   aspect_importance.default(model, data, predict_function,
-                            new_observation, aspects_list, B)
+                            new_observation, aspects_list, B, method)
 }
 
 #' @export
@@ -82,7 +83,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects_list,
 
 aspect_importance.default <- function(model,data, predict_function = predict,
                                       new_observation,
-                                      aspects_list, B = 100) {
+                                      aspects_list, B = 100, method = "default") {
   # look only for common variables in data and new observation
   if ("data.frame" %in% class(data)) {
     common_variables <- intersect(colnames(new_observation), colnames(data))
@@ -99,7 +100,7 @@ aspect_importance.default <- function(model,data, predict_function = predict,
   n_sample_changed <- n_sample
 
   # sample which aspects will be replaced
-  new_X <- get_sample(B, length(aspects_list), method = "default")
+  new_X <- get_sample(B, length(aspects_list), method)
 
   # replace aspects
   for (i in 1:nrow(n_sample)) {
@@ -193,4 +194,10 @@ plot.aspect_importance <- function(x, bar_width = 10) {
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none")
+}
+
+#' @export
+#' @rdname aspect_importance
+a_lime <- function(x, ...) {
+  aspect_importance(x, ...)
 }

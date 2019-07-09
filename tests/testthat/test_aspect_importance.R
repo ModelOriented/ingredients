@@ -1,6 +1,6 @@
 context("Check aspect_importance() functions")
 
-test_that("check output for aspects importance (glm)",{
+test_that("check output for aspects importance (glm, default)",{
   library("DALEX")
   library("ingredients")
   set.seed(123)
@@ -36,7 +36,7 @@ test_that("check output for aspects importance (glm)",{
 
 })
 
-test_that("check output for aspects importance (lm)",{
+test_that("check output for aspects importance (lm, binom)",{
   library("DALEX")
   library("ingredients")
 
@@ -52,9 +52,9 @@ test_that("check output for aspects importance (lm)",{
 
   aspect_importance_ap <- aspect_importance(model, apartments,
                                             predict, new_observation,
-                                            aspects)
+                                            aspects, method = "binom")
   expect_true("aspect_importance" %in% class(aspect_importance_ap))
-  expect_true(floor(aspect_importance_ap[aspect_importance_ap$aspects=="district",]$importance) == 342)
+  expect_true(floor(aspect_importance_ap[aspect_importance_ap$aspects=="district",]$importance) == 570)
 })
 
 test_that("check plot for aspects importance",{
@@ -76,6 +76,28 @@ test_that("check plot for aspects importance",{
                                             aspects)
   expect_is(plot(aspect_importance_ap), "gg")
 })
+
+test_that("check alias for aspect_importance",{
+  library("DALEX")
+  library("ingredients")
+
+  set.seed(123)
+  model <- lm(m2.price ~ ., data = apartments)
+
+  aspects <- list(space = c("surface", "no.rooms"),
+                  construction.year = "construction.year",
+                  floor = "floor",
+                  district = "district")
+
+  new_observation <- apartments_test[2,-1]
+
+  aspect_importance_ap <- a_lime(model, apartments,
+                                            predict, new_observation,
+                                            aspects)
+  expect_true("aspect_importance" %in% class(aspect_importance_ap))
+
+})
+
 
 test_that("check get_sample function with binom",{
   library("DALEX")
