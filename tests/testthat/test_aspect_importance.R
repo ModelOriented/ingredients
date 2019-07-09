@@ -30,8 +30,10 @@ test_that("check output for aspects importance (glm)",{
                                                      predict, new_observation,
                                                      aspects)
 
-  expect_true("lm" %in% class(aspect_importance_titanic_glm))
-  expect_true(length(aspect_importance_titanic_glm$coefficients) == 5)
+  expect_true("data.frame" %in% class(aspect_importance_titanic_glm))
+  expect_true(dim(aspect_importance_titanic_glm)[1] == 4)
+  expect_true(dim(aspect_importance_titanic_glm)[2] == 2)
+
 })
 
 test_that("check output for aspects importance (lm)",{
@@ -51,10 +53,28 @@ test_that("check output for aspects importance (lm)",{
   aspect_importance_ap <- aspect_importance(model, apartments,
                                             predict, new_observation,
                                             aspects)
-  expect_true("lm" %in% class(aspect_importance_ap))
-  expect_true(floor(coef(summary(aspect_importance_ap))["district","Estimate"]) == 342)
-  expect_true(is.numeric(floor(coef(summary(aspect_importance_ap))["district","Estimate"])))
+  expect_true("aspect_importance" %in% class(aspect_importance_ap))
+  expect_true(floor(aspect_importance_ap[aspect_importance_ap$aspects=="district",]$importance) == 342)
+})
 
+test_that("check plot for aspects importance",{
+  library("DALEX")
+  library("ingredients")
+
+  set.seed(123)
+  model <- lm(m2.price ~ ., data = apartments)
+
+  aspects <- list(space = c("surface", "no.rooms"),
+                  construction.year = "construction.year",
+                  floor = "floor",
+                  district = "district")
+
+  new_observation <- apartments_test[2,-1]
+
+  aspect_importance_ap <- aspect_importance(model, apartments,
+                                            predict, new_observation,
+                                            aspects)
+  expect_is(plot(aspect_importance_ap), "gg")
 })
 
 test_that("check get_sample function with binom",{
@@ -67,6 +87,7 @@ test_that("check get_sample function with binom",{
   expect_true(nrow(x) == 100)
   expect_true(max(x) == 1)
   expect_true(min(x) == 0)
+  expect_error(get_sample(-100,4,"binom"))
 })
 
 test_that("check get_sample function with default sampling",{

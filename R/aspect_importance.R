@@ -1,6 +1,6 @@
 #' Aspect Importance
-#'
 #' This explainer calculates the feature groups importance (called aspects importance) for a selected observation.
+#'
 #' Aspect Importance function takes a sample from a given dataset and modifies it.
 #' Modification is made by replacing part of its aspects by values from the observation.
 #' Then function is calculating the difference between the prediction made on modified sample and the original sample.
@@ -15,7 +15,7 @@
 #' @param B number of rows to be sampled from data
 #'
 #' @return An object of the class 'aspect_importance'.
-#' Contains linear model describing aspects' importance.
+#' Contains dataframe that describes aspects' importance.
 #'
 #' @importFrom stats lm
 #'
@@ -115,9 +115,16 @@ aspect_importance.default <- function(model,data, predict_function = predict,
   colnames(new_X) <- names(aspects_list)
   new_df <- data.frame(new_X, y_changed)
   new_model <- lm(y_changed~., data = new_df)
-  class(new_model) <- c("aspect_importance", "lm")
 
-  return(new_model)
+  # building dataframe with results
+  res <- as.data.frame(names(new_model$coefficients))
+  colnames(res)[1] <- "aspects"
+  res$importance <- unname(new_model$coefficients)
+  res <- res[!res$aspects == "(Intercept)",]
+  res <- res[order(-abs(res$importance)),]
+  class(res) <- c("aspect_importance", "data.frame")
+
+  return(res)
 }
 
 #' Function for getting binary matrix
@@ -174,18 +181,15 @@ get_sample <- function(n, p, method = c("default","binom"), f = 2) {
 #'
 #' @export
 
+
+
 plot.aspect_importance <- function(x, bar_width = 10) {
 
-  x_to_plot <- as.data.frame(names(x$coefficients))
-  x_to_plot$val <- unname(x$coefficients)
-  colnames(x_to_plot)[1] <- "aspects"
-  x_to_plot <- x_to_plot[!x_to_plot$aspects == "(Intercept)",]
-  x_to_plot$a_sign <- ifelse(x_to_plot$val > 0,"positive","negative")
-
-  x_to_plot$aspects <- reorder(x_to_plot$aspects, abs(x_to_plot$val), na.rm = TRUE)
+  x$a_sign <- ifelse(x$importance > 0,"positive","negative")
+  x$aspects <- reorder(x$aspects, abs(x$importance), na.rm = TRUE)
 
   # plot it
-  ggplot(x_to_plot, aes(aspects, ymin = 0, ymax = val, color = a_sign)) +
+  ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none")
