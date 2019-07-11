@@ -4,26 +4,29 @@
 \alias{get_sample}
 \title{Function for getting binary matrix}
 \usage{
-get_sample(n, m, method = c("default", "binom"), p = 0.05)
+get_sample(n, p, method = c("default", "binom"), f = 2)
 }
 \arguments{
 \item{n}{number of rows}
 
-\item{m}{number of columns}
+\item{p}{number of columns}
 
 \item{method}{sampling method}
 
-\item{p}{probability for binomial sampling}
+\item{f}{probability for binomial sampling}
 }
 \value{
 a binary matrix
 }
 \description{
-This function creates binary matrix.
-It uses either binomial distribution or sample() function
+Function creates binary matrix.
+It starts with a zero matrix. Then it replaces some zeros with ones.
+It either randomly replaces one or two zeros per row.
+Or replace random number of zeros per row - average number of replaced zeros can be controled by parameter f.
+Function doesn't allow the returned matrix to have rows with only zeros.
 }
 \examples{
  \dontrun{
- get_sample(100,4,"binom")
+ get_sample(100,6,"binom",3)
 }
 }

@@ -22,10 +22,10 @@ knitr::opts_chunk$set(
 
 # Data and logistic regression model for Titanic survival
 
-Vignette will present the aspect_importance() function on the dataset *titanic*. Dataset is available in the `DALEX` package.  
+Vignette will present the aspect_importance() function on the datasets *titanic* (available in the `DALEX` package) and *BostonHousing2* (from `mlbench` package).  
 At the beginning, we download *titanic* dataset and build logistic regression model.
 
-```{r}
+```{r read titanic data}
 library("DALEX")
 head(titanic)
 titanic <- na.omit(titanic)
@@ -43,8 +43,8 @@ Before using aspect_importance() we need to:
 * choose observation for which we explain aspects' importance.
 
 
-```{r}
-aspects <- list(wealth = c("class", "fare"), family = c("gender", "sibsp", "parch"), age = "age", embarked = "embarked")
+```{r build parameters for titanic model}
+aspects <- list(wealth = c("class", "fare"), family = c("sibsp", "parch"), personal = c("age","gender"), embarked = "embarked")
 
 B <- 100
 passenger <- data.frame(
@@ -63,10 +63,10 @@ predict(model_titanic_glm, passenger)
 
 # Calculating aspect importance (logistic regression)
 
-We call aspect_importance() function and see that features that are included in **wealth** (that is *class* and *fare*) have the biggest postive contribution on survival prediction for the passenger. **Age** feature has also quite strong positive influence. **Family** features ("gender", "sibsp", "parch") have some negative influence, of less importance than **wealth** and **age**. Port of embarkment (only one feature in this group) has only slightly negative influence.
+We call aspect_importance() function and see that features that are included in **wealth** (that is *class* and *fare*) have the biggest postive contribution on survival prediction for the passenger. Port of **embarkment** (only one feature in this group) has much smaller influence and is of a negative type. **Personal** (*gender*, *age*) features as well as **family** features (*sibsp*, *parch*) have sligthly positive influence. 
 
 
-```{r}
+```{r Calculating aspect importance (logistic regression)}
 library("ggplot2")
 library("ingredients")
 
@@ -79,9 +79,9 @@ plot(titanic_glm_ai) + ggtitle("Aspect importance for the selected passenger (lo
 
 # Calculating aspect importance with explainer
 
-Aspect_importance() could be also called using DALEX explainer as showed below.
+Aspect_importance() could be also called using `DALEX` explainer as showed below.
 
-```{r}
+```{r Calculating aspect importance with explainer}
 explain_titanic_glm <- explain(model_titanic_glm, 
                       data = titanic[,-9],
                       y = titanic$survived == "yes", 
@@ -93,11 +93,18 @@ titanic_glm_ai
 
 ```
 
+We can add additional information (ie. list of features that are included in every aspect) by calling add_additional_information().
+
+```{r adding additional info to titanic}
+add_additional_information(explain_titanic_glm$data, titanic_glm_ai, aspects)
+```
+
+
 # Random forest model for Titanic survival
 
 Secondly, we prepare random forest model for the *titanic* dataset.
 
-```{r}
+```{r  Random forest model for Titanic survival}
 library("randomForest")
 model_titanic_rf <- randomForest(factor(survived) == "yes" ~ gender + age + class + embarked +
                                    fare + sibsp + parch,  data = titanic)
@@ -106,17 +113,56 @@ model_titanic_rf <- randomForest(factor(survived) == "yes" ~ gender + age + clas
 
 # Calculating aspect importance (random forest)
 
-After calling aspect_importance() on the random forest model, we can observe that this time every aspect has smaller contribution to the prediction. Especially **wealth**, the biggest postive contributor in logistic regression case, this time has very slight influence.
+After calling aspect_importance() on the random forest model, we can observe that this time every aspect has much smaller contribution to the prediction. And this time **personal** features have a little big more influence than **wealth**.
 
-```{r}
+```{r Calculating aspect importance (random forest)}
 titanic_rf_ai <- aspect_importance(model_titanic_rf, titanic, predict, passenger, aspects, 100)
 
 titanic_rf_ai
 plot(titanic_rf_ai) + ggtitle("Aspect importance for the selected passenger (random for.)")
 ```
 
+# Autogrouping features into aspects
+
+On BostonHousing dataset, we will test function that automatically groups features into aspects basing the decision on the features correlation. Function only works on continuous variables.  
+
+We are importing *BostonHousing2* from `mlbench` package and choose columns with continuous features. Then we fit linear model to the data and choose observation to be explained.
+
+
+```{r import BostonHousing2}
+
+library(mlbench)
+data("BostonHousing2")
+data <- BostonHousing2[,-c(1:5, 10)] #excluding cont. features
+x <- BostonHousing2[,-c(1:6, 10)] #excluding cont. features and target variable
+model <- lm(cmedv ~., data = data)
+new_observation <- data[10,]
+```
+
+
+We run group_variables() function with cutting off level set on 0.5. In result we get a list of variables groups (aspects) where absolute value of features' pairwise correlation is at least at 0.5.
+
+```{r}
+aspects_list <- group_variables(x, 0.6)
+
+BostonHousing2_ai <- aspect_importance(model,data, predict_function = predict,
+                            new_observation,
+                            aspects_list, B = 50)
+BostonHousing2_ai
+```
+
+Finally, we use add_additional_information() function, with parameter *show_cor = T*, to show how features are grouped into aspects, show minimal value of pairwise correlation in group and show whether any pair of features is negatively correlated (*neg*) or not (*pos*). 
+
+```{r}
+BostonHousing2_ai_add <- add_additional_information(data, BostonHousing2_ai, aspects_list, show_cor = T)
+BostonHousing2_ai_add
+
+```
+
+
 # Session info
 
 ```{r}
 sessionInfo()
 ```
+*

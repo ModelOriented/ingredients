@@ -91,7 +91,7 @@ test_that("check alias for aspect_importance",{
 
   new_observation <- apartments_test[2,-1]
 
-  aspect_importance_ap <- a_lime(model, apartments,
+  aspect_importance_ap <- aspect_lime(model, apartments,
                                             predict, new_observation,
                                             aspects)
   expect_true("aspect_importance" %in% class(aspect_importance_ap))
@@ -122,4 +122,16 @@ test_that("check get_sample function with default sampling",{
   expect_true(nrow(x) == 50)
   expect_true(max(x) == 1)
   expect_true(min(x) == 0)
+})
+
+test_that("check group_variables function",{
+  library("DALEX")
+  library("ingredients")
+
+  titanic <- na.omit(titanic)
+  titanic_cont <- titanic[,unlist(lapply(titanic, is.numeric))]
+  aspect_list <- group_variables(titanic_cont, 0.5)
+  expect_true(length(aspect_list) == 3)
+  expect_error(group_variables(titanic, 0.6))
+
 })

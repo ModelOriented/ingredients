@@ -124,7 +124,6 @@ aspect_importance.default <- function(model,data, predict_function = predict,
   res <- res[!res$aspects == "(Intercept)",]
   res <- res[order(-abs(res$importance)),]
   class(res) <- c("aspect_importance", "data.frame")
-
   return(res)
 }
 
@@ -150,6 +149,7 @@ aspect_importance.default <- function(model,data, predict_function = predict,
 #'  get_sample(100,6,"binom",3)
 #' }
 #' @export
+#' @rdname get_sample
 
 get_sample <- function(n, p, method = c("default","binom"), f = 2) {
   method = match.arg(method)
@@ -168,6 +168,47 @@ get_sample <- function(n, p, method = c("default","binom"), f = 2) {
   return(x)
 }
 
+
+#' Group features into aspects
+#'
+#' Divides correlated features into groups, called aspects
+#'
+#'
+#' @param x dataframe with only numeric columns
+#' @param p correlation value for cutoff point
+#'
+#' @return list of aspects
+#' @export
+#'
+#' @importFrom stats hclust
+#' @importFrom stats cor
+#'
+#' @export
+#' @rdname group_variables
+
+group_variables <- function(x, p = 0.5) {
+
+  stopifnot(all(sapply(x, is.numeric) ))
+
+  # build and cut a tree
+  x_hc <- hclust(as.dist(1 - abs(cor(x, method = "spearman"))))
+  clust_list <- cutree(x_hc, h = (1 - p))
+
+  #prepare a list with aspects grouping
+  df <- as.data.frame(names(clust_list))
+  colnames(df) <- c("name")
+  df$val <- unname(clust_list)
+
+  res <- vector("list", max(clust_list))
+  names(res) <- paste0("aspect.group",seq_along(res))
+
+  for (i in c(1:length(res))) {
+    res[i] <- list(as.character(subset(df,val == i)$name))
+  }
+  return(res)
+}
+
+
 #' Function for plotting aspect_importance results
 #'
 #' This function plots the results of aspect_importance
@@ -181,6 +222,7 @@ get_sample <- function(n, p, method = c("default","binom"), f = 2) {
 #' @import ggplot2
 #'
 #' @export
+#' @rdname aspect_importance
 
 
 
@@ -196,8 +238,44 @@ plot.aspect_importance <- function(x, bar_width = 10) {
     theme(legend.position = "none")
 }
 
+#' temporary function, probably to be merged with aspect_importance
+#'
+#' Add additional information to results of aspect_importance function
+#' Show variables included in every aspect, minimal pairwise correlation in feature group and informs if any pairwise correlation in group is of negative type
+#'
+#' @param data -  orignal data that was fed to aspect_importance() function
+#' @param ai_model - aspect_importance() function results
+#' @param aspect_list - aspect list that was fed to aspect_importance() function
+#' @param show_cor - binary parameter for showing or hiding information about correlations
+#'
+#' @return data frame
+#' @export
+#'
+#' @importFrom stats cor
+#'
+#' @rdname add_additional_information
+#' @export
+
+add_additional_information <- function(data, ai_model, aspect_list, show_cor = F) {
+  for (i in 1:length(aspect_list)) {
+    ai_model$features[i] <- aspect_list[as.character(ai_model[i,1])]
+    vars <- unlist(ai_model$features[i])
+    if (all(sapply(data[,vars], is.numeric)) & length(vars)>1 & show_cor == T) {
+        cor_matrix <- cor(data[,vars], method = "spearman")
+        ai_model$min_cor[i] <- min(abs(cor_matrix))
+        ai_model$sign[i] <- ifelse(max(cor_matrix) > 0 & min(cor_matrix) < 0, "neg","pos")
+      } else if (show_cor == T) {
+        ai_model$min_cor[i] <- NA
+        ai_model$sign[i] <- ''
+      }
+  }
+  ai_model <- format(ai_model, digits = 4)
+  return(ai_model)
+}
+
 #' @export
 #' @rdname aspect_importance
-a_lime <- function(x, ...) {
+aspect_lime <- function(x, ...) {
   aspect_importance(x, ...)
 }
+
