@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -154,25 +145,25 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>titanic</span>)
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>glm</span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='show_rugs-1.png' alt='' width='700' height='433' /></div><div class='input'>
- </div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+ </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+ <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
                                     <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
  <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
 #&gt; Call:
@@ -181,60 +172,60 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 19.2%
+#&gt;         OOB estimate of  error rate: 18.96%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1317 101  0.07122708
-#&gt; yes  302 379  0.44346549</div><div class='input'>
- <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+#&gt; no  1321  97  0.06840621
+#&gt; yes  301 380  0.44199706</div><div class='input'>
+ <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>)</div><div class='output co'>#&gt; <span class='message'>Please note that 'y' is a factor. The default loss functions assume numerical outputs (e.g. scores, probabilities, rates). Consider changing the y to the logical or numerical (0-1) vector.</span></div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country   fare sibsp parch
-#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
+#&gt;        gender age            class    embarked country    fare sibsp parch
+#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
+#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
+#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
+#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
 #&gt;        _yhat_ _vname_ _ids_      _label_
-#&gt; 1960    0.002  gender  1960 randomForest
-#&gt; 1960.1  0.862  gender  1960 randomForest
-#&gt; 883     0.002  gender   883 randomForest
-#&gt; 883.1   0.538  gender   883 randomForest
-#&gt; 1594    0.002  gender  1594 randomForest
-#&gt; 1594.1  0.950  gender  1594 randomForest
+#&gt; 557     0.000  gender   557 randomForest
+#&gt; 557.1   0.932  gender   557 randomForest
+#&gt; 660     0.050  gender   660 randomForest
+#&gt; 660.1   0.550  gender   660 randomForest
+#&gt; 1535    0.000  gender  1535 randomForest
+#&gt; 1535.1  0.802  gender  1535 randomForest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked country   fare sibsp parch _yhat_
-#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0  0.862
-#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0  0.002
-#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0  0.002
-#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0  0.004
-#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0  0.002
-#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0  0.002
-#&gt;           _label_ _ids_
-#&gt; 1960 randomForest     1
-#&gt; 883  randomForest     2
-#&gt; 1594 randomForest     3
-#&gt; 1131 randomForest     4
-#&gt; 1445 randomForest     5
-#&gt; 1432 randomForest     6</div><div class='input'>
+#&gt;      gender age            class    embarked       country    fare sibsp parch
+#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
+#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
+#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
+#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
+#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
+#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
+#&gt;      _yhat_      _label_ _ids_
+#&gt; 557   0.000 randomForest     1
+#&gt; 660   0.050 randomForest     2
+#&gt; 1535  0.000 randomForest     3
+#&gt; 942   0.914 randomForest     4
+#&gt; 491   0.008 randomForest     5
+#&gt; 1639  0.004 randomForest     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'>head</span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_      _label_        _x_  _yhat_ _ids_
-#&gt; 1     age randomForest  0.1666667 0.51946     0
-#&gt; 2     age randomForest  2.0000000 0.56250     0
-#&gt; 3     age randomForest  4.0000000 0.56690     0
-#&gt; 4     age randomForest  7.0000000 0.51762     0
-#&gt; 5     age randomForest  9.0000000 0.51634     0
-#&gt; 6     age randomForest 13.0000000 0.44654     0</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_      _label_        _x_  _yhat_ _ids_
+#&gt; 1     age randomForest  0.1666667 0.50576     0
+#&gt; 2     age randomForest  2.0000000 0.53630     0
+#&gt; 3     age randomForest  4.0000000 0.53578     0
+#&gt; 4     age randomForest  7.0000000 0.49010     0
+#&gt; 5     age randomForest  9.0000000 0.48850     0
+#&gt; 6     age randomForest 13.0000000 0.42540     0</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'>show_rugs</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='show_rugs-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>)</div><div class='img'><img src='show_rugs-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>)</div><div class='img'><img src='show_rugs-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

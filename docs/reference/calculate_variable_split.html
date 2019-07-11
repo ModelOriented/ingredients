@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -110,7 +101,7 @@ For numerical variables splits are calculated as percentiles
 For all other variables splits are calculated as unique values.</p>
     
 
-    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>data</span>),
+    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>data</span>),
   <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -142,46 +133,14 @@ you should overload it.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='fu'>set.seed</span>(<span class='fl'>59</span>)
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
                                       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
-<span class='fu'>calculate_variable_split</span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)</div><div class='output co'>#&gt; $construction.year
-#&gt;  [1] 1920.00 1921.00 1922.00 1923.00 1924.00 1925.00 1926.00 1927.00 1928.00
-#&gt; [10] 1929.00 1929.89 1931.00 1932.00 1933.00 1934.00 1934.84 1935.00 1936.00
-#&gt; [19] 1937.00 1938.00 1939.00 1940.00 1941.00 1941.76 1943.00 1944.00 1945.00
-#&gt; [28] 1946.00 1947.00 1948.00 1949.00 1950.00 1951.00 1952.00 1953.00 1954.00
-#&gt; [37] 1956.00 1957.00 1958.00 1959.00 1960.00 1961.53 1962.52 1963.51 1965.00
-#&gt; [46] 1967.00 1967.47 1968.00 1969.00 1970.00 1971.00 1972.00 1973.00 1974.39
-#&gt; [55] 1975.00 1977.00 1978.00 1980.00 1981.00 1982.00 1983.00 1984.00 1985.00
-#&gt; [64] 1986.00 1987.00 1988.00 1989.00 1990.00 1991.00 1992.00 1993.00 1993.18
-#&gt; [73] 1994.00 1995.00 1996.00 1997.00 1998.00 1999.00 2000.00 2001.00 2002.00
-#&gt; [82] 2003.00 2004.00 2005.00 2007.00 2008.00 2009.00 2010.00
-#&gt; 
-#&gt; $surface
-#&gt;  [1]  20.00  22.00  23.98  24.00  25.00  26.00  27.00  30.00  31.00  32.00
-#&gt; [11]  33.00  35.00  37.00  38.00  39.00  40.00  41.00  42.00  44.00  46.00
-#&gt; [21]  47.00  48.00  49.78  51.00  52.00  53.00  54.00  55.73  56.72  57.00
-#&gt; [31]  59.00  60.00  61.00  62.00  63.00  64.00  65.64  67.00  68.62  70.00
-#&gt; [41]  72.00  73.59  75.00  76.00  78.00  79.55  81.00  82.00  83.00  84.00
-#&gt; [51]  85.50  87.00  88.48  90.00  91.00  93.00  93.44  95.00  96.00  98.00
-#&gt; [61] 100.00 101.39 103.00 105.00 106.00 107.00 108.00 109.00 110.00 111.00
-#&gt; [71] 112.00 113.00 114.27 116.00 118.00 120.00 121.00 123.00 124.00 125.00
-#&gt; [81] 127.00 128.00 130.00 131.00 132.00 133.00 136.00 137.00 138.00 141.00
-#&gt; [91] 142.00 143.00 144.00 145.00 146.04 147.03 148.00 149.00 150.00
-#&gt; 
-#&gt; $floor
-#&gt;  [1]  1.00  1.91  2.00  3.00  4.00  5.00  6.00  7.00  8.00  9.00 10.00
-#&gt; 
-#&gt; $no.rooms
-#&gt; [1] 1 2 3 4 5 6
-#&gt; 
-#&gt; $district
-#&gt;  [1] Srodmiescie Bielany     Praga       Ochota      Mokotow     Ursus      
-#&gt;  [7] Zoliborz    Wola        Bemowo      Ursynow    
-#&gt; 10 Levels: Bemowo Bielany Mokotow Ochota Praga Srodmiescie Ursus ... Zoliborz
-#&gt; </div></pre>
+<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
+<span class='fu'>calculate_variable_split</span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
