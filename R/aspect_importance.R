@@ -225,8 +225,9 @@ group_variables <- function(x, p = 0.5) {
 #' @rdname aspect_importance
 
 
-
 plot.aspect_importance <- function(x, bar_width = 10) {
+
+  stopifnot("aspect_importance" %in% class(x))
 
   x$a_sign <- ifelse(x$importance > 0,"positive","negative")
   x$aspects <- reorder(x$aspects, abs(x$importance), na.rm = TRUE)
@@ -243,8 +244,8 @@ plot.aspect_importance <- function(x, bar_width = 10) {
 #' Add additional information to results of aspect_importance function
 #' Show variables included in every aspect, minimal pairwise correlation in feature group and informs if any pairwise correlation in group is of negative type
 #'
-#' @param data -  orignal data that was fed to aspect_importance() function
 #' @param ai_model - aspect_importance() function results
+#' @param data -  orignal data that was fed to aspect_importance() function
 #' @param aspect_list - aspect list that was fed to aspect_importance() function
 #' @param show_cor - binary parameter for showing or hiding information about correlations
 #'
@@ -256,7 +257,7 @@ plot.aspect_importance <- function(x, bar_width = 10) {
 #' @rdname add_additional_information
 #' @export
 
-add_additional_information <- function(data, ai_model, aspect_list, show_cor = F) {
+add_additional_information <- function(ai_model, data, aspect_list, show_cor = F) {
   for (i in 1:length(aspect_list)) {
     ai_model$features[i] <- aspect_list[as.character(ai_model[i,1])]
     vars <- unlist(ai_model$features[i])

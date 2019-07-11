@@ -54,7 +54,7 @@ test_that("check output for aspects importance (lm, binom)",{
                                             predict, new_observation,
                                             aspects, method = "binom")
   expect_true("aspect_importance" %in% class(aspect_importance_ap))
-  expect_true(floor(aspect_importance_ap[aspect_importance_ap$aspects=="district",]$importance) == 570)
+  expect_true(floor(aspect_importance_ap[aspect_importance_ap$aspects == "district",]$importance) == 570)
 })
 
 test_that("check plot for aspects importance",{
@@ -96,6 +96,29 @@ test_that("check alias for aspect_importance",{
                                             aspects)
   expect_true("aspect_importance" %in% class(aspect_importance_ap))
 
+})
+
+test_that("plot for aspect_importance works",{
+  library("DALEX")
+  library("ingredients")
+
+  set.seed(123)
+  model <- lm(m2.price ~ ., data = apartments)
+
+  aspects <- list(space = c("surface", "no.rooms"),
+                  construction.year = "construction.year",
+                  floor = "floor",
+                  district = "district")
+
+  new_observation <- apartments_test[2,-1]
+
+  aspect_importance_ap <- aspect_importance(model, apartments,
+                                      predict, new_observation,
+                                      aspects)
+  p <- plot(aspect_importance_ap)
+  expect_true(is.ggplot(p))
+  expect_identical(p$labels$y, "Aspects importance")
+  expect_error(plot.aspect_importance(apartments))
 })
 
 

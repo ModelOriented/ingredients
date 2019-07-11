@@ -4,16 +4,16 @@
 \alias{add_additional_information}
 \title{temporary function, probably to be merged with aspect_importance}
 \usage{
-add_additional_information(data, ai_model, aspect_list, show_cor = F)
+add_additional_information(ai_model, data, aspect_list, show_cor = F)
 }
 \arguments{
+\item{ai_model}{- aspect_importance() function results}
+
 \item{data}{-  orignal data that was fed to aspect_importance() function}
 
 \item{aspect_list}{- aspect list that was fed to aspect_importance() function}
 
 \item{show_cor}{- binary parameter for showing or hiding information about correlations}
-
-\item{ai_mode}{- aspect_importance() function results}
 }
 \value{
 data frame

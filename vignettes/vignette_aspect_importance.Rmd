@@ -96,7 +96,7 @@ titanic_glm_ai
 We can add additional information (ie. list of features that are included in every aspect) by calling add_additional_information().
 
 ```{r adding additional info to titanic}
-add_additional_information(explain_titanic_glm$data, titanic_glm_ai, aspects)
+add_additional_information(titanic_glm_ai, explain_titanic_glm$data, aspects)
 ```
 
 
@@ -154,7 +154,7 @@ BostonHousing2_ai
 Finally, we use add_additional_information() function, with parameter *show_cor = T*, to show how features are grouped into aspects, show minimal value of pairwise correlation in group and show whether any pair of features is negatively correlated (*neg*) or not (*pos*). 
 
 ```{r}
-BostonHousing2_ai_add <- add_additional_information(data, BostonHousing2_ai, aspects_list, show_cor = T)
+BostonHousing2_ai_add <- add_additional_information(BostonHousing2_ai, data, aspects_list, show_cor = T)
 BostonHousing2_ai_add
 
 ```
@@ -165,4 +165,4 @@ BostonHousing2_ai_add
 ```{r}
 sessionInfo()
 ```
-*
+
