@@ -113,7 +113,7 @@ model_titanic_rf <- randomForest(factor(survived) == "yes" ~ gender + age + clas
 
 # Calculating aspect importance (random forest)
 
-After calling aspect_importance() on the random forest model, we can observe that this time every aspect has much smaller contribution to the prediction. And this time **personal** features have a little big more influence than **wealth**.
+After calling aspect_importance() on the random forest model, we can observe that this time every aspect has much smaller contribution to the prediction. We can notice as well that **personal** features have a little big more influence than **wealth**.
 
 ```{r Calculating aspect importance (random forest)}
 titanic_rf_ai <- aspect_importance(model_titanic_rf, titanic, predict, passenger, aspects, 100)
@@ -122,11 +122,11 @@ titanic_rf_ai
 plot(titanic_rf_ai) + ggtitle("Aspect importance for the selected passenger (random for.)")
 ```
 
-# Autogrouping features into aspects
+# Automated grouping features into aspects
 
-On BostonHousing dataset, we will test function that automatically groups features into aspects basing the decision on the features correlation. Function only works on continuous variables.  
+On *BostonHousing2* dataset, we will test function that automatically groups features into aspects (grouping is based on the features correlation). Function only works on continuous variables.  
 
-We are importing *BostonHousing2* from `mlbench` package and choose columns with continuous features. Then we fit linear model to the data and choose observation to be explained.
+We are importing *BostonHousing2* from `mlbench` package and choose columns with continuous features. Then we fit linear model to the data and choose observation to be explained. Target variable is cmedv. 
 
 
 ```{r import BostonHousing2}
@@ -134,13 +134,15 @@ We are importing *BostonHousing2* from `mlbench` package and choose columns with
 library(mlbench)
 data("BostonHousing2")
 data <- BostonHousing2[,-c(1:5, 10)] #excluding cont. features
+head(data)
 x <- BostonHousing2[,-c(1:6, 10)] #excluding cont. features and target variable
-model <- lm(cmedv ~., data = data)
 new_observation <- data[10,]
+model <- lm(cmedv ~., data = data)
+predict(model, new_observation)
 ```
 
 
-We run group_variables() function with cutting off level set on 0.5. In result we get a list of variables groups (aspects) where absolute value of features' pairwise correlation is at least at 0.5.
+We run group_variables() function with cutting off level set on 0.6. In result we get a list of variables groups (aspects) where absolute value of features' pairwise correlation is at least at 0.6.
 
 ```{r}
 aspects_list <- group_variables(x, 0.6)
@@ -156,6 +158,30 @@ Finally, we use add_additional_information() function, with parameter *show_cor 
 ```{r}
 BostonHousing2_ai_add <- add_additional_information(BostonHousing2_ai, data, aspects_list, show_cor = T)
 BostonHousing2_ai_add
+
+```
+
+# Using lasso in aspect_importance() function
+
+Function aspect_importance() can calculate coefficients (that is aspects' importance) by using either linear regression or lasso regression. Using lasso we can control how many nonzero coefficients are present in final explanation. To use aspect_importance() with lasso we are providing **n_var** parameter.
+
+We are going to use *BostonHousing2* dataset again. This time we would like to group variables into aspects with a cut off level for correlation set at 0.7.
+
+```{r}
+aspects_list <- group_variables(x, 0.7)
+BostonHousing2_ai <- aspect_importance(model,data, predict_function = predict,
+                            new_observation,
+                            aspects_list, B = 50)
+BostonHousing2_ai
+```
+We can see that the importance of some of those groups (1, 2 and 5) is relatively small. With the help of lasso technique, we would like to check the importance of variables' aspects, while controlling that three of them should be equal to 0. 
+
+```{r lasso demo}
+BostonHousing2_ai_lasso <- aspect_importance(model,data, predict_function = predict,
+                            new_observation,
+                            aspects_list, B = 50, n_var = 5)
+BostonHousing2_ai_lasso_add <- add_additional_information(BostonHousing2_ai_lasso, data, aspects_list, show_cor = T)
+BostonHousing2_ai_lasso_add
 
 ```
 

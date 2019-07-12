@@ -91,7 +91,7 @@ test_that("check alias for aspect_importance",{
 
   new_observation <- apartments_test[2,-1]
 
-  aspect_importance_ap <- aspect_lime(model, apartments,
+  aspect_importance_ap <- lime(model, apartments,
                                             predict, new_observation,
                                             aspects)
   expect_true("aspect_importance" %in% class(aspect_importance_ap))
@@ -121,6 +121,26 @@ test_that("plot for aspect_importance works",{
   expect_error(plot.aspect_importance(apartments))
 })
 
+test_that("check for aspect_importance with lasso",{
+  library("DALEX")
+  library("ingredients")
+
+  set.seed(123)
+  model <- lm(m2.price ~ ., data = apartments)
+
+  aspects <- list(space = c("surface", "no.rooms"),
+                  construction.year = "construction.year",
+                  floor = "floor",
+                  district = "district")
+
+  new_observation <- apartments_test[2,-1]
+
+  aspect_importance_ap <- aspect_importance(model, apartments,
+                                            predict, new_observation,
+                                            aspects, n_var = 3)
+  expect_true("aspect_importance" %in% class(aspect_importance_ap))
+  expect_true(sum(aspect_importance_ap[,2] != 0) == 3)
+})
 
 test_that("check get_sample function with binom",{
   library("DALEX")
@@ -158,3 +178,4 @@ test_that("check group_variables function",{
   expect_error(group_variables(titanic, 0.6))
 
 })
+

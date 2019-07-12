@@ -4,21 +4,26 @@
 #' Aspect Importance function takes a sample from a given dataset and modifies it.
 #' Modification is made by replacing part of its aspects by values from the observation.
 #' Then function is calculating the difference between the prediction made on modified sample and the original sample.
-#' Finally, it measures the impact of aspects on the change of prediction by using the linear model.
+#' Finally, it measures the impact of aspects on the change of prediction by using the linear model or lasso.
 #'
-#' @param x an explainer created with the `DALEX::explain()` function
-#' @param model model created on data, it will be extracted from `x` if it's an explainer
-#' @param data dataset, it will be extracted from `x` if it's an explainer
-#' @param predict_function predict function, it will be extracted from `x` if it's an explainer
+#'
+#' @param x a model to be explained or an explainer created with the `DALEX::explain()` function
+#' @param data dataset, it will be extracted from `x`` if it's an explainer
+#' @param predict_function predict function, it will be extracted from `x`` if it's an explainer
 #' @param new_observation selected observation with columns that corresponds to variables used in the model
 #' @param aspects_list list containg grouping of features into aspects
 #' @param B number of rows to be sampled from data
 #' @param method sampling method in get_sample()
+#' @param n_var how many non-zero coefficients for lasso fitting, if zero than linear regression is used
+#' @param ... other parameters
 #'
 #' @return An object of the class 'aspect_importance'.
 #' Contains dataframe that describes aspects' importance.
 #'
 #' @importFrom stats lm
+#' @importFrom stats coef
+#' @importFrom stats model.matrix
+#' @importFrom glmnet glmnet
 #'
 #' @export
 #'
@@ -57,7 +62,6 @@
 #' }
 #'
 #' @export
-#' @rdname aspect_importance
 
 aspect_importance <- function(x, ...)
   UseMethod("aspect_importance")
@@ -66,7 +70,7 @@ aspect_importance <- function(x, ...)
 #' @rdname aspect_importance
 
 aspect_importance.explainer <- function(x, new_observation, aspects_list,
-                                        B = 100, method = "default") {
+                                        B = 100, method = "default", n_var = 0, ...) {
 
   # extracts model, data and predict function from the explainer
   data <- x$data
@@ -75,15 +79,16 @@ aspect_importance.explainer <- function(x, new_observation, aspects_list,
 
   # calls target function
   aspect_importance.default(model, data, predict_function,
-                            new_observation, aspects_list, B, method)
+                            new_observation, aspects_list, B, method, n_var)
 }
 
 #' @export
 #' @rdname aspect_importance
 
-aspect_importance.default <- function(model,data, predict_function = predict,
+aspect_importance.default <- function(x,data, predict_function = predict,
                                       new_observation,
-                                      aspects_list, B = 100, method = "default") {
+                                      aspects_list, B = 100, method = "default",
+                                      n_var = 0, ...) {
   # look only for common variables in data and new observation
   if ("data.frame" %in% class(data)) {
     common_variables <- intersect(colnames(new_observation), colnames(data))
@@ -94,6 +99,9 @@ aspect_importance.default <- function(model,data, predict_function = predict,
   # stop if no common variables are found
   stopifnot(length(common_variables) > 0,
             length(setdiff(unlist(aspects_list),colnames(new_observation))) == 0)
+
+  #number of expected coefficients cannot be negative
+  stopifnot(n_var >= 0)
 
   # create empty matrix and data frames
   n_sample <- select_sample(data, n = B)
@@ -109,18 +117,26 @@ aspect_importance.default <- function(model,data, predict_function = predict,
   }
 
   # calculate change in predictions
-  y_changed <- predict_function(model, n_sample_changed) -
-    predict_function(model, n_sample)
+  y_changed <- predict_function(x, n_sample_changed) -
+    predict_function(x, n_sample)
 
-  # fit linear model to estimate aspects importance
+  # fit linear model/lasso to estimate aspects importance
   colnames(new_X) <- names(aspects_list)
-  new_df <- data.frame(new_X, y_changed)
-  new_model <- lm(y_changed~., data = new_df)
+  new_df <- data.frame(y_changed, new_X)
 
-  # building dataframe with results
-  res <- as.data.frame(names(new_model$coefficients))
-  colnames(res)[1] <- "aspects"
-  res$importance <- unname(new_model$coefficients)
+  if (n_var == 0) {
+    lm_model <- lm(y_changed~., data = new_df)
+    model_coef <- lm_model$coefficients
+  } else {
+    x_new_df <- model.matrix(y_changed ~ ., data = new_df)[,-1]
+    y_new_df <- y_changed
+    glmnet_model <- glmnet(x_new_df, y_new_df, alpha = 1)
+    indx <- min(which(glmnet_model$df >= n_var))
+    model_coef <- coef(glmnet_model)[,indx]
+  }
+  #prepare dataframe with results
+  res <- data.frame(names(model_coef),unname(model_coef))
+  colnames(res) <- c("aspects","importance")
   res <- res[!res$aspects == "(Intercept)",]
   res <- res[order(-abs(res$importance)),]
   class(res) <- c("aspect_importance", "data.frame")
@@ -189,16 +205,15 @@ get_sample <- function(n, p, method = c("default","binom"), f = 2) {
 group_variables <- function(x, p = 0.5) {
 
   stopifnot(all(sapply(x, is.numeric) ))
+  val <- NULL
 
   # build and cut a tree
   x_hc <- hclust(as.dist(1 - abs(cor(x, method = "spearman"))))
   clust_list <- cutree(x_hc, h = (1 - p))
 
   #prepare a list with aspects grouping
-  df <- as.data.frame(names(clust_list))
-  colnames(df) <- c("name")
-  df$val <- unname(clust_list)
-
+  df <- data.frame(names(clust_list), unname(clust_list))
+  colnames(df) <- c("name","val")
   res <- vector("list", max(clust_list))
   names(res) <- paste0("aspect.group",seq_along(res))
 
@@ -215,6 +230,7 @@ group_variables <- function(x, p = 0.5) {
 #'
 #' @param x object of aspect_importance class
 #' @param bar_width bar width
+#' @param ... other parameters
 #'
 #' @return a ggplot2 object
 #' @export
@@ -222,18 +238,18 @@ group_variables <- function(x, p = 0.5) {
 #' @import ggplot2
 #'
 #' @export
-#' @rdname aspect_importance
 
 
-plot.aspect_importance <- function(x, bar_width = 10) {
+plot.aspect_importance <- function(x, bar_width = 10, ...) {
 
   stopifnot("aspect_importance" %in% class(x))
 
-  x$a_sign <- ifelse(x$importance > 0,"positive","negative")
-  x$aspects <- reorder(x$aspects, abs(x$importance), na.rm = TRUE)
+  a_sign <- aspects <- NULL
+  x$a_sign <- ifelse(x[,2] > 0,"positive","negative")
+  x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
 
   # plot it
-  ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
+  ggplot(x, aes(aspects, ymin = 0, ymax = x[,2], color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none")
@@ -276,7 +292,7 @@ add_additional_information <- function(ai_model, data, aspect_list, show_cor = F
 
 #' @export
 #' @rdname aspect_importance
-aspect_lime <- function(x, ...) {
+lime <- function(x, ...) {
   aspect_importance(x, ...)
 }
 

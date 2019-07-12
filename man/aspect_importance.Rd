@@ -4,26 +4,25 @@
 \alias{aspect_importance}
 \alias{aspect_importance.explainer}
 \alias{aspect_importance.default}
-\alias{plot.aspect_importance}
-\alias{aspect_lime}
+\alias{lime}
 \title{Aspect Importance
 This explainer calculates the feature groups importance (called aspects importance) for a selected observation.}
 \usage{
 aspect_importance(x, ...)
 
 \method{aspect_importance}{explainer}(x, new_observation, aspects_list,
-  B = 100, method = "default")
+  B = 100, method = "default", n_var = 0, ...)
 
-\method{aspect_importance}{default}(model, data,
-  predict_function = predict, new_observation, aspects_list, B = 100,
-  method = "default")
+\method{aspect_importance}{default}(x, data, predict_function = predict,
+  new_observation, aspects_list, B = 100, method = "default",
+  n_var = 0, ...)
 
-\method{plot}{aspect_importance}(x, bar_width = 10)
-
-aspect_lime(x, ...)
+lime(x, ...)
 }
 \arguments{
-\item{x}{an explainer created with the `DALEX::explain()` function}
+\item{x}{a model to be explained or an explainer created with the `DALEX::explain()` function}
+
+\item{...}{other parameters}
 
 \item{new_observation}{selected observation with columns that corresponds to variables used in the model}
 
@@ -33,29 +32,21 @@ aspect_lime(x, ...)
 
 \item{method}{sampling method in get_sample()}
 
-\item{model}{model created on data, it will be extracted from `x` if it's an explainer}
+\item{n_var}{how many non-zero coefficients for lasso fitting, if zero than linear regression is used}
 
-\item{data}{dataset, it will be extracted from `x` if it's an explainer}
+\item{data}{dataset, it will be extracted from `x`` if it's an explainer}
 
-\item{predict_function}{predict function, it will be extracted from `x` if it's an explainer}
-
-\item{bar_width}{bar width}
-
-\item{x}{object of aspect_importance class}
+\item{predict_function}{predict function, it will be extracted from `x`` if it's an explainer}
 }
 \value{
 An object of the class 'aspect_importance'.
 Contains dataframe that describes aspects' importance.
-
-a ggplot2 object
 }
 \description{
 Aspect Importance function takes a sample from a given dataset and modifies it.
 Modification is made by replacing part of its aspects by values from the observation.
 Then function is calculating the difference between the prediction made on modified sample and the original sample.
-Finally, it measures the impact of aspects on the change of prediction by using the linear model.
-
-This function plots the results of aspect_importance
+Finally, it measures the impact of aspects on the change of prediction by using the linear model or lasso.
 }
 \examples{
 library("DALEX")
