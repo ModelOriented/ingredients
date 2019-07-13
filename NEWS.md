@@ -1,3 +1,8 @@
+ingredients 0.3.6
+----------------------------------------------------------------
+* a new verion of `lime` is implemented in the `lime()`/`aspect_importance()` function.
+* Kasia Pekala and Huber Baniecki are added as contributors.
+
 ingredients 0.3.5
 ----------------------------------------------------------------
 * new feature [#29](https://github.com/ModelOriented/ingredients/issues/29). Feature importance now takes an argument `B` that replicates permutations `B` times and calculates average from drop loss.
