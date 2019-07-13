@@ -23,6 +23,7 @@ LazyData: true
 RoxygenNote: 6.1.1
 Imports: DALEX,
     ggplot2,
+    glmnet,
     scales
 Suggests: gbm,
   gower,
