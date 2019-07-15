@@ -4,27 +4,7 @@ var m = options.m;
 var barWidth = options.barWidth,
     chartTitle = options.chartTitle;
 
-// effort to make labels margin
-var temp = svg.selectAll()
-              .data(data[1])
-              .enter();
-
-var textWidth = [];
-
-temp.append("text")
-    .text(function(d) { return d;})
-    .style("font-size", "12px")
-    .style("font-weight", 400)
-    .each(function(d,i) {
-        var thisWidth = this.getComputedTextLength();
-        textWidth.push(thisWidth);
-    });
-
-svg.selectAll('text').remove();
-temp.remove();
-
-var maxLength = d3.max(textWidth)+15;
-////
+var maxLength = calculateTextWidth(data[1])+15;
 
 var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
     w = width - margin.left - margin.right,

@@ -92,58 +92,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
       .text(variableName);
 
   // find 5 nice ticks with max and min - do better than d3
-  var domain = x.domain();
-  var tickValues = d3.ticks(domain[0], domain[1],5);
-
-  switch (tickValues.length){
-    case 3:
-      tickValues.unshift(domain[0]);
-      tickValues.push(domain[1]);
-      break;
-
-    case 4:
-      if(Math.abs(domain[0] - tickValues[0]) < Math.abs(domain[1] - tickValues[3])){
-        tickValues.shift();
-        tickValues.unshift(domain[0]);
-        tickValues.push(domain[1]);
-      } else {
-        tickValues.pop();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      }
-      break;
-
-    case 5:
-      tickValues.pop();
-      tickValues.shift();
-      tickValues.push(domain[1]);
-      tickValues.unshift(domain[0]);
-      break;
-
-    case 6:
-      if(Math.abs(domain[0] - tickValues[0]) < Math.abs(domain[1] - tickValues[3])){
-        tickValues.pop();
-        tickValues.shift();
-        tickValues.shift();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      } else {
-        tickValues.pop();
-        tickValues.pop();
-        tickValues.shift();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      }
-      break;
-
-    case 7:
-      tickValues.pop();
-      tickValues.pop();
-      tickValues.shift();
-      tickValues.shift();
-      tickValues.push(domain[1]);
-      tickValues.unshift(domain[0]);
-  }
+  var tickValues = getTickValues(x.domain());
 
   var xAxis = d3.axisBottom(x)
               .tickValues(tickValues)
@@ -289,7 +238,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
           .attr("class", "axisTitle")
           .attr("transform", "rotate(-90)")
           .attr("y", 15)
-          .attr("x", -(margin.top + plotTop + plotHeight)/2)
+          .attr("x", -(margin.bottom + plotTop + plotHeight)/2)
           .attr("text-anchor", "middle")
           .text("prediction");
   }
