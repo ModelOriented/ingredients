@@ -238,7 +238,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
           .attr("class", "axisTitle")
           .attr("transform", "rotate(-90)")
           .attr("y", 15)
-          .attr("x", -(margin.top + plotTop + plotHeight)/2)
+          .attr("x", -(margin.bottom + plotTop + plotHeight)/2)
           .attr("text-anchor", "middle")
           .text("prediction");
   }
