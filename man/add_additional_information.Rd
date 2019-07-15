@@ -4,7 +4,7 @@
 \alias{add_additional_information}
 \title{temporary function, probably to be merged with aspect_importance}
 \usage{
-add_additional_information(ai_model, data, aspect_list, show_cor = F)
+add_additional_information(ai_model, data, aspect_list, show_cor = FALSE)
 }
 \arguments{
 \item{ai_model}{- aspect_importance() function results}
