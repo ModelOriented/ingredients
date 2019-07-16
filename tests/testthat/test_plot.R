@@ -13,7 +13,7 @@ test_that("plot feature_importance_explainer",{
 })
 
 test_that("plot ceteris_paribus_oscillations", {
-  cp_glm <- ceteris_paribus(explainer_ glm, titanic[10:12, ])
+  cp_glm <- ceteris_paribus(explainer_glm, titanic[10:12, ])
   os_glm <- calculate_oscillations(cp_glm)
   pl <- plot(os_glm)
   expect_true("gg" %in% class(pl))
