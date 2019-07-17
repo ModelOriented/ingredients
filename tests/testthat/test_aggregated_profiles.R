@@ -63,7 +63,7 @@ test_that("plot partial_dependency",{
 
   res <- partial_dependency(explain_titanic_rf, N=50, variables = "gender", only_numerical = FALSE)
 
-  expect_true("aggregated_profiles_explainer" %in% class(pl2))
+  expect_true("aggregated_profiles_explainer" %in% class(res))
 })
 
 
