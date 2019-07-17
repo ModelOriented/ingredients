@@ -67,13 +67,13 @@
 #' }
 #' @export
 plot.aggregated_profiles_explainer <- function(x, ...,
-                                                      size = 1,
-                                                      alpha = 1,
-                                                      color = "_label_",
-                                                      facet_ncol = NULL,
-                                                      variables = NULL) {
+                                          size = 1,
+                                          alpha = 1,
+                                          color = "_label_",
+                                          facet_ncol = NULL,
+                                          variables = NULL) {
 
-  # if there is more explainers, they should be merged into a single data frame
+  # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   aggregated_profiles <- do.call(rbind, dfl)
   class(aggregated_profiles) <- "data.frame"
