@@ -2,6 +2,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^misc$
+^images$
 ^docs$
 ^_pkgdown\.yml$
 .travis.yml
