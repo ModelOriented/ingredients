@@ -23,7 +23,6 @@ test_that("plot aggregate_profiles",{
   cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 
   pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial", groups = "Sex")
-  invisible(print(pdp_rf_p))
 
   pdp_rf_p <- aggregate_profiles(cp_rf, variables = "Age", type = "partial")
   pdp_rf_p$`_label_` <- "RF_partial"
@@ -49,8 +48,8 @@ test_that("plot aggregate_profiles",{
 
 test_that("plot partial_dependency",{
   library("DALEX")
-  library("ingredients")
   library("randomForest")
+  titanic <- na.omit(titanic)
   model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                      fare + sibsp + parch,  data = titanic)
 
