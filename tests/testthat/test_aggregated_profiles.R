@@ -45,3 +45,25 @@ test_that("plot aggregate_profiles",{
 
   expect_true("gg" %in% class(pl2))
 })
+
+
+test_that("plot partial_dependency",{
+  library("DALEX")
+  library("ingredients")
+  library("randomForest")
+  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+                                     fare + sibsp + parch,  data = titanic)
+
+  explain_titanic_rf <- explain(model_titanic_rf,
+                                data = titanic[,-9],
+                                y = titanic$survived)
+
+  selected_passangers <- select_sample(titanic, n = 100)
+  cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
+
+  res <- partial_dependency(explain_titanic_rf, N=50, variables = "gender", only_numerical = FALSE)
+
+  expect_true("aggregated_profiles_explainer" %in% class(pl2))
+})
+
+
