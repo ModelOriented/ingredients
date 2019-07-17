@@ -115,12 +115,13 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
 
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
+  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>,
+  <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>class</span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
+  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>, <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>partial_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>,
@@ -152,6 +153,10 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
     <tr>
       <th>grid_points</th>
       <td><p>number of points for profile. Will be passed to `calculate_variable_splits()`.</p></td>
+    </tr>
+    <tr>
+      <th>only_numerical</th>
+      <td><p>a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>data</th>
