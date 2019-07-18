@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggreagate_profiles.R
 \name{aggregate_profiles}
 \alias{aggregate_profiles}
-\title{Aggregate Ceteris Paribus Profiles}
+\title{Aggregates Ceteris Paribus Profiles}
 \usage{
 aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
   type = "partial", variables = NULL)
@@ -10,15 +10,15 @@ aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
 
-\item{...}{other explainers that shall be plotted together}
+\item{...}{other explainers that shall be calculated together}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
+\item{only_numerical}{a logical. If TRUE then only numerical variables will be calculated If FALSE then only categorical variables will be calculated}
 
-\item{groups}{a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated}
+\item{groups}{a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated}
 
 \item{type}{either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not NULL then aggregate only for selected `variables` will be calculated}
 }
 \value{
 an 'aggregated_profiles_explainer' layer

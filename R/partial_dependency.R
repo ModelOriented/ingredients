@@ -14,6 +14,7 @@
 #' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.
 #' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
 #' @param label name of the model. By default it's extracted from the 'class' attribute of the model
+#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -58,7 +59,8 @@ partial_dependency <- function(x, ...)
 #' @rdname partial_dependency
 partial_dependency.explainer <- function(x, variables = NULL, N = 500,
                                       variable_splits = NULL, grid_points = 101,
-                                      ...) {
+                                      ...,
+                                      only_numerical = TRUE) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
@@ -71,7 +73,7 @@ partial_dependency.explainer <- function(x, variables = NULL, N = 500,
                           grid_points = grid_points,
                           variable_splits = variable_splits,
                           N = N,
-                          ...)
+                          ..., only_numerical = only_numerical)
 }
 
 
@@ -83,7 +85,8 @@ partial_dependency.default <- function(x, data, predict_function = predict,
                            grid_points = 101,
                            variable_splits = NULL,
                            N = 500,
-                           ...) {
+                           ...,
+                           only_numerical = TRUE) {
   if (N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
@@ -97,7 +100,7 @@ partial_dependency.default <- function(x, data, predict_function = predict,
                             variable_splits = variable_splits,
                             label = label, ...)
 
-  aggregate_profiles(cp, variables = variables, type = "partial")
+  aggregate_profiles(cp, variables = variables, type = "partial", only_numerical = only_numerical)
 }
 
 

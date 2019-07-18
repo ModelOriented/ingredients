@@ -1,4 +1,4 @@
-#' Aggregate Ceteris Paribus Profiles
+#' Aggregates Ceteris Paribus Profiles
 #'
 #' The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
 #' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
@@ -6,11 +6,11 @@
 #' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
-#' @param ... other explainers that shall be plotted together
-#' @param variables if not NULL then only `variables` will be presented
+#' @param ... other explainers that shall be calculated together
+#' @param variables if not NULL then aggregate only for selected `variables` will be calculated
 #' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
-#' @param groups a variable name that will be usef for grouping. By default 'NULL' which means that no groups shall be calculated
-#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
+#' @param groups a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated
+#' @param only_numerical a logical. If TRUE then only numerical variables will be calculated If FALSE then only categorical variables will be calculated
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'

@@ -1,8 +1,10 @@
-#' Adds a Layer with Aggregated Profiles
+#' Plots Aggregated Profiles
 #'
-#' Function 'show_aggregated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+#' Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
+#' It works in a similar way to 'plot.ceteris_paribus', but instead of individual profiles show average profiles for each variable
+#' listed in the 'variables' vector.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function `aggregate_profiles()`
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
@@ -15,7 +17,7 @@
 #' @return a ggplot2 layer
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
+#' # Toy example
 #' titanic <- na.omit(titanic)
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 #'                        data = titanic, family = "binomial")
@@ -67,13 +69,13 @@
 #' }
 #' @export
 plot.aggregated_profiles_explainer <- function(x, ...,
-                                                      size = 1,
-                                                      alpha = 1,
-                                                      color = "_label_",
-                                                      facet_ncol = NULL,
-                                                      variables = NULL) {
+                                          size = 1,
+                                          alpha = 1,
+                                          color = "_label_",
+                                          facet_ncol = NULL,
+                                          variables = NULL) {
 
-  # if there is more explainers, they should be merged into a single data frame
+  # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   aggregated_profiles <- do.call(rbind, dfl)
   class(aggregated_profiles) <- "data.frame"
