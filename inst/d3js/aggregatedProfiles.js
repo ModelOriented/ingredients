@@ -1,6 +1,6 @@
 // load all data
 var variableNames = options.variableNames, n = options.n;
-var yMax = options.yMax, yMin = options.yMin;
+var yMax = options.yMax, yMin = options.yMin, yMean = options.yMean;
 var size = options.size, alpha = options.alpha, color = options.color;
 var onlyNumerical = options.onlyNumerical, m = options.facetNcol;
 var chartTitle = options.chartTitle;
@@ -44,7 +44,7 @@ svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
 function aggregatedProfiles(data){
-  var profData = data[0], minMaxData = data[1], yMeans = data[2];
+  var profData = data[0], minMaxData = data[1];
 
   // lines or bars?
   if (onlyNumerical) {
@@ -55,8 +55,7 @@ function aggregatedProfiles(data){
   } else {
     for (let i=0; i<n; i++){
       let variableName = variableNames[i];
-      categoricalPlot(variableName, profData[variableName], yMeans[variableName], i+1);
-      console.log(yMeans[variableName][0])
+      categoricalPlot(variableName, profData[variableName], i+1);
     }
   }
 }
@@ -199,7 +198,7 @@ function numericalPlot(variableName, lData, mData, i) {
   }
 }
 
-function categoricalPlot(variableName, bData, yMean, i){
+function categoricalPlot(variableName, bData, i){
 
   var x = d3.scaleLinear()
         .range([plotLeft,  plotLeft + plotWidth])
@@ -270,7 +269,7 @@ function categoricalPlot(variableName, bData, yMean, i){
         .enter()
         .append("g");
 
-  var fullModel = yMean; ///// WHERE SHOULD BE THE BARSTART?
+  var fullModel = yMean;
 
   // make tooltip
   var tool_tip = d3.tip()
@@ -357,5 +356,8 @@ function staticTooltipHtml(d, variableName){
         break;
     }
   }
+
+  temp += onlyNumerical ? "" : "<center>" +  "mean observation prediction:"
+                                + "</br>" + yMean + "</br>";
   return temp;
 }

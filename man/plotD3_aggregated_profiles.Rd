@@ -43,18 +43,20 @@ show average profiles for each variable listed in the 'variables' vector.
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
+
 library("DALEX")
 library("ingredients")
 library("randomForest")
-titanic <- na.omit(titanic)
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                   fare + sibsp + parch,  data = titanic)
+titanic_small <- na.omit(titanic[1:500,-5])
+model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
+                                   fare + sibsp + parch,  data = titanic_small)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
+                              data = titanic_small[,-8],
+                              y = titanic$survived == "yes",
                               label = "Random Forest v7")
 
-selected_passangers <- select_sample(titanic, n = 100)
+selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 
 pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)

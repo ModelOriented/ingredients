@@ -24,19 +24,20 @@
 #' @return a `r2d3` object.
 #'
 #' @examples
+#'
 #' library("DALEX")
 #' library("ingredients")
 #' library("randomForest")
-#' titanic <- na.omit(titanic)
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                    fare + sibsp + parch,  data = titanic)
+#' titanic_small <- na.omit(titanic[1:500,-5])
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
+#'                                    fare + sibsp + parch,  data = titanic_small)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#                               y = titanic$survived == "yes",
+#'                               data = titanic_small[,-8],
+#'                               y = titanic$survived == "yes",
 #'                               label = "Random Forest v7")
 #'
-#' selected_passangers <- select_sample(titanic, n = 100)
+#' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #'
 #' pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)
@@ -110,7 +111,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`)
 
-  min_max_list <- y_means <- list()
+  min_max_list <- y_mean <- list()
 
   # line plot or bar plot?
   if (only_numerical) {
@@ -134,13 +135,13 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
     if (length(dfl) > 1) stop("Please pick one aggregated profile.")
 
     aggregated_profiles_list <- lapply(aggregated_profiles_list, function(x){
-      ret <- x[, c("_x_", "_yhat_", "_vname_")]
-      colnames(ret) <- c("xhat", "yhat", "vname")
+      ret <- x[, c("_x_", "_yhat_", "_vname_", "_label_")]
+      colnames(ret) <- c("xhat", "yhat", "vname", "label")
       ret$yhat <- as.numeric(ret$yhat)
       ret
     })
 
-    y_means <- list() ## TODO
+    y_mean <- round(attr(x, "mean_prediction"),3)
   }
 
   if (is.null(chartTitle)) chartTitle = paste("Ceteris Paribus Profiles")
@@ -148,12 +149,13 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
+                  yMean = y_mean,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = only_numerical,
                   facetNcol = facet_ncol, scalePlot = scale_plot,
                   chartTitle = chartTitle, labelsMargin = label_margin)
 
-  temp <- jsonlite::toJSON(list(aggregated_profiles_list, min_max_list, y_means))
+  temp <- jsonlite::toJSON(list(aggregated_profiles_list, min_max_list))
 
   r2d3::r2d3(temp, system.file("d3js/aggregatedProfiles.js", package = "ingredients"),
              dependencies = list(

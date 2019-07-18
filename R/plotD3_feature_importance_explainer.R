@@ -1,5 +1,6 @@
-#' Plot Feature Importance Objects in D3 with r2d3 Package.
+#' @title Plot Feature Importance Objects in D3 with r2d3 Package.
 #'
+#' @description
 #' Function \code{plotD3.feature_importance_explainer} plots dropouts for variables used in the model.
 #' It uses output from \code{feature_importance} function that corresponds to permutation based measure of feature importance.
 #' Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
