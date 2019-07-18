@@ -7,7 +7,7 @@
 \method{plotD3}{aggregated_profiles_explainer}(x, ..., size = 2,
   alpha = 1, color = "#46bac2", only_numerical = TRUE,
   facet_ncol = 2, scale_plot = FALSE, variables = NULL,
-  chartTitle = NULL, label_margin = 60)
+  chart_title = NULL, label_margin = 60)
 }
 \arguments{
 \item{x}{a aggregated profiles explainer produced with function `aggregate_profiles()`}
@@ -28,7 +28,7 @@
 
 \item{variables}{if not NULL then only `variables` will be presented}
 
-\item{chartTitle}{a character. Set custom title}
+\item{chart_title}{a character. Set custom title}
 
 \item{label_margin}{a numeric. Set width of label margins, when only_numerical is FALSE}
 }
@@ -43,7 +43,6 @@ show average profiles for each variable listed in the 'variables' vector.
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
-
 library("DALEX")
 library("ingredients")
 library("randomForest")
@@ -66,13 +65,12 @@ pdp_rf_c$`_label_` <- "RF_conditional"
 pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = TRUE)
 pdp_rf_a$`_label_` <- "RF_accumulated"
 
-plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE)
-plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
+plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE, scale_plot = TRUE)
 
 pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
 pdp$`_label_` <- "RF_partial"
 
-plotD3(pdp, only_numerical = FALSE)
+plotD3(pdp, variables = c("gender","class"), only_numerical = FALSE)
 
 }
 \references{

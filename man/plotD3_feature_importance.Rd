@@ -6,7 +6,7 @@
 \usage{
 \method{plotD3}{feature_importance_explainer}(x, ..., max_vars = NULL,
   bar_width = 12, split = "model", scale_height = FALSE,
-  margin = 0.15, chartTitle = NULL)
+  margin = 0.15, chart_title = NULL)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the 'feature_importance' function}
@@ -25,7 +25,7 @@ By default NULL what means all variables}
 \item{margin}{extend x axis domain range to adjust the plot.
 Usually value between 0.1 and 0.3, by default it's 0.15}
 
-\item{chartTitle}{a character. Set custom title}
+\item{chart_title}{a character. Set custom title}
 }
 \value{
 a `r2d3` object.

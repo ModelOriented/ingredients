@@ -15,7 +15,7 @@
 #' @param scale_height should the height of plot scale with window size? By default it's FALSE
 #' @param margin extend x axis domain range to adjust the plot.
 #' Usually value between 0.1 and 0.3, by default it's 0.15
-#' @param chartTitle a character. Set custom title
+#' @param chart_title a character. Set custom title
 #'
 #' @return a `r2d3` object.
 #'
@@ -55,13 +55,13 @@ plotD3.feature_importance_explainer <-  function(x, ...,
                                                  split = "model",
                                                  scale_height = FALSE,
                                                  margin = 0.15,
-                                                 chartTitle = NULL){
+                                                 chart_title = NULL){
   if (!(split %in% c("model", "feature"))){
     stop("The plotD3.feature_importance_explainer()
          function requires split to be model or feature.")
   }
 
-  if (is.null(chartTitle)) chartTitle <- "Feature importance"
+  if (is.null(chart_title)) chart_title <- "Feature importance"
 
   n <- length(list(...)) + 1
   m <- dim(x)[1] - 2
@@ -84,7 +84,7 @@ plotD3.feature_importance_explainer <-  function(x, ...,
 
   options <- list(barWidth = bar_width,
                   xmin = xmin-ticksMargin, xmax = xmax+ticksMargin,
-                  scaleHeight = scale_height, chartTitle = chartTitle)
+                  scaleHeight = scale_height, chartTitle = chart_title)
 
   if (split == "model"){
     # one plot for each model

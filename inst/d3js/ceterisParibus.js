@@ -10,6 +10,8 @@ var plotHeight, plotWidth;
 var margin = {top: 98, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
 var labelsMargin = options.labelsMargin;
 
+m = d3.min([n,m]);
+
 if (m != 1) {
   if (onlyNumerical === true){
     margin.inner2 = 25;

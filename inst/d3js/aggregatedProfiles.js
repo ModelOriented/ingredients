@@ -3,11 +3,13 @@ var variableNames = options.variableNames, n = options.n;
 var yMax = options.yMax, yMin = options.yMin, yMean = options.yMean;
 var size = options.size, alpha = options.alpha, color = options.color;
 var onlyNumerical = options.onlyNumerical, m = options.facetNcol;
-var chartTitle = options.chartTitle;
+var chartTitle = options.chartTitle, labelNames = options.labelNames;
 
 var plotHeight, plotWidth;
 var margin = {top: 98, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
 var labelsMargin = options.labelsMargin;
+
+m = d3.min([n,m]);
 
 if (m != 1) {
   if (onlyNumerical === true){
@@ -81,6 +83,38 @@ function numericalPlot(variableName, lData, mData, i) {
           .attr("x", plotLeft)
           .attr("y", plotTop - 60)
           .text(chartTitle);
+      // add legend
+    var tempW = -20+14;
+
+    var legend = svg.selectAll(".legend")
+          .data(labelNames)
+          .enter()
+          .append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d, i) {
+            let temp = getTextWidth(d, 11, "Fira Sans, sans-serif");
+            tempW = tempW + temp + 20;
+            return "translate(" + (margin.left+(m*plotWidth) + (m-1)*margin.inner2 - tempW) +
+                "," + (margin.top - 60) + ")";
+          });
+
+    legend.append("text")
+          .attr("dy", ".6em")
+          .attr("class", "legendLabel")
+          .text(function(d) { return d;})
+          .attr("x", 14);
+
+    legend.append("rect")
+            .attr("width", 8)
+            .attr("height", 8)
+            .attr("class", "legendBox");
+
+    legend.append("circle")
+            .attr("class", "legendDot")
+            .attr("cx", 4)
+            .attr("cy", 4)
+            .attr("r", 2.5)
+            .style("fill", function(d, i) {return colors[i];});
   }
 
   svg.append("text")

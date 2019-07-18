@@ -16,7 +16,7 @@
 #' @param facet_ncol number of columns for the `facet_wrap`
 #' @param scale_plot a logical. Should size of the plot scale with window size? By default it's FALSE
 #' @param variables if not NULL then only `variables` will be presented
-#' @param chartTitle a character. Set custom title
+#' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins, when only_numerical is FALSE
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
@@ -24,7 +24,6 @@
 #' @return a `r2d3` object.
 #'
 #' @examples
-#'
 #' library("DALEX")
 #' library("ingredients")
 #' library("randomForest")
@@ -47,13 +46,12 @@
 #' pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = TRUE)
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #'
-#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE)
-#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
+#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE, scale_plot = TRUE)
 #'
 #' pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
 #' pdp$`_label_` <- "RF_partial"
 #'
-#' plotD3(pdp, only_numerical = FALSE)
+#' plotD3(pdp, variables = c("gender","class"), only_numerical = FALSE)
 #'
 #' @export
 #' @rdname plotD3_aggregated_profiles
@@ -61,7 +59,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                                                  color = "#46bac2",
                                                  only_numerical = TRUE,
                                                  facet_ncol = 2, scale_plot = FALSE,
-                                                 variables = NULL, chartTitle = NULL,
+                                                 variables = NULL, chart_title = NULL,
                                                  label_margin = 60){
 
   # if there is more explainers, they should be merged into a single data frame
@@ -75,7 +73,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
 
-  hl <- split(aggregated_profiles, f = as.character(aggregated_profiles$`_vname_`), drop = FALSE)
+  hl <- split(aggregated_profiles, f = as.character(aggregated_profiles$`_vname_`), drop = FALSE)[all_variables]
 
   # only numerical or only factor?
   is_numeric <- unlist(lapply(hl, function(x){
@@ -111,7 +109,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`)
 
-  min_max_list <- y_mean <- list()
+  min_max_list <- y_mean <- label_names <- NULL
 
   # line plot or bar plot?
   if (only_numerical) {
@@ -131,6 +129,8 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
       split(x, f = x$label)
     })
 
+    label_names <- names(aggregated_profiles_list[[1]])
+
   } else {
     if (length(dfl) > 1) stop("Please pick one aggregated profile.")
 
@@ -144,16 +144,16 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
     y_mean <- round(attr(x, "mean_prediction"),3)
   }
 
-  if (is.null(chartTitle)) chartTitle = paste("Ceteris Paribus Profiles")
+  if (is.null(chart_title)) chart_title = paste("Ceteris Paribus Profiles")
 
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
-                  yMean = y_mean,
+                  yMean = y_mean, labelNames = label_names,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = only_numerical,
                   facetNcol = facet_ncol, scalePlot = scale_plot,
-                  chartTitle = chartTitle, labelsMargin = label_margin)
+                  chartTitle = chart_title, labelsMargin = label_margin)
 
   temp <- jsonlite::toJSON(list(aggregated_profiles_list, min_max_list))
 

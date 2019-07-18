@@ -15,7 +15,7 @@
 #' @param facet_ncol number of columns for the `facet_wrap`
 #' @param scale_plot a logical. Should size of the plot scale with window size? By default it's FALSE
 #' @param variables if not NULL then only `variables` will be presented
-#' @param chartTitle a character. Set custom title
+#' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins, when only_numerical is FALSE
 #' @param show_observations a logcal. Adds observations layer to a plot. By default it's TRUE
 #' @param show_rugs a logcal. Adds rugs layer to a plot. By default it's TRUE
@@ -60,7 +60,7 @@ plotD3 <- function(x, ...)
 plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
                                  color = "#46bac2", only_numerical = TRUE,
                                  facet_ncol = 2, scale_plot = FALSE,
-                                 variables = NULL, chartTitle = NULL, label_margin = 60,
+                                 variables = NULL, chart_title = NULL, label_margin = 60,
                                  show_observations = TRUE, show_rugs = TRUE) {
 
   # if there is more explainers, they should be merged into a single data frame
@@ -153,14 +153,14 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     })
   }
 
-  if (is.null(chartTitle)) chartTitle = paste("Ceteris Paribus Profiles")
+  if (is.null(chart_title)) chart_title = paste("Ceteris Paribus Profiles")
 
   options <- list(variableNames = as.list(vnames), n = length(vnames),
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = only_numerical,
                   facetNcol = facet_ncol, scalePlot = scale_plot,
-                  chartTitle = chartTitle, labelsMargin = label_margin,
+                  chartTitle = chart_title, labelsMargin = label_margin,
                   showObservations = show_observations, showRugs = show_rugs)
 
   temp <- jsonlite::toJSON(list(all_profiles_list, min_max_list, all_observations))
