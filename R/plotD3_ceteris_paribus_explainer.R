@@ -20,7 +20,7 @@
 #' @param show_observations a logcal. Adds observations layer to a plot. By default it's TRUE
 #' @param show_rugs a logcal. Adds rugs layer to a plot. By default it's TRUE
 #'
-#' @return an `r2d3` object.
+#' @return a `r2d3` object.
 #'
 #' @examples
 #' \dontrun{
@@ -74,9 +74,6 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     all_variables <- intersect(all_variables, variables)
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
-
-  # is color a variable or literal?
-  # is_color_a_variable <- color %in% c(all_variables, "_label_")
 
   # only numerical or only factor?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)

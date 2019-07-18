@@ -28,7 +28,7 @@ Usually value between 0.1 and 0.3, by default it's 0.15}
 \item{chartTitle}{a character. Set custom title}
 }
 \value{
-an `r2d3` object.
+a `r2d3` object.
 }
 \description{
 Function \code{plotD3.feature_importance_explainer} plots dropouts for variables used in the model.

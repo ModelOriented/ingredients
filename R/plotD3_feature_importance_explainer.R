@@ -16,7 +16,7 @@
 #' Usually value between 0.1 and 0.3, by default it's 0.15
 #' @param chartTitle a character. Set custom title
 #'
-#' @return an `r2d3` object.
+#' @return a `r2d3` object.
 #'
 #' @examples
 #' \dontrun{

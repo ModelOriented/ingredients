@@ -40,7 +40,7 @@ plotD3(x, ...)
 \item{show_rugs}{a logcal. Adds rugs layer to a plot. By default it's TRUE}
 }
 \value{
-an `r2d3` object.
+a `r2d3` object.
 }
 \description{
 Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
