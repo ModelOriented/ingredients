@@ -1,5 +1,5 @@
 // load all data
-var variableNames = options.variableNames, n = options.n;
+var variableNames = options.variableNames, n = options.n, labelCount = options.c;
 var yMax = options.yMax, yMin = options.yMin, yMean = options.yMean;
 var size = options.size, alpha = options.alpha, color = options.color;
 var onlyNumerical = options.onlyNumerical, m = options.facetNcol;
@@ -36,7 +36,7 @@ if (options.scalePlot === true) {
 var tColors = getColors(3, "point");
 var dbColor = tColors[0];
 var lbColor = color; //colors[1];
-var colors = getColors(options.c, "line");
+var colors = getColors(labelCount, "line");
 
 // plot
 aggregatedProfiles(data);
@@ -83,38 +83,41 @@ function numericalPlot(variableName, lData, mData, i) {
           .attr("x", plotLeft)
           .attr("y", plotTop - 60)
           .text(chartTitle);
-      // add legend
-    var tempW = -20+14;
 
-    var legend = svg.selectAll(".legend")
-          .data(labelNames)
-          .enter()
-          .append("g")
-          .attr("class", "legend")
-          .attr("transform", function(d, i) {
-            let temp = getTextWidth(d, 11, "Fira Sans, sans-serif");
-            tempW = tempW + temp + 20;
-            return "translate(" + (margin.left+(m*plotWidth) + (m-1)*margin.inner2 - tempW) +
-                "," + (margin.top - 60) + ")";
-          });
+      if (labelCount>1) {
+        // add legend
+        var tempW = -20+14;
 
-    legend.append("text")
-          .attr("dy", ".6em")
-          .attr("class", "legendLabel")
-          .text(function(d) { return d;})
-          .attr("x", 14);
+        var legend = svg.selectAll(".legend")
+              .data(labelNames)
+              .enter()
+              .append("g")
+              .attr("class", "legend")
+              .attr("transform", function(d, i) {
+                let temp = getTextWidth(d, 11, "Fira Sans, sans-serif");
+                tempW = tempW + temp + 20;
+                return "translate(" + (margin.left+(m*plotWidth) + (m-1)*margin.inner2 - tempW) +
+                    "," + (margin.top - 50) + ")";
+              });
 
-    legend.append("rect")
-            .attr("width", 8)
-            .attr("height", 8)
-            .attr("class", "legendBox");
+        legend.append("text")
+              .attr("dy", ".6em")
+              .attr("class", "legendLabel")
+              .text(function(d) { return d;})
+              .attr("x", 14);
 
-    legend.append("circle")
-            .attr("class", "legendDot")
-            .attr("cx", 4)
-            .attr("cy", 4)
-            .attr("r", 2.5)
-            .style("fill", function(d, i) {return colors[i];});
+        legend.append("rect")
+                .attr("width", 8)
+                .attr("height", 8)
+                .attr("class", "legendBox");
+
+        legend.append("circle")
+                .attr("class", "legendDot")
+                .attr("cx", 4)
+                .attr("cy", 4)
+                .attr("r", 2.5)
+                .style("fill", function(d, i) {return colors[i];});
+      }
   }
 
   svg.append("text")
