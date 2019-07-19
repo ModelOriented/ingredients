@@ -92,7 +92,7 @@ aggregate_profiles <- function(x, ...,
   if (type == 'partial') {
 
     if (!only_numerical) {
-      # change x column to propercharacter values
+      # change x column to proper character values
       all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
     }
 
