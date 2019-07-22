@@ -9,7 +9,7 @@ plotD3(x, ...)
 
 \method{plotD3}{ceteris_paribus_explainer}(x, ..., size = 2, alpha = 1,
   color = "#46bac2", only_numerical = TRUE, facet_ncol = 2,
-  scale_plot = FALSE, variables = NULL, chartTitle = NULL,
+  scale_plot = FALSE, variables = NULL, chart_title = NULL,
   label_margin = 60, show_observations = TRUE, show_rugs = TRUE)
 }
 \arguments{
@@ -31,7 +31,7 @@ plotD3(x, ...)
 
 \item{variables}{if not NULL then only `variables` will be presented}
 
-\item{chartTitle}{a character. Set custom title}
+\item{chart_title}{a character. Set custom title}
 
 \item{label_margin}{a numeric. Set width of label margins, when only_numerical is FALSE}
 
@@ -40,7 +40,7 @@ plotD3(x, ...)
 \item{show_rugs}{a logcal. Adds rugs layer to a plot. By default it's TRUE}
 }
 \value{
-an `r2d3` object.
+a `r2d3` object.
 }
 \description{
 Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.

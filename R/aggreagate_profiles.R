@@ -86,8 +86,7 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
   }
 
-  #
-  # stardard partial profiles
+  # standard partial profiles
   # just average
   if (type == 'partial')
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
@@ -97,6 +96,11 @@ aggregate_profiles <- function(x, ...,
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
 
   class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
+
+  # calculate mean(all observation's _yhat_), mean of prediction
+  attr(aggregated_profiles, "mean_prediction") <-
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`)
+
   aggregated_profiles
 }
 
