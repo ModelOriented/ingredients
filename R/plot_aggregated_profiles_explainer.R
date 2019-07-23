@@ -14,7 +14,7 @@
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return a ggplot2 layer
+#' @return a ggplot2 object
 #' @examples
 #' library("DALEX")
 #' # Toy example

@@ -82,12 +82,19 @@ aggregate_profiles <- function(x, ...,
   all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
-  for (i in seq_along(tmp)) {
-    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
+  for (viname in unique(tmp)) {
+    all_profiles$`_x_`[tmp == viname] <- all_profiles[tmp == viname, viname]
+  }
+#  Old version, much slower
+#  for (i in seq_along(tmp)) {
+#    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
+#  }
+
+  if (class(all_profiles) != "data.frame") {
+    all_profiles <- as.data.frame(all_profiles)
   }
 
-  #
-  # stardard partial profiles
+  # standard partial profiles
   # just average
   if (type == 'partial') {
 
@@ -104,6 +111,11 @@ aggregate_profiles <- function(x, ...,
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
 
   class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
+
+  # calculate mean(all observation's _yhat_), mean of prediction
+  attr(aggregated_profiles, "mean_prediction") <-
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`)
+
   aggregated_profiles
 }
 

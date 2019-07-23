@@ -37,6 +37,17 @@ text {
     text-align: left;
 }
 
+.legendLabel{
+    font-weight: 400;
+    font-size: 11px;
+    text-align: left;
+}
+
+.legendBox{
+    fill: #ceced9;
+    opacity: 0.5;
+}
+
 .interceptLine{
     stroke: #371ea3;
 	stroke-width: 0.5px;

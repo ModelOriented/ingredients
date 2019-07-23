@@ -24,7 +24,7 @@
 \item{variables}{if not NULL then only `variables` will be presented}
 }
 \value{
-a ggplot2 layer
+a ggplot2 object
 }
 \description{
 Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
