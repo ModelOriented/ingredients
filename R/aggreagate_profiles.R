@@ -82,8 +82,16 @@ aggregate_profiles <- function(x, ...,
   all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
-  for (i in seq_along(tmp)) {
-    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
+  for (viname in unique(tmp)) {
+    all_profiles$`_x_`[tmp == viname] <- all_profiles[tmp == viname, viname]
+  }
+#  Old version, much slower
+#  for (i in seq_along(tmp)) {
+#    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
+#  }
+
+  if (class(all_profiles) != "data.frame") {
+    all_profiles <- as.data.frame(all_profiles)
   }
 
   # standard partial profiles
