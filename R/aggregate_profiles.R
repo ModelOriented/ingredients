@@ -96,8 +96,15 @@ aggregate_profiles <- function(x, ...,
 
   # standard partial profiles
   # just average
-  if (type == 'partial')
+  if (type == 'partial') {
+
+    if (!only_numerical) {
+      # change x column to proper character values
+      all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
+    }
+
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
+  }
   if (type == 'conditional')
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
   if (type == 'accumulated')
