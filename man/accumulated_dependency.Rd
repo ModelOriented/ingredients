@@ -10,12 +10,13 @@
 accumulated_dependency(x, ...)
 
 \method{accumulated_dependency}{explainer}(x, variables = NULL,
-  N = 500, variable_splits = NULL, grid_points = 101, ...)
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  only_numerical = TRUE)
 
 \method{accumulated_dependency}{default}(x, data,
   predict_function = predict, label = class(x)[1], variables = NULL,
-  grid_points = grid_points, variable_splits = variable_splits,
-  N = 500, ...)
+  grid_points = 101, variable_splits = NULL, N = 500, ...,
+  only_numerical = TRUE)
 
 \method{accumulated_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
@@ -32,6 +33,8 @@ accumulated_dependency(x, ...)
 \item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.}
 
 \item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
+
+\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
 
 \item{data}{validation dataset Will be extracted from `x` if it's an explainer}
 
