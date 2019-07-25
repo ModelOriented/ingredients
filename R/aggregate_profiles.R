@@ -20,6 +20,7 @@
 #' library("DALEX")
 #'  \donttest{
 #' library("randomForest")
+#' titanic <- na.omit(titanic)
 #'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
 #'                                     fare + sibsp + parch,  data = titanic)
 #'  model_titanic_rf
