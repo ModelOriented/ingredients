@@ -236,7 +236,11 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependency</span>(<span class='no'>explain_titanic_rf</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='accumulated_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>only_numerical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 40 rows containing missing values (geom_path).</span></div><div class='img'><img src='accumulated_dependency-3.png' alt='' width='700' height='433' /></div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 40 rows containing missing values (geom_col).</span></div><div class='img'><img src='accumulated_dependency-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or flipped?</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 40 rows containing missing values (geom_col).</span></div><div class='img'><img src='accumulated_dependency-4.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
