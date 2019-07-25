@@ -86,19 +86,37 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
+  is_x_numeric <- is.numeric(aggregated_profiles$`_x_`)
 
+  # initiate plot
   `_x_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
   res <- ggplot(data = aggregated_profiles, aes(`_x_`, group = paste(`_ids_`, `_label_`)))
-  if (is_color_a_variable) {
-    nlabels <- length(unique(aggregated_profiles$`_label_`))
 
+  # what kind of plot shall be plotted?
+  # numerical
+  if (is_color_a_variable & is_x_numeric) {
+    nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
       scale_color_manual(name = "", values = theme_drwhy_colors(nlabels))
-  } else {
+  }
+  if (!is_color_a_variable & is_x_numeric) {
     res <- res +
       geom_line(aes(y = `_yhat_`), size = size, alpha = alpha, color = color)
   }
+  # what kind of plot shall be plotted?
+  # categorical
+  if (is_color_a_variable & !is_x_numeric) {
+    nlabels <- length(unique(aggregated_profiles$`_label_`))
+    res <- res +
+      geom_col(aes_string(y = "`_yhat_`", fill = paste0("`",color,"`")), size = size, alpha = alpha, position = "dodge") +
+      scale_fill_manual(name = "", values = theme_drwhy_colors(nlabels))
+  }
+  if (!is_color_a_variable & !is_x_numeric) {
+    res <- res +
+      geom_col(aes(y = `_yhat_`), size = size, alpha = alpha, fill = color, position = "dodge")
+  }
+
   res + theme_drwhy() + ylab("average prediction") + xlab("") +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }

@@ -81,6 +81,9 @@ plot(pdp_rf)
 
 pdp_rf <- accumulated_dependency(explain_titanic_rf, only_numerical = FALSE)
 plot(pdp_rf)
+# or flipped?
+library(ggplot2)
+plot(pdp_rf) + coord_flip()
 }
 }
 \references{
