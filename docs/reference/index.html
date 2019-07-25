@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -63,7 +54,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +96,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.3.6</small>
+        <small>version&nbsp;0.3.7</small>
       </h1>
     </div>
 
@@ -257,6 +248,12 @@ This explainer calculates the feature groups importance (called aspects importan
             <p><code><a href="plot.feature_importance_explainer.html">plot(<i>&lt;feature_importance_explainer&gt;</i>)</a></code> </p>
           </td>
           <td><p>Plots Variable Importance</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotD3_aggregated_profiles.html">plotD3(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
+          </td>
+          <td><p>Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.</p></td>
         </tr><tr>
           <!--  -->
           <td>

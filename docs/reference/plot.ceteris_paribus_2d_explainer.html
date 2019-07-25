@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -63,7 +54,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +102,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_2d_explainer</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>split_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>split_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
@@ -166,46 +157,60 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
-<span class='fu'>set.seed</span>(<span class='fl'>59</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>59</span>)
 
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
       <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
-      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)
-
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
+      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartmentsTest</span>$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; data              :  9000  rows  5  cols 
+#&gt;   -&gt; target variable   :  9000  values 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predicted values  :  numerical, min =  2010.982 , mean =  3505.971 , max =  5840.604  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -727.4451 , mean =  5.552194 , max =  1262.554  
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>, ]
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus_2d.html'>ceteris_paribus_2d</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>)
-<span class='fu'>head</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2            vname1  vname2        label
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2            vname1  vname2        label
 #&gt; 1001   4899.536   1920   20.0 construction.year surface randomForest
 #&gt; 1001.1 4896.920   1920   21.3 construction.year surface randomForest
 #&gt; 1001.2 4900.060   1920   22.6 construction.year surface randomForest
 #&gt; 1001.3 4900.187   1920   23.9 construction.year surface randomForest
 #&gt; 1001.4 4901.809   1920   25.2 construction.year surface randomForest
 #&gt; 1001.5 4896.952   1920   26.5 construction.year surface randomForest</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># HR data</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>hours</span> + <span class='no'>evaluation</span> + <span class='no'>salary</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
-<span class='no'>pred1</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>, <span class='no'>x</span>)   <span class='fu'>predict</span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)[,<span class='fl'>1</span>]
-<span class='no'>explainer_rf_fired</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>],
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>hours</span> + <span class='no'>evaluation</span> + <span class='no'>salary</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
+<span class='no'>pred1</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>m</span>, <span class='no'>x</span>)   <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>m</span>, <span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)[,<span class='fl'>1</span>]
+<span class='no'>explainer_rf_fired</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>],
    <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>,
-   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>pred1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"fired"</span>)
-
+   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>pred1</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  fired 
+#&gt;   -&gt; data              :  7847  rows  5  cols 
+#&gt;   -&gt; target variable   :  7847  values 
+#&gt;   -&gt; predict function  :  pred1 
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3751844 , max =  1  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.766 , mean =  -0.01135109 , max =  0.712  
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>new_emp</span> <span class='kw'>&lt;-</span> <span class='no'>HR</span>[<span class='fl'>1</span>, ]
 <span class='no'>new_emp</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
 #&gt; 1   male 32.58267 41.88626          3      1  fired</div><div class='input'>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus_2d.html'>ceteris_paribus_2d</a></span>(<span class='no'>explainer_rf_fired</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_emp</span>)
-<span class='fu'>head</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;     y_hat   new_x1   new_x2 vname1 vname2 label
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;     y_hat   new_x1   new_x2 vname1 vname2 label
 #&gt; 1   0.472 20.00389 35.00000    age  hours fired
 #&gt; 1.1 0.524 20.00389 35.44978    age  hours fired
 #&gt; 1.2 0.582 20.00389 35.89955    age  hours fired
 #&gt; 1.3 0.570 20.00389 36.34933    age  hours fired
 #&gt; 1.4 0.540 20.00389 36.79911    age  hours fired
 #&gt; 1.5 0.582 20.00389 37.24889    age  hours fired</div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-5.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

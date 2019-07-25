@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -63,7 +54,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -155,8 +146,9 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'>library</span>(<span class='st'>"randomForest"</span>)
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
+ <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
                                     <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
  <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
 #&gt; Call:
@@ -165,67 +157,101 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 19.25%
+#&gt;         OOB estimate of  error rate: 18.82%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1318 100  0.07052186
-#&gt; yes  304 377  0.44640235</div><div class='input'>
- <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+#&gt; no  1324  94  0.06629055
+#&gt; yes  301 380  0.44199706</div><div class='input'>
+ <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>)</div><div class='output co'>#&gt; <span class='message'>Please note that 'y' is a factor. The default loss functions assume numerical outputs (e.g. scores, probabilities, rates). Consider changing the y to the logical or numerical (0-1) vector.</span></div><div class='input'>
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; data              :  2099  rows  8  cols 
+#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
+#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2384621 , max =  1  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: ‘-’ not meaningful for factors</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='fu'>head</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country   fare sibsp parch
-#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked country    fare sibsp parch
+#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
+#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
+#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
+#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
 #&gt;        _yhat_ _vname_ _ids_      _label_
-#&gt; 1960    0.000  gender  1960 randomForest
-#&gt; 1960.1  0.892  gender  1960 randomForest
-#&gt; 883     0.004  gender   883 randomForest
-#&gt; 883.1   0.456  gender   883 randomForest
-#&gt; 1594    0.000  gender  1594 randomForest
-#&gt; 1594.1  0.954  gender  1594 randomForest
+#&gt; 557     0.006  gender   557 randomForest
+#&gt; 557.1   0.924  gender   557 randomForest
+#&gt; 660     0.052  gender   660 randomForest
+#&gt; 660.1   0.498  gender   660 randomForest
+#&gt; 1535    0.000  gender  1535 randomForest
+#&gt; 1535.1  0.826  gender  1535 randomForest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked country   fare sibsp parch _yhat_
-#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0  0.892
-#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0  0.004
-#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0  0.000
-#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0  0.002
-#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0  0.002
-#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0  0.000
-#&gt;           _label_ _ids_
-#&gt; 1960 randomForest     1
-#&gt; 883  randomForest     2
-#&gt; 1594 randomForest     3
-#&gt; 1131 randomForest     4
-#&gt; 1445 randomForest     5
-#&gt; 1432 randomForest     6</div><div class='input'>
+#&gt;      gender age            class    embarked       country    fare sibsp parch
+#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
+#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
+#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
+#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
+#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
+#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
+#&gt;      _yhat_      _label_ _ids_
+#&gt; 557   0.006 randomForest     1
+#&gt; 660   0.052 randomForest     2
+#&gt; 1535  0.000 randomForest     3
+#&gt; 942   0.900 randomForest     4
+#&gt; 491   0.008 randomForest     5
+#&gt; 1639  0.000 randomForest     6</div><div class='input'>
+<span class='co'># continouse variable</span>
 <span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)
 <span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
 <span class='no'>pdp_rf_c</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"conditional"</span>)
 <span class='no'>pdp_rf_c</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_conditional"</span>
 <span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
-<span class='fu'>plot</span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>,
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
-<span class='fu'>head</span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_             _label_        _x_ _groups_    _yhat_ _ids_
-#&gt; 1     age randomForest_female  0.1666667   female 0.7610000     0
-#&gt; 2     age randomForest_female  2.0000000   female 0.7462727     0
-#&gt; 3     age randomForest_female  4.0000000   female 0.7898182     0
-#&gt; 4     age randomForest_female  7.0000000   female 0.7720000     0
-#&gt; 5     age randomForest_female  9.0000000   female 0.7770000     0
-#&gt; 6     age randomForest_female 13.0000000   female 0.7958182     0</div><div class='input'><span class='fu'>plot</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_             _label_        _x_ _groups_ _yhat_ _ids_
+#&gt; 1     age randomForest_female  0.1666667   female 0.7297     0
+#&gt; 2     age randomForest_female  2.0000000   female 0.7103     0
+#&gt; 3     age randomForest_female  4.0000000   female 0.7405     0
+#&gt; 4     age randomForest_female  7.0000000   female 0.7314     0
+#&gt; 5     age randomForest_female  9.0000000   female 0.7395     0
+#&gt; 6     age randomForest_female 13.0000000   female 0.7553     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
-  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-2.png' alt='' width='700' height='433' /></div></pre>
+  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
+
+<span class='co'># categorical variable</span>
+<span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>only_numerical</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)
+<span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
+<span class='no'>pdp_rf_c</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>only_numerical</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"conditional"</span>)
+<span class='no'>pdp_rf_c</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_conditional"</span>
+<span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>only_numerical</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
+<span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>only_numerical</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
+                             <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_             _label_              _x_ _groups_ _yhat_ _ids_
+#&gt; 1   class randomForest_female              1st   female 0.8698     0
+#&gt; 2   class randomForest_female              2nd   female 0.8589     0
+#&gt; 3   class randomForest_female              3rd   female 0.5760     0
+#&gt; 4   class randomForest_female        deck crew   female 0.8182     0
+#&gt; 5   class randomForest_female engineering crew   female 0.7072     0
+#&gt; 6   class randomForest_female restaurant staff   female 0.6937     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='img'><img src='aggregate_profiles-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-6.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

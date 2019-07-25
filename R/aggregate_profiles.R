@@ -59,11 +59,16 @@
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+#' # or maybe flipped?
+#' library(ggplot2)
+#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_") + coord_flip()
 #'
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE,
 #'                              groups = "gender")
 #' head(pdp_rf)
 #' plot(pdp_rf, variables = "class")
+#' # or maybe flipped?
+#' plot(pdp_rf, variables = "class") + coord_flip()
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,
