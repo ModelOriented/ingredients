@@ -46,6 +46,7 @@ selected_passangers <- select_sample(titanic, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 head(cp_rf)
 
+# continouse variable
 pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
 pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
@@ -61,6 +62,21 @@ plot(cp_rf, variables = "age") +
   show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red") +
   show_aggregated_profiles(pdp_rf, size = 3, color = "_label_")
+
+
+# categorical variable
+pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "partial")
+pdp_rf_p$`_label_` <- "RF_partial"
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "conditional")
+pdp_rf_c$`_label_` <- "RF_conditional"
+pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "accumulated")
+pdp_rf_a$`_label_` <- "RF_accumulated"
+plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+
+pdp_rf <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE,
+                             groups = "gender")
+head(pdp_rf)
+plot(pdp_rf, variables = "class")
 }
 }
 \references{

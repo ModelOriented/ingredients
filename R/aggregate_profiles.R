@@ -33,6 +33,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' head(cp_rf)
 #'
+#' # continouse variable
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 #' pdp_rf_p$`_label_` <- "RF_partial"
 #' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
@@ -48,6 +49,21 @@
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
 #'   show_aggregated_profiles(pdp_rf, size = 3, color = "_label_")
+#'
+#'
+#' # categorical variable
+#' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "partial")
+#' pdp_rf_p$`_label_` <- "RF_partial"
+#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "conditional")
+#' pdp_rf_c$`_label_` <- "RF_conditional"
+#' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "accumulated")
+#' pdp_rf_a$`_label_` <- "RF_accumulated"
+#' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+#'
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE,
+#'                              groups = "gender")
+#' head(pdp_rf)
+#' plot(pdp_rf, variables = "class")
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,
@@ -95,17 +111,15 @@ aggregate_profiles <- function(x, ...,
     all_profiles <- as.data.frame(all_profiles)
   }
 
+  # change x column to proper character values
+  if (!only_numerical) {
+    all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
+  }
+
   # standard partial profiles
   # just average
-  if (type == 'partial') {
-
-    if (!only_numerical) {
-      # change x column to proper character values
-      all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
-    }
-
+  if (type == 'partial')
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
-  }
   if (type == 'conditional')
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
   if (type == 'accumulated')
@@ -121,12 +135,20 @@ aggregate_profiles <- function(x, ...,
 }
 
 aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
-
-  all_profiles$`_orginal_` <- 0
   observations <- attr(all_profiles, "observations")
-  for (i in 1:nrow(all_profiles)) {
-    all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                as.character(all_profiles$`_vname_`[i])]
+  # just initialisation
+  if (is.numeric(all_profiles$`_x_`)) {
+    all_profiles$`_orginal_` <- 0
+    for (i in 1:nrow(all_profiles)) {
+      all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                  as.character(all_profiles$`_vname_`[i])]
+    }
+  } else {
+    all_profiles$`_orginal_` <- ""
+    for (i in 1:nrow(all_profiles)) {
+      all_profiles$`_orginal_`[i] <- as.character(observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                               as.character(all_profiles$`_vname_`[i])])
+    }
   }
 
   # split all_profiles into groups
@@ -142,10 +164,17 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
     chunks <- lapply(split_profiles, function(split_profile) {
       if (nrow(split_profile) == 0) return(NULL)
 
-      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
-      diffsd <- sqrt(mean(diffs^2))
-
-      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+      if (is.numeric(split_profile$`_x_`)) {
+        # for continuous variables we will calculate weighted average
+        # where weights depends on square distance between points
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+        diffsd <- sqrt(mean(diffs^2))
+        split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+      } else {
+        # for categorical variables we will calculate weighted average
+        # but weights are 0-1, 1 if it's the same level and 0 otherwise
+        split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
+      }
 
       #  diffs
       per_points <- split(split_profile, split_profile$`_ids_`)
@@ -208,11 +237,20 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
 }
 
 aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
-  all_profiles$`_orginal_` <- 0
   observations <- attr(all_profiles, "observations")
-  for (i in 1:nrow(all_profiles)) {
-    all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                as.character(all_profiles$`_vname_`[i])]
+  # just initialisation
+  if (is.numeric(all_profiles$`_x_`)) {
+    all_profiles$`_orginal_` <- 0
+    for (i in 1:nrow(all_profiles)) {
+      all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                  as.character(all_profiles$`_vname_`[i])]
+    }
+  } else {
+    all_profiles$`_orginal_` <- ""
+    for (i in 1:nrow(all_profiles)) {
+      all_profiles$`_orginal_`[i] <- as.character(observations[as.character(all_profiles$`_ids_`[i]) ,
+                                                               as.character(all_profiles$`_vname_`[i])])
+    }
   }
 
   # split all_profiles into groups
@@ -228,10 +266,17 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
   chunks <- lapply(split_profiles, function(split_profile) {
       if (nrow(split_profile) == 0) return(NULL)
 
-      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
-      diffsd <- sqrt(mean(diffs^2))
-
-      split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+      if (is.numeric(split_profile$`_x_`)) {
+        # for continuous variables we will calculate weighted average
+        # where weights depends on square distance between points
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
+        diffsd <- sqrt(mean(diffs^2))
+        split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+      } else {
+        # for categorical variables we will calculate weighted average
+        # but weights are 0-1, 1 if it's the same level and 0 otherwise
+        split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
+      }
 
       per_points <- split(split_profile, split_profile[, c("_x_", groups)])
 
