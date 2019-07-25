@@ -1,3 +1,7 @@
+ingredients 0.3.7
+----------------------------------------------------------------
+* `aggregated_profiles_conditional` and `aggregated_profiles_accumulated` are rewritten with some code fixes
+
 ingredients 0.3.6
 ----------------------------------------------------------------
 * a new verion of `lime` is implemented in the `lime()`/`aspect_importance()` function.
@@ -13,6 +17,7 @@ ingredients 0.3.4
 * `feature_importance` now can take `variable_grouping` argument that assess importance of group of features
 * fix in ceteris_paribus, now it handles models with just one variable
 * fix [#27](https://github.com/ModelOriented/ingredients/issues/27) for multiple rows 
+
 ingredients 0.3.3
 ----------------------------------------------------------------
 * `show_profiles` and `show_residuals` functions extend Ceteris Paribus Plots.
