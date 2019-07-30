@@ -148,7 +148,7 @@ function numericalPlot(variableName, lData, mData, i) {
                     .tickFormat("")
             ).call(g => g.select(".domain").remove());
 
-  if (i%2 === 1) {
+  if (i%m === 1) {
       var yAxis = d3.axisLeft(y)
               .ticks(5)
               .tickSize(0);
@@ -230,7 +230,7 @@ function numericalPlot(variableName, lData, mData, i) {
     plotLeft += (margin.inner2 + plotWidth);
   }
   if (i%m === 0){
-    plotLeft -= (margin.inner2 + (m-1)*plotWidth);
+    plotLeft -= (m-1)*(margin.inner2+plotWidth);
     plotTop += (margin.inner + plotHeight);
   }
 }
