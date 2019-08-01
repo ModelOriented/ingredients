@@ -194,7 +194,8 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
       chunks <- lapply(per_points, function(per_point) {
         avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
         res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
-        res$`_yhat_` <- avg
+        # NaN occurs when all weights are 0 , #43
+        res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
         res
       })
       par_profile <- do.call(rbind, chunks)
@@ -288,7 +289,8 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
       chunks <- lapply(per_points, function(per_point) {
         avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
         res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
-        res$`_yhat_` <- avg
+        # NaN occurs when all weights are 0 , #43
+        res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
         res
       })
       do.call(rbind, chunks)
