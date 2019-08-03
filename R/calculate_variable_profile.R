@@ -61,16 +61,19 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
     } else {
       ids <- rep(rownames(data), each = length(split_points))
     }
+
     new_data <- data[rep(1:nrow(data), each = length(split_points)), , drop = FALSE]
     new_data[, variable] <- rep(split_points, nrow(data))
 
     yhat <- predict_function(model, new_data, ...)
-    new_data <- cbind(new_data,
+    new_data <- data.frame(new_data,
                       `_yhat_` = yhat,
                       `_vname_` = variable,
-                      `_ids_` = ids)
+                      `_ids_` = ids,
+                      check.names = FALSE)
     new_data
   })
+
   profile <- do.call(rbind, profiles)
   class(profile) <- c("individual_variable_profile", class(profile))
   profile

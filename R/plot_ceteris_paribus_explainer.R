@@ -100,7 +100,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     all_profiles$`_x_` <- 0
 
     if (length(vnames) == 0) {
-      # but `variables`` are selected, then change to factor
+      # but `variables` are selected, then change to factor
       if (length(variables) > 0) {
         only_numerical <- FALSE
         vnames <- variables

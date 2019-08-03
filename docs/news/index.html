@@ -31,15 +31,6 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- Google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-5650686-14');
-</script>
 
   </head>
 
@@ -63,7 +54,7 @@
       <ul class="navbar-mi2 nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -77,6 +68,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
+    </li>
     <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
@@ -105,6 +99,29 @@
     </div>
 
     <div class="contents">
+    <div id="ingredients-0-3-7" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ingredients-0-3-7" class="anchor"></a>ingredients 0.3.7</h2>
+<ul>
+<li>
+<code>aggregated_profiles_conditional</code> and <code>aggregated_profiles_accumulated</code> are rewritten with some code fixes</li>
+</ul>
+</div>
+    <div id="ingredients-0-3-6" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ingredients-0-3-6" class="anchor"></a>ingredients 0.3.6</h2>
+<ul>
+<li>a new verion of <code>lime</code> is implemented in the <code><a href="../reference/aspect_importance.html">lime()</a></code>/<code><a href="../reference/aspect_importance.html">aspect_importance()</a></code> function.</li>
+<li>Kasia Pekala and Huber Baniecki are added as contributors.</li>
+</ul>
+</div>
+    <div id="ingredients-0-3-5" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ingredients-0-3-5" class="anchor"></a>ingredients 0.3.5</h2>
+<ul>
+<li>new feature <a href="https://github.com/ModelOriented/ingredients/issues/29">#29</a>. Feature importance now takes an argument <code>B</code> that replicates permutations <code>B</code> times and calculates average from drop loss.</li>
+</ul>
+</div>
     <div id="ingredients-0-3-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ingredients-0-3-4" class="anchor"></a>ingredients 0.3.4</h2>
@@ -113,6 +130,8 @@
 <code>plotD3</code> now supports Ceteris Paribus Profiles.</li>
 <li>
 <code>feature_importance</code> now can take <code>variable_grouping</code> argument that assess importance of group of features</li>
+<li>fix in ceteris_paribus, now it handles models with just one variable</li>
+<li>fix <a href="https://github.com/ModelOriented/ingredients/issues/27">#27</a> for multiple rows</li>
 </ul>
 </div>
     <div id="ingredients-0-3-3" class="section level2">
@@ -185,6 +204,9 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked contents-mi2">
+        <li><a href="#ingredients-0-3-7">0.3.7</a></li>
+        <li><a href="#ingredients-0-3-6">0.3.6</a></li>
+        <li><a href="#ingredients-0-3-5">0.3.5</a></li>
         <li><a href="#ingredients-0-3-4">0.3.4</a></li>
         <li><a href="#ingredients-0-3-3">0.3.3</a></li>
         <li><a href="#ingredients-0-3-2">0.3.2</a></li>

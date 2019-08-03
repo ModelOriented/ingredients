@@ -1,6 +1,6 @@
 context("Check plotD3() functions")
 
-test_that("plot plotD3",{
+test_that("plotD3 Feature Importance",{
   library("DALEX")
 
   apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
@@ -22,6 +22,10 @@ test_that("plot plotD3",{
   expect_true("r2d3" %in% class(p3))
   expect_true("r2d3" %in% class(p4))
   expect_true("r2d3" %in% class(p5))
+})
+
+test_that("plotD3 Ceteris Paribus and plotD3 Aggregated Profiles",{
+  library("DALEX")
 
   titanic <- na.omit(titanic)
   titanic$survived <- as.integer(as.factor(titanic$survived))
@@ -48,4 +52,22 @@ test_that("plot plotD3",{
 
   expect_error(plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
                       facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE))
+
+  pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)
+  pdp_rf_p$`_label_` <- "RF_partial"
+  pdp_rf_c <- aggregate_profiles(cp_rf, type = "conditional", only_numerical = TRUE)
+  pdp_rf_c$`_label_` <- "RF_conditional"
+  pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = TRUE)
+  pdp_rf_a$`_label_` <- "RF_accumulated"
+
+  p8 <- plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE)
+
+  pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+  pdp$`_label_` <- "RF_partial"
+
+  p9 <- plotD3(pdp, only_numerical = FALSE)
+
+
+  expect_true("r2d3" %in% class(p8))
+  expect_true("r2d3" %in% class(p9))
 })

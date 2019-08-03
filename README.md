@@ -23,9 +23,15 @@ Key functions are:
  
 The package `ingredients` is a part of the [DrWhy.AI](http://drwhy.ai) universe. 
 
+## Interactive plot in D3
+
+`feature_importance()` and `ceteris_paribus()` also work with **D3**! 
+[see an example](https://modeloriented.github.io/ingredients/ceterisParibusDemo.html) 
+![plotD3](images/plotD3.png)
+
 ## Install
 
-From GitHub
+Install from GitHub
 
 ```{r}
 devtools::install_github("ModelOriented/ingredients")

@@ -10,6 +10,8 @@ var plotHeight, plotWidth;
 var margin = {top: 98, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
 var labelsMargin = options.labelsMargin;
 
+m = d3.min([n,m]);
+
 if (m != 1) {
   if (onlyNumerical === true){
     margin.inner2 = 25;
@@ -92,58 +94,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
       .text(variableName);
 
   // find 5 nice ticks with max and min - do better than d3
-  var domain = x.domain();
-  var tickValues = d3.ticks(domain[0], domain[1],5);
-
-  switch (tickValues.length){
-    case 3:
-      tickValues.unshift(domain[0]);
-      tickValues.push(domain[1]);
-      break;
-
-    case 4:
-      if(Math.abs(domain[0] - tickValues[0]) < Math.abs(domain[1] - tickValues[3])){
-        tickValues.shift();
-        tickValues.unshift(domain[0]);
-        tickValues.push(domain[1]);
-      } else {
-        tickValues.pop();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      }
-      break;
-
-    case 5:
-      tickValues.pop();
-      tickValues.shift();
-      tickValues.push(domain[1]);
-      tickValues.unshift(domain[0]);
-      break;
-
-    case 6:
-      if(Math.abs(domain[0] - tickValues[0]) < Math.abs(domain[1] - tickValues[3])){
-        tickValues.pop();
-        tickValues.shift();
-        tickValues.shift();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      } else {
-        tickValues.pop();
-        tickValues.pop();
-        tickValues.shift();
-        tickValues.push(domain[1]);
-        tickValues.unshift(domain[0]);
-      }
-      break;
-
-    case 7:
-      tickValues.pop();
-      tickValues.pop();
-      tickValues.shift();
-      tickValues.shift();
-      tickValues.push(domain[1]);
-      tickValues.unshift(domain[0]);
-  }
+  var tickValues = getTickValues(x.domain());
 
   var xAxis = d3.axisBottom(x)
               .tickValues(tickValues)
@@ -164,7 +115,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
                     .tickFormat("")
             ).call(g => g.select(".domain").remove());
 
-  if (i%2 === 1) {
+  if (i%m === 1) {
       var yAxis = d3.axisLeft(y)
               .ticks(5)
               .tickSize(0);
@@ -289,7 +240,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
           .attr("class", "axisTitle")
           .attr("transform", "rotate(-90)")
           .attr("y", 15)
-          .attr("x", -(margin.top + plotTop + plotHeight)/2)
+          .attr("x", -(margin.bottom + plotTop + plotHeight)/2)
           .attr("text-anchor", "middle")
           .text("prediction");
   }
@@ -298,7 +249,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
     plotLeft += (margin.inner2 + plotWidth);
   }
   if (i%m === 0){
-    plotLeft -= (margin.inner2 + (m-1)*plotWidth);
+    plotLeft -= (m-1)*(margin.inner2+plotWidth);
     plotTop += (margin.inner + plotHeight);
   }
 }
@@ -430,6 +381,7 @@ function categoricalPlot(variableName, bData, lData, i){
               "translate(" + (margin.left + m*plotWidth + (m-1)*margin.inner2 + margin.right)/2 + " ," +
                              (plotTop + plotHeight + 45) + ")")
         .attr("class", "axisTitle")
+        .attr("text-anchor", "middle")
         .text("prediction");
   }
 

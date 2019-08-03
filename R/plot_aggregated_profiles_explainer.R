@@ -1,8 +1,10 @@
-#' Adds a Layer with Aggregated Profiles
+#' Plots Aggregated Profiles
 #'
-#' Function 'show_aggregated_profiles' adds a layer to a plot created with 'plot.ceteris_paribus_explainer'.
+#' Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
+#' It works in a similar way to 'plot.ceteris_paribus', but instead of individual profiles show average profiles for each variable
+#' listed in the 'variables' vector.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function `aggregate_profiles()`
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
@@ -12,10 +14,10 @@
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return a ggplot2 layer
+#' @return a ggplot2 object
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
+#' # Toy example
 #' titanic <- na.omit(titanic)
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 #'                        data = titanic, family = "binomial")
@@ -67,13 +69,13 @@
 #' }
 #' @export
 plot.aggregated_profiles_explainer <- function(x, ...,
-                                                      size = 1,
-                                                      alpha = 1,
-                                                      color = "_label_",
-                                                      facet_ncol = NULL,
-                                                      variables = NULL) {
+                                          size = 1,
+                                          alpha = 1,
+                                          color = "_label_",
+                                          facet_ncol = NULL,
+                                          variables = NULL) {
 
-  # if there is more explainers, they should be merged into a single data frame
+  # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   aggregated_profiles <- do.call(rbind, dfl)
   class(aggregated_profiles) <- "data.frame"
@@ -84,19 +86,37 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
+  is_x_numeric <- is.numeric(aggregated_profiles$`_x_`)
 
+  # initiate plot
   `_x_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
   res <- ggplot(data = aggregated_profiles, aes(`_x_`, group = paste(`_ids_`, `_label_`)))
-  if (is_color_a_variable) {
-    nlabels <- length(unique(aggregated_profiles$`_label_`))
 
+  # what kind of plot shall be plotted?
+  # numerical
+  if (is_color_a_variable & is_x_numeric) {
+    nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
       scale_color_manual(name = "", values = theme_drwhy_colors(nlabels))
-  } else {
+  }
+  if (!is_color_a_variable & is_x_numeric) {
     res <- res +
       geom_line(aes(y = `_yhat_`), size = size, alpha = alpha, color = color)
   }
+  # what kind of plot shall be plotted?
+  # categorical
+  if (is_color_a_variable & !is_x_numeric) {
+    nlabels <- length(unique(aggregated_profiles$`_label_`))
+    res <- res +
+      geom_col(aes_string(y = "`_yhat_`", fill = paste0("`",color,"`")), size = size, alpha = alpha, position = "dodge") +
+      scale_fill_manual(name = "", values = theme_drwhy_colors(nlabels))
+  }
+  if (!is_color_a_variable & !is_x_numeric) {
+    res <- res +
+      geom_col(aes(y = `_yhat_`), size = size, alpha = alpha, fill = color, position = "dodge")
+  }
+
   res + theme_drwhy() + ylab("average prediction") + xlab("") +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }
