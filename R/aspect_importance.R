@@ -244,12 +244,12 @@ plot.aspect_importance <- function(x, bar_width = 10, ...) {
 
   stopifnot("aspect_importance" %in% class(x))
 
-  a_sign <- aspects <- NULL
-  x$a_sign <- ifelse(x[,2] > 0,"positive","negative")
+  importance <- a_sign <- aspects <- NULL
+  x$a_sign <- ifelse(x$importance > 0,"positive","negative")
   x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
 
   # plot it
-  ggplot(x, aes(aspects, ymin = 0, ymax = x[,2], color = a_sign)) +
+  ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none")
@@ -260,7 +260,7 @@ plot.aspect_importance <- function(x, bar_width = 10, ...) {
 #' Add additional information to results of aspect_importance function
 #' Show variables included in every aspect, minimal pairwise correlation in feature group and informs if any pairwise correlation in group is of negative type
 #'
-#' @param ai_model - aspect_importance() function results
+#' @param x - aspect_importance() function results
 #' @param data -  orignal data that was fed to aspect_importance() function
 #' @param aspect_list - aspect list that was fed to aspect_importance() function
 #' @param show_cor - binary parameter for showing or hiding information about correlations
@@ -273,21 +273,21 @@ plot.aspect_importance <- function(x, bar_width = 10, ...) {
 #' @rdname add_additional_information
 #' @export
 
-add_additional_information <- function(ai_model, data, aspect_list, show_cor = F) {
+add_additional_information <- function(x, data, aspect_list, show_cor = FALSE) {
   for (i in 1:length(aspect_list)) {
-    ai_model$features[i] <- aspect_list[as.character(ai_model[i,1])]
-    vars <- unlist(ai_model$features[i])
+    x$features[i] <- aspect_list[as.character(x[i,1])]
+    vars <- unlist(x$features[i])
     if (all(sapply(data[,vars], is.numeric)) & length(vars)>1 & show_cor == T) {
         cor_matrix <- cor(data[,vars], method = "spearman")
-        ai_model$min_cor[i] <- min(abs(cor_matrix))
-        ai_model$sign[i] <- ifelse(max(cor_matrix) > 0 & min(cor_matrix) < 0, "neg","pos")
+        x$min_cor[i] <- min(abs(cor_matrix))
+        x$sign[i] <- ifelse(max(cor_matrix) > 0 & min(cor_matrix) < 0, "neg","pos")
       } else if (show_cor == T) {
-        ai_model$min_cor[i] <- NA
-        ai_model$sign[i] <- ''
+        x$min_cor[i] <- NA
+        x$sign[i] <- ''
       }
   }
-  ai_model <- format(ai_model, digits = 4)
-  return(ai_model)
+  x <- format(x, digits = 4)
+  return(x)
 }
 
 #' @export
