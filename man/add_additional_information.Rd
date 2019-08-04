@@ -4,10 +4,10 @@
 \alias{add_additional_information}
 \title{temporary function, probably to be merged with aspect_importance}
 \usage{
-add_additional_information(ai_model, data, aspect_list, show_cor = FALSE)
+add_additional_information(x, data, aspect_list, show_cor = FALSE)
 }
 \arguments{
-\item{ai_model}{- aspect_importance() function results}
+\item{x}{- aspect_importance() function results}
 
 \item{data}{-  orignal data that was fed to aspect_importance() function}
 
