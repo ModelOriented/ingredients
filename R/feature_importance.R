@@ -173,7 +173,7 @@ feature_importance.default <- function(x,
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
 
     wrong_names <- !all(sapply(variable_groups, function(variable_set) {
-      all(variable_set %in% names(data))
+      all(variable_set %in% colnames(data))
     }))
 
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
