@@ -138,13 +138,26 @@ test_that("feature_importance averaged over many permutations are stable", {
 
 # Variable grouping
 
-test_that("Variable groupings validation", {
+test_that("Variable groupings validation with data frame", {
   vd_rf <- feature_importance(explainer_rf,
                               loss_function = loss_root_mean_square,
-                              variable_groups = list("demographics" = c("Sex", "Age"),
-                                                       "ticket_type" = c("Pclass", "Fare"))
+                              variable_groups = list(
+                                siblings_souse = c("SibSp"),
+                                demographics = c("Sex", "Age"),
+                                ticket_type = c("Pclass", "Fare"))
                               )
   expect_is(vd_rf, "feature_importance_explainer")
+})
+
+
+test_that("Variable groupings validation with matrix", {
+  result <- feature_importance(explainer_xgb,
+                               variable_groups = list(
+                                 siblings_souse = c("SibSp"),
+                                 demographics = c("Sex", "Age"),
+                                 ticket_type = c("Pclass", "Fare"))
+                               )
+  expect_is(result, "feature_importance_explainer")
 })
 
 
