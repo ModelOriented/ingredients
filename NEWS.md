@@ -1,3 +1,8 @@
+ingredients 0.3.8
+----------------------------------------------------------------
+* Natural language description for `ceteris_paribus()`, `feature_importance()` and `aggregated_profiles()` explanations generated with `describe()` function. 
+
+
 ingredients 0.3.7
 ----------------------------------------------------------------
 * `aggregated_profiles_conditional` and `aggregated_profiles_accumulated` are rewritten with some code fixes
