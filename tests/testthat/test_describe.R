@@ -57,7 +57,7 @@ test_result <- sapply(variables, function(y) {
     })
 })
 
-fi_lm <- feature_importance(explain_titanic_rf, loss_function = loss_root_mean_square)
+fi_lm <- feature_importance(explain_titanic_rf)
 test_that("Output format", {
   expect_is(describe(fi_lm), "ceteris_paribus_description")
 })

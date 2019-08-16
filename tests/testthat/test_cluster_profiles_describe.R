@@ -19,8 +19,7 @@ test_that("describe cluster_profiles",{
   selected_passangers <- select_sample(titanic_small, n = 1)
   cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
   desc_cp_rf <- describe(cp_rf, variables = "Age")
-  res <- print(desc_cp_rf)
-  res <- print(cp_rf)
+
 
   expect_true("ceteris_paribus_description" %in% class(desc_cp_rf))
 })
