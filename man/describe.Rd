@@ -9,17 +9,17 @@
 \title{Natural language description of feature importance explainer}
 \usage{
 \method{describe}{aggregated_profiles_explainer}(explainer,
-  nonsignificance_treshold = 0,15, ..., display_values = FALSE,
+  nonsignificance_treshold = 0.15, ..., display_values = FALSE,
   display_numbers = FALSE, variables = NULL, label = "prediction")
 
-describe(explainer, nonsignificance_treshold = 0,15, ...)
+describe(explainer, nonsignificance_treshold = 0.15, ...)
 
 \method{describe}{ceteris_paribus_explainer}(explainer,
-  nonsignificance_treshold = 0,15, ..., display_values = FALSE,
+  nonsignificance_treshold = 0.15, ..., display_values = FALSE,
   display_numbers = FALSE, variables = NULL, label = "prediction")
 
 \method{describe}{feature_importance_explainer}(explainer,
-  nonsignificance_treshold = 0,15, ...)
+  nonsignificance_treshold = 0.15, ...)
 }
 \arguments{
 \item{explainer}{a DALEX explainer}

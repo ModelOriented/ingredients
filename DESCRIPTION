@@ -26,15 +26,19 @@ Imports: DALEX,
     ggplot2,
     glmnet,
     scales
-Suggests: gbm,
-  gower,
-  randomForest,
-  titanic,
-  xgboost,
-  testthat,
-  dplyr,
-  r2d3,
-  ggpubr,
-  jsonlite
+Suggests: 
+    gbm,
+    gower,
+    randomForest,
+    titanic,
+    xgboost,
+    testthat,
+    dplyr,
+    r2d3,
+    ggpubr,
+    jsonlite,
+    knitr,
+    rmarkdown
 URL: https://ModelOriented.github.io/ingredients/
 BugReports: https://github.com/ModelOriented/ingredients/issues
+VignetteBuilder: knitr
