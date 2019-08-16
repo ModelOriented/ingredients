@@ -165,25 +165,49 @@ describe.aggregated_profiles_explainer <- function(explainer,
 
 
   if (class(df[ ,'_x_']) == "numeric") {
-    baseline_prediction <- attr(explainer, "mean_prediction")
-    introduction <- paste0("The average, ",
-                           label," for ", model_name, " is equal to ",
-                           round(baseline_prediction,3), ".")
-
     df <- explainer[which(explainer[ ,'_vname_'] == variables), ]
     if (nrow(df) == 0) stop("There is no such variable.")
-    df <- df[ ,c("_x_","_yhat_")]
+    if (length(unique(df[ ,'_x_'])) != length(df[ ,'_x_'])) {
+      stop("Use aggregated_profile() function for describing a ceteris paribus explanation for more than one instance.")
+    }
+    df <- df[ ,c('_x_',"_yhat_")]
+
+    #introduction
+    #baseline_prediction <- attr(explainer, "observations")[ ,'_yhat_'][[1]]
+    introduction <- paste0("The average ", label, " of ", model_name,
+                           " is equal to ", round(baseline_prediction, 3), ".")
 
     # prefix
-    max_name <- df[which.max(df$`_yhat_`),"_x_"]
-    min_name <- df[which.min(df$`_yhat_`),"_x_"]
+    max_name <- df[which.max(df$`_yhat_`), '_x_']
+    min_name <- df[which.min(df$`_yhat_`), '_x_']
     cutpoint <- find_break(smooth(df$`_yhat_`))
-    cut_name <- round(df[cutpoint, "_x_"], 3)
-    prefix = paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
-                    " while the lowest for (", variables, " = ", min_name, ").\n",
-                    "Breakpoint is identified at (", variables, " = ", cut_name, ").")
+    cut_name <- round(df[cutpoint, '_x_'], 3)
+
+    # Test if the break point is between max_name and min_name
+    multiple_breakpoints <- ifelse((cut_name < min(min_name, max_name) | cut_name > max(min_name, max_name)),
+                                   TRUE,
+                                   FALSE)
+    if (multiple_breakpoints) {
+      df_additional <- df[which(df[ ,'_x_'] == min(min_name, max_name)):which(df[ ,'_x_'] == max(min_name, max_name)), ]
+      cutpoint_additional <- find_break(smooth(na.omit(df_additional$`_yhat_`)))
+    }
+    breakpoint_description <- ifelse(multiple_breakpoints,
+                                     paste0("Breakpoints are identified at (",
+                                            variables, " = ", cut_name, " and ",
+                                            variables, " = ",
+                                            round(df[cutpoint_additional, '_x_'], 3), ")."),
+                                     paste0("Breakpoint is identified at (",
+                                            variables, " = ", cut_name, ")."))
+
+    prefix <- paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
+                     " while the lowest for (", variables, " = ", min_name, ").\n",
+                     breakpoint_description)
 
     #sufix
+    cutpoint <- ifelse(multiple_breakpoints,
+                       cutpoint_additional,
+                       cutpoint)
+
     sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
                                        df = df,
                                        cutpoint = cutpoint,
@@ -191,6 +215,7 @@ describe.aggregated_profiles_explainer <- function(explainer,
 
 
     description <- paste(introduction, prefix, sufix, sep = "\n")
+
   }
   class(description) <- "ceteris_paribus_description"
   description

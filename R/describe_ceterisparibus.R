@@ -103,7 +103,7 @@ describe.ceteris_paribus_explainer <- function(explainer,
     # Choosing the mode of the explanation
     if (display_numbers) {
       sign1 <- if (df[1,'_yhat_'] > baseline_prediction) "increases" else "decreases"
-      argument1 <- paste0("The", df$order[1], " most important change in ", model_name,
+      argument1 <- paste0("The most important change in ", model_name,
                           "'s prediction would occur for ", variables, " = ",
                           df[1,'variable_name'], ". It ",sign1,
                           " the prediction by ", df$importance[1], ".")
@@ -163,8 +163,8 @@ describe.ceteris_paribus_explainer <- function(explainer,
         arguments_decreasing <- paste0("decrease substantially if the value of ",
                                        variables, " variable would change to ", decreasing)
       }
-      introduction <- paste0("For the selected instance",value,", ",
-                              label," for ", model_name, " is equal to ",
+      introduction <- paste0("For the selected instance", value,", ",
+                              label," estimated by ", model_name, " is equal to ",
                               round(baseline_prediction,3), ".")
 
       described_all <- (nrow(df_important) == nrow(df))
@@ -175,13 +175,15 @@ describe.ceteris_paribus_explainer <- function(explainer,
 
       description <- ifelse(include_everything,
                             paste0(introduction, "\n",
-                                   "Model's prediction would ", arguments_increasing, ". On the other hand, for ",
-                                   model_name, label, " would ", arguments_decreasing,
+                                   "Model's prediction would ", arguments_increasing,
+                                   ". On the other hand, ",
+                                   model_name,"'s ", label, " would ", arguments_decreasing,
                                    ". The largest change would be marked if ",
                                    variables, " variable would change to ",
                                    df_important[1,"variable_name"], ". \n",
                                    summary),
-                            paste0(introduction, "\n", "Model's prediction would ", arguments_increasing,
+                            paste0(introduction, "\n",
+                                   "Model's prediction would ", arguments_increasing,
                                    arguments_decreasing, ".\n",
                                    "The largest change would be marked if ",
                                    variables, " variable would change to ",
@@ -201,19 +203,41 @@ describe.ceteris_paribus_explainer <- function(explainer,
 
     #introduction
     baseline_prediction <- attr(explainer, "observations")[ ,'_yhat_'][[1]]
-    introduction <- paste0(model_name," predicts that for the selected instance", value, ", ",
-                           label, " is equal to ", round(baseline_prediction, 3), ".")
+    introduction <- paste0("For the selected instance ", model_name,
+                           " predicts that ", value, ", ", label,
+                           " is equal to ", round(baseline_prediction, 3), ".")
 
     # prefix
     max_name <- df[which.max(df$`_yhat_`), variables]
     min_name <- df[which.min(df$`_yhat_`), variables]
     cutpoint <- find_break(smooth(df$`_yhat_`))
     cut_name <- round(df[cutpoint, variables], 3)
-    prefix = paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
-                    " while the lowest for (", variables, " = ", min_name, ").\n",
-                    "Breakpoint is identified at (", variables, " = ", cut_name, ").")
+
+    # Test if the break point is between max_name and min_name
+    multiple_breakpoints <- ifelse((cut_name < min(min_name, max_name) | cut_name > max(min_name, max_name)),
+                                   TRUE,
+                                   FALSE)
+    if (multiple_breakpoints) {
+      df_additional <- df[which(df[ ,variables] == min(min_name, max_name)):which(df[ ,variables] == max(min_name, max_name)), ]
+      cutpoint_additional <- find_break(smooth(na.omit(df_additional$`_yhat_`)))
+    }
+    breakpoint_description <- ifelse(multiple_breakpoints,
+                                     paste0("Breakpoints are identified at (",
+                                     variables, " = ", cut_name, " and ",
+                                     variables, " = ",
+                                     round(df[cutpoint_additional, variables], 3), ")."),
+                                     paste0("Breakpoint is identified at (",
+                                     variables, " = ", cut_name, ")."))
+
+    prefix <- paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
+                     " while the lowest for (", variables, " = ", min_name, ").\n",
+                     breakpoint_description)
 
     #sufix
+    cutpoint <- ifelse(multiple_breakpoints,
+                       cutpoint_additional,
+                       cutpoint)
+
     sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
                                        df = df,
                                        cutpoint = cutpoint,
