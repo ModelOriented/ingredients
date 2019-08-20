@@ -71,7 +71,7 @@ describe.ceteris_paribus_explainer <- function(explainer,
 
   variables_value <- ifelse(class(attr(explainer, "observations")[ ,variables][[1]]) == 'numeric',
                             round(attr(explainer, "observations")[ ,variables][[1]],3),
-                            attr(explainer, "observations")[ ,variables][[1]]
+                            as.character(attr(explainer, "observations")[ ,variables][[1]])
                       )
   value <- ifelse(display_values,
                   paste0(" (", variables, " = ",
