@@ -217,6 +217,6 @@ describe.aggregated_profiles_explainer <- function(explainer,
     description <- paste(introduction, prefix, sufix, sep = "\n")
 
   }
-  class(description) <- "ceteris_paribus_description"
+  class(description) <- c("ceteris_paribus_description", "character")
   description
 }
