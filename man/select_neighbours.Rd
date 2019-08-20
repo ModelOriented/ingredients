@@ -4,13 +4,13 @@
 \alias{select_neighbours}
 \title{Select Subset of Rows Closest to a Specified Observation}
 \usage{
-select_neighbours(data, observation, variables = NULL,
+select_neighbours(observation, data, variables = NULL,
   distance = gower::gower_dist, n = 20, frac = NULL)
 }
 \arguments{
-\item{data}{set of observations}
-
 \item{observation}{single observation}
+
+\item{data}{set of observations}
 
 \item{variables}{names of variables that shall be used for calculation of distance. By default these are all variables present in `data` and `observation`}
 
