@@ -69,215 +69,243 @@ describe.ceteris_paribus_explainer <- function(explainer,
   model_name <- as.character(explainer[1,'_label_'])
   model_name <- paste(toupper(substr(model_name, 1, 1)), substr(model_name, 2, nchar(model_name)), sep="")
 
-  variables_value <- ifelse(class(attr(explainer, "observations")[ ,variables][[1]]) == 'numeric',
-                            round(attr(explainer, "observations")[ ,variables][[1]],3),
-                            attr(explainer, "observations")[ ,variables][[1]]
-                      )
+  # Assigning a value to the choosen variable
+  variables_value <- ifelse(class(attr(explainer, "observations")[,variables]) == 'numeric',
+                            round(attr(explainer, "observations")[,variables],3),
+                            as.character(attr(explainer, "observations")[,variables]))
+
   value <- ifelse(display_values,
                   paste0(" (", variables, " = ",
-                         variables_value, ")"), "")
+                         variables_value, ")"),
+                  "")
 
-  # Specifying a df for variable description
-  baseline_prediction <- attr(explainer, "observations")[ ,'_yhat_'][[1]]
+  # Generating description
+  if (class(explainer[ ,variables]) == "factor" | class(explainer[ ,variables]) == "character") {
+    description <- describe_ceterisparibus_factor(explainer,
+                                                  nonsignificance_treshold = nonsignificance_treshold,
+                                                  display_values = display_values,
+                                                  display_numbers = display_numbers,
+                                                  variables = variables,
+                                                  label = label,
+                                                  model_name = model_name,
+                                                  value = value)
+  } else if (class(explainer[ ,variables]) == "numeric") {
+    description <- describe_ceterisparibus_continuous(explainer,
+                                                      nonsignificance_treshold = nonsignificance_treshold,
+                                                      display_values = display_values,
+                                                      display_numbers = display_numbers,
+                                                      variables = variables,
+                                                      label = label,
+                                                      model_name = model_name,
+                                                      value = value)
+  }
+  class(description) = c("ceteris_paribus_description", "character")
+  description
+}
+
+specify_df <- function(explainer, variables, nonsignificance_treshold) {
+
+  #Creates a df for easier description generation
   df <- explainer[which(explainer[ ,'_vname_'] == variables), ]
+
+  #ERROR HANDLING
   if (nrow(df) == 0) stop("There is no such variable.")
   if (length(unique(df[ ,variables])) != length(df[ ,variables])) {
     stop("Use aggregated_profile() function for describing a ceteris paribus explanation for more than one instance.")
   }
 
   df <- df[ ,c(variables,"_yhat_")]
-
+  treshold <- NULL
   if (class(df[ ,variables]) == "factor" | class(df[ ,variables]) == "character") {
+    #choosing the prediction value for the observation being explained
+    baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
     df['importance'] <- sapply(df[ ,'_yhat_'], function(x) abs(x-baseline_prediction))
     df['importance'] <- round(df['importance'],3)
     df <- df[order(df[ ,'importance'], decreasing = TRUE), ]
+    df['variable_name'] <- paste0('"', df[ ,variables],'"')
+    df <- df[-which(df[ ,variables] == attr(explainer, "observations")[1,variables]), ]
+
     most_important_prediction <- max(df[ ,'importance'])
     treshold <- most_important_prediction * nonsignificance_treshold
-
-    # Modifying names for better description display
-    df['variable_name'] <- sapply(df[ ,variables], function(x) paste0('"',x,'"'))
-
-    df <- df[-which(df[ ,variables] == attr(explainer, "observations")[,variables][[1]]), ]
     df['important'] <- sapply(df[ ,'importance'], function(x) if (x < treshold) FALSE else TRUE)
+  }
+  list("df" = df, "treshold" = treshold)
+}
+describe_ceterisparibus_factor <- function(explainer,
+                                           nonsignificance_treshold,
+                                           display_values,
+                                           display_numbers,
+                                           variables,
+                                           label,
+                                           model_name,
+                                           value) {
 
-    # Choosing the mode of the explanation
-    if (display_numbers) {
+  # Specifying a df for easier variable description
+
+  df_list <- specify_df(explainer = explainer,
+                   variables = variables,
+                   nonsignificance_treshold = nonsignificance_treshold)
+  df <- df_list$df
+  treshold <- df_list$treshold
+  #Selecting model's prediction for the observation being explained
+  baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
+
+  # Choosing the mode of the explanation
+  if (display_numbers) {
+    argument1 <- NULL
+    argument2 <- NULL
+    argument3 <- NULL
+    if (nrow(df) > 0) {
       sign1 <- if (df[1,'_yhat_'] > baseline_prediction) "increases" else "decreases"
       argument1 <- paste0("The most important change in ", model_name,
                           "'s prediction would occur for ", variables, " = ",
                           df[1,'variable_name'], ". It ",sign1,
                           " the prediction by ", df$importance[1], ".")
-      if (nrow(df) == 1) argumentation <- argument1
-      if (nrow(df) >= 2) {
+    }
+    if (nrow(df) > 1) {
       sign2 <- if (df[2,'_yhat_'] > baseline_prediction) "increases" else "decreases"
       argument2 <- paste0("The second most important change in ", "the",
                           " prediction would occur for ", variables, " = ",
                           df[2,'variable_name'], ". It ",sign2,
                           " the prediction by ", df$importance[2], ".")
-      }
-      if (nrow(df) == 2) {
-        argumentation <- paste(argument1, argument2, sep = "\n")
-      }
-      if (nrow(df) >= 3) {
+    }
+    if (nrow(df) > 2) {
       sign3 <- if (df[3,'_yhat_'] > baseline_prediction) "increases" else "decreases"
       argument3 <- paste0("The third most important change in ", "the",
                           " prediction would occur for ", variables, " = ",
                           df[3,'variable_name'], ". It ",sign3,
                           " the prediction by ", df$importance[3], ".")
-      argumentation <- paste(argument1, argument2, argument3, sep = " \n")
-      }
+    }
 
-      introduction <- paste0(model_name," predicts that for the selected instance", value, ", ",
-                             label, " is equal to ", round(baseline_prediction, 3))
+    introduction <- paste0(model_name," predicts that for the selected instance", value, ", ",
+                           label, " is equal to ", round(baseline_prediction, 3))
 
-      summary <- ifelse((nrow(df) > 3),
-                        paste0("Other variable values are with less importance.",
-                               " They do not change the ", label, " by more than ",
-                               df$importance[4],"."),
-                               "All variables are being displayed.")
+    argumentation <- paste(argument1, argument2, argument3, sep = " \n")
 
-      description <- paste0(introduction," \n",
-                            argumentation, "\n",
-                            summary)
+    summary <- ifelse((nrow(df) > 3),
+                      paste0("Other variable values are with less importance.",
+                             " They do not change the ", label, " by more than ",
+                             df$importance[4],"."),
+                      "All variables are being displayed.")
+
+    description <- paste0(introduction, "\n\n",
+                          argumentation, "\n\n",
+                          summary)
+  } else {
+    df_important <- df[which(df[ ,'important'] == TRUE ), ]
+    df_positive <- df[which(df_important[ ,'_yhat_'] >= baseline_prediction), ]
+    df_negative <- df[which(df_important[ ,'_yhat_'] < baseline_prediction), ]
+
+    if (nrow(df_positive) == 0) {
+      arguments_increasing <-  NULL
     } else {
-      df_important <- df[which(df[ ,'important'] == TRUE ), ]
-      # Choosing three variable values
-      #if (nrow(df_important) > 3) df_important <- df_important[1:3, ]
-      df_positive <- df[which(df_important[ ,'_yhat_'] >= baseline_prediction), ]
-      df_negative <- df[which(df_important[ ,'_yhat_'] < baseline_prediction), ]
+      increasing <- paste(df_positive[ ,'variable_name'], collapse = ", ")
+      arguments_increasing <- paste0("increase substantially if the value of ",
+                                     variables, " variable would change to ", increasing)
+    }
 
-      include_everything <- TRUE
-      if (nrow(df_positive) == 0) {
-        arguments_increasing <-  ""
-        include_everything <- FALSE
-      } else {
-        increasing <- paste(df_positive[ ,'variable_name'], collapse = ", ")
-        arguments_increasing <- paste0("increase substantially if the value of ",
-                                       variables, " variable would change to ", increasing)
-      }
-      if (nrow(df_negative) == 0) {
-        arguments_decreasing <-  ""
-        include_everything <- FALSE
-      } else {
-        decreasing <- paste(df_negative[ ,'variable_name'], collapse = ", ")
-        arguments_decreasing <- paste0("decrease substantially if the value of ",
-                                       variables, " variable would change to ", decreasing)
-      }
-      introduction <- paste0("For the selected instance", value,", ",
-                              label," estimated by ", model_name, " is equal to ",
-                              round(baseline_prediction,3), ".")
+    if (nrow(df_negative) == 0) {
+      arguments_decreasing <- NULL
+    } else {
+      decreasing <- paste(df_negative[ ,'variable_name'], collapse = ", ")
+      arguments_decreasing <- paste0("decrease substantially if the value of ",
+                                     variables, " variable would change to ", decreasing)
+    }
 
-      described_all <- (nrow(df_important) == nrow(df))
-      summary <- ifelse(described_all,
-                        "All the variables were displayed.",
-                        paste0("Other variables are with less importance and they do not change ",
-                               label, " by more than ", round(treshold,2), "%."))
+    introduction <- paste0("For the selected instance", value,", ",
+                           label," estimated by ", model_name, " is equal to ",
+                           round(baseline_prediction,3), ".")
 
-      description <- ifelse(include_everything,
-                            paste0(introduction, "\n",
-                                   "Model's prediction would ", arguments_increasing,
+    argumentation <- ifelse((is.null(arguments_increasing) | is.null(arguments_decreasing)),
+                            paste0("Model's prediction would ", arguments_increasing,
+                                   arguments_decreasing, ".\n",
+                                   "The largest change would be marked if ",
+                                   variables, " variable would change to ",
+                                   df_important[1,"variable_name"], "."),
+                            paste0("Model's prediction would ", arguments_increasing,
                                    ". On the other hand, ",
                                    model_name,"'s ", label, " would ", arguments_decreasing,
                                    ". The largest change would be marked if ",
                                    variables, " variable would change to ",
-                                   df_important[1,"variable_name"], ". \n",
-                                   summary),
-                            paste0(introduction, "\n",
-                                   "Model's prediction would ", arguments_increasing,
-                                   arguments_decreasing, ".\n",
-                                   "The largest change would be marked if ",
-                                   variables, " variable would change to ",
-                                   df_important[1,"variable_name"], ". \n",
-                                   summary))
+                                   df_important[1,"variable_name"], "."))
 
-    }
+    described_all <- (nrow(df_important) == nrow(df))
+    summary <- ifelse(described_all,
+                      "All the variables were displayed.",
+                      paste0("Other variables are with less importance and they do not change ",
+                             label, " by more than ", round(treshold,2), "%."))
+
+    description <- paste0(introduction, "\n\n",
+                          argumentation, "\n\n",
+                          summary)
   }
-
-  if (class(df[ ,variables]) == "numeric") {
-    df <- explainer[which(explainer[ ,'_vname_'] == variables), ]
-    if (nrow(df) == 0) stop("There is no such variable.")
-    if (length(unique(df[ ,variables])) != length(df[ ,variables])) {
-      stop("Use aggregated_profile() function for describing a ceteris paribus explanation for more than one instance.")
-    }
-    df <- df[ ,c(variables,"_yhat_")]
-
-    #introduction
-    baseline_prediction <- attr(explainer, "observations")[ ,'_yhat_'][[1]]
-    introduction <- paste0("For the selected instance ", model_name,
-                           " predicts that ", value, ", ", label,
-                           " is equal to ", round(baseline_prediction, 3), ".")
-
-    # prefix
-    max_name <- df[which.max(df$`_yhat_`), variables]
-    min_name <- df[which.min(df$`_yhat_`), variables]
-    cutpoint <- find_break(smooth(df$`_yhat_`))
-    cut_name <- round(df[cutpoint, variables], 3)
-
-    # Test if the break point is between max_name and min_name
-    multiple_breakpoints <- ifelse((cut_name < min(min_name, max_name) | cut_name > max(min_name, max_name)),
-                                   TRUE,
-                                   FALSE)
-    if (multiple_breakpoints) {
-      df_additional <- df[which(df[ ,variables] == min(min_name, max_name)):which(df[ ,variables] == max(min_name, max_name)), ]
-      cutpoint_additional <- find_break(smooth(na.omit(df_additional$`_yhat_`)))
-    }
-    breakpoint_description <- ifelse(multiple_breakpoints,
-                                     paste0("Breakpoints are identified at (",
-                                     variables, " = ", cut_name, " and ",
-                                     variables, " = ",
-                                     round(df[cutpoint_additional, variables], 3), ")."),
-                                     paste0("Breakpoint is identified at (",
-                                     variables, " = ", cut_name, ")."))
-
-    prefix <- paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
-                     " while the lowest for (", variables, " = ", min_name, ").\n",
-                     breakpoint_description)
-
-    #sufix
-    cutpoint <- ifelse(multiple_breakpoints,
-                       cutpoint_additional,
-                       cutpoint)
-
-    sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
-                                       df = df,
-                                       cutpoint = cutpoint,
-                                       variables = variables)
-
-
-    description <- paste(introduction, prefix, sufix, sep = "\n")
-
-  }
-  class(description) = "ceteris_paribus_description"
-  description
 }
 
-# Describes a numeric variable's ceteris_paribus profile given a cutpoint
+describe_ceterisparibus_continuous <- function(explainer,
+                                               nonsignificance_treshold,
+                                               display_values,
+                                               display_numbers,
+                                               variables,
+                                               label,
+                                               model_name,
+                                               value) {
 
-describe_numeric_variable <- function(original_x, df, cutpoint, variables) {
-  # Different default value for ceteris_paribus and pdp
-  default <- if (!(is.null(original_x))) original_x[1, variables] else mean(df[,'_yhat_'])
-  # selected point is on the left from cutpoint
-  if (default <= df[cutpoint, variables]) {
-    # point is higher than the average
-    if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
-      sufix = paste0("Average model responses are *lower* for variable values *higher* than breakpoint.")
-    } else {
-      sufix = paste0("Average model responses are *higher* for variable values *higher* than breakpoint.")
-    }
-  } else {
-    # point is higher than the average
-    if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
-      sufix = paste0("Average model responses are *higher* for variable values *lower* than breakpoint.")
-    } else {
-      sufix = paste0("Average model responses are *lower* for variable values *lower* than breakpoint.")
-    }
+  # Specifying a df for variable description
+  df <- specify_df(explainer = explainer, variables = variables)$df
+
+  baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
+
+  introduction <- paste0(model_name, " predicts that for the selected instance",
+                         " predicts that ", value, ", ", label,
+                         " is equal to ", round(baseline_prediction, 3), ".")
+
+  # prefix
+  max_name <- df[which.max(df$`_yhat_`), variables]
+  min_name <- df[which.min(df$`_yhat_`), variables]
+  cutpoint <- find_optimal_cutpoint_average(smooth(df$`_yhat_`))
+  cut_name <- round(df[cutpoint, variables], 3)
+
+  # Test if the break point is between max_name and min_name
+  multiple_breakpoints <- ifelse((cut_name < min(min_name, max_name) | cut_name > max(min_name, max_name)),
+                                 TRUE,
+                                 FALSE)
+  if (multiple_breakpoints) {
+    df_additional <- df[which(df[ ,variables] == min(min_name, max_name)):which(df[ ,variables] == max(min_name, max_name)), ]
+    cutpoint_additional <- find_optimal_cutpoint_average(smooth(na.omit(df_additional$`_yhat_`)))
   }
-  sufix
+
+  breakpoint_description <- ifelse(multiple_breakpoints,
+                                   paste0("Breakpoints are identified at (",
+                                          variables, " = ", cut_name, " and ",
+                                          variables, " = ",
+                                          round(df[cutpoint_additional, variables], 3), ")."),
+                                   paste0("Breakpoint is identified at (",
+                                          variables, " = ", cut_name, ")."))
+
+  prefix <- paste0("The highest prediction occurs for (", variables, " = ", max_name, "),",
+                   " while the lowest for (", variables, " = ", min_name, ").\n",
+                   breakpoint_description)
+
+
+  cutpoint <- ifelse(multiple_breakpoints,
+                     cutpoint_additional,
+                     cutpoint)
+
+
+
+  sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
+                                     df = df,
+                                     cutpoint = cutpoint,
+                                     variables = variables)
+
+
+  description <- paste(introduction, prefix, sufix, sep = "\n\n")
+
 }
 
-# Finds breakpoints for ceteris_paribus profile description
 
-find_break <- function(vector_predictions) {
+find_optimal_cutpoint <- function(vector_predictions) {
+  # Finds breakpoints for ceteris_paribus profile description
   vector_observations <- 1:length(vector_predictions)
   breakpoints_all <-sapply(vector_observations, function(x) {
     dum_x <- ifelse(vector_observations <= x, 1, 0)
@@ -290,4 +318,60 @@ find_break <- function(vector_predictions) {
   breakpoints_all <- breakpoints_all[order(abs(breakpoints_all), decreasing = TRUE, na.last = TRUE)]
   as.numeric(names(breakpoints_all[1]))
 }
+find_optimal_cutpoint_average <- function(x) {
+  diffs <- sapply(1:(length(x) - 1), function(cutpoint) {
+    abs(mean(x[1:cutpoint]) - mean(x[-(1:cutpoint)]))
+  })
+  w <- pmin(seq_along(diffs) / length(diffs), 1 - seq_along(diffs) / length(diffs))
+  which.max(diffs * w^0.25)
+}
+describe_numeric_variable <- function(original_x, df, cutpoint, variables) {
+  # Describes a numeric variable given a cutpoint
+
+  # Different default value for ceteris_paribus and pdp
+  default <- if (!(is.null(original_x))) original_x[1, variables] else mean(df[,'_yhat_'])
+
+  # selected point is on the left from cutpoint
+  if (default <= df[cutpoint, variables]) {
+    # point is higher than the average
+    if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
+      sufix = paste0("Average model responses are *lower* for variable values *higher* than breakpoint ")
+    } else {
+      sufix = paste0("Average model responses are *higher* for variable values *higher* than breakpoint ")
+    }
+  } else {
+    # point is higher than the average
+    if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
+      sufix = paste0("Average model responses are *higher* for variable values *lower* than breakpoint ")
+    } else {
+      sufix = paste0("Average model responses are *lower* for variable values *lower* than breakpoint")
+    }
+  }
+  paste0(sufix, "(= ", round(df[cutpoint, variables], 3), ").")
+}
+describe_numeric_variable_average <- function(original_x, x_part, cutpoint, vname) {
+      # selected point is on the left from cutpoint
+    if (original_x[1, vname] <= x_part[cutpoint, vname]) {
+      # point is higher than the average
+      if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
+        sufix = paste0("Model responses are *lower* for *higher* values of ", vname, " \n")
+      } else {
+        sufix = paste0("Model responses are *higher* for *higher* values of ", vname, " \n")
+      }
+    } else {
+      # point is higher than the average
+      if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
+        sufix = paste0("Model responses are *higher* for *lower* values of ", vname, " \n")
+      } else {
+        sufix = paste0("Model responses are *lower* for *lower* values of ", vname, " \n")
+      }
+    }
+    sufix
+  }
+
+
+
+
+
+
 

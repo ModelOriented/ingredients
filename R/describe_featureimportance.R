@@ -53,7 +53,7 @@ describe.feature_importance_explainer <- function(explainer,
                         n_of_all,". \n Variables ",
                         important_variables,
                         " have the highest importantance.")
-  class(description) = "ceteris_paribus_description"
+  class(description) = c("ceteris_paribus_description", "character")
   description
 
 }
