@@ -154,7 +154,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
                   yMean = y_mean, labelNames = label_names,
                   size = size, alpha = alpha, color = color,
-                  onlyNumerical = ifelse(variable_type == "numerical", TRUE, FALSE),
+                  onlyNumerical = variable_type == "numerical",
                   facetNcol = facet_ncol, scalePlot = scale_plot,
                   chartTitle = chart_title, labelsMargin = label_margin)
 

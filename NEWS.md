@@ -1,6 +1,7 @@
 ingredients 0.3.9
 ---------------------------------------------------------------
-* change `only_numerical` parameter to `variable_type`
+* change `only_numerical` parameter to `variable_type` in functions aggregated_profiles(),
+cluster_profiles(), plot() and others, as requested in #15
 
 ingredients 0.3.8
 ----------------------------------------------------------------

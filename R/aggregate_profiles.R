@@ -313,7 +313,7 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
 }
 
 #'@noRd
-#'@title Chech if variable_type is "numerical" or "categorical"
+#'@title Check if variable_type is "numerical" or "categorical"
 #'
 #'@param variable_type a character
 #'

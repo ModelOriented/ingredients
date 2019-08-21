@@ -19,8 +19,6 @@ knitr::opts_chunk$set(
 ```
 
 
-#if(interactive()) {options(error = utils::recover)}
-
 ## Introduction
 
 We adress the problem of insuficient interpretability of explanations for domain experts. We solve this issue by introducing `describe()` function, which automaticly generates natural language descriptions of explanations generated with `ingredients` package. 

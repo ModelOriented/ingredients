@@ -161,7 +161,7 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   options <- list(variableNames = as.list(vnames), n = length(vnames),
                   yMax = yMax + yMargin, yMin = yMin - yMargin,
                   size = size, alpha = alpha, color = color,
-                  onlyNumerical = ifelse(variable_type == "numerical", TRUE, FALSE),
+                  onlyNumerical = variable_type == "numerical",
                   facetNcol = facet_ncol, scalePlot = scale_plot,
                   chartTitle = chart_title, labelsMargin = label_margin,
                   showObservations = show_observations, showRugs = show_rugs)
