@@ -30,7 +30,7 @@ test_that("plot cluster_profiles",{
   pl2 <- plot(cp_rf, color = "grey", variables = "Age") +
     show_aggregated_profiles(clust_rf, color = "_label_", size = 2)
 
-  pl3 <- plot(cp_rf, variables = "Embarked", only_numerical = FALSE)
+  pl3 <- plot(cp_rf, variables = "Embarked", variable_type = "categorical")
 
   clust_rf <- cluster_profiles(cp_rf, k = 3, center = TRUE, variables = "Age")
 

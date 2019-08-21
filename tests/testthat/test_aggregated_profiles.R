@@ -43,6 +43,8 @@ test_that("plot aggregate_profiles",{
   pl2 <- plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
   expect_true("gg" %in% class(pl2))
+
+  expect_error(aggregate_profiles(explainer_rf, variable_type = "wrong"))
 })
 
 
@@ -60,9 +62,7 @@ test_that("plot partial_dependency",{
   selected_passangers <- select_sample(titanic, n = 100)
   cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 
-  res <- partial_dependency(explain_titanic_rf, N=50, variables = "gender", only_numerical = FALSE)
+  res <- partial_dependency(explain_titanic_rf, N=50, variables = "gender", variable_type = "categorical")
 
   expect_true("aggregated_profiles_explainer" %in% class(res))
 })
-
-

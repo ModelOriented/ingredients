@@ -8,7 +8,7 @@
 plotD3(x, ...)
 
 \method{plotD3}{ceteris_paribus_explainer}(x, ..., size = 2, alpha = 1,
-  color = "#46bac2", only_numerical = TRUE, facet_ncol = 2,
+  color = "#46bac2", variable_type = "numerical", facet_ncol = 2,
   scale_plot = FALSE, variables = NULL, chart_title = NULL,
   label_margin = 60, show_observations = TRUE, show_rugs = TRUE)
 }
@@ -23,7 +23,8 @@ plotD3(x, ...)
 
 \item{color}{a character.  Set line color}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only selected variables will be plotted as bars.}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
+If "categorical" then only categorical variables will be plotted.}
 
 \item{facet_ncol}{number of columns for the `facet_wrap`}
 
@@ -33,7 +34,7 @@ plotD3(x, ...)
 
 \item{chart_title}{a character. Set custom title}
 
-\item{label_margin}{a numeric. Set width of label margins, when only_numerical is FALSE}
+\item{label_margin}{a numeric. Set width of label margins in "categorical" type}
 
 \item{show_observations}{a logcal. Adds observations layer to a plot. By default it's TRUE}
 
@@ -73,7 +74,7 @@ selected_passanger <- select_sample(titanic, n = 1)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 
 plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
-     facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE)
+     facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
 }
 
 }

@@ -79,7 +79,7 @@ perturbed_variable <- "class"
 cp_rf <- ceteris_paribus(explain_titanic_rf, 
                          passanger,
                          variables = perturbed_variable)
-plot(cp_rf, only_numerical = FALSE)
+plot(cp_rf, variable_type = "categorical")
 ```
 
 For a user with no experience, interpreting the above plot may be not straightforward. Thus we generate a natural language description in order to make it easier. 
@@ -111,7 +111,7 @@ Continuous variables are described as well.
 perturbed_variable_continuous <- "age"
 cp_rf <- ceteris_paribus(explain_titanic_rf, 
                          passanger)
-plot(cp_rf, only_numerical = TRUE, variables = perturbed_variable_continuous)
+plot(cp_rf, variables = perturbed_variable_continuous)
 describe(cp_rf, variables = perturbed_variable_continuous)
 ```
 Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependency profiles.
@@ -119,13 +119,13 @@ Ceteris Paribus profiles are described only for a single observation. If we want
 ### Partial and Accumulated Dependency Profiles
 
 ```{r}
-pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)
+pdp <- aggregate_profiles(cp_rf, type = "partial")
 plot(pdp, variables = "fare")
 describe(pdp, variables = "fare")
 ```
 
 ```{r}
-pdp <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = FALSE)
+pdp <- aggregate_profiles(cp_rf, type = "accumulated", variable_type = "categorical")
 plot(pdp, variables = perturbed_variable)
 describe(pdp, variables = perturbed_variable)
 ```

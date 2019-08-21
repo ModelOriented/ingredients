@@ -11,7 +11,8 @@
 #' @param k number of clusters for the hclust function
 #' @param center shall profiles be centered before clustering
 #' @param aggregate_function a function for profile aggregation. By default it's 'mean'
-#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
+#' @param variable_type a character. If "numerical" then only numerical variables will be computed.
+#' If "categorical" then only categorical variables will be computed.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -62,10 +63,13 @@
 #' @export
 cluster_profiles <- function(x, ...,
                        aggregate_function = mean,
-                       only_numerical = TRUE,
+                       variable_type = "numerical",
                        center = FALSE,
                        k = 3,
                        variables = NULL) {
+
+  check_variable_type(variable_type)
+
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -81,7 +85,7 @@ cluster_profiles <- function(x, ...,
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
     if (length(vnames) == 0) stop("There are no numerical variables")
     all_profiles$`_x_` <- 0

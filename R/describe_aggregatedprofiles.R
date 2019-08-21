@@ -28,7 +28,7 @@
 #'
 #' selected_passangers <- select_sample(titanic, n = 10)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
-#' pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+#' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' describe(pdp, variables = "gender")
 #'
 #' @export

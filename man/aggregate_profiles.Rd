@@ -4,7 +4,7 @@
 \alias{aggregate_profiles}
 \title{Aggregates Ceteris Paribus Profiles}
 \usage{
-aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
+aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
   type = "partial", variables = NULL)
 }
 \arguments{
@@ -12,7 +12,8 @@ aggregate_profiles(x, ..., only_numerical = TRUE, groups = NULL,
 
 \item{...}{other explainers that shall be calculated together}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be calculated If FALSE then only categorical variables will be calculated}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
+If "categorical" then only categorical variables will be calculated.}
 
 \item{groups}{a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated}
 
@@ -65,18 +66,21 @@ plot(cp_rf, variables = "age") +
 
 
 # categorical variable
-pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "partial")
+pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class",
+                               variable_type = "categorical",  type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
-pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "conditional")
+pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class",
+                               variable_type = "categorical", type = "conditional")
 pdp_rf_c$`_label_` <- "RF_conditional"
-pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "accumulated")
+pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class",
+                               variable_type = "categorical", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 # or maybe flipped?
 library(ggplot2)
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_") + coord_flip()
 
-pdp_rf <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE,
+pdp_rf <- aggregate_profiles(cp_rf, variables = "class", variable_type = "categorical",
                              groups = "gender")
 head(pdp_rf)
 plot(pdp_rf, variables = "class")
