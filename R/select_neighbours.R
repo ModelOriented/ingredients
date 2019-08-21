@@ -7,8 +7,8 @@
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
-#' @param data set of observations
 #' @param observation single observation
+#' @param data set of observations
 #' @param variables names of variables that shall be used for calculation of distance. By default these are all variables present in `data` and `observation`
 #' @param distance the distance function, by default the `gower_dist` function.
 #' @param n number of neighbours to select
@@ -23,12 +23,12 @@
 #' new_apartment
 #' small_apartments
 #' @export
-select_neighbours <- function(data, observation, variables = NULL, distance = gower::gower_dist, n = 20, frac = NULL) {
+select_neighbours <- function(observation, data, variables = NULL, distance = gower::gower_dist, n = 20, frac = NULL) {
   UseMethod("select_neighbours")
 }
 
 #' @export
-select_neighbours.default <- function(data, observation, variables = NULL, distance = gower::gower_dist, n = 20, frac = NULL) {
+select_neighbours.default <- function(observation, data, variables = NULL, distance = gower::gower_dist, n = 20, frac = NULL) {
  if (is.null(variables)) {
    variables <- intersect(colnames(observation),
                           colnames(data))
