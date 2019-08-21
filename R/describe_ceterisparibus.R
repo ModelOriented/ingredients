@@ -39,7 +39,7 @@
 #'
 #'selected_passanger <- select_sample(titanic, n = 1, seed = 123)
 #'cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
-#'plot(cp_rf, only_numerical = FALSE)
+#'plot(cp_rf, variable_type = "categorical")
 #'describe(cp_rf, variables = "class", label = "the predicted probability")
 #'
 #' @export

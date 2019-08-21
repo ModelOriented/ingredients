@@ -45,27 +45,27 @@ test_that("plotD3 Ceteris Paribus and plotD3 Aggregated Profiles",{
   p6 <- plotD3(cp_rf, variables = c("age","parch","fare","sibsp"),
                size = 5, alpha = 0.5, show_rugs = TRUE, scale_plot = TRUE)
   p7 <- plotD3(cp_rf2, variables = c("class", "embarked", "gender", "sibsp"),
-               facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE)
+               facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
 
   expect_true("r2d3" %in% class(p6))
   expect_true("r2d3" %in% class(p7))
 
   expect_error(plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
-                      facet_ncol = 2, only_numerical = FALSE, label_margin = 100, scale_plot = TRUE))
+                      facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE))
 
-  pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)
+  pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial")
   pdp_rf_p$`_label_` <- "RF_partial"
-  pdp_rf_c <- aggregate_profiles(cp_rf, type = "conditional", only_numerical = TRUE)
+  pdp_rf_c <- aggregate_profiles(cp_rf, type = "conditional")
   pdp_rf_c$`_label_` <- "RF_conditional"
-  pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = TRUE)
+  pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated")
   pdp_rf_a$`_label_` <- "RF_accumulated"
 
-  p8 <- plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE)
+  p8 <- plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a)
 
-  pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+  pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
   pdp$`_label_` <- "RF_partial"
 
-  p9 <- plotD3(pdp, only_numerical = FALSE)
+  p9 <- plotD3(pdp, variable_type = "categorical")
 
 
   expect_true("r2d3" %in% class(p8))

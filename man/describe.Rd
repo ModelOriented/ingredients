@@ -80,7 +80,7 @@ explain_titanic_rf <- explain(model_titanic_rf,
 
 selected_passangers <- select_sample(titanic, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
-pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 describe(pdp, variables = "gender")
 
 library("DALEX")
@@ -98,7 +98,7 @@ explain_titanic_rf <- explain(model_titanic_rf,
 
 selected_passanger <- select_sample(titanic, n = 1, seed = 123)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
-plot(cp_rf, only_numerical = FALSE)
+plot(cp_rf, variable_type = "categorical")
 describe(cp_rf, variables = "class", label = "the predicted probability")
 
 library("DALEX")

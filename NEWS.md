@@ -1,3 +1,8 @@
+ingredients 0.3.9
+---------------------------------------------------------------
+* change `only_numerical` parameter to `variable_type` in functions aggregated_profiles(),
+cluster_profiles(), plot() and others, as requested in #15
+
 ingredients 0.3.8
 ----------------------------------------------------------------
 * Natural language description generated with `describe()` function for `ceteris_paribus()`, `feature_importance()` and `aggregated_profiles()` explanations. 

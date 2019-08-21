@@ -14,7 +14,7 @@ explain_titanic_rf <- explain(model_titanic_rf,
                               label = "rf")
 
 selected_passanger <- select_sample(titanic, n = 1)
-cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger, only_numerical = FALSE)
+cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger, variable_type = "categorical")
 description <- describe(cp_rf, variables = "gender", display_numbers = TRUE,
          label = "the predicted probability")
 
@@ -42,7 +42,7 @@ test_result <- sapply(variables, function(y) {
 
 
 test_result <- sapply(variables, function(y) {
-    pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+    pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
     description <- describe(pdp,
                             variables = y,
                             display_numbers = TRUE)

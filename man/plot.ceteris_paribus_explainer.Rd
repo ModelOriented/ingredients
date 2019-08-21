@@ -5,7 +5,7 @@
 \title{Plots Ceteris Paribus Profiles}
 \usage{
 \method{plot}{ceteris_paribus_explainer}(x, ..., size = 1, alpha = 1,
-  color = "#46bac2", only_numerical = TRUE, facet_ncol = NULL,
+  color = "#46bac2", variable_type = "numerical", facet_ncol = NULL,
   variables = NULL)
 }
 \arguments{
@@ -19,7 +19,8 @@
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only selected variables will be plotted as bars.}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
+If "categorical" then only categorical variables will be plotted.}
 
 \item{facet_ncol}{number of columns for the `facet_wrap()`}
 
@@ -80,7 +81,7 @@ plot(cp_rf, variables = "age") +
 
 plot(cp_rf, variables = "class")
 plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1)
-plot(cp_rf, variables = c("class", "embarked", "gender", "sibsp"), only_numerical = FALSE)
+plot(cp_rf, variables = c("class", "embarked", "gender", "sibsp"), variable_type = "categorical")
 
 }
 }

@@ -10,7 +10,8 @@
 #' @param sides a string containing any of "trbl", for top, right, bottom, and left. Passed to geom rug.
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param variables if not NULL then only `variables` will be presented
-#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.
+#' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
+#' If "categorical" then only categorical variables will be plotted.
 #'
 #' @return a ggplot2 layer
 #' @examples
@@ -61,9 +62,11 @@ show_rugs <- function(x, ...,
                       size = 0.5,
                       alpha = 1,
                       color = "#371ea3",
-                      only_numerical = TRUE,
+                      variable_type = "numerical",
                       sides = "b",
                       variables = NULL) {
+
+  check_variable_type(variable_type)
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -82,7 +85,7 @@ show_rugs <- function(x, ...,
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_observations[, all_variables, drop = FALSE], is.numeric)
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     vnames <- all_variables[which(is_numeric)]
     if (length(vnames) == 0) stop("There are no numerical variables")
   } else {
