@@ -53,7 +53,7 @@ model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + c
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_small[,-8],
-                              y = titanic$survived == "yes",
+                              y = titanic_small$survived == "yes",
                               label = "Random Forest v7")
 
 selected_passangers <- select_sample(titanic_small, n = 100)
@@ -71,7 +71,7 @@ plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, variable_type = "numerical", scale_plot = T
 pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 pdp$`_label_` <- "RF_partial"
 
-plotD3(pdp, variables = c("gender","class"), variable_type = "categorical")
+plotD3(pdp, variables = c("gender","class"), variable_type = "categorical", label_margin = 70)
 
 }
 \references{

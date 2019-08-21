@@ -107,7 +107,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   })
   all_observations <- do.call(rbind, all_observations)
   m <- dim(all_observations)[2]
-  colnames(all_observations) <- c(colnames(all_observations)[1:(m-3)], "yhat","model","observation.id")
+  colnames(all_observations) <- c(colnames(all_observations)[1:(m-3)],
+                                  "yhat", "model", "observation.id")
   all_observations <- all_observations[,c(m,m-1,m-2,1:(m-3))]
   all_observations$observation.id <- rownames(all_observations)
 
@@ -117,9 +118,9 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   all_profiles$`_vname_` <- droplevels(all_profiles$`_vname_`)
   rownames(all_profiles) <- NULL
 
-  yMax <- max(all_profiles$`_yhat_`)
-  yMin <- min(all_profiles$`_yhat_`)
-  yMargin <- abs(yMax - yMin)*0.1;
+  ymax <- max(all_profiles$`_yhat_`)
+  ymin <- min(all_profiles$`_yhat_`)
+  ymargin <- abs(ymax-ymin)*0.1;
 
   all_profiles_list <- split(all_profiles, all_profiles$`_vname_`)
 
@@ -156,14 +157,14 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
     })
   }
 
-  if (is.null(chart_title)) chart_title = paste("Ceteris Paribus Profiles")
+  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames), n = length(vnames),
-                  yMax = yMax + yMargin, yMin = yMin - yMargin,
+                  yMax = ymax + ymargin, yMin = ymin - ymargin,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = variable_type == "numerical",
                   facetNcol = facet_ncol, scalePlot = scale_plot,
-                  chartTitle = chart_title, labelsMargin = label_margin,
+                  chartTitle = chart_title, labelMargin = label_margin,
                   showObservations = show_observations, showRugs = show_rugs)
 
   temp <- jsonlite::toJSON(list(all_profiles_list, min_max_list, all_observations))
@@ -171,7 +172,8 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
   r2d3::r2d3(temp, system.file("d3js/ceterisParibus.js", package = "ingredients"),
              dependencies = list(
                system.file("d3js/colorsDrWhy.js", package = "ingredients"),
-               system.file("d3js/tooltipD3.js", package = "ingredients")
+               system.file("d3js/d3-tip.js", package = "ingredients"),
+               system.file("d3js/hackHead.js", package = "ingredients")
                ),
              css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
              d3_version = 4,

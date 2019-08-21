@@ -34,7 +34,7 @@
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_small[,-8],
-#'                               y = titanic$survived == "yes",
+#'                               y = titanic_small$survived == "yes",
 #'                               label = "Random Forest v7")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
@@ -52,7 +52,7 @@
 #' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' pdp$`_label_` <- "RF_partial"
 #'
-#' plotD3(pdp, variables = c("gender","class"), variable_type = "categorical")
+#' plotD3(pdp, variables = c("gender","class"), variable_type = "categorical", label_margin = 70)
 #'
 #' @export
 #' @rdname plotD3_aggregated_profiles
@@ -106,13 +106,13 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   aggregated_profiles$`_vname_` <- droplevels(aggregated_profiles$`_vname_`)
   rownames(aggregated_profiles) <- NULL
 
-  yMax <- max(aggregated_profiles$`_yhat_`)
-  yMin <- min(aggregated_profiles$`_yhat_`)
-  yMargin <- abs(yMax - yMin)*0.1;
+  ymax <- max(aggregated_profiles$`_yhat_`)
+  ymin <- min(aggregated_profiles$`_yhat_`)
+  ymargin <- abs(ymax - ymin)*0.1;
 
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`)
 
-  min_max_list <- y_mean <- label_names <- NULL
+  min_max_list <- ymean <- label_names <- NULL
 
   # line plot or bar plot?
   if (variable_type == "numerical") {
@@ -144,26 +144,27 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
       ret
     })
 
-    y_mean <- round(attr(x, "mean_prediction"),3)
+    ymean <- round(attr(x, "mean_prediction"),3)
   }
 
-  if (is.null(chart_title)) chart_title = paste("Ceteris Paribus Profiles")
+  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,
-                  yMax = yMax + yMargin, yMin = yMin - yMargin,
-                  yMean = y_mean, labelNames = label_names,
+                  yMax = ymax + ymargin, yMin = ymin - ymargin,
+                  yMean = ymean, labelNames = label_names,
                   size = size, alpha = alpha, color = color,
                   onlyNumerical = variable_type == "numerical",
                   facetNcol = facet_ncol, scalePlot = scale_plot,
-                  chartTitle = chart_title, labelsMargin = label_margin)
+                  chartTitle = chart_title, labelMargin = label_margin)
 
   temp <- jsonlite::toJSON(list(aggregated_profiles_list, min_max_list))
 
   r2d3::r2d3(temp, system.file("d3js/aggregatedProfiles.js", package = "ingredients"),
              dependencies = list(
                system.file("d3js/colorsDrWhy.js", package = "ingredients"),
-               system.file("d3js/tooltipD3.js", package = "ingredients")
+               system.file("d3js/d3-tip.js", package = "ingredients"),
+               system.file("d3js/hackHead.js", package = "ingredients")
              ),
              css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
              d3_version = 4,

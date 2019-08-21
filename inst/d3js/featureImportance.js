@@ -1,17 +1,17 @@
-var minValue = options.xmin;
-var maxValue = options.xmax;
+var xMin = options.xmin;
+var xMax = options.xmax;
 var n = options.n;
 var m = options.m;
 var barWidth = options.barWidth,
     chartTitle = options.chartTitle;
 
-var maxLength = calculateTextWidth(data[1])+15;
+var maxLength = calculateTextWidth(data[1]) + 15;
 
-var margin = {top: 98, right: 30, bottom: 71, left: maxLength, inner: 42},
-    w = width - margin.left - margin.right,
+var margin = {top: 78, right: 30, bottom: 50, left: maxLength, inner: 42},
     h = height - margin.top - margin.bottom,
     plotTop = margin.top,
-    plotHeight = m*barWidth + (m+1)*barWidth/2;
+    plotHeight = m*barWidth + (m+1)*barWidth/2,
+    plotWidth = 420*1.2;
 
 if (options.scaleHeight === true) {
   if (h > n*plotHeight + (n-1)*margin.inner) {
@@ -22,34 +22,35 @@ if (options.scaleHeight === true) {
 
 var colors = getColors(n, "bar");
 
-featureImportance(data[0]);
+featureImportance(data);
 
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
 // plot function
 function featureImportance(data) {
-    var i = 1;
+  var fiData = data[0];
+  var i = 1;
 
-    for (var j in data) {
-      var modelName = j;
-      var modelData = data[j];
-      singlePlot(modelName, modelData, i);
-      i += 1;
-    }
+  for (var j in fiData) {
+    var modelName = j;
+    var modelData = fiData[j];
+    singlePlot(modelName, modelData, i);
+    i += 1;
+  }
 }
 
 function singlePlot(modelName, modelData, i) {
 
   var x = d3.scaleLinear()
-      .range([margin.left, margin.left + w])
-      .domain([minValue, maxValue]);
+      .range([margin.left, margin.left + plotWidth])
+      .domain([xMin, xMax]);
 
   if (i == n){
     // xaxis
       svg.append("text")
         .attr("transform",
-              "translate(" + (width/2) + " ," +
+              "translate(" + (margin.left + plotWidth/2) + " ," +
                              (plotTop + plotHeight + 45) + ")")
         .attr("class", "axisTitle")
         .text("Drop-out loss");
@@ -68,9 +69,7 @@ function singlePlot(modelName, modelData, i) {
   var y = d3.scaleBand()
       .rangeRound([plotTop + plotHeight, plotTop])
       .padding(0.33)
-      .domain(modelData.map(function (d) {
-           return d.variable;
-      }));
+      .domain(modelData.map(d => d.variable));
 
   // grid
   var xGrid = svg.append("g")
@@ -102,15 +101,18 @@ function singlePlot(modelName, modelData, i) {
 
   yAxis = svg.append("g")
       .attr("class", "axisLabel")
-      .attr("transform","translate(" + (yGridStart-10) + ",0)")
+      .attr("transform","translate(" + (yGridStart - 10) + ",0)")
       .call(yAxis)
       .call(g => g.select(".domain").remove());
 
-  if (i == 1){
+  // wrap y label text
+  yAxis.selectAll("text").call(wrapText, margin.left - 10);
+
+  if (i == 1) {
     // title
       svg.append("text")
         .attr("x", yGridStart)
-        .attr("y", plotTop - 60)
+        .attr("y", plotTop - 40)
         .attr("class", "bigTitle")
         .text(chartTitle);
   }
@@ -124,9 +126,9 @@ function singlePlot(modelName, modelData, i) {
 
   // tooltip
   var tool_tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-8, 0])
-        .html(d => staticTooltipHtml(modelName,d));
+        .attr("class", "d3-tip")
+        .html(d => staticTooltipHtml(modelName, d));
+
   svg.call(tool_tip);
 
   // bars
@@ -177,9 +179,9 @@ function singlePlot(modelName, modelData, i) {
   plotTop += (margin.inner + plotHeight);
 }
 
-function staticTooltipHtml(modelName, d){
+function staticTooltipHtml(modelName, d) {
     let sign;
-    if (d.dropout_loss > d.full_model) sign = "+"; else sign = "";
+    d.dropout_loss > d.full_model ? sign = "+" : sign = "";
     var temp ="Model: " + modelName
       + "</br>" +
       "Model loss after feature " + d.variable
