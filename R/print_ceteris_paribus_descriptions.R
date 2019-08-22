@@ -17,7 +17,7 @@
 #'                            y = titanic$survived == "yes")
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
 #' cp_rf
-#' describe(cp_rf)
+#' describe(cp_rf, variables = "class")
 #' plot(cp_rf)
 #'
 #'  \donttest{
@@ -34,12 +34,12 @@
 #' selected_passangers <- select_sample(titanic, n = 1)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
-#' describe(cp_rf)
+#' describe(cp_rf, variables = "class")
 #' plot(cp_rf) +
 #'   show_observations(cp_rf)
 #'  }
 #'
-print.ceteris_paribus_descriptions <- function(x, ...) {
+print.ceteris_paribus_description <- function(x, ...) {
   for (element in x) {
     cat(element, "\n")
   }

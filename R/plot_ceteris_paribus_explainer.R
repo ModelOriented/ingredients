@@ -12,7 +12,8 @@
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param facet_ncol number of columns for the `facet_wrap()`
 #' @param variables if not NULL then only `variables` will be presented
-#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only selected variables will be plotted as bars.
+#' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
+#' If "categorical" then only categorical variables will be plotted.
 #'
 #' @return a ggplot2 object
 #' @export
@@ -67,7 +68,7 @@
 #'
 #' plot(cp_rf, variables = "class")
 #' plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1)
-#' plot(cp_rf, variables = c("class", "embarked", "gender", "sibsp"), only_numerical = FALSE)
+#' plot(cp_rf, variables = c("class", "embarked", "gender", "sibsp"), variable_type = "categorical")
 #'
 #' }
 #' @export
@@ -75,8 +76,10 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    size = 1,
    alpha = 1,
    color = "#46bac2",
-   only_numerical = TRUE,
+   variable_type = "numerical",
    facet_ncol = NULL, variables = NULL) {
+
+  check_variable_type(variable_type)
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -95,14 +98,14 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
     all_profiles$`_x_` <- 0
 
     if (length(vnames) == 0) {
       # but `variables` are selected, then change to factor
       if (length(variables) > 0) {
-        only_numerical <- FALSE
+        variable_type <- "categorical"
         vnames <- variables
         all_profiles$`_x_` <- ""
       } else {
@@ -119,7 +122,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   }
 
   # how to plot profiles
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
     pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, color, size, alpha, facet_ncol = facet_ncol)

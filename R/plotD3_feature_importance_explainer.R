@@ -72,10 +72,10 @@ plotD3.feature_importance_explainer <-  function(x, ...,
   xmax <- max(df[df$variable!="_baseline_",]$dropout_loss)
   xmin <- min(df$dropout_loss)
 
-  ticksMargin <- abs(xmin-xmax)*margin;
+  xmargin <- abs(xmin-xmax)*margin;
 
-  bestFits <- df[df$variable == "_full_model_", ]
-  df <- merge(df, bestFits[,c("label", "dropout_loss")], by = "label")
+  best_fits <- df[df$variable == "_full_model_", ]
+  df <- merge(df, best_fits[,c("label", "dropout_loss")], by = "label")
 
   # remove rows that starts with _
   df <- df[!(substr(df$variable,1,1) == "_"),]
@@ -83,8 +83,10 @@ plotD3.feature_importance_explainer <-  function(x, ...,
   perm <- aggregate(df$dropout_loss.x, by = list(Category=df$variable), FUN = mean)
 
   options <- list(barWidth = bar_width,
-                  xmin = xmin-ticksMargin, xmax = xmax+ticksMargin,
-                  scaleHeight = scale_height, chartTitle = chart_title)
+                  xmin = xmin - xmargin,
+                  xmax = xmax + xmargin,
+                  scaleHeight = scale_height,
+                  chartTitle = chart_title)
 
   if (split == "model"){
     # one plot for each model
@@ -119,7 +121,8 @@ plotD3.feature_importance_explainer <-  function(x, ...,
     r2d3::r2d3(data = temp, script = system.file("d3js/featureImportance.js", package = "ingredients"),
                dependencies = list(
                  system.file("d3js/colorsDrWhy.js", package = "ingredients"),
-                 system.file("d3js/tooltipD3.js", package = "ingredients")
+                 system.file("d3js/d3-tip.js", package = "ingredients"),
+                 system.file("d3js/hackHead.js", package = "ingredients")
                ),
                css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
          d3_version = 4,
@@ -149,7 +152,8 @@ plotD3.feature_importance_explainer <-  function(x, ...,
     r2d3::r2d3(data = temp, script = system.file("d3js/featureImportanceSplit.js", package = "ingredients"),
                dependencies = list(
                  system.file("d3js/colorsDrWhy.js", package = "ingredients"),
-                 system.file("d3js/tooltipD3.js", package = "ingredients")
+                 system.file("d3js/d3-tip.js", package = "ingredients"),
+                 system.file("d3js/hackHead.js", package = "ingredients")
                ),
                css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
          d3_version = 4,

@@ -11,12 +11,12 @@ accumulated_dependency(x, ...)
 
 \method{accumulated_dependency}{explainer}(x, variables = NULL,
   N = 500, variable_splits = NULL, grid_points = 101, ...,
-  only_numerical = TRUE)
+  variable_type = "numerical")
 
 \method{accumulated_dependency}{default}(x, data,
   predict_function = predict, label = class(x)[1], variables = NULL,
   grid_points = 101, variable_splits = NULL, N = 500, ...,
-  only_numerical = TRUE)
+  variable_type = "numerical")
 
 \method{accumulated_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
@@ -34,7 +34,8 @@ accumulated_dependency(x, ...)
 
 \item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
+If "categorical" then only categorical variables will be calculated.}
 
 \item{data}{validation dataset Will be extracted from `x` if it's an explainer}
 
@@ -79,7 +80,7 @@ library("randomForest")
 pdp_rf <- accumulated_dependency(explain_titanic_rf)
 plot(pdp_rf)
 
-pdp_rf <- accumulated_dependency(explain_titanic_rf, only_numerical = FALSE)
+pdp_rf <- accumulated_dependency(explain_titanic_rf, variable_type = "categorical")
 plot(pdp_rf)
 }
 }

@@ -1,0 +1,129 @@
+---
+title: "Describing-Explanations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Describing-Explanations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 3.5,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+## Introduction
+
+We adress the problem of insuficient interpretability of explanations for domain experts. We solve this issue by introducing `describe()` function, which automaticly generates natural language descriptions of explanations generated with `ingredients` package. 
+
+## ingredients Package
+
+The `ingredients` package allows for generating prediction validation and predition perturbation explanations. They allow for both global and local model explanation.
+
+Generic function `decribe()` generates a natural language description for explanations generated with `feature_importance()`, `ceteris_paribus()` functions. 
+
+To show generating automatic descriptions we first load the data set and build a random forest model classifying, which of the passangers survived sinking of the titanic. Then, using `DALEX` package, we generate an explainer of the model. Lastly we select a random passanger, which prediction's should be explained. 
+
+```{r message=FALSE, warning=FALSE}
+library("DALEX")
+library("ingredients")
+library("randomForest")
+titanic <- na.omit(titanic)
+
+model_titanic_rf <- randomForest(survived == "yes" ~ .,
+                                 data = titanic 
+                                 )
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                            data = titanic[,-9],
+                            y = titanic$survived == "yes",
+                            label = "Random Forest")
+
+passanger <- titanic[sample(nrow(titanic), 1) ,-9]
+passanger
+```
+
+Now we are ready for generating various explantions and then describing it with `describe()` function. 
+
+### Feature Importance
+
+Feature importance explanation shows the importance of all the model's variables. As it is a global explanation technique, no passanger need to be specified. 
+
+```{r}
+importance_rf <- feature_importance(explain_titanic_rf)
+plot(importance_rf)
+```
+
+Function `describe()` easily describes which variables are the most important. 
+Argument `nonsignificance_treshold` as always sets the level above which variables become significant. For higher treshold, less variables will be described as significant.  
+
+```{r}
+describe(importance_rf)
+```
+
+### Ceteris Paribus Profiles
+
+Ceteris Paribus profiles shows how the model's input changes with the change of a specified variable. 
+
+```{r}
+perturbed_variable <- "class"
+cp_rf <- ceteris_paribus(explain_titanic_rf, 
+                         passanger,
+                         variables = perturbed_variable)
+plot(cp_rf, variable_type = "categorical")
+```
+
+For a user with no experience, interpreting the above plot may be not straightforward. Thus we generate a natural language description in order to make it easier. 
+
+```{r}
+describe(cp_rf)
+```
+
+Natural lannguage descriptions should be flexible in order to provide the desired level of complexity and specificity. Thus various parameters can modify the description being generated.
+
+```{r}
+describe(cp_rf,
+         display_numbers = TRUE,
+         label = "the probability that the passanger will survive")
+```
+
+Please note, that `describe()` can handle only one variable at a time, so it is recommended to specify, which variables should be described. 
+
+```{r}
+describe(cp_rf,
+         display_numbers = TRUE,
+         label = "the probability that the passanger will survive",
+         variables = perturbed_variable)
+```
+
+Continuous variables are described as well.
+
+```{r}
+perturbed_variable_continuous <- "age"
+cp_rf <- ceteris_paribus(explain_titanic_rf, 
+                         passanger)
+plot(cp_rf, variables = perturbed_variable_continuous)
+describe(cp_rf, variables = perturbed_variable_continuous)
+```
+Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependency profiles.
+
+### Partial and Accumulated Dependency Profiles
+
+```{r}
+pdp <- aggregate_profiles(cp_rf, type = "partial")
+plot(pdp, variables = "fare")
+describe(pdp, variables = "fare")
+```
+
+```{r}
+pdp <- aggregate_profiles(cp_rf, type = "accumulated", variable_type = "categorical")
+plot(pdp, variables = perturbed_variable)
+describe(pdp, variables = perturbed_variable)
+```

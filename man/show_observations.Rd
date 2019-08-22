@@ -5,7 +5,7 @@
 \title{Adds a Layer with Observations to a Profile Plot}
 \usage{
 show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
-  only_numerical = TRUE, variables = NULL)
+  variable_type = "numerical", variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
@@ -18,7 +18,8 @@ show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
-\item{only_numerical}{a logical. If TRUE then only numerical variables will be plotted. If FALSE then only categorical variables will be plotted.}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
+If "categorical" then only categorical variables will be plotted.}
 
 \item{variables}{if not NULL then only `variables` will be presented}
 }

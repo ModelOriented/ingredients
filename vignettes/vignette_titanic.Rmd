@@ -127,7 +127,7 @@ And for selected categorical variables. Note, that sibsp is numerical but here i
 ```{r}
 plot(sp_rf, 
      variables = c("class", "embarked", "gender", "sibsp"), 
-     only_numerical = FALSE)
+     variable_type = "categorical")
 ```
 
 It looks like the most important feature for this passenger is `age` and `sex`. After all his odds for survival are higher than for the average passenger. Mainly because of the young age and despite of being a male.

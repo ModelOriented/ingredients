@@ -10,7 +10,8 @@
 #' @param variables if not NULL then aggregate only for selected `variables` will be calculated
 #' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated
-#' @param only_numerical a logical. If TRUE then only numerical variables will be calculated If FALSE then only categorical variables will be calculated
+#' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
+#' If "categorical" then only categorical variables will be calculated.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -52,18 +53,21 @@
 #'
 #'
 #' # categorical variable
-#' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "partial")
+#' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class",
+#'                                variable_type = "categorical",  type = "partial")
 #' pdp_rf_p$`_label_` <- "RF_partial"
-#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "conditional")
+#' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "class",
+#'                                variable_type = "categorical", type = "conditional")
 #' pdp_rf_c$`_label_` <- "RF_conditional"
-#' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE, type = "accumulated")
+#' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class",
+#'                                variable_type = "categorical", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 #' # or maybe flipped?
 #' library(ggplot2)
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_") + coord_flip()
 #'
-#' pdp_rf <- aggregate_profiles(cp_rf, variables = "class", only_numerical=FALSE,
+#' pdp_rf <- aggregate_profiles(cp_rf, variables = "class", variable_type = "categorical",
 #'                              groups = "gender")
 #' head(pdp_rf)
 #' plot(pdp_rf, variables = "class")
@@ -72,10 +76,13 @@
 #' }
 #' @export
 aggregate_profiles <- function(x, ...,
-                      only_numerical = TRUE,
+                      variable_type = "numerical",
                       groups = NULL,
                       type = 'partial',
                       variables = NULL) {
+
+  check_variable_type(variable_type)
+
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
@@ -91,7 +98,7 @@ aggregate_profiles <- function(x, ...,
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
     if (length(vnames) == 0) stop("There are no numerical variables")
     all_profiles$`_x_` <- 0
@@ -117,7 +124,7 @@ aggregate_profiles <- function(x, ...,
   }
 
   # change x column to proper character values
-  if (!only_numerical) {
+  if (variable_type == "categorical") {
     all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
   }
 
@@ -305,3 +312,12 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
   aggregated_profiles
 }
 
+#'@noRd
+#'@title Check if variable_type is "numerical" or "categorical"
+#'
+#'@param variable_type a character
+#'
+check_variable_type <- function(variable_type) {
+  if (!(variable_type %in% c("numerical", "categorical")))
+    stop("variable_type needs to be 'numerical' or 'categorical'")
+}

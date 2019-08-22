@@ -12,12 +12,13 @@
 #' @param color a character.  Set line/bar color
 #' @param size a numeric. Set width of lines
 #' @param alpha a numeric between 0 and 1. Opacity of lines
-#' @param only_numerical a logical. If TRUE then only numerical variables will be plotted. If FALSE then only selected variables will be plotted as bars.
+#' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
+#' If "categorical" then only categorical variables will be plotted.
 #' @param facet_ncol number of columns for the `facet_wrap`
 #' @param scale_plot a logical. Should size of the plot scale with window size? By default it's FALSE
 #' @param variables if not NULL then only `variables` will be presented
 #' @param chart_title a character. Set custom title
-#' @param label_margin a numeric. Set width of label margins, when only_numerical is FALSE
+#' @param label_margin a numeric. Set width of label margins in "categorical" type
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -33,34 +34,36 @@
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_small[,-8],
-#'                               y = titanic$survived == "yes",
+#'                               y = titanic_small$survived == "yes",
 #'                               label = "Random Forest v7")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #'
-#' pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", only_numerical = TRUE)
+#' pdp_rf_p <- aggregate_profiles(cp_rf, type = "partial", variable_type = "numerical")
 #' pdp_rf_p$`_label_` <- "RF_partial"
-#' pdp_rf_c <- aggregate_profiles(cp_rf, type = "conditional", only_numerical = TRUE)
+#' pdp_rf_c <- aggregate_profiles(cp_rf, type = "conditional", variable_type = "numerical")
 #' pdp_rf_c$`_label_` <- "RF_conditional"
-#' pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", only_numerical = TRUE)
+#' pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", variable_type = "numerical")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #'
-#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, only_numerical = TRUE, scale_plot = TRUE)
+#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, variable_type = "numerical", scale_plot = TRUE)
 #'
-#' pdp <- aggregate_profiles(cp_rf, type = "partial", only_numerical = FALSE)
+#' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' pdp$`_label_` <- "RF_partial"
 #'
-#' plotD3(pdp, variables = c("gender","class"), only_numerical = FALSE)
+#' plotD3(pdp, variables = c("gender","class"), variable_type = "categorical", label_margin = 70)
 #'
 #' @export
 #' @rdname plotD3_aggregated_profiles
 plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                                                  color = "#46bac2",
-                                                 only_numerical = TRUE,
+                                                 variable_type = "numerical",
                                                  facet_ncol = 2, scale_plot = FALSE,
                                                  variables = NULL, chart_title = NULL,
                                                  label_margin = 60){
+
+  check_variable_type(variable_type)
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -80,13 +83,13 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
     is.numeric(x$`_x_`)
   }))
 
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
 
     if (length(vnames) == 0) {
       # but `variables` are selected, then change to factor
       if (length(variables) > 0) {
-        only_numerical <- FALSE
+        variable_type <- "categorical"
         vnames <- variables
       } else {
         stop("There are no numerical variables")
@@ -103,16 +106,16 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   aggregated_profiles$`_vname_` <- droplevels(aggregated_profiles$`_vname_`)
   rownames(aggregated_profiles) <- NULL
 
-  yMax <- max(aggregated_profiles$`_yhat_`)
-  yMin <- min(aggregated_profiles$`_yhat_`)
-  yMargin <- abs(yMax - yMin)*0.1;
+  ymax <- max(aggregated_profiles$`_yhat_`)
+  ymin <- min(aggregated_profiles$`_yhat_`)
+  ymargin <- abs(ymax - ymin)*0.1;
 
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`)
 
-  min_max_list <- y_mean <- label_names <- NULL
+  min_max_list <- ymean <- label_names <- NULL
 
   # line plot or bar plot?
-  if (only_numerical) {
+  if (variable_type == "numerical") {
     aggregated_profiles_list <- lapply(aggregated_profiles_list, function(x){
       ret <- x[, c('_x_', "_yhat_", "_vname_", "_label_")]
       colnames(ret) <- c("xhat", "yhat", "vname", "label")
@@ -141,26 +144,27 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
       ret
     })
 
-    y_mean <- round(attr(x, "mean_prediction"),3)
+    ymean <- round(attr(x, "mean_prediction"),3)
   }
 
-  if (is.null(chart_title)) chart_title = paste("Ceteris Paribus Profiles")
+  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,
-                  yMax = yMax + yMargin, yMin = yMin - yMargin,
-                  yMean = y_mean, labelNames = label_names,
+                  yMax = ymax + ymargin, yMin = ymin - ymargin,
+                  yMean = ymean, labelNames = label_names,
                   size = size, alpha = alpha, color = color,
-                  onlyNumerical = only_numerical,
+                  onlyNumerical = variable_type == "numerical",
                   facetNcol = facet_ncol, scalePlot = scale_plot,
-                  chartTitle = chart_title, labelsMargin = label_margin)
+                  chartTitle = chart_title, labelMargin = label_margin)
 
   temp <- jsonlite::toJSON(list(aggregated_profiles_list, min_max_list))
 
   r2d3::r2d3(temp, system.file("d3js/aggregatedProfiles.js", package = "ingredients"),
              dependencies = list(
                system.file("d3js/colorsDrWhy.js", package = "ingredients"),
-               system.file("d3js/tooltipD3.js", package = "ingredients")
+               system.file("d3js/d3-tip.js", package = "ingredients"),
+               system.file("d3js/hackHead.js", package = "ingredients")
              ),
              css = system.file("d3js/themeDrWhy.css", package = "ingredients"),
              d3_version = 4,
