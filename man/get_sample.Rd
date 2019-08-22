@@ -4,25 +4,25 @@
 \alias{get_sample}
 \title{Function for getting binary matrix}
 \usage{
-get_sample(n, p, method = c("default", "binom"), f = 2)
+get_sample(n, p, sample_method = c("default", "binom"), f = 2)
 }
 \arguments{
 \item{n}{number of rows}
 
 \item{p}{number of columns}
 
-\item{method}{sampling method}
+\item{sample_method}{sampling method}
 
-\item{f}{probability for binomial sampling}
+\item{f}{frequency for binomial sampling}
 }
 \value{
 a binary matrix
 }
 \description{
-Function creates binary matrix.
-It starts with a zero matrix. Then it replaces some zeros with ones.
-It either randomly replaces one or two zeros per row.
-Or replace random number of zeros per row - average number of replaced zeros can be controled by parameter f.
+Function creates binary matrix, to be used in aspect_importance method. It
+starts with a zero matrix. Then it replaces some zeros with ones. It either
+randomly replaces one or two zeros per row. Or replace random number of zeros
+per row - average number of replaced zeros can be controled by parameter f.
 Function doesn't allow the returned matrix to have rows with only zeros.
 }
 \examples{

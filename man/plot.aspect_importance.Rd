@@ -17,5 +17,5 @@
 a ggplot2 object
 }
 \description{
-This function plots the results of aspect_importance
+This function plots the results of aspect_importance.
 }

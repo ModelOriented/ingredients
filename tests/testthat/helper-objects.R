@@ -41,7 +41,7 @@ xgb_model <- xgboost(data=titanic_small_mat, label=titanic_small_survived,
 explainer_xgb <- explain(xgb_model,
                          data=titanic_small_mat,
                          y=titanic_small_survived, label="xgboost")
-              
+
 # helper objects for aspect_importance tests
 titanic_data <- na.omit(titanic)
 titanic_glm_model <- glm(survived == "yes" ~ class+gender+age+sibsp+parch+fare+embarked,
@@ -74,3 +74,10 @@ apartments_aspects <- list(space = c("surface", "no.rooms"),
                            district = "district")
 
 apartments_new_observation <- apartments_test[2,-1]
+
+apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
+
+apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
+
+apartments_num_new_observation <- apartments_num[2,-1]
+
