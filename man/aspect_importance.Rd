@@ -5,48 +5,60 @@
 \alias{aspect_importance.explainer}
 \alias{aspect_importance.default}
 \alias{lime}
-\title{Aspect Importance
-This explainer calculates the feature groups importance (called aspects importance) for a selected observation.}
+\title{Calculates the feature groups importance (called aspects importance) for a
+selected observation}
 \usage{
 aspect_importance(x, ...)
 
 \method{aspect_importance}{explainer}(x, new_observation, aspects_list,
-  B = 100, method = "default", n_var = 0, ...)
+  B = 100, sample_method = "default", n_var = 0, f = 2,
+  show_cor = FALSE, ...)
 
 \method{aspect_importance}{default}(x, data, predict_function = predict,
-  new_observation, aspects_list, B = 100, method = "default",
-  n_var = 0, ...)
+  new_observation, aspects_list, B = 100, sample_method = "default",
+  n_var = 0, f = 2, show_cor = FALSE, ...)
 
 lime(x, ...)
 }
 \arguments{
-\item{x}{a model to be explained or an explainer created with the `DALEX::explain()` function}
+\item{x}{a model to be explained or an explainer created with the
+`DALEX::explain()` function}
 
 \item{...}{other parameters}
 
-\item{new_observation}{selected observation with columns that corresponds to variables used in the model}
+\item{new_observation}{selected observation with columns that corresponds to
+variables used in the model}
 
-\item{aspects_list}{list containg grouping of features into aspects}
+\item{aspects_list}{list containting grouping of features into aspects}
 
 \item{B}{number of rows to be sampled from data}
 
-\item{method}{sampling method in get_sample()}
+\item{sample_method}{sampling method in \code{\link{get_sample}}}
 
-\item{n_var}{how many non-zero coefficients for lasso fitting, if zero than linear regression is used}
+\item{n_var}{how many non-zero coefficients should be after lasso fitting,
+if zero than linear regression is used}
+
+\item{f}{frequency in in \code{\link{get_sample}}}
+
+\item{show_cor}{show if all features in aspect are pairwise positivly
+correlated, works only if dataset contains solely numeric values}
 
 \item{data}{dataset, it will be extracted from `x`` if it's an explainer}
 
-\item{predict_function}{predict function, it will be extracted from `x`` if it's an explainer}
+\item{predict_function}{predict function, it will be extracted from `x`` if
+it's an explainer}
 }
 \value{
-An object of the class 'aspect_importance'.
-Contains dataframe that describes aspects' importance.
+An object of the class 'aspect_importance'. Contains dataframe that
+  describes aspects' importance.
 }
 \description{
-Aspect Importance function takes a sample from a given dataset and modifies it.
-Modification is made by replacing part of its aspects by values from the observation.
-Then function is calculating the difference between the prediction made on modified sample and the original sample.
-Finally, it measures the impact of aspects on the change of prediction by using the linear model or lasso.
+Aspect Importance function takes a sample from a given dataset and modifies
+it. Modification is made by replacing part of its aspects by values from the
+observation. Then function is calculating the difference between the
+prediction made on modified sample and the original sample. Finally, it
+measures the impact of aspects on the change of prediction by using the
+linear model or lasso.
 }
 \examples{
 library("DALEX")
@@ -60,15 +72,14 @@ explain_titanic_glm <- explain(model_titanic_glm,
                                y = titanic$survived == "yes")
 
 aspects <- list(wealth = c("class", "fare"),
-                family = c("gender", "sibsp", "parch"),
-                age = "age",
+                family = c("sibsp", "parch"),
+                personal = c("gender", "age"),
                 embarked = "embarked")
 
 aspect_importance(explain_titanic_glm, new_observation = titanic[1,],
                   aspects_list = aspects)
 
 \donttest{
-
 library("randomForest")
 model_titanic_rf <- randomForest(survived ~ class + gender + age + sibsp +
                                    parch + fare + embarked, data = titanic)

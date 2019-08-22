@@ -2,18 +2,30 @@
 % Please edit documentation in R/aspect_importance.R
 \name{group_variables}
 \alias{group_variables}
-\title{Group features into aspects}
+\title{Groups numeric features into aspects}
 \usage{
-group_variables(x, p = 0.5)
+group_variables(x, p = 0.5, clust_method = "complete",
+  draw_tree = FALSE)
 }
 \arguments{
 \item{x}{dataframe with only numeric columns}
 
-\item{p}{correlation value for cutoff point}
+\item{p}{correlation value for cut-off level}
+
+\item{clust_method}{the agglomeration method to be used,
+see \code{\link[stats]{hclust}} methods}
+
+\item{draw_tree}{if TRUE, function plots tree that illustrates grouping}
 }
 \value{
 list of aspects
 }
 \description{
-Divides correlated features into groups, called aspects
+Divides correlated features into groups, called aspects. Division is based on
+correlation cutoff level.
+}
+\examples{
+library("DALEX")
+dragons_data <- dragons[,c(2,3,4,7,8)]
+group_variables(dragons_data, p = 0.7, clust_method = "complete")
 }
