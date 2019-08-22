@@ -6,9 +6,11 @@ var onlyNumerical = options.onlyNumerical, m = options.facetNcol;
 var chartTitle = options.chartTitle;
 var showObservations = options.showObservations, showRugs = options.showRugs;
 
+var pointSize = 3*size/2; // scale point size with size, default is 3
+
 var plotHeight, plotWidth;
-var margin = {top: 98, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
-var labelsMargin = options.labelsMargin;
+var margin = {top: 78, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
+var labelMargin = options.labelMargin;
 
 m = d3.min([n,m]);
 
@@ -16,13 +18,12 @@ if (m != 1) {
   if (onlyNumerical === true){
     margin.inner2 = 25;
   } else {
-    margin.inner2 = labelsMargin;
-    margin.left = labelsMargin;
+    margin.inner2 = labelMargin;
+    margin.left = labelMargin;
   }
 }
 
 var w = width - margin.left - margin.right;
-var h = height - margin.top - margin.bottom;
 
 var plotTop = margin.top, plotLeft = margin.left;
 
@@ -36,7 +37,7 @@ if (options.scalePlot === true) {
 
 var colors = getColors(3, "point");
 var pointColor = colors[0];
-var lineColor = color; //colors[1];
+var lineColor = color;
 var greyColor = colors[2];
 
 // plot
@@ -46,18 +47,18 @@ ceterisParibus(data);
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
-function ceterisParibus(data){
+function ceterisParibus(data) {
   var profData = data[0], minMaxData = data[1], obsData = data[2];
 
   // lines or bars?
   if (onlyNumerical) {
-    for (let i=0; i<n; i++){
+    for (let i=0; i<n; i++) {
       let variableName = variableNames[i];
       numericalPlot(variableName, profData[variableName],
-      minMaxData[variableName], obsData, i+1);
+                    minMaxData[variableName], obsData, i+1);
     }
   } else {
-    for (let i=0; i<n; i++){
+    for (let i=0; i<n; i++) {
       let variableName = variableNames[i];
       categoricalPlot(variableName, profData[variableName], obsData, i+1);
     }
@@ -75,15 +76,15 @@ function numericalPlot(variableName, lData, mData, pData, i) {
             .domain([yMin, yMax]);
 
   var line = d3.line()
-               .x(function(d) { return x(d.xhat); })
-               .y(function(d) { return y(d.yhat); })
+               .x(d => x(d.xhat))
+               .y(d => y(d.yhat))
                .curve(d3.curveMonotoneX);
 
-  if (i==1) {
+  if (i == 1) {
       svg.append("text")
           .attr("class", "bigTitle")
           .attr("x", plotLeft)
-          .attr("y", plotTop - 60)
+          .attr("y", plotTop - 40)
           .text(chartTitle);
   }
 
@@ -129,8 +130,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
 
   // make tooltip
   var tool_tip = d3.tip()
-            .attr("class", "tooltip")
-            .offset([-8, 0])
+            .attr("class", "d3-tip")
             .html(function(d, addData) {
               if(addData !== undefined){
                 return changedTooltipHtml(d, addData);
@@ -138,6 +138,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
                 return staticTooltipHtml(d);
               }
             });
+
   svg.call(tool_tip);
 
   // function to find nearest point on the line
@@ -164,7 +165,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
         .style("stroke", lineColor)
         .style("opacity", alpha)
         .style("stroke-width", size)
-        .on('mouseover', function(d){
+        .on('mouseover', function(d) {
 
           d3.select(this)
             .style("stroke", pointColor)
@@ -201,7 +202,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
             .attr("id", d => d["observation.id"])
             .attr("cx", d => x(d[variableName]))
             .attr("cy", d => y(d.yhat))
-            .attr("r", 3)
+            .attr("r", pointSize)
             .style("stroke-width", 15)
             .style("stroke", "red")
             .style("stroke-opacity", 0)
@@ -209,12 +210,12 @@ function numericalPlot(variableName, lData, mData, pData, i) {
             .on('mouseover', function(d) {
               tool_tip.show(d);
           		d3.select(this)
-          			.attr("r", 6);
+          			.attr("r", 2*pointSize);
           	})
             .on('mouseout', function(d) {
               tool_tip.hide(d);
           		d3.select(this)
-          			.attr("r", 3);
+          			.attr("r", pointSize);
           	});
     }
 
@@ -235,7 +236,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
       .attr("y2", plotTop + plotHeight - 10);
   }
 
-  if (i==n){
+  if (i == n) {
     svg.append("text")
           .attr("class", "axisTitle")
           .attr("transform", "rotate(-90)")
@@ -245,10 +246,10 @@ function numericalPlot(variableName, lData, mData, pData, i) {
           .text("prediction");
   }
 
-  if (i%m !== 0){
+  if (i%m !== 0) {
     plotLeft += (margin.inner2 + plotWidth);
   }
-  if (i%m === 0){
+  if (i%m === 0) {
     plotLeft -= (m-1)*(margin.inner2+plotWidth);
     plotTop += (margin.inner + plotHeight);
   }
@@ -276,9 +277,7 @@ function categoricalPlot(variableName, bData, lData, i){
   var y = d3.scaleBand()
         .rangeRound([plotTop + plotHeight, plotTop])
         .padding(0.33)
-        .domain(bData.map(function (d) {
-             return d.xhat;
-        }));
+        .domain(bData.map(d => d.xhat));
 
   var xGrid = svg.append("g")
          .attr("class", "grid")
@@ -302,9 +301,12 @@ function categoricalPlot(variableName, bData, lData, i){
 
   yAxis = svg.append("g")
         .attr("class", "axisLabel")
-        .attr("transform","translate(" + (plotLeft-8) + ",0)")
+        .attr("transform","translate(" + (plotLeft - 8) + ",0)")
         .call(yAxis)
         .call(g => g.select(".domain").remove());
+
+  // wrap y label text
+  yAxis.selectAll("text").call(wrapText, margin.left - 10);
 
   svg.append("text")
         .attr("x", plotLeft)
@@ -312,10 +314,10 @@ function categoricalPlot(variableName, bData, lData, i){
         .attr("class", "smallTitle")
         .text(variableName + " = " + lData[0][variableName]);
 
-  if (i == 1){
+  if (i == 1) {
     svg.append("text")
           .attr("x", plotLeft)
-          .attr("y", plotTop - 60)
+          .attr("y", plotTop - 40)
           .attr("class", "bigTitle")
           .text(chartTitle);
   }
@@ -329,20 +331,18 @@ function categoricalPlot(variableName, bData, lData, i){
 
   // make tooltip
   var tool_tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-8, 0])
-        .html(function(d) { return changedTooltipHtml(d, lData[0]); });
+        .attr("class", "d3-tip")
+        .html(d => changedTooltipHtml(d, lData[0]));
+
   svg.call(tool_tip);
 
   // add bars
   bars.append("rect")
         .attr("class", variableName)
         .attr("fill", lineColor)
-        .attr("y", function (d) {
-            return y(d.xhat);
-        })
+        .attr("y", d => y(d.xhat))
         .attr("height", y.bandwidth())
-        .attr("x", function (d) {
+        .attr("x", function(d) {
           // start ploting the bar left to full model line
           if (x(d.yhat) < x(fullModel)) {
             return x(d.yhat);
@@ -350,9 +350,7 @@ function categoricalPlot(variableName, bData, lData, i){
             return x(fullModel);
           }
         })
-        .attr("width", function (d) {
-            return  Math.abs(x(d.yhat) - x(fullModel));
-        })
+        .attr("width", d => Math.abs(x(d.yhat) - x(fullModel)))
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide);
 
@@ -385,16 +383,16 @@ function categoricalPlot(variableName, bData, lData, i){
         .text("prediction");
   }
 
-  if (i%m !== 0){
+  if (i%m !== 0) {
     plotLeft += (margin.inner2 + plotWidth);
   }
-  if (i%m === 0){
+  if (i%m === 0) {
     plotLeft -= (m-1)*(margin.inner2+plotWidth);
     plotTop += (margin.inner + plotHeight);
   }
 }
 
-function staticTooltipHtml(d, addData){
+function staticTooltipHtml(d, addData) {
   // function formats tooltip text
   var temp = "";
   for (var [k, v] of Object.entries(d)) {
@@ -402,7 +400,7 @@ function staticTooltipHtml(d, addData){
       k = "prediction";
       temp += "<center>" +  k + ": " + v + "</br>";
       temp += "</br>";
-    } else{
+    } else {
       temp += "<center>" +  k + ": " + v + "</br>";
     }
   }

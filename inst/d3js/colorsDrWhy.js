@@ -170,3 +170,32 @@ function getTextWidth(text, fontSize, fontFace) {
   context.font = fontSize + 'px ' + fontFace;
   return context.measureText(text).width;
 }
+
+function wrapText(text, width) {
+  // this function wraps text
+  text.each(function () {
+      var text = d3.select(this).style('font-family', 'Fira Sans, sans-serif'),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1, // ems
+          y = text.attr("y"),
+          dy = 0,
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em")
+      while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan")
+                          .attr("x", 0)
+                          .attr("y", y)
+                          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                          .text(word);
+          }
+      }
+  });
+}

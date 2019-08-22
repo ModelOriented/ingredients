@@ -6,22 +6,21 @@ var onlyNumerical = options.onlyNumerical, m = options.facetNcol;
 var chartTitle = options.chartTitle, labelNames = options.labelNames;
 
 var plotHeight, plotWidth;
-var margin = {top: 98, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
-var labelsMargin = options.labelsMargin;
+var margin = {top: 78, right: 30, bottom: 50, left: 65, inner: 70, inner2: 0};
+var labelMargin = options.labelMargin;
 
 m = d3.min([n,m]);
 
 if (m != 1) {
-  if (onlyNumerical === true){
+  if (onlyNumerical === true) {
     margin.inner2 = 25;
   } else {
-    margin.inner2 = labelsMargin;
-    margin.left = labelsMargin;
+    margin.inner2 = labelMargin;
+    margin.left = labelMargin;
   }
 }
 
 var w = width - margin.left - margin.right;
-var h = height - margin.top - margin.bottom;
 
 var plotTop = margin.top, plotLeft = margin.left;
 
@@ -35,7 +34,7 @@ if (options.scalePlot === true) {
 
 var tColors = getColors(3, "point");
 var dbColor = tColors[0];
-var lbColor = color; //colors[1];
+var lbColor = color;
 var colors = getColors(labelCount, "line");
 
 // plot
@@ -45,17 +44,17 @@ aggregatedProfiles(data);
 svg.selectAll("text")
   .style('font-family', 'Fira Sans, sans-serif');
 
-function aggregatedProfiles(data){
+function aggregatedProfiles(data) {
   var profData = data[0], minMaxData = data[1];
 
   // lines or bars?
   if (onlyNumerical) {
-    for (let i=0; i<n; i++){
+    for (let i=0; i<n; i++) {
       let variableName = variableNames[i];
       numericalPlot(variableName, profData[variableName], minMaxData[variableName], i+1);
     }
   } else {
-    for (let i=0; i<n; i++){
+    for (let i=0; i<n; i++) {
       let variableName = variableNames[i];
       categoricalPlot(variableName, profData[variableName], i+1);
     }
@@ -73,18 +72,18 @@ function numericalPlot(variableName, lData, mData, i) {
             .domain([yMin, yMax]);
 
   var line = d3.line()
-               .x(function(d) { return x(d.xhat); })
-               .y(function(d) { return y(d.yhat); })
+               .x(d => x(d.xhat))
+               .y(d => y(d.yhat))
                .curve(d3.curveMonotoneX);
 
-  if (i==1) {
+  if (i == 1) {
       svg.append("text")
           .attr("class", "bigTitle")
           .attr("x", plotLeft)
-          .attr("y", plotTop - 60)
+          .attr("y", plotTop - 40)
           .text(chartTitle);
 
-      if (labelCount>1) {
+      if (labelCount > 1) {
         // add legend
         var tempW = -20+14;
 
@@ -103,7 +102,7 @@ function numericalPlot(variableName, lData, mData, i) {
         legend.append("text")
               .attr("dy", ".6em")
               .attr("class", "legendLabel")
-              .text(function(d) { return d;})
+              .text(d => d)
               .attr("x", 14);
 
         legend.append("rect")
@@ -116,7 +115,7 @@ function numericalPlot(variableName, lData, mData, i) {
                 .attr("cx", 4)
                 .attr("cy", 4)
                 .attr("r", 2.5)
-                .style("fill", function(d, i) {return colors[i];});
+                .style("fill", (d, i) => colors[i]);
       }
   }
 
@@ -162,18 +161,16 @@ function numericalPlot(variableName, lData, mData, i) {
 
   // make tooltip
   var tool_tip = d3.tip()
-            .attr("class", "tooltip")
-            .offset([-8, 0])
-            .html(function(d) {
-              return staticTooltipHtml(d, variableName);
-            });
+            .attr("class", "d3-tip")
+            .html(d => staticTooltipHtml(d, variableName));
+
   svg.call(tool_tip);
 
   // function to find nearest point on the line
   var bisectXhat = d3.bisector(d => d.xhat).right;
 
   // tooltip appear with info nearest to mouseover
-  function appear(data){
+  function appear(data) {
     var x0 = x.invert(d3.mouse(d3.event.currentTarget)[0]),
         i = bisectXhat(data, x0),
         d0 = data[i - 1],
@@ -184,7 +181,7 @@ function numericalPlot(variableName, lData, mData, i) {
   }
 
   // add lines
-  Object.keys(lData).forEach(function(key, j) {
+  Object.keys(lData).forEach(function(key,j) {
       svg.append("path")
         .data([lData[key]])
         .attr("class", "line " + variableName)
@@ -193,10 +190,9 @@ function numericalPlot(variableName, lData, mData, i) {
         .style("stroke", colors[j])
         .style("opacity", alpha)
         .style("stroke-width", size)
-        .on('mouseover', function(d){
+        .on('mouseover', function(d) {
 
           d3.select(this)
-            .style("stroke", dbColor)
             .style("stroke-width", size*1.5);
 
           // make line and points appear on top
@@ -208,7 +204,6 @@ function numericalPlot(variableName, lData, mData, i) {
         .on('mouseout', function(d){
 
           d3.select(this)
-            .style("stroke", colors[j])
             .style("stroke-width", size);
 
           // hide changed tooltip
@@ -216,7 +211,7 @@ function numericalPlot(variableName, lData, mData, i) {
         });
   });
 
-  if (i==n){
+  if (i == n) {
     svg.append("text")
           .attr("class", "axisTitle")
           .attr("transform", "rotate(-90)")
@@ -226,19 +221,19 @@ function numericalPlot(variableName, lData, mData, i) {
           .text("average prediction");
   }
 
-  if (i%m !== 0){
+  if (i%m !== 0) {
     plotLeft += (margin.inner2 + plotWidth);
   }
-  if (i%m === 0){
+  if (i%m === 0) {
     plotLeft -= (m-1)*(margin.inner2+plotWidth);
     plotTop += (margin.inner + plotHeight);
   }
 }
 
-function categoricalPlot(variableName, bData, i){
+function categoricalPlot(variableName, bData, i) {
 
   var x = d3.scaleLinear()
-        .range([plotLeft,  plotLeft + plotWidth])
+        .range([plotLeft, plotLeft + plotWidth])
         .domain([yMin, yMax]);
 
   // plot one xAxis per facet column
@@ -257,9 +252,7 @@ function categoricalPlot(variableName, bData, i){
   var y = d3.scaleBand()
         .rangeRound([plotTop + plotHeight, plotTop])
         .padding(0.33)
-        .domain(bData.map(function (d) {
-             return d.xhat;
-        }));
+        .domain(bData.map(d => d.xhat));
 
   var xGrid = svg.append("g")
          .attr("class", "grid")
@@ -283,9 +276,12 @@ function categoricalPlot(variableName, bData, i){
 
   yAxis = svg.append("g")
         .attr("class", "axisLabel")
-        .attr("transform","translate(" + (plotLeft-8) + ",0)")
+        .attr("transform","translate(" + (plotLeft - 8) + ",0)")
         .call(yAxis)
         .call(g => g.select(".domain").remove());
+
+  // wrap y label text
+  yAxis.selectAll("text").call(wrapText, margin.left - 10);
 
   svg.append("text")
         .attr("x", plotLeft)
@@ -293,10 +289,10 @@ function categoricalPlot(variableName, bData, i){
         .attr("class", "smallTitle")
         .text(variableName);
 
-  if (i == 1){
+  if (i == 1) {
     svg.append("text")
           .attr("x", plotLeft)
-          .attr("y", plotTop - 60)
+          .attr("y", plotTop - 40)
           .attr("class", "bigTitle")
           .text(chartTitle);
   }
@@ -310,20 +306,18 @@ function categoricalPlot(variableName, bData, i){
 
   // make tooltip
   var tool_tip = d3.tip()
-        .attr("class", "tooltip")
-        .offset([-8, 0])
-        .html(function(d) { return staticTooltipHtml(d, variableName); });
+        .attr("class", "d3-tip")
+        .html(d => staticTooltipHtml(d, variableName));
+
   svg.call(tool_tip);
 
   // add bars
   bars.append("rect")
         .attr("class", variableName)
         .attr("fill", lbColor)
-        .attr("y", function (d) {
-            return y(d.xhat);
-        })
+        .attr("y", d => y(d.xhat))
         .attr("height", y.bandwidth())
-        .attr("x", function (d) {
+        .attr("x", function(d) {
           // start ploting the bar left to full model line
           if (x(d.yhat) < x(fullModel)) {
             return x(d.yhat);
@@ -331,9 +325,7 @@ function categoricalPlot(variableName, bData, i){
             return x(fullModel);
           }
         })
-        .attr("width", function (d) {
-            return  Math.abs(x(d.yhat) - x(fullModel));
-        })
+        .attr("width", d => Math.abs(x(d.yhat) - x(fullModel)))
         .on('mouseover', tool_tip.show)
         .on('mouseout', tool_tip.hide);
 
@@ -356,7 +348,7 @@ function categoricalPlot(variableName, bData, i){
         .attr("x2", x(fullModel))
         .attr("y2", maximumY + y.bandwidth());
 
-  if (i==n) {
+  if (i == n) {
     svg.append("text")
         .attr("transform",
               "translate(" + (margin.left + m*plotWidth + (m-1)*margin.inner2 + margin.right)/2 + " ," +
@@ -379,7 +371,7 @@ function staticTooltipHtml(d, variableName){
   // function formats tooltip text
   var temp = "";
   for (var [k, v] of Object.entries(d)) {
-    switch(k){
+    switch (k) {
       case "xhat":
         temp += "<center>" +  variableName  + ": " + v + "</br>";
         break;
