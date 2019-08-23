@@ -4,7 +4,7 @@
 #'
 #' @param x a ceteris paribus explainer produced with the 'ceteris_paribus_2d' function
 #' @param ... currently will be ignored
-#' @param split_ncol number of columns for the 'facet_wrap'
+#' @param facet_ncol number of columns for the `facet_wrap()`
 #' @param add_raster if TRUE then `geom_raster` will be added to present levels with diverging colors
 #' @param add_contour if TRUE then `geom_contour` will be added to present contours
 #' @param bins number of contours to be added
@@ -55,7 +55,7 @@
 #'
 #' plot(wi_rf_2d)
 #' }
-plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_raster = TRUE,
+plot.ceteris_paribus_2d_explainer <- function(x, ..., facet_ncol = NULL, add_raster = TRUE,
                                               add_contour = TRUE, bins = 3, add_observation = TRUE,
                                               pch = "+", size = 6) {
   all_responses <- x
@@ -77,7 +77,7 @@ plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_ras
   observation <- do.call(rbind, observations)
 
   pl <- ggplot(all_responses, aes(new_x1, new_x2, fill = y_hat, z = y_hat)) +
-    facet_wrap(vname1 ~ vname2, scales = "free", ncol = split_ncol) +
+    facet_wrap(vname1 ~ vname2, scales = "free", ncol = facet_ncol) +
     xlab("") + ylab("") +
     scale_fill_gradient2(name = 'Prediction', midpoint = midpoint,
                          low = "#2cd9dd", high = "#ff4940", mid = "#f0f0f4")
@@ -95,4 +95,20 @@ plot.ceteris_paribus_2d_explainer <- function(x, ..., split_ncol = NULL, add_ras
     pl <- pl + geom_point(data = observation, fill = "black", pch = pch, size = size)
   }
   pl + theme_drwhy_blank()
+}
+
+theme_drwhy_blank <- function() {
+  theme_bw(base_line_size = 0) %+replace%
+    theme(axis.ticks = element_blank(), legend.background = element_blank(),
+          legend.key = element_blank(), panel.background = element_blank(),
+          panel.border = element_blank(), strip.background = element_blank(),
+          plot.background = element_blank(), complete = TRUE,
+          legend.direction = "horizontal", legend.position = "top",
+          plot.title = element_text(color = "#371ea3", size = 16, hjust = 0),
+          plot.subtitle = element_text(color = "#371ea3", size = 14, hjust = 0),
+          axis.line.x = element_line(color = "white"),
+          axis.ticks.x = element_line(color = "white"),
+          axis.title = element_text(color = "#371ea3"),
+          axis.text = element_text(color = "#371ea3", size = 10),
+          strip.text = element_text(color = "#371ea3", size = 12, hjust = 0, margin = margin(0, 0, 1, 0)))
 }

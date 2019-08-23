@@ -38,7 +38,8 @@
 #' head(pdp_rf)
 #'
 #' }
-print.aggregated_ceteris_paribus_explainer <- function(x, ...) {
+print.aggregated_profiles_explainer <- function(x, ...) {
+
   cat("Top profiles    : \n")
   class(x) <- "data.frame"
   print(head(x, ...))

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ceteris Paribus Profiles aka Individual Variable Profiles — ceteris_paribus • ingredients</title>
+<title>Prints Aggregated Profiles — print.aggregated_profiles_explainer • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,12 +35,9 @@
 
 
 
-<meta property="og:title" content="Ceteris Paribus Profiles aka Individual Variable Profiles — ceteris_paribus" />
+<meta property="og:title" content="Prints Aggregated Profiles — print.aggregated_profiles_explainer" />
 
-<meta property="og:description" content="This explainer works for individual observations.
-For each observation it calculates Ceteris Paribus Profiles for selected variables.
-Such profiles can be used to hypothesize about model results if selected variable is changed.
-For this reason it is also called 'What-If Profiles'." />
+<meta property="og:description" content="Prints Aggregated Profiles" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,89 +133,32 @@ For this reason it is also called 'What-If Profiles'." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ceteris Paribus Profiles aka Individual Variable Profiles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/ceteris_paribus.R'><code>R/ceteris_paribus.R</code></a></small>
-    <div class="hidden name"><code>ceteris_paribus.Rd</code></div>
+    <h1>Prints Aggregated Profiles</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/print_aggregated_profiles.R'><code>R/print_aggregated_profiles.R</code></a></small>
+    <div class="hidden name"><code>print.aggregated_profiles_explainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This explainer works for individual observations.
-For each observation it calculates Ceteris Paribus Profiles for selected variables.
-Such profiles can be used to hypothesize about model results if selected variable is changed.
-For this reason it is also called 'What-If Profiles'.</p>
+    <p>Prints Aggregated Profiles</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for explainer</span>
-<span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for aggregated_profiles_explainer</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a model to be explained, or an explainer created with the `DALEX::explain()` function.</p></td>
+      <td><p>an individual variable profile explainer produced with the `aggregate_profiles()` function</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters</p></td>
-    </tr>
-    <tr>
-      <th>new_observation</th>
-      <td><p>a new observation with columns that corresponds to variables used in the model</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>true labels for `new_observation`. If specified then will be added to ceteris paribus plots.</p></td>
-    </tr>
-    <tr>
-      <th>variables</th>
-      <td><p>names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.</p></td>
-    </tr>
-    <tr>
-      <th>variable_splits</th>
-      <td><p>named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data available in the `explainer`.</p></td>
-    </tr>
-    <tr>
-      <th>grid_points</th>
-      <td><p>number of points for profile. Will be passed to `calculate_variable_splits()`.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>validation dataset. It will be extracted from `x` if it's an explainer</p></td>
-    </tr>
-    <tr>
-      <th>predict_function</th>
-      <td><p>predict function. It will be extracted from `x` if it's an explainer</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
+      <td><p>other arguments that will be passed to `head()`</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An object of the class 'ceteris_paribus_explainer'.
-It's a data frame with calculated average responses.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Find more details in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -238,62 +178,9 @@ It's a data frame with calculated average responses.</p>
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>,])
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;       gender        age class    embarked       country fare sibsp parch
-#&gt; 1       male 42.0000000   3rd Southampton United States 7.11     0     0
-#&gt; 1.1   female 42.0000000   3rd Southampton United States 7.11     0     0
-#&gt; 11      male  0.1666667   3rd Southampton United States 7.11     0     0
-#&gt; 1.110   male  2.0000000   3rd Southampton United States 7.11     0     0
-#&gt; 1.2     male  4.0000000   3rd Southampton United States 7.11     0     0
-#&gt; 1.3     male  7.0000000   3rd Southampton United States 7.11     0     0
-#&gt;          _yhat_ _vname_ _ids_ _label_
-#&gt; 1     0.1857672  gender     1      lm
-#&gt; 1.1   0.6711517  gender     1      lm
-#&gt; 11    0.2452313     age     1      lm
-#&gt; 1.110 0.2423748     age     1      lm
-#&gt; 1.2   0.2392846     age     1      lm
-#&gt; 1.3   0.2347001     age     1      lm
-#&gt; 
-#&gt; 
-#&gt; Top observations:
-#&gt;   gender age class    embarked       country fare sibsp parch    _yhat_ _label_
-#&gt; 1   male  42   3rd Southampton United States 7.11     0     0 0.1857672      lm
-#&gt;   _ids_
-#&gt; 1     1</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='ceteris_paribus-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span><div class='input'> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
- <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt;  randomForest(formula = survived ~ gender + age + class + embarked +      fare + sibsp + parch, data = titanic) 
-#&gt;                Type of random forest: classification
-#&gt;                      Number of trees: 500
-#&gt; No. of variables tried at each split: 2
-#&gt; 
-#&gt;         OOB estimate of  error rate: 19.15%
-#&gt; Confusion matrix:
-#&gt;       no yes class.error
-#&gt; no  1318 100  0.07052186
-#&gt; yes  302 379  0.44346549</div><div class='input'>
- <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  Random Forest v7 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (<span style='color: #BB0000;'>WARNING</span><span>)
-#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
-#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2394102 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
-<span class='co'># select few passangers</span>
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>selected_passangers</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        gender age            class    embarked country    fare sibsp parch
 #&gt; 557      male  50              2nd Southampton England 13.0000     0     0
 #&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
@@ -301,13 +188,13 @@ It's a data frame with calculated average responses.</p>
 #&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
 #&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
 #&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
-#&gt;        _yhat_ _vname_ _ids_          _label_
-#&gt; 557     0.004  gender   557 Random Forest v7
-#&gt; 557.1   0.936  gender   557 Random Forest v7
-#&gt; 660     0.052  gender   660 Random Forest v7
-#&gt; 660.1   0.620  gender   660 Random Forest v7
-#&gt; 1535    0.000  gender  1535 Random Forest v7
-#&gt; 1535.1  0.854  gender  1535 Random Forest v7
+#&gt;           _yhat_ _vname_ _ids_ _label_
+#&gt; 557    0.1816347  gender   557      lm
+#&gt; 557.1  0.6650408  gender   557      lm
+#&gt; 660    0.2164257  gender   660      lm
+#&gt; 660.1  0.7118800  gender   660      lm
+#&gt; 1535   0.2074819  gender  1535      lm
+#&gt; 1535.1 0.7007726  gender  1535      lm
 #&gt; 
 #&gt; 
 #&gt; Top observations:
@@ -318,29 +205,98 @@ It's a data frame with calculated average responses.</p>
 #&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
 #&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
 #&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
-#&gt;      _yhat_          _label_ _ids_
-#&gt; 557   0.004 Random Forest v7     1
-#&gt; 660   0.052 Random Forest v7     2
-#&gt; 1535  0.000 Random Forest v7     3
-#&gt; 942   0.918 Random Forest v7     4
-#&gt; 491   0.004 Random Forest v7     5
-#&gt; 1639  0.004 Random Forest v7     6</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='ceteris_paribus-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;         _yhat_ _label_ _ids_
+#&gt; 557  0.1816347      lm     1
+#&gt; 660  0.2164257      lm     2
+#&gt; 1535 0.2074819      lm     3
+#&gt; 942  0.6677830      lm     4
+#&gt; 491  0.2081213      lm     5
+#&gt; 1639 0.1724511      lm     6</div><div class='input'><span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_ _label_        _x_    _yhat_ _ids_
+#&gt; 1     age      lm  0.1666667 0.3600860     0
+#&gt; 2     age      lm  2.0000000 0.3572098     0
+#&gt; 3     age      lm  4.0000000 0.3540871     0
+#&gt; 4     age      lm  7.0000000 0.3494324     0
+#&gt; 5     age      lm  9.0000000 0.3463490     0
+#&gt; 6     age      lm 13.0000000 0.3402298     0</div><div class='input'>
+</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+ <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
+ <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt;  randomForest(formula = survived ~ gender + age + class + embarked +      fare + sibsp + parch, data = titanic) 
+#&gt;                Type of random forest: classification
+#&gt;                      Number of trees: 500
+#&gt; No. of variables tried at each split: 2
+#&gt; 
+#&gt;         OOB estimate of  error rate: 18.96%
+#&gt; Confusion matrix:
+#&gt;       no yes class.error
+#&gt; no  1321  97  0.06840621
+#&gt; yes  301 380  0.44199706</div><div class='input'>
+ <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; data              :  2099  rows  8  cols 
+#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
+#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2383516 , max =  1  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked country    fare sibsp parch
+#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
+#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
+#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
+#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
+#&gt;        _yhat_ _vname_ _ids_      _label_
+#&gt; 557     0.000  gender   557 randomForest
+#&gt; 557.1   0.932  gender   557 randomForest
+#&gt; 660     0.050  gender   660 randomForest
+#&gt; 660.1   0.550  gender   660 randomForest
+#&gt; 1535    0.000  gender  1535 randomForest
+#&gt; 1535.1  0.802  gender  1535 randomForest
+#&gt; 
+#&gt; 
+#&gt; Top observations:
+#&gt;      gender age            class    embarked       country    fare sibsp parch
+#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
+#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
+#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
+#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
+#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
+#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
+#&gt;      _yhat_      _label_ _ids_
+#&gt; 557   0.000 randomForest     1
+#&gt; 660   0.050 randomForest     2
+#&gt; 1535  0.000 randomForest     3
+#&gt; 942   0.914 randomForest     4
+#&gt; 491   0.008 randomForest     5
+#&gt; 1639  0.004 randomForest     6</div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_      _label_        _x_  _yhat_ _ids_
+#&gt; 1     age randomForest  0.1666667 0.50576     0
+#&gt; 2     age randomForest  2.0000000 0.53630     0
+#&gt; 3     age randomForest  4.0000000 0.53578     0
+#&gt; 4     age randomForest  7.0000000 0.49010     0
+#&gt; 5     age randomForest  9.0000000 0.48850     0
+#&gt; 6     age randomForest 13.0000000 0.42540     0</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

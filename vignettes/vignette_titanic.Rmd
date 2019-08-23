@@ -63,9 +63,6 @@ library("ingredients")
 fi_rf <- feature_importance(explain_titanic_rf)
 head(fi_rf)
 plot(fi_rf)
-
-library("r2d3")
-plotD3(fi_rf)
 ```
 
 # Feature effects

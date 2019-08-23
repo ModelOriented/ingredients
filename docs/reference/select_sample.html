@@ -109,9 +109,6 @@ This is useful if data is large and we need just a sample to calculate profiles.
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -119,7 +116,12 @@ This is useful if data is large and we need just a sample to calculate profiles.
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Subset of Rows</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/select_samples.R'><code>R/select_samples.R</code></a></small>
     <div class="hidden name"><code>select_sample.Rd</code></div>
     </div>
 
@@ -155,7 +157,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
     </tr>
     <tr>
       <th>n</th>
-      <td><p>named list of vectors. Elements of the list are vectors with points in which profiles should be calculated. See an example for more details.</p></td>
+      <td><p>number of observations to select.</p></td>
     </tr>
     <tr>
       <th>seed</th>

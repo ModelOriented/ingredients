@@ -8,7 +8,7 @@
 #' you should overload it.
 #'
 #' @param data set of observations. Profile will be calculated for every observation (every row)
-#' @param n named list of vectors. Elements of the list are vectors with points in which profiles should be calculated. See an example for more details.
+#' @param n number of observations to select.
 #' @param seed seed for random number generator.
 #'
 #' @return a data frame with selected rows

@@ -9,11 +9,10 @@
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @export
-#'
 #' @examples
 #' library("DALEX")
 #' # Toy examples, because CRAN angels ask for them
+#'
 #' titanic <- na.omit(titanic)
 #' set.seed(1313)
 #' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
@@ -23,9 +22,10 @@
 #'                            data = titanic_small[,-9],
 #'                            y = titanic_small$survived == "yes")
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1, ])
+#'
 #' calculate_oscillations(cp_rf)
 #'
-#'  \donttest{
+#' \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'
@@ -40,25 +40,35 @@
 #' cp_rf <- ceteris_paribus(explainer_rf, apartment)
 #' calculate_oscillations(cp_rf)
 #' }
+#'
+#' @export
+#' @rdname calculate_oscillations
 calculate_oscillations <- function(x, sort = TRUE, ...) {
+
   stopifnot("ceteris_paribus_explainer" %in% class(x))
 
   observations <- attr(x, "observations")
   variables <- unique(as.character(x$`_vname_`))
   ids <- unique(as.character(x$`_ids_`))
-  lapply(variables, function(variable) {
-    lapply(ids, function(id) {
+
+  tmp <- lapply(variables, function(variable) {
+
+    tmp <- lapply(ids, function(id) {
       diffs <- x[x$`_vname_` == variable & x$`_ids_` == id,"_yhat_"] - observations[id,"_yhat_"]
       data.frame(`_vname_` = variable, `_ids_` = id, oscillations = mean(abs(diffs)))
-    }) -> tmp
+    })
+
     do.call(rbind, tmp)
-  }) -> tmp
+  })
+
   res <- do.call(rbind, tmp)
   colnames(res) <- c("_vname_", "_ids_", "oscillations")
+
   if (sort) {
     res <- res[order(res$oscillations, decreasing = TRUE),]
   }
-  class(res) = c("ceteris_paribus_oscillations", "data.frame")
+
+  class(res) <- c("ceteris_paribus_oscillations", "data.frame")
   res
 }
 

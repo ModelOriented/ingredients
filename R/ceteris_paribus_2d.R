@@ -12,10 +12,6 @@
 #'
 #' @return An object of the class 'ceteris_paribus_2d_explainer'.
 #' It's a data frame with calculated average responses.
-#' @export
-#'
-#' @importFrom stats quantile
-#' @importFrom utils head
 #'
 #' @examples
 #' library("DALEX")
@@ -30,7 +26,8 @@
 #' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
 #' head(cp_rf)
 #' plot(cp_rf)
-#'  \donttest{
+#'
+#' \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'
@@ -48,7 +45,16 @@
 #' head(wi_rf_2d)
 #' plot(wi_rf_2d)
 #' }
+#'
+#' @importFrom stats quantile
+#' @importFrom utils head
+#'
+#' @export
+#' @rdname ceteris_paribus_2d
 ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variables = NULL) {
+
+  #:# could use some comments
+
   if (!("explainer" %in% class(explainer)))
     stop("The what_if() function requires an object created with explain() function.")
   if (is.null(explainer$data))
@@ -85,7 +91,8 @@ ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variab
   new_y_hat <- predict_function(model, observation)
 
   attr(all_responses, "prediction") <- list(observation = observation, new_y_hat = new_y_hat)
-  class(all_responses) = c("ceteris_paribus_2d_explainer", "data.frame")
+  class(all_responses) <- c("ceteris_paribus_2d_explainer", "data.frame")
+
   all_responses
 }
 

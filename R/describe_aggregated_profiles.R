@@ -13,15 +13,15 @@
 #' @importFrom stats quantile
 #'
 #' @examples
-#'library("DALEX")
-#'library("ingredients")
-#'library("randomForest")
+#' library("DALEX")
+#' library("ingredients")
+#' library("randomForest")
 #'
-#'titanic <- na.omit(titanic)
+#' titanic <- na.omit(titanic)
 #'
-#'model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                   fare + sibsp + parch,  data = titanic)
-#'explain_titanic_rf <- explain(model_titanic_rf,
+#' explain_titanic_rf <- explain(model_titanic_rf,
 #'                              data = titanic[,-9],
 #'                              y = titanic$survived == "yes",
 #'                              label = "rf")
@@ -33,37 +33,37 @@
 #'
 #' @export
 #' @rdname describe
-
-
-describe.aggregated_profiles_explainer <- function(explainer,
-                                                   nonsignificance_treshold = 0.15,
-                                                   ...,
-                                                   display_values = FALSE,
-                                                   display_numbers = FALSE,
-                                                   variables = NULL,
-                                                   label = "prediction"){
+describe.partial_dependency_explainer <- function(x,
+                                                  nonsignificance_treshold = 0.15,
+                                                  ...,
+                                                  display_values = FALSE,
+                                                  display_numbers = FALSE,
+                                                  variables = NULL,
+                                                  label = "prediction") {
 
   # ERROR HANDLING
-  if (length(unique(explainer[ ,'_vname_'])) == 1) variables <- as.character(explainer[1,'_vname_'])
+  if (length(unique(x[ ,'_vname_'])) == 1) variables <- as.character(x[1,'_vname_'])
   if (is.null(variables)) stop("Choose a single variable to be described.")
   if (!class(variables) == "character") stop("Enter the single variables name as character.")
 
   # Assigning model's name
-  model_name <- as.character(explainer[1,'_label_'])
+  model_name <- as.character(x[1,'_label_'])
   model_name <- paste(toupper(substr(model_name, 1, 1)), substr(model_name, 2, nchar(model_name)), sep="")
 
 
   # Generating description
-  if (class(explainer[ ,'_x_']) == "factor" | class(explainer[ ,'_x_']) == "character") {
-    description <- describe_aggregatedprofiles_factor(explainer,
-                                                  nonsignificance_treshold = nonsignificance_treshold,
-                                                  display_values = display_values,
-                                                  display_numbers = display_numbers,
-                                                  variables = variables,
-                                                  label = label,
-                                                  model_name = model_name)
-  } else if (class(explainer[ ,'_x_']) == "numeric") {
-    description <- describe_aggregatedprofiles_continuous(explainer,
+  if (class(x[ ,'_x_']) == "numeric") {
+    description <- describe_aggregated_profiles_continuous(x = x,
+                                                           nonsignificance_treshold = nonsignificance_treshold,
+                                                           display_values = display_values,
+                                                           display_numbers = display_numbers,
+                                                           variables = variables,
+                                                           label = label,
+                                                           model_name = model_name)
+  } else {
+    x[ ,'_x_'] <- as.character(x[ ,'_x_'])
+
+    description <- describe_aggregated_profiles_factor(x = x,
                                                       nonsignificance_treshold = nonsignificance_treshold,
                                                       display_values = display_values,
                                                       display_numbers = display_numbers,
@@ -71,27 +71,30 @@ describe.aggregated_profiles_explainer <- function(explainer,
                                                       label = label,
                                                       model_name = model_name)
   }
-  class(description) = c("ceteris_paribus_description", "character")
+
+  class(description) <- c("aggregated_profiles_description", "description", "character")
   description
 }
 
-describe_aggregatedprofiles_factor <- function(explainer,
-                                           nonsignificance_treshold,
-                                           display_values,
-                                           display_numbers,
-                                           variables,
-                                           label,
-                                           model_name) {
+
+describe_aggregated_profiles_factor <- function(x,
+                                               nonsignificance_treshold,
+                                               display_values,
+                                               display_numbers,
+                                               variables,
+                                               label,
+                                               model_name) {
 
   # Specifying a df for easier variable description
 
-  df_list <- specify_df_aggregated(explainer = explainer,
-                        variables = variables,
-                        nonsignificance_treshold = nonsignificance_treshold)
+  df_list <- specify_df_aggregated(x = x,
+                                   variables = variables,
+                                   nonsignificance_treshold = nonsignificance_treshold)
   df <- df_list$df
   treshold <- df_list$treshold
+
   #Selecting model's prediction for the observation being explained
-  baseline_prediction <- attr(explainer, "mean_prediction")
+  baseline_prediction <- attr(x, "mean_prediction")
 
   # Choosing the mode of the explanation
   if (display_numbers) {
@@ -183,20 +186,23 @@ describe_aggregatedprofiles_factor <- function(explainer,
                           argumentation, "\n\n",
                           summary)
   }
+
+  description
 }
 
-describe_aggregatedprofiles_continuous <- function(explainer,
-                                               nonsignificance_treshold,
-                                               display_values,
-                                               display_numbers,
-                                               variables,
-                                               label,
-                                               model_name) {
+
+describe_aggregated_profiles_continuous <- function(x,
+                                                   nonsignificance_treshold,
+                                                   display_values,
+                                                   display_numbers,
+                                                   variables,
+                                                   label,
+                                                   model_name) {
 
   # Specifying a df for variable description
-  df <- specify_df_aggregated(explainer = explainer, variables = variables)$df
+  df <- specify_df_aggregated(x = x, variables = variables)$df
 
-  baseline_prediction <- attr(explainer, "mean_prediction")
+  baseline_prediction <- attr(x, "mean_prediction")
 
   introduction <- paste0(model_name, "'s mean ", label,
                          " is equal to ", round(baseline_prediction, 3), ".")
@@ -235,7 +241,7 @@ describe_aggregatedprofiles_continuous <- function(explainer,
 
 
 
-  sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
+  sufix <- describe_numeric_variable(original_x = attr(x, "observations"),
                                      df = df,
                                      cutpoint = cutpoint,
                                      variables = variables)
@@ -243,16 +249,27 @@ describe_aggregatedprofiles_continuous <- function(explainer,
 
   description <- paste(introduction, prefix, sufix, sep = "\n\n")
 
+  description
 }
 
-specify_df_aggregated <- function(explainer, variables, nonsignificance_treshold) {
-  baseline_prediction <- attr(explainer, "mean_prediction")
-  df <- explainer[which(explainer[ ,'_vname_'] == variables), ]
+
+#:# could use some comments
+specify_df_aggregated <- function(x, variables, nonsignificance_treshold) {
+
+  baseline_prediction <- attr(x, "mean_prediction")
+
+  df <- x[which(x[ ,'_vname_'] == variables), ]
+
   if (nrow(df) == 0) stop("There is no such variable.")
+
   df <- df[ ,c("_x_","_yhat_")]
+
   colnames(df)[1] <- variables
+
   df['variable_name'] <- paste0('"', df[ ,variables],'"')
+
   treshold <- NULL
+
   if (class(df[ ,variables]) == "factor" | class(df[ ,variables]) == "character") {
 
     df['importance'] <- sapply(df[ ,'_yhat_'], function(x) abs(x-baseline_prediction))
@@ -264,7 +281,9 @@ specify_df_aggregated <- function(explainer, variables, nonsignificance_treshold
     treshold <- most_important_prediction * nonsignificance_treshold
 
     # Modifying names for better description display
-    df['important'] <- sapply(df[ ,'importance'], function(x) if (x < treshold) FALSE else TRUE)
-    }
-  list("df" = df, "treshold" = treshold)
+    df['important'] <- sapply(df[ ,'importance'], function(x) ifelse(x < treshold, TRUE, FALSE))
+
   }
+
+  list("df" = df, "treshold" = treshold)
+}

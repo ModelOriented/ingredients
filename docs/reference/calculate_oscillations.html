@@ -109,9 +109,6 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -119,7 +116,12 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate Oscillations for Ceteris Paribus Explainer</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/calculate_oscillations.R'><code>R/calculate_oscillations.R</code></a></small>
     <div class="hidden name"><code>calculate_oscillations.Rd</code></div>
     </div>
 
@@ -171,6 +173,7 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='co'># Toy examples, because CRAN angels ask for them</span>
+
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1313</span>)
 <span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>titanic</span>), <span class='fl'>500</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
@@ -187,12 +190,13 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; residuals         :  numerical, min =  -0.789032 , mean =  1.818369e-14 , max =  0.8594593  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>, ])
+
 <span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;    _vname_ _ids_ oscillations
 #&gt; 1   gender   557   0.24255979
 #&gt; 2      age   557   0.03919331
 #&gt; 3     fare   557   0.02683490
 #&gt; 4 survived   557   0.00000000</div><div class='input'>
- </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
 
 <span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
@@ -203,6 +207,8 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; data              :  9000  rows  6  cols 
 #&gt;   -&gt; target variable   :  9000  values 
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; predicted values  :  numerical, min =  2010.982 , mean =  3505.971 , max =  5840.604  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
@@ -217,7 +223,8 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt; 4             floor  1001    243.95950
 #&gt; 5          no.rooms  1001    153.95825
 #&gt; 2 construction.year  1001     51.99319
-#&gt; 1          m2.price  1001      0.00000</div></span></pre>
+#&gt; 1          m2.price  1001      0.00000</div></span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

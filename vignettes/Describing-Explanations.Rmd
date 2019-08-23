@@ -38,13 +38,12 @@ library("randomForest")
 titanic <- na.omit(titanic)
 
 model_titanic_rf <- randomForest(survived == "yes" ~ .,
-                                 data = titanic 
-                                 )
+                                 data = titanic)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                            data = titanic[,-9],
-                            y = titanic$survived == "yes",
-                            label = "Random Forest")
+                              data = titanic[,-9],
+                              y = titanic$survived == "yes",
+                              label = "Random Forest")
 
 passanger <- titanic[sample(nrow(titanic), 1) ,-9]
 passanger
@@ -114,16 +113,10 @@ describe(cp_rf, variables = perturbed_variable_continuous)
 ```
 Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependency profiles.
 
-### Partial and Accumulated Dependency Profiles
+### Partial Dependency Profiles
 
 ```{r}
 pdp <- aggregate_profiles(cp_rf, type = "partial")
 plot(pdp, variables = "fare")
 describe(pdp, variables = "fare")
-```
-
-```{r}
-pdp <- aggregate_profiles(cp_rf, type = "accumulated", variable_type = "categorical")
-plot(pdp, variables = perturbed_variable)
-describe(pdp, variables = perturbed_variable)
 ```

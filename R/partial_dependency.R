@@ -58,36 +58,44 @@ partial_dependency <- function(x, ...)
 
 #' @export
 #' @rdname partial_dependency
-partial_dependency.explainer <- function(x, variables = NULL, N = 500,
-                                      variable_splits = NULL, grid_points = 101,
-                                      ...,
-                                      variable_type = "numerical") {
+partial_dependency.explainer <- function(x,
+                                         variables = NULL,
+                                         N = 500,
+                                         variable_splits = NULL,
+                                         grid_points = 101,
+                                         ...,
+                                         variable_type = "numerical") {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
   predict_function <- x$predict_function
   label <- x$label
 
-  partial_dependency.default(model, data, predict_function,
-                          label = label,
-                          variables = variables,
-                          grid_points = grid_points,
-                          variable_splits = variable_splits,
-                          N = N,
-                          ..., variable_type = variable_type)
+  partial_dependency.default(x = model,
+                             data = data,
+                             predict_function = predict_function,
+                             label = label,
+                             variables = variables,
+                             grid_points = grid_points,
+                             variable_splits = variable_splits,
+                             N = N,
+                             ...,
+                             variable_type = variable_type)
 }
 
 
 #' @export
 #' @rdname partial_dependency
-partial_dependency.default <- function(x, data, predict_function = predict,
-                           label = class(x)[1],
-                           variables = NULL,
-                           grid_points = 101,
-                           variable_splits = NULL,
-                           N = 500,
-                           ...,
-                           variable_type = "numerical") {
+partial_dependency.default <- function(x,
+                                       data,
+                                       predict_function = predict,
+                                       label = class(x)[1],
+                                       variables = NULL,
+                                       grid_points = 101,
+                                       variable_splits = NULL,
+                                       N = 500,
+                                       ...,
+                                       variable_type = "numerical") {
   if (N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
@@ -95,11 +103,15 @@ partial_dependency.default <- function(x, data, predict_function = predict,
     ndata <- data
   }
 
-  cp <- ceteris_paribus.default(x, data, predict_function = predict_function,
-                            ndata, variables = variables,
-                            grid_points = grid_points,
-                            variable_splits = variable_splits,
-                            label = label, ...)
+  cp <- ceteris_paribus.default(x,
+                                data,
+                                predict_function = predict_function,
+                                new_observation = ndata,
+                                variables = variables,
+                                grid_points = grid_points,
+                                variable_splits = variable_splits,
+                                label = label,
+                                ...)
 
   aggregate_profiles(cp, variables = variables, type = "partial", variable_type = variable_type)
 }

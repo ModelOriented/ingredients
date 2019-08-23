@@ -29,37 +29,6 @@ Note that \code{calculate_variable_profile} function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.
 }
-\examples{
-library("DALEX")
- \donttest{
-library("randomForest")
-set.seed(59)
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                      no.rooms + district, data = apartments)
-vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
-variable_splits <- calculate_variable_split(apartments, vars)
-new_apartment <- apartmentsTest[1:10, ]
-profiles <- calculate_variable_profile(new_apartment, variable_splits,
-                               apartments_rf_model)
-head(profiles)
-
-# only subset of observations
-small_apartments <- select_sample(apartmentsTest, n = 10)
-small_apartments
-small_profiles <- calculate_variable_profile(small_apartments, variable_splits,
-                               apartments_rf_model)
-head(small_profiles)
-
-# neighbors for a selected observation
-new_apartment <- apartments[1, 2:6]
-small_apartments <- select_neighbours(apartmentsTest, new_apartment, n = 10)
-small_apartments
-small_profiles <- calculate_variable_profile(small_apartments, variable_splits,
-                               apartments_rf_model)
-head(new_apartment)
-head(small_profiles)
-}
-}
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 }

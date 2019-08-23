@@ -59,10 +59,15 @@ plotD3 <- function(x, ...)
 #' @export
 #' @rdname plotD3_ceteris_paribus
 plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
-                                 color = "#46bac2", variable_type = "numerical",
-                                 facet_ncol = 2, scale_plot = FALSE,
-                                 variables = NULL, chart_title = NULL, label_margin = 60,
-                                 show_observations = TRUE, show_rugs = TRUE) {
+                                             color = "#46bac2",
+                                             variable_type = "numerical",
+                                             facet_ncol = 2,
+                                             scale_plot = FALSE,
+                                             variables = NULL,
+                                             chart_title = "Ceteris Paribus Profiles",
+                                             label_margin = 60,
+                                             show_observations = TRUE,
+                                             show_rugs = TRUE) {
 
   check_variable_type(variable_type)
 
@@ -156,8 +161,6 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
       ret
     })
   }
-
-  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames), n = length(vnames),
                   yMax = ymax + ymargin, yMin = ymin - ymargin,

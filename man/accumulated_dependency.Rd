@@ -15,67 +15,73 @@ accumulated_dependency(x, ...)
 
 \method{accumulated_dependency}{default}(x, data,
   predict_function = predict, label = class(x)[1], variables = NULL,
-  grid_points = 101, variable_splits = NULL, N = 500, ...,
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
   variable_type = "numerical")
 
 \method{accumulated_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.}
+\item{x}{a model to be explained, or an explainer created with function
+\code{DALEX::explain()} or object of the class \code{ceteris_paribus_explainer}.}
 
 \item{...}{other parameters}
 
-\item{variables}{names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.}
+\item{variables}{names of variables for which profiles shall be calculated. Will be passed to \code{calculate_variable_splits()}.
+If NULL then all variables from the validation data will be used.}
 
 \item{N}{number of observations used for calculation of partial dependency profiles. By default, 500 observations will be chosen randomly.}
 
-\item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.}
+\item{variable_splits}{named list of splits for variables, in most cases created with \code{calculate_variable_splits()}.
+If NULL then it will be calculated based on validation data avaliable in the \code{explainer}.}
 
-\item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
+\item{grid_points}{number of points for profile. Will be passed to \code{calculate_variable_splits()}.}
 
 \item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
 If "categorical" then only categorical variables will be calculated.}
 
-\item{data}{validation dataset Will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset Will be extracted from \code{x} if it's an explainer}
 
-\item{predict_function}{predict function Will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function Will be extracted from \code{x} if it's an explainer}
 
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
-an 'aggregated_profiles_explainer' geom
+an \code{aggregated_profiles_explainer} object
 }
 \description{
 Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+Function \code{accumulated_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}..
 }
 \details{
 Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 }
 \examples{
 library("DALEX")
-# Toy examples, because CRAN angels ask for them
-titanic <- na.omit(titanic)
+
+titanic_imputed$country <- NULL
+
 model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
-pdp_glm <- accumulated_dependency(explain_titanic_glm, N = 50, variables = c("age", "fare"))
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed$survived == "yes",
+                               verbose = FALSE)
+
+pdp_glm <- accumulated_dependency(explain_titanic_glm,
+                                  N = 50, variables = c("age", "fare"))
 head(pdp_glm)
 plot(pdp_glm)
 
- \donttest{
+\donttest{
 library("randomForest")
- model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- model_titanic_rf
 
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived)
+model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic_imputed)
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed$survived == "yes")
 
 pdp_rf <- accumulated_dependency(explain_titanic_rf)
 plot(pdp_rf)
@@ -83,6 +89,7 @@ plot(pdp_rf)
 pdp_rf <- accumulated_dependency(explain_titanic_rf, variable_type = "categorical")
 plot(pdp_rf)
 }
+
 }
 \references{
 ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},

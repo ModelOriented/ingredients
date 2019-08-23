@@ -3,6 +3,5 @@ pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
   Describing-Explanations: Describing-Explanations.html
-  vignette_aspect_importance: vignette_aspect_importance.html
   vignette_titanic: vignette_titanic.html
 

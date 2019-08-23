@@ -66,8 +66,12 @@ ceteris_paribus <- function(x, ...)
 
 #' @export
 #' @rdname ceteris_paribus
-ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = NULL,
-                                      variable_splits = NULL, grid_points = 101,
+ceteris_paribus.explainer <- function(x,
+                                      new_observation,
+                                      y = NULL,
+                                      variables = NULL,
+                                      variable_splits = NULL,
+                                      grid_points = 101,
                                       ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
@@ -75,24 +79,31 @@ ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = 
   predict_function <- x$predict_function
   label <- x$label
 
-  ceteris_paribus.default(model, data, predict_function,
+  ceteris_paribus.default(x = model,
+                          data = data,
+                          predict_function = predict_function,
                           new_observation = new_observation,
-                          label = label,
-                          variables = variables,
-                          grid_points = grid_points,
-                          variable_splits = variable_splits,
                           y = y,
+                          variables = variables,
+                          variable_splits = variable_splits,
+                          grid_points = grid_points,
+                          label = label,
                           ...)
 }
 
 
 #' @export
 #' @rdname ceteris_paribus
-ceteris_paribus.default <- function(x, data, predict_function = predict,
-                                    new_observation, y = NULL, variables = NULL,
+ceteris_paribus.default <- function(x,
+                                    data,
+                                    predict_function = predict,
+                                    new_observation,
+                                    y = NULL,
+                                    variables = NULL,
                                     variable_splits = NULL,
                                     grid_points = 101,
-                                    label = class(x)[1], ...) {
+                                    label = class(x)[1],
+                                    ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -164,7 +175,7 @@ ceteris_paribus.default <- function(x, data, predict_function = predict,
 
   # prepare final object
   attr(profiles, "observations") <- new_observation
-  class(profiles) = c("ceteris_paribus_explainer", "data.frame")
+  class(profiles) <- c("ceteris_paribus_explainer", "data.frame")
   profiles
 }
 

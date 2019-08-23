@@ -109,9 +109,6 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -119,7 +116,12 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Adds a Layer with Rugs to a Profile Plot</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/show_rugs.R'><code>R/show_rugs.R</code></a></small>
     <div class="hidden name"><code>show_rugs.Rd</code></div>
     </div>
 
@@ -277,7 +279,8 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 #&gt; 491   0.008 randomForest     5
 #&gt; 1639  0.004 randomForest     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_      _label_        _x_  _yhat_ _ids_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_      _label_        _x_  _yhat_ _ids_
 #&gt; 1     age randomForest  0.1666667 0.50576     0
 #&gt; 2     age randomForest  2.0000000 0.53630     0
 #&gt; 3     age randomForest  4.0000000 0.53578     0

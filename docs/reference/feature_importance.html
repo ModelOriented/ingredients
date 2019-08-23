@@ -109,9 +109,6 @@ For this reason it is also called the Variable Dropout Plot." />
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -119,7 +116,12 @@ For this reason it is also called the Variable Dropout Plot." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ For this reason it is also called the Variable Dropout Plot." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Feature Importance</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/feature_importance.R'><code>R/feature_importance.R</code></a></small>
     <div class="hidden name"><code>feature_importance.Rd</code></div>
     </div>
 
@@ -154,11 +156,11 @@ For this reason it is also called the Variable Dropout Plot.</p>
   <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>feature_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='no'>y</span>, <span class='no'>predict_function</span>,
-  <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>, <span class='no'>...</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"raw"</span>, <span class='st'>"ratio"</span>, <span class='st'>"difference"</span>), <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>keep_raw_permutations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>feature_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='no'>y</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>,
+  <span class='no'>...</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"raw"</span>, <span class='st'>"ratio"</span>, <span class='st'>"difference"</span>),
+  <span class='kw'>n_sample</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_raw_permutations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -307,6 +309,8 @@ It's a data frame with calculated average response.</p>
 #&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
+#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
+#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: warunek posiada długość &gt; 1 i tylko pierwszy element będzie użyty</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,

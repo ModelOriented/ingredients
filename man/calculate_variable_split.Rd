@@ -28,14 +28,3 @@ Note that \code{calculate_variable_split} function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.
 }
-\examples{
-library("DALEX")
- \dontrun{
-library("randomForest")
-set.seed(59)
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                      no.rooms + district, data = apartments)
-vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
-calculate_variable_split(apartments, vars)
-}
-}

@@ -7,14 +7,14 @@ test_that("plotD3 Feature Importance",{
                                         no.rooms + district, data = apartments)
 
   explainer_rf <- explain(apartments_rf_model,
-                          data = apartmentsTest, y = apartmentsTest$m2.price)
+                          data = apartmentsTest, y = apartmentsTest$m2.price, verbose = FALSE)
 
   fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
 
   p1 <- plotD3(fi_rf)
-  p2 <- plotD3(fi_rf, scaleHeight = TRUE)
-  p3 <- plotD3(fi_rf, label = FALSE)
-  p4 <- plotD3(fi_rf, label = FALSE, scaleHeight = TRUE)
+  p2 <- plotD3(fi_rf, scale_height = TRUE)
+  p3 <- plotD3(fi_rf, bar_width = 20)
+  p4 <- plotD3(fi_rf, chart_title = "HELLO", scale_height = TRUE)
   p5 <- plotD3(fi_rf, max_vars = 2, split = "feature")
 
   expect_true("r2d3" %in% class(p1))
@@ -34,7 +34,7 @@ test_that("plotD3 Ceteris Paribus and plotD3 Aggregated Profiles",{
   explainer_titanic_rf <- explain(model_titanic_rf,
                                   data = titanic[,-9],
                                   y = titanic$survived,
-                                  label = "rf")
+                                  label = "rf", verbose = FALSE)
 
   selected_passanger <- select_sample(titanic, n = 10)
   cp_rf <- ceteris_paribus(explainer_titanic_rf, selected_passanger)

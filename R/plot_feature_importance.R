@@ -17,8 +17,9 @@
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
 #' @importFrom DALEX loss_root_mean_square
+#' @importFrom DALEX theme_drwhy theme_drwhy_vertical theme_drwhy_colors
+#'
 #' @return a ggplot2 object
-#' @export
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -73,8 +74,9 @@
 #' head(vd_xgb)
 #'
 #' plot(vd_glm, vd_xgb, bar_width = 5)
-#'  }
+#' }
 #'
+#' @export
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width = 10) {
   dfl <- c(list(x), list(...))
 

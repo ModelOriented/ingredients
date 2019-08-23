@@ -9,7 +9,7 @@ select_sample(data, n = 100, seed = 1313)
 \arguments{
 \item{data}{set of observations. Profile will be calculated for every observation (every row)}
 
-\item{n}{named list of vectors. Elements of the list are vectors with points in which profiles should be calculated. See an example for more details.}
+\item{n}{number of observations to select.}
 
 \item{seed}{seed for random number generator.}
 }

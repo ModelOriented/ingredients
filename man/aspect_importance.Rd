@@ -10,12 +10,12 @@ selected observation}
 \usage{
 aspect_importance(x, ...)
 
-\method{aspect_importance}{explainer}(x, new_observation, aspects_list,
-  B = 100, sample_method = "default", n_var = 0, f = 2,
+\method{aspect_importance}{explainer}(x, new_observation, aspects,
+  N = 100, sample_method = "default", n_var = 0, f = 2,
   show_cor = FALSE, ...)
 
 \method{aspect_importance}{default}(x, data, predict_function = predict,
-  new_observation, aspects_list, B = 100, sample_method = "default",
+  new_observation, aspects, N = 100, sample_method = "default",
   n_var = 0, f = 2, show_cor = FALSE, ...)
 
 lime(x, ...)
@@ -29,9 +29,9 @@ lime(x, ...)
 \item{new_observation}{selected observation with columns that corresponds to
 variables used in the model}
 
-\item{aspects_list}{list containting grouping of features into aspects}
+\item{aspects}{list containting grouping of features into aspects}
 
-\item{B}{number of rows to be sampled from data}
+\item{N}{number of observarions to be sampled from data}
 
 \item{sample_method}{sampling method in \code{\link{get_sample}}}
 
@@ -77,7 +77,7 @@ aspects <- list(wealth = c("class", "fare"),
                 embarked = "embarked")
 
 aspect_importance(explain_titanic_glm, new_observation = titanic[1,],
-                  aspects_list = aspects)
+                  aspects = aspects)
 
 \donttest{
 library("randomForest")
@@ -89,7 +89,7 @@ explain_titanic_rf <- explain(model_titanic_rf,
                               y = titanic$survived == "yes")
 
 aspect_importance(explain_titanic_rf, new_observation = titanic[1,],
-                  aspects_list = aspects)
+                  aspects = aspects)
 
 }
 

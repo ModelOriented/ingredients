@@ -17,7 +17,8 @@
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return an 'aggregated_profile_explainer' layer
+#' @return object of class \code{aggregated_profile_explainer}
+#'
 #' @examples
 #' library("DALEX")
 #' # Toy examples, because CRAN angels ask for them
@@ -33,23 +34,20 @@
 #' plot(pdp_rf)
 #'
 #'  \donttest{
-#' library("titanic")
 #' library("randomForest")
 #'
-#' titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-#'                                    "SibSp", "Parch", "Fare", "Embarked")]
-#' titanic_small$Survived <- factor(titanic_small$Survived)
-#' titanic_small$Sex <- factor(titanic_small$Sex)
-#' titanic_small$Embarked <- factor(titanic_small$Embarked)
+#' titanic_small <- titanic[,c("survived", "class", "gender", "age",
+#'                          "sibsp", "parch", "fare", "embarked")]
 #' titanic_small <- na.omit(titanic_small)
-#' rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+#' rf_model <- randomForest(survived == "yes" ~ class + gender + age + sibsp + parch + fare + embarked,
 #'                          data = titanic_small)
 #' explainer_rf <- explain(rf_model, data = titanic_small,
-#'                         y = titanic_small$Survived == "1", label = "RF")
+#'                         y = titanic_small$survived == "1yes", label = "RF")
 #'
 #' pdp_rf <- conditional_dependency(explainer_rf)
 #' plot(pdp_rf)
 #' }
+#'
 #' @export
 #' @rdname conditional_dependency
 conditional_dependency <- function(x, ...)
@@ -57,34 +55,42 @@ conditional_dependency <- function(x, ...)
 
 #' @export
 #' @rdname conditional_dependency
-conditional_dependency.explainer <- function(x, variables = NULL, N = 500,
-                                         variable_splits = NULL, grid_points = 101,
-                                         ...) {
+conditional_dependency.explainer <- function(x,
+                                             variables = NULL,
+                                             N = 500,
+                                             variable_splits = NULL,
+                                             grid_points = 101,
+                                             ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
   data <- x$data
   predict_function <- x$predict_function
   label <- x$label
 
-  conditional_dependency.default(model, data, predict_function,
-                             label = label,
-                             variables = variables,
-                             grid_points = grid_points,
-                             variable_splits = variable_splits,
-                             N = N,
-                             ...)
+  conditional_dependency.default(x = model,
+                                 data = data,
+                                 predict_function = predict_function,
+                                 label = label,
+                                 variables = variables,
+                                 N = N,
+                                 variable_splits = variable_splits,
+                                 grid_points = grid_points,
+                                 ...)
 }
 
 
 #' @export
 #' @rdname conditional_dependency
-conditional_dependency.default <- function(x, data, predict_function = predict,
-                                       label = class(x)[1],
-                                       variables = NULL,
-                                       grid_points = grid_points,
-                                       variable_splits = variable_splits,
-                                       N = 500,
-                                       ...) {
+conditional_dependency.default <- function(x,
+                                           data,
+                                           predict_function = predict,
+                                           label = class(x)[1],
+                                           variables = NULL,
+                                           N = 500,
+                                           variable_splits = NULL,
+                                           grid_points = 101,
+                                           ...) {
+
   if (N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
@@ -92,8 +98,11 @@ conditional_dependency.default <- function(x, data, predict_function = predict,
     ndata <- data
   }
 
-  cp <- ceteris_paribus.default(x, data, predict_function = predict_function,
-                                ndata, variables = variables,
+  cp <- ceteris_paribus.default(x,
+                                data,
+                                predict_function = predict_function,
+                                new_observation = ndata,
+                                variables = variables,
                                 grid_points = grid_points,
                                 variable_splits = variable_splits,
                                 label = label, ...)

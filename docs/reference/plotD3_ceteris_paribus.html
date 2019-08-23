@@ -110,9 +110,6 @@ Find more detailes in Ceteris Paribus Chapter." />
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -120,7 +117,12 @@ Find more detailes in Ceteris Paribus Chapter." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -134,7 +136,7 @@ Find more detailes in Ceteris Paribus Chapter." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plots Ceteris Paribus Profiles in D3 with r2d3 Package.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plotD3_ceteris_paribus.R'><code>R/plotD3_ceteris_paribus.R</code></a></small>
     <div class="hidden name"><code>plotD3_ceteris_paribus.Rd</code></div>
     </div>
 
@@ -151,8 +153,9 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Ceteris Paribus Profiles"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>,
+  <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

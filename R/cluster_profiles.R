@@ -135,6 +135,6 @@ cluster_profiles <- function(x, ...,
   aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_cluster_`, sep = "_")
   aggregated_profiles$`_ids_` <- 0
 
-  class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
+  class(aggregated_profiles) <- c("aggregated_profiles_explainer", "data.frame")
   aggregated_profiles
 }

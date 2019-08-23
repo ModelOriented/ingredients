@@ -60,8 +60,9 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                                                  color = "#46bac2",
                                                  variable_type = "numerical",
                                                  facet_ncol = 2, scale_plot = FALSE,
-                                                 variables = NULL, chart_title = NULL,
-                                                 label_margin = 60){
+                                                 variables = NULL,
+                                                 chart_title = "Aggregated Profiles",
+                                                 label_margin = 60) {
 
   check_variable_type(variable_type)
 
@@ -146,8 +147,6 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
     ymean <- round(attr(x, "mean_prediction"),3)
   }
-
-  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,

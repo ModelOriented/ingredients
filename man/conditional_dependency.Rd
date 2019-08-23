@@ -15,8 +15,7 @@ conditional_dependency(x, ...)
 
 \method{conditional_dependency}{default}(x, data,
   predict_function = predict, label = class(x)[1], variables = NULL,
-  grid_points = grid_points, variable_splits = variable_splits,
-  N = 500, ...)
+  N = 500, variable_splits = NULL, grid_points = 101, ...)
 
 \method{conditional_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
@@ -43,7 +42,7 @@ local_dependency(x, ...)
 \item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
 }
 \value{
-an 'aggregated_profile_explainer' layer
+object of class \code{aggregated_profile_explainer}
 }
 \description{
 Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
@@ -67,23 +66,20 @@ pdp_rf <- conditional_dependency(explain_titanic_glm, N = 50)
 plot(pdp_rf)
 
  \donttest{
-library("titanic")
 library("randomForest")
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-                                   "SibSp", "Parch", "Fare", "Embarked")]
-titanic_small$Survived <- factor(titanic_small$Survived)
-titanic_small$Sex <- factor(titanic_small$Sex)
-titanic_small$Embarked <- factor(titanic_small$Embarked)
+titanic_small <- titanic[,c("survived", "class", "gender", "age",
+                         "sibsp", "parch", "fare", "embarked")]
 titanic_small <- na.omit(titanic_small)
-rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+rf_model <- randomForest(survived == "yes" ~ class + gender + age + sibsp + parch + fare + embarked,
                          data = titanic_small)
 explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF")
+                        y = titanic_small$survived == "1yes", label = "RF")
 
 pdp_rf <- conditional_dependency(explainer_rf)
 plot(pdp_rf)
 }
+
 }
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

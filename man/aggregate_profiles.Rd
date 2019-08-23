@@ -8,7 +8,7 @@ aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
   type = "partial", variables = NULL)
 }
 \arguments{
-\item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
+\item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
 \item{...}{other explainers that shall be calculated together}
 
@@ -19,10 +19,10 @@ If "categorical" then only categorical variables will be calculated.}
 
 \item{type}{either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
 
-\item{variables}{if not NULL then aggregate only for selected `variables` will be calculated}
+\item{variables}{if not NULL then aggregate only for selected \code{variables} will be calculated}
 }
 \value{
-an 'aggregated_profiles_explainer' layer
+an \code{aggregated_profiles_explainer} object
 }
 \description{
 The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
@@ -32,18 +32,18 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 }
 \examples{
 library("DALEX")
- \donttest{
 library("randomForest")
-titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- model_titanic_rf
 
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived)
+titanic_imputed$country <- NULL
 
-selected_passangers <- select_sample(titanic, n = 100)
+model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+                                    fare + sibsp + parch,  data = titanic_imputed)
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                           data = titanic_imputed[,-9],
+                           y = titanic_imputed$survived == "yes")
+
+selected_passangers <- select_sample(titanic_imputed, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 head(cp_rf)
 
@@ -54,8 +54,10 @@ pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
 pdp_rf_c$`_label_` <- "RF_conditional"
 pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
+
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
+\donttest{
 pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
                              groups = "gender")
 head(pdp_rf)
@@ -63,7 +65,6 @@ plot(cp_rf, variables = "age") +
   show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red") +
   show_aggregated_profiles(pdp_rf, size = 3, color = "_label_")
-
 
 # categorical variable
 pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class",
@@ -76,6 +77,7 @@ pdp_rf_a <- aggregate_profiles(cp_rf, variables = "class",
                                variable_type = "categorical", type = "accumulated")
 pdp_rf_a$`_label_` <- "RF_accumulated"
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+
 # or maybe flipped?
 library(ggplot2)
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_") + coord_flip()
@@ -87,6 +89,7 @@ plot(pdp_rf, variables = "class")
 # or maybe flipped?
 plot(pdp_rf, variables = "class") + coord_flip()
 }
+
 }
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

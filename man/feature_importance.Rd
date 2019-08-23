@@ -14,11 +14,11 @@ feature_importance(x, ...)
   keep_raw_permutations = NULL, variables = NULL,
   variable_groups = NULL, label = NULL)
 
-\method{feature_importance}{default}(x, data, y, predict_function,
-  loss_function = loss_root_mean_square, ..., label = class(x)[1],
-  type = c("raw", "ratio", "difference"), n_sample = NULL, B = 1,
-  keep_raw_permutations = NULL, variables = NULL,
-  variable_groups = NULL)
+\method{feature_importance}{default}(x, data, y,
+  predict_function = predict, loss_function = loss_root_mean_square,
+  ..., label = class(x)[1], type = c("raw", "ratio", "difference"),
+  n_sample = NULL, B = 1, keep_raw_permutations = NULL,
+  variables = NULL, variable_groups = NULL)
 }
 \arguments{
 \item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}

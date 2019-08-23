@@ -111,9 +111,6 @@ For all other variables splits are calculated as unique values." />
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -121,7 +118,12 @@ For all other variables splits are calculated as unique values." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -135,7 +137,7 @@ For all other variables splits are calculated as unique values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Internal Function for Split Points for Selected Variables</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/calculate_variable_profile.R'><code>R/calculate_variable_profile.R</code></a></small>
     <div class="hidden name"><code>calculate_variable_split.Rd</code></div>
     </div>
 
@@ -179,15 +181,6 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
-                                      <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
-<span class='fu'>calculate_variable_split</span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,9 +190,7 @@ you should overload it.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

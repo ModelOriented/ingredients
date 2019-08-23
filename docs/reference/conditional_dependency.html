@@ -109,9 +109,6 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -119,7 +116,12 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Conditional Dependency Profiles</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/conditional_dependency.R'><code>R/conditional_dependency.R</code></a></small>
     <div class="hidden name"><code>conditional_dependency.Rd</code></div>
     </div>
 
@@ -153,8 +155,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 <span class='co'># S3 method for default</span>
 <span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>,
   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='no'>grid_points</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='no'>variable_splits</span>,
-  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>...</span>)
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>,
@@ -205,7 +206,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an 'aggregated_profile_explainer' layer</p>
+    <p>object of class <code>aggregated_profile_explainer</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -258,7 +259,8 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 #&gt;   -&gt; residuals         :  numerical, min =  -0.82 , mean =  0.04226891 , max =  0.956  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explainer_rf</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></span></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

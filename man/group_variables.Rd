@@ -28,4 +28,5 @@ correlation cutoff level.
 library("DALEX")
 dragons_data <- dragons[,c(2,3,4,7,8)]
 group_variables(dragons_data, p = 0.7, clust_method = "complete")
+
 }

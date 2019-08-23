@@ -108,9 +108,6 @@
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -118,7 +115,12 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -132,7 +134,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Ceteris Paribus 2D Explanations</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plot_ceteris_paribus_2d.R'><code>R/plot_ceteris_paribus_2d.R</code></a></small>
     <div class="hidden name"><code>plot.ceteris_paribus_2d_explainer.Rd</code></div>
     </div>
 
@@ -143,7 +145,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_2d_explainer</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>split_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
@@ -159,8 +161,8 @@
       <td><p>currently will be ignored</p></td>
     </tr>
     <tr>
-      <th>split_ncol</th>
-      <td><p>number of columns for the 'facet_wrap'</p></td>
+      <th>facet_ncol</th>
+      <td><p>number of columns for the `facet_wrap()`</p></td>
     </tr>
     <tr>
       <th>add_raster</th>

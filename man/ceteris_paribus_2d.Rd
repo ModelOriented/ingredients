@@ -40,7 +40,8 @@ explain_titanic_glm <- explain(model_titanic_glm,
 cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
 head(cp_rf)
 plot(cp_rf)
- \donttest{
+
+\donttest{
 library("randomForest")
 set.seed(59)
 
@@ -58,4 +59,5 @@ wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
 head(wi_rf_2d)
 plot(wi_rf_2d)
 }
+
 }

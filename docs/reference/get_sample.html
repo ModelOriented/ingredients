@@ -37,10 +37,10 @@
 
 <meta property="og:title" content="Function for getting binary matrix — get_sample" />
 
-<meta property="og:description" content="Function creates binary matrix.
-It starts with a zero matrix. Then it replaces some zeros with ones.
-It either randomly replaces one or two zeros per row.
-Or replace random number of zeros per row - average number of replaced zeros can be controled by parameter f.
+<meta property="og:description" content="Function creates binary matrix, to be used in aspect_importance method. It
+starts with a zero matrix. Then it replaces some zeros with ones. It either
+randomly replaces one or two zeros per row. Or replace random number of zeros
+per row - average number of replaced zeros can be controled by parameter f.
 Function doesn't allow the returned matrix to have rows with only zeros." />
 <meta name="twitter:card" content="summary" />
 
@@ -112,9 +112,6 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
       <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
       <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -122,7 +119,12 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -136,21 +138,21 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Function for getting binary matrix</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/aspect_importance.R'><code>R/aspect_importance.R</code></a></small>
     <div class="hidden name"><code>get_sample.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function creates binary matrix.
-It starts with a zero matrix. Then it replaces some zeros with ones.
-It either randomly replaces one or two zeros per row.
-Or replace random number of zeros per row - average number of replaced zeros can be controled by parameter f.
+    <p>Function creates binary matrix, to be used in aspect_importance method. It
+starts with a zero matrix. Then it replaces some zeros with ones. It either
+randomly replaces one or two zeros per row. Or replace random number of zeros
+per row - average number of replaced zeros can be controled by parameter f.
 Function doesn't allow the returned matrix to have rows with only zeros.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_sample</span>(<span class='no'>n</span>, <span class='no'>p</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"default"</span>, <span class='st'>"binom"</span>), <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>get_sample</span>(<span class='no'>n</span>, <span class='no'>p</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"default"</span>, <span class='st'>"binom"</span>), <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,12 +166,12 @@ Function doesn't allow the returned matrix to have rows with only zeros.</p>
       <td><p>number of columns</p></td>
     </tr>
     <tr>
-      <th>method</th>
+      <th>sample_method</th>
       <td><p>sampling method</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>probability for binomial sampling</p></td>
+      <td><p>frequency for binomial sampling</p></td>
     </tr>
     </table>
     

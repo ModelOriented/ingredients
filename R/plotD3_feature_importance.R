@@ -55,13 +55,12 @@ plotD3.feature_importance_explainer <-  function(x, ...,
                                                  split = "model",
                                                  scale_height = FALSE,
                                                  margin = 0.15,
-                                                 chart_title = NULL){
+                                                 chart_title = "Feature importance") {
+
   if (!(split %in% c("model", "feature"))){
     stop("The plotD3.feature_importance_explainer()
          function requires split to be model or feature.")
   }
-
-  if (is.null(chart_title)) chart_title <- "Feature importance"
 
   n <- length(list(...)) + 1
   m <- dim(x)[1] - 2
