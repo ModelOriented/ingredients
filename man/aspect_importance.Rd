@@ -21,8 +21,8 @@ aspect_importance(x, ...)
 lime(x, ...)
 }
 \arguments{
-\item{x}{a model to be explained or an explainer created with the
-`DALEX::explain()` function}
+\item{x}{an explainer created with the \code{DALEX::explain()} function
+or a model to be explained.}
 
 \item{...}{other parameters}
 
@@ -38,18 +38,19 @@ variables used in the model}
 \item{n_var}{how many non-zero coefficients should be after lasso fitting,
 if zero than linear regression is used}
 
-\item{f}{frequency in in \code{\link{get_sample}}}
+\item{f}{frequency in \code{\link{get_sample}}}
 
 \item{show_cor}{show if all features in aspect are pairwise positivly
 correlated, works only if dataset contains solely numeric values}
 
-\item{data}{dataset, it will be extracted from `x`` if it's an explainer}
+\item{data}{dataset, it will be extracted from \code{x} if it's an explainer
+NOTE: It is best when target variable is not present in the \code{data}}
 
-\item{predict_function}{predict function, it will be extracted from `x`` if
+\item{predict_function}{predict function, it will be extracted from \code{x} if
 it's an explainer}
 }
 \value{
-An object of the class 'aspect_importance'. Contains dataframe that
+An object of the class \code{aspect_importance}. Contains dataframe that
   describes aspects' importance.
 }
 \description{
@@ -62,33 +63,39 @@ linear model or lasso.
 }
 \examples{
 library("DALEX")
-titanic <- na.omit(titanic)
+
+titanic_imputed$country <- NULL
+
 model_titanic_glm <- glm(survived == "yes" ~
-                           class+gender+age+sibsp+parch+fare+embarked,
-                         data = titanic, family = "binomial")
+                         class+gender+age+sibsp+parch+fare+embarked,
+                         data = titanic_imputed,
+                         family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                               data = titanic[,-9],
-                               y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed$survived == "yes")
 
 aspects <- list(wealth = c("class", "fare"),
                 family = c("sibsp", "parch"),
                 personal = c("gender", "age"),
                 embarked = "embarked")
 
-aspect_importance(explain_titanic_glm, new_observation = titanic[1,],
+aspect_importance(explain_titanic_glm,
+                  new_observation = titanic_imputed[1,],
                   aspects = aspects)
 
 \donttest{
 library("randomForest")
 model_titanic_rf <- randomForest(survived ~ class + gender + age + sibsp +
-                                   parch + fare + embarked, data = titanic)
+                                 parch + fare + embarked,
+                                 data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived == "yes")
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed$survived == "yes")
 
-aspect_importance(explain_titanic_rf, new_observation = titanic[1,],
+aspect_importance(explain_titanic_rf,
+                  new_observation = titanic_imputed[1,],
                   aspects = aspects)
 
 }

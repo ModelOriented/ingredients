@@ -12,31 +12,35 @@ select_neighbours(observation, data, variables = NULL,
 
 \item{data}{set of observations}
 
-\item{variables}{names of variables that shall be used for calculation of distance. By default these are all variables present in `data` and `observation`}
+\item{variables}{names of variables that shall be used for calculation of distance.
+By default these are all variables present in \code{data} and \code{observation}}
 
-\item{distance}{the distance function, by default the `gower_dist` function.}
+\item{distance}{the distance function, by default the \code{gower_dist()} function.}
 
 \item{n}{number of neighbours to select}
 
-\item{frac}{if `n` is not specified (NULL), then will be calculated as `frac` * number of rows in `data`. Either `n` or `frac` need to be specified.}
+\item{frac}{if \code{n} is not specified (NULL), then will be calculated as \code{frac} * number of rows in \code{data}.
+Either \code{n} or \code{frac} need to be specified.}
 }
 \value{
 a data frame with selected rows
 }
 \description{
-This function selects subset of rows from data set.
+Function \code{\link{select_neighbours}} selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles.
 }
 \details{
-Note that \code{select_neighbours} function is S3 generic.
+Note that \code{select_neighbours()} function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.
 }
 \examples{
 library("DALEX")
 
-new_apartment <- apartments[1, 2:6]
-small_apartments <- select_neighbours(apartmentsTest, new_apartment, n = 10)
+new_apartment <- apartments[1,2:6]
+small_apartments <- select_neighbours(new_apartment, apartments_test, n = 10)
+
 new_apartment
 small_apartments
+
 }

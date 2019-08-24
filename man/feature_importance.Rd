@@ -21,35 +21,41 @@ feature_importance(x, ...)
   variables = NULL, variable_groups = NULL)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()`.}
+\item{x}{an explainer created with function \code{DALEX::explain()}, or a model to be explained.}
 
 \item{...}{other parameters}
 
 \item{loss_function}{a function thet will be used to assess variable importance}
 
-\item{type}{character, type of transformation that should be applied for dropout loss. 'raw' results raw drop lossess, 'ratio' returns \code{drop_loss/drop_loss_full_model} while 'difference' returns \code{drop_loss - drop_loss_full_model}}
+\item{type}{character, type of transformation that should be applied for dropout loss.
+"raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
+while "difference" returns \code{drop_loss - drop_loss_full_model}}
 
-\item{n_sample}{number of observations that should be sampled for calculation of variable importance. If NULL then variable importance will be calculated on whole dataset (no sampling).}
+\item{n_sample}{number of observations that should be sampled for calculation of variable importance.
+If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{B}{integer, number of permutation rounds to perform on each variable}
 
-\item{keep_raw_permutations}{logical or NULL, determines if output retains information for individual permutations; default is to omit for B=1 and keep otherwise}
+\item{keep_raw_permutations}{logical or \code{NULL}, determines if output retains information for individual permutations;
+default is to omit for \code{B=1} and keep otherwise}
 
-\item{variables}{vector of variables. If NULL then variable importance will be tested for each variable from the `data` separately. By default NULL}
+\item{variables}{vector of variables. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}}
 
-\item{variable_groups}{list of variables names vectors. This is for testing joint variable importance. If NULL then variable importance will be tested separately for `variables`. By default NULL. If specified then it will override `variables`}
+\item{variable_groups}{list of variables names vectors. This is for testing joint variable importance.
+If \code{NULL} then variable importance will be tested separately for \code{variables}.
+By default \code{NULL}. If specified then it will override \code{variables}}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset, will be extracted from \code{x} if it's an explainer
+NOTE: It is best when target variable is not present in the \code{data}}
 
-\item{y}{true labels for `data`, will be extracted from `x` if it's an explainer}
+\item{y}{true labels for \code{data}, will be extracted from \code{x} if it's an explainer}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function, will be extracted from \code{x} if it's an explainer}
 }
 \value{
-An object of the class 'feature_importance'.
-It's a data frame with calculated average response.
+an object of the class \code{feature_importance}
 }
 \description{
 This function calculates permutation based feature importance.
@@ -117,7 +123,9 @@ vd_rf_group <- feature_importance(explain_titanic_rf,
 plot(vd_rf_group, vd_rf)
 
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
-explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
+explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
+                         verbose = FALSE, precalculate = FALSE)
+
 vd_rf <- feature_importance(explainer_rf, type = "raw",
                             loss_function = loss_cross_entropy)
 head(vd_rf)
@@ -136,8 +144,10 @@ data_train <- xgb.DMatrix(model_martix_train, label = HR$status == "fired")
 param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
               objective = "binary:logistic", eval_metric = "auc")
 HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
+
 explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
                      y = HR$status == "fired", label = "xgboost")
+
 vd_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(vd_xgb)
 plot(vd_xgb, vd_glm)

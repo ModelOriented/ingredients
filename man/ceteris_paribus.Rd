@@ -17,29 +17,33 @@ ceteris_paribus(x, ...)
   ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with the `DALEX::explain()` function.}
+\item{x}{an explainer created with the \code{DALEX::explain()} function, or a model to be explained.}
 
 \item{...}{other parameters}
 
 \item{new_observation}{a new observation with columns that corresponds to variables used in the model}
 
-\item{y}{true labels for `new_observation`. If specified then will be added to ceteris paribus plots.}
+\item{y}{true labels for \code{new_observation}. If specified then will be added to ceteris paribus plots.
+NOTE: It is best when target variable is not present in the \code{new_observation}}
 
-\item{variables}{names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.}
+\item{variables}{names of variables for which profiles shall be calculated.
+Will be passed to \code{\link{calculate_variable_split}}.
+If NULL then all variables from the validation data will be used.}
 
-\item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data available in the `explainer`.}
+\item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
+If NULL then it will be calculated based on validation data available in the \code{explainer}.}
 
-\item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
+\item{grid_points}{number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.}
 
-\item{data}{validation dataset. It will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset. It will be extracted from \code{x} if it's an explainer
+NOTE: It is best when target variable is not present in the \code{data}}
 
-\item{predict_function}{predict function. It will be extracted from `x` if it's an explainer}
+\item{predict_function}{predict function. It will be extracted from \code{x} if it's an explainer}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 }
 \value{
-An object of the class 'ceteris_paribus_explainer'.
-It's a data frame with calculated average responses.
+an object of the class \code{ceteris_paribus_explainer}.
 }
 \description{
 This explainer works for individual observations.
@@ -53,31 +57,37 @@ Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}
 \examples{
 library("DALEX")
 
-titanic <- na.omit(titanic)
+titanic_small <- titanic_imputed[, c(1,2,6,9)]
+
 model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
+                         data = titanic_small,
+                         family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
-cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
+                               data = titanic_small[,-4],
+                               y = titanic_small$survived == "yes",
+                               verbose = FALSE)
+
+cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 cp_rf
 
 plot(cp_rf, variables = "age")
 
 \donttest{
- library("randomForest")
- model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- model_titanic_rf
+library("randomForest")
+model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+                                 fare + sibsp + parch,  data = titanic_imputed)
 
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived,
-                           label = "Random Forest v7")
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-9],
+                              y = titanic_imputed$survived,
+                              label = "Random Forest v7",
+                              verbose = FALSE,
+                              precalculate = FALSE)
 
 # select few passangers
-selected_passangers <- select_sample(titanic, n = 20)
+selected_passangers <- select_sample(titanic_imputed, n = 20)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
 
@@ -86,6 +96,7 @@ plot(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red")
 
 }
+
 }
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

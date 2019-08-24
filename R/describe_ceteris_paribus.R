@@ -8,11 +8,11 @@
 #' ceteris paribus profile. The description summarizes variable values, that would change
 #' model's prediction at most. If a ceteris paribus profile for multiple variables is passed,
 #' \code{variables} must specify a single variable to be described. Works only for a ceteris paribus profile
-#' for one observation. For `display_numbers = TRUE`
-#' three most important variable values are displayed, while `display_numbers = FALSE` displays
+#' for one observation. For \code{display_numbers = TRUE}
+#' three most important variable values are displayed, while \code{display_numbers = FALSE} displays
 #' all the important variables, however without further details.
 #'
-#' @param x a ceteris paribus explanation produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explanation produced with function \code{ceteris_paribus()}
 #' @param nonsignificance_treshold a parameter specifying a treshold for variable importance
 #' @param ... other arguments
 #' @param display_values allows for displaying variable values

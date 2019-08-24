@@ -1,23 +1,25 @@
 #' Cluster Ceteris Paribus Profiles
 #'
-#' Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+#' This function calculates aggregates of ceteris paribus profiles based on
 #' hierarchical clustering.
 #'
 #' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
-#' @param variables if not NULL then only `variables` will be presented
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param k number of clusters for the hclust function
 #' @param center shall profiles be centered before clustering
-#' @param aggregate_function a function for profile aggregation. By default it's 'mean'
+#' @param aggregate_function a function for profile aggregation. By default it's \code{mean}
 #' @param variable_type a character. If "numerical" then only numerical variables will be computed.
 #' If "categorical" then only categorical variables will be computed.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @importFrom stats as.dist cutree hclust
-#' @return a 'aggregated_profiles_explainer' layer
+#'
+#' @return an object of the class \code{aggregated_profiles_explainer}
+#'
 #' @examples
 #' library("DALEX")
 #' titanic <- na.omit(titanic)

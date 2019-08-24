@@ -10,7 +10,7 @@
   chart_title = "Aggregated Profiles", label_margin = 60)
 }
 \arguments{
-\item{x}{a aggregated profiles explainer produced with function `aggregate_profiles()`}
+\item{x}{a aggregated profiles explainer produced with function \code{aggregate_profiles()}}
 
 \item{...}{other explainers that shall be plotted together}
 
@@ -23,30 +23,30 @@
 \item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
 If "categorical" then only categorical variables will be plotted.}
 
-\item{facet_ncol}{number of columns for the `facet_wrap`}
+\item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
-\item{scale_plot}{a logical. Should size of the plot scale with window size? By default it's FALSE}
+\item{scale_plot}{a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 
 \item{chart_title}{a character. Set custom title}
 
 \item{label_margin}{a numeric. Set width of label margins in "categorical" type}
 }
 \value{
-a `r2d3` object.
+a \code{r2d3} object.
 }
 \description{
-Function 'plotD3.aggregated_profiles_explainer' plots an aggregate of ceteris paribus profiles.
-It works in a similar way to 'plotD3.ceteris_paribus' but, instead of individual profiles,
-show average profiles for each variable listed in the 'variables' vector.
+Function \code{\link{plotD3.aggregated_profiles_explainer}} plots an aggregate of ceteris paribus profiles.
+It works in a similar way to \code{\link{plotD3.ceteris_paribus_explainer}} but, instead of individual profiles,
+show average profiles for each variable listed in the \code{variables} vector.
 
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
-library("ingredients")
 library("randomForest")
+
 titanic_small <- na.omit(titanic[1:500,-5])
 model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
                                    fare + sibsp + parch,  data = titanic_small)

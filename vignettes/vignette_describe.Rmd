@@ -21,11 +21,11 @@ knitr::opts_chunk$set(
 ```
 
 
-## Introduction
+# Introduction
 
 We adress the problem of insuficient interpretability of explanations for domain experts. We solve this issue by introducing `describe()` function, which automaticly generates natural language descriptions of explanations generated with `ingredients` package.
 
-## ingredients Package
+# ingredients Package
 
 The `ingredients` package allows for generating prediction validation and predition perturbation explanations. They allow for both global and local model explanation.
 
@@ -53,7 +53,7 @@ passanger
 
 Now we are ready for generating various explantions and then describing it with `describe()` function.
 
-### Feature Importance
+## Feature Importance
 
 Feature importance explanation shows the importance of all the model's variables. As it is a global explanation technique, no passanger need to be specified.
 
@@ -69,7 +69,7 @@ Argument `nonsignificance_treshold` as always sets the level above which variabl
 describe(importance_rf)
 ```
 
-### Ceteris Paribus Profiles
+## Ceteris Paribus Profiles
 
 Ceteris Paribus profiles shows how the model's input changes with the change of a specified variable.
 
@@ -113,9 +113,10 @@ cp_rf <- ceteris_paribus(explain_titanic_rf,
 plot(cp_rf, variables = perturbed_variable_continuous)
 describe(cp_rf, variables = perturbed_variable_continuous)
 ```
+
 Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependency profiles.
 
-### Partial Dependency Profiles
+## Partial Dependency Profiles
 
 ```{r}
 pdp <- aggregate_profiles(cp_rf, type = "partial")

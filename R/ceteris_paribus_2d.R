@@ -5,17 +5,15 @@
 #'
 #' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
 #'
-#' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
+#' @param explainer a model to be explained, preprocessed by the \code{DALEX::explain()} function
 #' @param observation a new observation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
 #' @param variables if specified, then only these variables will be explained
 #'
-#' @return An object of the class 'ceteris_paribus_2d_explainer'.
-#' It's a data frame with calculated average responses.
+#' @return an object of the class \code{ceteris_paribus_2d_explainer}.
 #'
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
 #' titanic <- na.omit(titanic)
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 #'                        data = titanic, family = "binomial")

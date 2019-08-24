@@ -1,9 +1,9 @@
 #' Select Subset of Rows
 #'
-#' This function selects subset of rows from data set.
+#' Function \code{\link{select_sample}} selects subset of rows from data set.
 #' This is useful if data is large and we need just a sample to calculate profiles.
 #'
-#' Note that \code{select_subsample} function is S3 generic.
+#' Note that \code{select_subsample()} function is S3 generic.
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
@@ -12,10 +12,13 @@
 #' @param seed seed for random number generator.
 #'
 #' @return a data frame with selected rows
+#'
 #' @examples
 #' library("DALEX")
-#' small_apartments <- select_sample(apartmentsTest)
+#'
+#' small_apartments <- select_sample(apartments_test)
 #' head(small_apartments)
+#'
 #' @export
 select_sample <- function(data, n = 100, seed = 1313) {
   UseMethod("select_sample")

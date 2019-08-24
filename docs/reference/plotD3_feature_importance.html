@@ -85,7 +85,7 @@ In different panels variable contributions may not look like sorted if variable 
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@ In different panels variable contributions may not look like sorted if variable 
         <li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -103,15 +103,15 @@ In different panels variable contributions may not look like sorted if variable 
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
@@ -121,16 +121,16 @@ In different panels variable contributions may not look like sorted if variable 
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
     <span class="fa fa-github fa-lg"></span>
-
+     
   </a>
 </li>
       </ul>
-
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-
+      
       </header>
 
 <div class="row">
@@ -142,25 +142,25 @@ In different panels variable contributions may not look like sorted if variable 
     </div>
 
     <div class="ref-description">
-
+    
     <p>Function <code>plotD3.feature_importance_explainer</code> plots dropouts for variables used in the model.
-It uses output from <code>feature_importance</code> function that corresponds to permutation based measure of feature importance.
+It uses output from <code><a href='feature_importance.html'>feature_importance</a></code> function that corresponds to permutation based measure of feature importance.
 Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
-
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"model"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Feature importance"</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a feature importance explainer produced with the 'feature_importance' function</p></td>
+      <td><p>a feature importance explainer produced with the <code><a href='feature_importance.html'>feature_importance()</a></code> function</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -169,7 +169,7 @@ In different panels variable contributions may not look like sorted if variable 
     <tr>
       <th>max_vars</th>
       <td><p>maximum number of variables that shall be presented for for each model.
-By default NULL what means all variables</p></td>
+By default <code>NULL</code> which means all variables</p></td>
     </tr>
     <tr>
       <th>bar_width</th>
@@ -177,11 +177,11 @@ By default NULL what means all variables</p></td>
     </tr>
     <tr>
       <th>split</th>
-      <td><p>either <code>"model"</code> or <code>"feature"</code> determines the plot layout</p></td>
+      <td><p>either "model" or "feature" determines the plot layout</p></td>
     </tr>
     <tr>
       <th>scale_height</th>
-      <td><p>should the height of plot scale with window size? By default it's FALSE</p></td>
+      <td><p>a logical. If <code>TRUE</code>, the height of plot scales with window size. By default it's <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>margin</th>
@@ -193,29 +193,38 @@ Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
       <td><p>a character. Set custom title</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `r2d3` object.</p>
-
+    <p>a <code>r2d3</code> object.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ingredients"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>lm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"lm"</span>)
+<span class='no'>explainer_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>lm_model</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>,
+                        <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"lm"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_lm</span>)
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
+#&gt; 1      _full_model_     279.3262    lm
+#&gt; 2 construction.year     279.2987    lm
+#&gt; 3          no.rooms     289.6181    lm
+#&gt; 4             floor     503.1583    lm
+#&gt; 5           surface     620.3488    lm
+#&gt; 6          district     990.7506    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+
 <span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>"rf"</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>$<span class='no'>m2.price</span>,
+                        <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"rf"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_rf</span>)
@@ -226,15 +235,16 @@ Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
-<span class='co'># }</span></pre>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-
+      
       <li><a href="#value">Value</a></li>
-
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -244,14 +254,15 @@ Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
       </footer>
    </div>
 
-
+  
 
   </body>
 </html>
+

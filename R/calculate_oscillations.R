@@ -3,41 +3,44 @@
 #' Oscillations are proxies for local feature importance at the instance level.
 #' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
 #'
-#' @param x a ceteris_paribus explainer produced with the `ceteris_paribus()` function
+#' @param x a ceteris_paribus explainer produced with the \code{ceteris_paribus()} function
 #' @param sort a logical value. If TRUE then rows are sorted along the oscillations
 #' @param ... other arguments
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
+#' @return an object of the class \code{ceteris_paribus_oscillations}
+#'
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
 #'
-#' titanic <- na.omit(titanic)
-#' set.seed(1313)
-#' titanic_small <- titanic[sample(1:nrow(titanic), 500), c(1,2,6,9)]
+#' titanic_small <- titanic_imputed[1:500, c(1,2,6,9)]
+#'
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic_small, family = "binomial")
+#'                          data = titanic_small, family = "binomial")
+#'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic_small[,-9],
-#'                            y = titanic_small$survived == "yes")
-#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1, ])
+#'                                data = titanic_small[,-4],
+#'                                y = titanic_small$survived == "yes")
+#'
+#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 #'
 #' calculate_oscillations(cp_rf)
 #'
 #' \donttest{
 #' library("randomForest")
-#' set.seed(59)
 #'
 #' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'       no.rooms + district, data = apartments)
+#'                                     no.rooms + district, data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
-#'       data = apartmentsTest, y = apartmentsTest$m2.price)
+#'                         data = apartmentsTest,
+#'                          y = apartmentsTest$m2.price)
 #'
 #' apartment <- apartmentsTest[1,]
 #'
 #' cp_rf <- ceteris_paribus(explainer_rf, apartment)
+#'
 #' calculate_oscillations(cp_rf)
 #' }
 #'

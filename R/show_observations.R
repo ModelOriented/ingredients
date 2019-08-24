@@ -1,18 +1,20 @@
 #' Adds a Layer with Observations to a Profile Plot
 #'
-#' Function 'show_observations' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
+#' Function \code{\link{show_observations}} adds a layer to a plot created with
+#' \code{\link{plot.ceteris_paribus_explainer}} for selected observations.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
-#' @param variables if not NULL then only `variables` will be presented
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
 #' If "categorical" then only categorical variables will be plotted.
 #'
-#' @return a ggplot2 layer
+#' @return a \code{ggplot2} layer
+#'
 #' @examples
 #' library("DALEX")
 #' library("randomForest")
@@ -29,7 +31,7 @@
 #' cp_rf
 #'
 #' plot(cp_rf, variables = "age", color = "grey") +
-#' show_observations(cp_rf, variables = "age", color = "grey") +
+#' show_observations(cp_rf, variables = "age", color = "black") +
 #'   show_rugs(cp_rf, variables = "age", color = "red")
 #'
 #'

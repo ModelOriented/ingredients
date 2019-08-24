@@ -2,9 +2,13 @@
 % Please edit documentation in R/calculate_variable_profile.R
 \name{calculate_variable_profile}
 \alias{calculate_variable_profile}
+\alias{calculate_variable_profile.default}
 \title{Internal Function for Individual Variable Profiles}
 \usage{
 calculate_variable_profile(data, variable_splits, model,
+  predict_function = predict, ...)
+
+\method{calculate_variable_profile}{default}(data, variable_splits, model,
   predict_function = predict, ...)
 }
 \arguments{
@@ -25,7 +29,7 @@ a data frame with profiles for selected variables and selected observations
 This function calculates individual variable profiles (ceteris paribus profiles), i.e. series of predictions from a model calculated for observations with altered single coordinate.
 }
 \details{
-Note that \code{calculate_variable_profile} function is S3 generic.
+Note that \code{\link{calculate_variable_profile}} function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.
 }

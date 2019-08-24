@@ -14,7 +14,7 @@ plotD3(x, ...)
   show_observations = TRUE, show_rugs = TRUE)
 }
 \arguments{
-\item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
+\item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
 \item{...}{other explainers that shall be plotted together}
 
@@ -27,33 +27,32 @@ plotD3(x, ...)
 \item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
 If "categorical" then only categorical variables will be plotted.}
 
-\item{facet_ncol}{number of columns for the `facet_wrap`}
+\item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
-\item{scale_plot}{a logical. Should size of the plot scale with window size? By default it's FALSE}
+\item{scale_plot}{a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 
 \item{chart_title}{a character. Set custom title}
 
 \item{label_margin}{a numeric. Set width of label margins in "categorical" type}
 
-\item{show_observations}{a logcal. Adds observations layer to a plot. By default it's TRUE}
+\item{show_observations}{a logical. Adds observations layer to a plot. By default it's \code{TRUE}}
 
-\item{show_rugs}{a logcal. Adds rugs layer to a plot. By default it's TRUE}
+\item{show_rugs}{a logical. Adds rugs layer to a plot. By default it's \code{TRUE}}
 }
 \value{
-a `r2d3` object.
+a \code{r2d3} object.
 }
 \description{
-Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
+Function \code{\link{plotD3.ceteris_paribus_explainer}} plots Individual Variable Profiles for selected observations.
+It uses output from \code{\link{ceteris_paribus}} function.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 
 Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
-\dontrun{
 library("DALEX")
-library("ingredients")
 library("randomForest")
 
 titanic <- na.omit(titanic)
@@ -76,6 +75,6 @@ cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 
 plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
      facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
-}
+
 
 }

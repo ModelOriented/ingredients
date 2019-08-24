@@ -1,32 +1,31 @@
 #' @title Plots Ceteris Paribus Profiles in D3 with r2d3 Package.
 #'
 #' @description
-#' Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
+#' Function \code{\link{plotD3.ceteris_paribus_explainer}} plots Individual Variable Profiles for selected observations.
+#' It uses output from \code{\link{ceteris_paribus}} function.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 #'
 #' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
 #' @param color a character.  Set line color
 #' @param size a numeric. Set width of lines
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
 #' If "categorical" then only categorical variables will be plotted.
-#' @param facet_ncol number of columns for the `facet_wrap`
-#' @param scale_plot a logical. Should size of the plot scale with window size? By default it's FALSE
-#' @param variables if not NULL then only `variables` will be presented
+#' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
+#' @param scale_plot a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins in "categorical" type
-#' @param show_observations a logcal. Adds observations layer to a plot. By default it's TRUE
-#' @param show_rugs a logcal. Adds rugs layer to a plot. By default it's TRUE
+#' @param show_observations a logical. Adds observations layer to a plot. By default it's \code{TRUE}
+#' @param show_rugs a logical. Adds rugs layer to a plot. By default it's \code{TRUE}
 #'
-#' @return a `r2d3` object.
+#' @return a \code{r2d3} object.
 #'
 #' @examples
-#' \dontrun{
 #' library("DALEX")
-#' library("ingredients")
 #' library("randomForest")
 #'
 #' titanic <- na.omit(titanic)
@@ -49,7 +48,7 @@
 #'
 #' plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
 #'      facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
-#' }
+#'
 #'
 #' @export
 #' @rdname plotD3_ceteris_paribus

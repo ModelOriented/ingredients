@@ -2,7 +2,7 @@
 #'
 #' This function calculates individual variable profiles (ceteris paribus profiles), i.e. series of predictions from a model calculated for observations with altered single coordinate.
 #'
-#' Note that \code{calculate_variable_profile} function is S3 generic.
+#' Note that \code{\link{calculate_variable_profile}} function is S3 generic.
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
@@ -16,10 +16,12 @@
 #'
 #' @return a data frame with profiles for selected variables and selected observations
 #'
+#' @rdname calculate_variable_profile
 calculate_variable_profile <- function(data, variable_splits, model, predict_function = predict, ...) {
   UseMethod("calculate_variable_profile")
 }
 
+#' @rdname calculate_variable_profile
 calculate_variable_profile.default <- function(data, variable_splits, model, predict_function = predict, ...) {
 
   variables <- names(variable_splits)
@@ -58,7 +60,7 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
 #' (in general uniform quantiles of the length grid_points).
 #' For all other variables splits are calculated as unique values.
 #'
-#' Note that \code{calculate_variable_split} function is S3 generic.
+#' Note that \code{\link{calculate_variable_split}} function is S3 generic.
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
@@ -69,10 +71,11 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
 #' @return A named list with splits for selected variables
 #' @importFrom stats predict
 #'
+#' @rdname calculate_variable_split
 calculate_variable_split <- function(data, variables = colnames(data), grid_points = 101) {
   UseMethod("calculate_variable_split")
 }
-
+#' @rdname calculate_variable_split
 calculate_variable_split.default <- function(data, variables = colnames(data), grid_points = 101) {
   variable_splits <- lapply(variables, function(var) {
     selected_column <- data[,var]

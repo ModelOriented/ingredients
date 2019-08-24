@@ -1,15 +1,16 @@
 #' Aggregates Ceteris Paribus Profiles
 #'
-#' The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+#' The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
 #' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 #' Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 #' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
-#' @param variables if not NULL then aggregate only for selected \code{variables} will be calculated
-#' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
-#' @param groups a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated
+#' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
+#' @param type either "partial"/"conditional"/"accumulated" for parital dependence, conditional profiles of accumulated local effects
+#' @param groups a variable name that will be used for grouping.
+#' By default \code{NULL} which means that no groups shall be calculated
 #' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
 #' If "categorical" then only categorical variables will be calculated.
 #'
@@ -17,7 +18,7 @@
 #'
 #' @importFrom stats na.omit quantile weighted.mean
 #'
-#' @return an \code{aggregated_profiles_explainer} object
+#' @return an object of the class \code{aggregated_profiles_explainer}
 #'
 #' @examples
 #' library("DALEX")
@@ -29,7 +30,7 @@
 #'                                     fare + sibsp + parch,  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic_imputed[,-9],
+#'                            data = titanic_imputed[,-8],
 #'                            y = titanic_imputed$survived == "yes")
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)
@@ -77,6 +78,7 @@
 #' plot(pdp_rf, variables = "class")
 #' # or maybe flipped?
 #' plot(pdp_rf, variables = "class") + coord_flip()
+#'
 #' }
 #'
 #' @export
@@ -84,7 +86,7 @@
 aggregate_profiles <- function(x, ...,
                                variable_type = "numerical",
                                groups = NULL,
-                               type = 'partial',
+                               type = "partial",
                                variables = NULL) {
 
   check_variable_type(variable_type)
@@ -120,12 +122,7 @@ aggregate_profiles <- function(x, ...,
   tmp <- as.character(all_profiles$`_vname_`)
   for (viname in unique(tmp)) {
     all_profiles$`_x_`[tmp == viname] <- all_profiles[tmp == viname, viname]
-
-    }
-  #  Old version, much slower
-  #  for (i in seq_along(tmp)) {
-  #    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
-  #  }
+  }
 
   if (class(all_profiles) != "data.frame") {
     all_profiles <- as.data.frame(all_profiles)
@@ -138,17 +135,17 @@ aggregate_profiles <- function(x, ...,
 
   # standard partial profiles
   # just average
-  if (type == 'partial') {
+  if (type == "partial") {
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "partial_dependency_explainer", "data.frame")
   }
-  if (type == 'conditional') {
+  if (type == "conditional") {
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "conditional_dependency_explainer", "data.frame")
   }
-  if (type == 'accumulated') {
+  if (type == "accumulated") {
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "accumulated_dependency_explainer", "data.frame")

@@ -8,7 +8,7 @@ show_rugs(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
   variable_type = "numerical", sides = "b", variables = NULL)
 }
 \arguments{
-\item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
+\item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
 \item{...}{other explainers that shall be plotted together}
 
@@ -23,56 +23,33 @@ If "categorical" then only categorical variables will be plotted.}
 
 \item{sides}{a string containing any of "trbl", for top, right, bottom, and left. Passed to geom rug.}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not NULL then only \code{variables} will be presented}
 }
 \value{
-a ggplot2 layer
+a \code{ggplot2} layer
 }
 \description{
-Function 'show_rugs' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
+Function \code{\link{show_rugs}} adds a layer to a plot created with
+\code{\link{plot.ceteris_paribus_explainer}} for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 }
 \examples{
 library("DALEX")
-# Toy examples, because CRAN angels ask for them
-titanic <- na.omit(titanic)
-selected_passangers <- select_sample(titanic, n = 100)
-
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
-
-explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
-
-cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
-pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
-plot(cp_rf, variables = "age") +
-  show_observations(cp_rf, variables = "age") +
-  show_aggregated_profiles(pdp_rf, size = 3)
-
- \donttest{
 library("randomForest")
- model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- model_titanic_rf
 
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived)
+rf_model <- randomForest(survived == "yes" ~.,
+                         data = titanic_imputed)
 
-cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
+explainer_rf <- explain(rf_model, data = titanic_imputed,
+                        y = titanic_imputed$survived == "yes",
+                        label = "RF", verbose = FALSE)
+
+selected_passangers <- select_sample(titanic_imputed, n = 100)
+cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-pdp_rf <- aggregate_profiles(cp_rf, variables = "age")
-head(pdp_rf)
+plot(cp_rf, variables = "age", color = "grey") +
+show_observations(cp_rf, variables = "age", color = "black") +
+  show_rugs(cp_rf, variables = "age", color = "red")
 
-plot(cp_rf, variables = "age") +
-  show_observations(cp_rf, variables = "age") +
-  show_rugs(cp_rf, variables = "age", color = "red") +
-  show_aggregated_profiles(pdp_rf, size = 3)
-
-plot(pdp_rf, variables = "age", color = "grey")
-
-}
 }

@@ -15,17 +15,18 @@ aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
 \item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
 If "categorical" then only categorical variables will be calculated.}
 
-\item{groups}{a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated}
+\item{groups}{a variable name that will be used for grouping.
+By default \code{NULL} which means that no groups shall be calculated}
 
-\item{type}{either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects}
+\item{type}{either "partial"/"conditional"/"accumulated" for parital dependence, conditional profiles of accumulated local effects}
 
-\item{variables}{if not NULL then aggregate only for selected \code{variables} will be calculated}
+\item{variables}{if not \code{NULL} then aggregate only for selected \code{variables} will be calculated}
 }
 \value{
-an \code{aggregated_profiles_explainer} object
+an object of the class \code{aggregated_profiles_explainer}
 }
 \description{
-The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
 It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
@@ -40,7 +41,7 @@ model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
                                     fare + sibsp + parch,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic_imputed[,-9],
+                           data = titanic_imputed[,-8],
                            y = titanic_imputed$survived == "yes")
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)
@@ -88,6 +89,7 @@ head(pdp_rf)
 plot(pdp_rf, variables = "class")
 # or maybe flipped?
 plot(pdp_rf, variables = "class") + coord_flip()
+
 }
 
 }

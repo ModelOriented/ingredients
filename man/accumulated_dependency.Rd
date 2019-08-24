@@ -22,36 +22,39 @@ accumulated_dependency(x, ...)
   variables = NULL)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function
-\code{DALEX::explain()} or object of the class \code{ceteris_paribus_explainer}.}
+\item{x}{an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
+or a model to be explained.}
 
 \item{...}{other parameters}
 
-\item{variables}{names of variables for which profiles shall be calculated. Will be passed to \code{calculate_variable_splits()}.
-If NULL then all variables from the validation data will be used.}
+\item{variables}{names of variables for which profiles shall be calculated.
+Will be passed to \code{\link{calculate_variable_split}}.
+If \code{NULL} then all variables from the validation data will be used.}
 
-\item{N}{number of observations used for calculation of partial dependency profiles. By default, 500 observations will be chosen randomly.}
+\item{N}{number of observations used for calculation of partial dependency profiles.
+By default, 500 observations will be chosen randomly.}
 
-\item{variable_splits}{named list of splits for variables, in most cases created with \code{calculate_variable_splits()}.
-If NULL then it will be calculated based on validation data avaliable in the \code{explainer}.}
+\item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
+If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.}
 
-\item{grid_points}{number of points for profile. Will be passed to \code{calculate_variable_splits()}.}
+\item{grid_points}{number of points for profile. Will be passed to\code{\link{calculate_variable_split}}.}
 
 \item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
 If "categorical" then only categorical variables will be calculated.}
 
-\item{data}{validation dataset Will be extracted from \code{x} if it's an explainer}
+\item{data}{validation dataset Will be extracted from \code{x} if it's an explainer
+NOTE: It is best when target variable is not present in the \code{data}}
 
 \item{predict_function}{predict function Will be extracted from \code{x} if it's an explainer}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 }
 \value{
-an \code{aggregated_profiles_explainer} object
+an object of the class \code{aggregated_profiles_explainer}
 }
 \description{
 Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-Function \code{accumulated_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}..
+Function \code{\link{accumulated_dependency}} calls \code{\link{ceteris_paribus}} and then \code{\link{aggregate_profiles}}.
 }
 \details{
 Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
@@ -69,10 +72,10 @@ explain_titanic_glm <- explain(model_titanic_glm,
                                y = titanic_imputed$survived == "yes",
                                verbose = FALSE)
 
-pdp_glm <- accumulated_dependency(explain_titanic_glm,
+adp_glm <- accumulated_dependency(explain_titanic_glm,
                                   N = 50, variables = c("age", "fare"))
-head(pdp_glm)
-plot(pdp_glm)
+head(adp_glm)
+plot(adp_glm)
 
 \donttest{
 library("randomForest")
@@ -81,13 +84,14 @@ model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
-                              y = titanic_imputed$survived == "yes")
+                              y = titanic_imputed$survived == "yes",
+                              verbose = FALSE)
 
-pdp_rf <- accumulated_dependency(explain_titanic_rf)
-plot(pdp_rf)
+adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")
+plot(adp_rf)
 
-pdp_rf <- accumulated_dependency(explain_titanic_rf, variable_type = "categorical")
-plot(pdp_rf)
+adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
+plotD3(adp_rf, variable_type = "categorical", label_margin = 80, scale_plot = TRUE)
 }
 
 }

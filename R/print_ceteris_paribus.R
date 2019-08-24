@@ -1,27 +1,25 @@
 #' Prints Individual Variable Explainer Summary
 #'
-#' @param x an individual variable profile explainer produced with the `ceteris_paribus()` function
-#' @param ... other arguments that will be passed to `head()`
-#'
-#' @export
+#' @param x an individual variable profile explainer produced with the \code{ceteris_paribus()} function
+#' @param ... other arguments that will be passed to \code{head()}
 #'
 #' @examples
 #' library("DALEX")
-#'  \donttest{
 #' library("randomForest")
-#' set.seed(59)
 #'
 #' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'       no.rooms + district, data = apartments)
+#'                                     no.rooms + district, data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
-#'       data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
+#'                         data = apartmentsTest[,2:6],
+#'                         y = apartmentsTest$m2.price)
 #'
 #' apartments_small <- select_sample(apartmentsTest, 10)
 #'
 #' cp_rf <- ceteris_paribus(explainer_rf, apartments_small)
 #' cp_rf
-#' }
+#'
+#' @export
 print.ceteris_paribus_explainer <- function(x, ...) {
   cat("Top profiles    : \n")
   class(x) <- "data.frame"
