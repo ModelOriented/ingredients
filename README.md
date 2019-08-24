@@ -1,12 +1,14 @@
 # ingredients: Effects and Importances of Model Ingredients
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ingredients)](https://cran.r-project.org/package=ingredients)
-[![Build Status](https://travis-ci.org/ModelOriented/ingredients.svg?branch=master)](https://travis-ci.org/ModelOriented/ingredients)
+[![Build Status](https://api.travis-ci.org/ModelOriented/ingredients.png)](https://travis-ci.org/ModelOriented/ingredients)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg)](https://codecov.io/github/ModelOriented/ingredients?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ingredients)](https://cran.r-project.org/package=ingredients)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/ingredients?color=orange)](http://cranlogs.r-pkg.org/badges/grand-total/ingredients)
 
-Collection of tools for assessment of feature importance and feature effects.
+## Overview
+
+The `ingredients` package is a collection of tools for assessment of feature importance and feature effects.
 
 Key functions are: 
 
@@ -18,22 +20,33 @@ Key functions are:
 * `conditional_dependency()` for Conditional Dependency Plots also called M Plots,
 * `accumulated_dependency()` for Accumulated Local Effects Plots,
 * `aggregate_profiles()` and `cluster_profiles()` for aggregation of Ceteris Paribus Profiles,
-* `theme_drwhy() `with a ggplot2 skin for all plots,
-* generic `print()` and `plot()` for better usability of selected explainers.
+* `aspect_importance()` for LIME style explanations,
+* generic `print()` and `plot()` for better usability of selected explainers,
+* generic `plotD3()` for interactive, D3 based explanations,
+* generic `describe()` for explanations in natural language.
  
-The package `ingredients` is a part of the [DrWhy.AI](http://drwhy.ai) universe. 
+The philosophy behind `ingredients` explanations is described in the [Predictive Models: Explore, Explain, and Debug](https://pbiecek.github.io/PM_VEE/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
 
-## Interactive plot in D3
+
+## Installation
+
+```{r}
+# the easiest way to get ingredients is to install it from CRAN:
+install.packages("ingredients")
+
+# Or the the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("ModelOriented/ingredients")
+```
+
+## Interactive plots with D3
 
 `feature_importance()` and `ceteris_paribus()` also work with **D3**! 
 [see an example](https://modeloriented.github.io/ingredients/ceterisParibusDemo.html) 
 ![plotD3](images/plotD3.png)
 
-## Install
 
-Install from GitHub
+## Acknowledgments
 
-```{r}
-devtools::install_github("ModelOriented/ingredients")
-```
-
+Work on this package was financially supported by the 'NCN Opus grant 2016/21/B/ST6/02176'.
+    
