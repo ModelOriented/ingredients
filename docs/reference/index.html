@@ -79,7 +79,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -102,20 +102,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -155,12 +157,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="add_additional_information.html">add_additional_information()</a></code> </p>
-        </td>
-        <td><p>temporary function, probably to be merged with aspect_importance</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="aggregate_profiles.html">aggregate_profiles()</a></code> </p>
         </td>
         <td><p>Aggregates Ceteris Paribus Profiles</p></td>
@@ -169,8 +165,14 @@
         <td>
           <p><code><a href="aspect_importance.html">aspect_importance()</a></code> <code><a href="aspect_importance.html">lime()</a></code> </p>
         </td>
-        <td><p>Aspect Importance
-This explainer calculates the feature groups importance (called aspects importance) for a selected observation.</p></td>
+        <td><p>Calculates the feature groups importance (called aspects importance) for a
+selected observation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="aspect_importance_single.html">aspect_importance_single()</a></code> </p>
+        </td>
+        <td><p>Aspects importance for single aspects</p></td>
       </tr><tr>
         
         <td>
@@ -236,7 +238,7 @@ This explainer calculates the feature groups importance (called aspects importan
         <td>
           <p><code><a href="group_variables.html">group_variables()</a></code> </p>
         </td>
-        <td><p>Group features into aspects</p></td>
+        <td><p>Groups numeric features into aspects</p></td>
       </tr><tr>
         
         <td>
@@ -379,7 +381,7 @@ This explainer calculates the feature groups importance (called aspects importan
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

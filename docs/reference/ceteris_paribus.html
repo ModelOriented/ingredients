@@ -85,7 +85,7 @@ For this reason it is also called 'What-If Profiles'." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -108,20 +108,22 @@ For this reason it is also called 'What-If Profiles'." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -135,7 +137,7 @@ For this reason it is also called 'What-If Profiles'." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Ceteris Paribus Profiles aka Individual Variable Profiles</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/ceteris_paribus.R'><code>R/ceteris_paribus.R</code></a></small>
     <div class="hidden name"><code>ceteris_paribus.Rd</code></div>
     </div>
 
@@ -269,11 +271,11 @@ It's a data frame with calculated average responses.</p>
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 19.1%
+#&gt;         OOB estimate of  error rate: 19.15%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1321  97  0.06840621
-#&gt; yes  304 377  0.44640235</div><div class='input'>
+#&gt; no  1318 100  0.07052186
+#&gt; yes  302 379  0.44346549</div><div class='input'>
  <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
@@ -285,7 +287,7 @@ It's a data frame with calculated average responses.</p>
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2366394 , max =  1  
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2394102 , max =  1  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='co'># select few passangers</span>
@@ -301,11 +303,11 @@ It's a data frame with calculated average responses.</p>
 #&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
 #&gt;        _yhat_ _vname_ _ids_          _label_
 #&gt; 557     0.004  gender   557 Random Forest v7
-#&gt; 557.1   0.922  gender   557 Random Forest v7
-#&gt; 660     0.048  gender   660 Random Forest v7
-#&gt; 660.1   0.528  gender   660 Random Forest v7
+#&gt; 557.1   0.936  gender   557 Random Forest v7
+#&gt; 660     0.052  gender   660 Random Forest v7
+#&gt; 660.1   0.620  gender   660 Random Forest v7
 #&gt; 1535    0.000  gender  1535 Random Forest v7
-#&gt; 1535.1  0.824  gender  1535 Random Forest v7
+#&gt; 1535.1  0.854  gender  1535 Random Forest v7
 #&gt; 
 #&gt; 
 #&gt; Top observations:
@@ -318,11 +320,11 @@ It's a data frame with calculated average responses.</p>
 #&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
 #&gt;      _yhat_          _label_ _ids_
 #&gt; 557   0.004 Random Forest v7     1
-#&gt; 660   0.048 Random Forest v7     2
+#&gt; 660   0.052 Random Forest v7     2
 #&gt; 1535  0.000 Random Forest v7     3
-#&gt; 942   0.926 Random Forest v7     4
+#&gt; 942   0.918 Random Forest v7     4
 #&gt; 491   0.004 Random Forest v7     5
-#&gt; 1639  0.002 Random Forest v7     6</div><div class='input'>
+#&gt; 1639  0.004 Random Forest v7     6</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='ceteris_paribus-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -348,7 +350,7 @@ It's a data frame with calculated average responses.</p>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

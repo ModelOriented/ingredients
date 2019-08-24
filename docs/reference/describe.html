@@ -84,7 +84,7 @@ feature_importance() explanations what enchaces their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -107,20 +107,22 @@ feature_importance() explanations what enchaces their interpretability." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -134,7 +136,7 @@ feature_importance() explanations what enchaces their interpretability." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Natural language description of feature importance explainer</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/describe_aggregatedprofiles.R'><code>R/describe_aggregatedprofiles.R</code></a>, <a href='https://github.com/ModelOriented/ingredients/blob/master/R/describe_ceterisparibus.R'><code>R/describe_ceterisparibus.R</code></a>, <a href='https://github.com/ModelOriented/ingredients/blob/master/R/describe_featureimportance.R'><code>R/describe_featureimportance.R</code></a></small>
     <div class="hidden name"><code>describe.Rd</code></div>
     </div>
 
@@ -234,15 +236,17 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.006548007 , mean =  0.3246828 , max =  0.9913264  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.01157211 , mean =  0.3246509 , max =  0.9942719  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8108972 , mean =  -0.0002426264 , max =  0.9027742  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7913474 , mean =  -0.0002106689 , max =  0.9089244  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>pdp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'>describe</span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)</div><div class='output co'>#&gt; The average, prediction for Rf is equal to 0.245.
-#&gt; Model's prediction would increase substantially if the value of gender variable would change to "female". On the other hand, for Rfprediction would decrease substantially if the value of gender variable would change to "male". The largest change would be marked if gender variable would change to "female". 
+<span class='fu'>describe</span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)</div><div class='output co'>#&gt; Rf's mean prediction is equal to 0.245.
+#&gt; 
+#&gt; Model's prediction would increase substantially if the value of gender variable would change to "female". On the other hand, Rf's prediction would decrease substantially if the value of gender variable would change to "male". The largest change would be marked if gender variable would change to "female".
+#&gt; 
 #&gt; All the variables were displayed. </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ingredients"</span>)
@@ -266,8 +270,10 @@ The current design of DALEX explainer does not allow for displaying variables va
 <span class='no'>selected_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"the predicted probability"</span>)</div><div class='output co'>#&gt; For the selected instance, the predicted probability estimated by Rf is equal to 0.136.
+#&gt; 
 #&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st".
-#&gt; The largest change would be marked if class variable would change to "deck crew". 
+#&gt; The largest change would be marked if class variable would change to "deck crew".
+#&gt; 
 #&gt; Other variables are with less importance and they do not change the predicted probability by more than 0.06%. </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ingredients"</span>)
@@ -304,7 +310,7 @@ The current design of DALEX explainer does not allow for displaying variables va
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

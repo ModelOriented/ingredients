@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Groups numeric features into aspects — group_variables • ingredients</title>
+<title>Aspects importance for single aspects — aspect_importance_single • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,10 +35,10 @@
 
 
 
-<meta property="og:title" content="Groups numeric features into aspects — group_variables" />
+<meta property="og:title" content="Aspects importance for single aspects — aspect_importance_single" />
 
-<meta property="og:description" content="Divides correlated features into groups, called aspects. Division is based on
-correlation cutoff level." />
+<meta property="og:description" content="Calculates aspect_importance for single aspects (every aspect contains only
+one feature)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,60 +134,90 @@ correlation cutoff level." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Groups numeric features into aspects</h1>
+    <h1>Aspects importance for single aspects</h1>
     <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/aspect_importance.R'><code>R/aspect_importance.R</code></a></small>
-    <div class="hidden name"><code>group_variables.Rd</code></div>
+    <div class="hidden name"><code>aspect_importance_single.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Divides correlated features into groups, called aspects. Division is based on
-correlation cutoff level.</p>
+    <p>Calculates aspect_importance for single aspects (every aspect contains only
+one feature).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>group_variables</span>(<span class='no'>x</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>clust_method</span> <span class='kw'>=</span> <span class='st'>"complete"</span>,
-  <span class='kw'>draw_tree</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>aspect_importance_single</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+  <span class='no'>new_observation</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>response_variable</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>dataframe with only numeric columns</p></td>
+      <td><p>a model to be explained</p></td>
     </tr>
     <tr>
-      <th>p</th>
-      <td><p>correlation value for cut-off level</p></td>
+      <th>data</th>
+      <td><p>dataset</p></td>
     </tr>
     <tr>
-      <th>clust_method</th>
-      <td><p>the agglomeration method to be used,
-see <code><a href='https://www.rdocumentation.org/packages/stats/topics/hclust'>hclust</a></code> methods</p></td>
+      <th>predict_function</th>
+      <td><p>predict function</p></td>
     </tr>
     <tr>
-      <th>draw_tree</th>
-      <td><p>if TRUE, function plots tree that illustrates grouping</p></td>
+      <th>new_observation</th>
+      <td><p>selected observation with columns that corresponds to
+variables used in the model</p></td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td><p>number of rows to be sampled from data</p></td>
+    </tr>
+    <tr>
+      <th>sample_method</th>
+      <td><p>sampling method in <code><a href='get_sample.html'>get_sample</a></code></p></td>
+    </tr>
+    <tr>
+      <th>n_var</th>
+      <td><p>how many non-zero coefficients for lasso fitting, if zero than
+linear regression is used</p></td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td><p>frequency in in <code><a href='get_sample.html'>get_sample</a></code></p></td>
+    </tr>
+    <tr>
+      <th>response_variable</th>
+      <td><p>name of response variable, should be provided if it is
+included in data</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>list of aspects</p>
+    <p>An object of the class 'aspect_importance'. Contains dataframe that
+  describes aspects' importance.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='no'>dragons_data</span> <span class='kw'>&lt;-</span> <span class='no'>dragons</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>7</span>,<span class='fl'>8</span>)]
-<span class='fu'>group_variables</span>(<span class='no'>dragons_data</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>clust_method</span> <span class='kw'>=</span> <span class='st'>"complete"</span>)</div><div class='output co'>#&gt; $aspect.group1
-#&gt; [1] "height" "weight"
-#&gt; 
-#&gt; $aspect.group2
-#&gt; [1] "scars"       "life_length"
-#&gt; 
-#&gt; $aspect.group3
-#&gt; [1] "number_of_lost_teeth"
-#&gt; </div></pre>
+<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~
+                           <span class='no'>class</span>+<span class='no'>gender</span>+<span class='no'>age</span>+<span class='no'>sibsp</span>+<span class='no'>parch</span>+<span class='no'>fare</span>+<span class='no'>embarked</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+
+<span class='fu'>aspect_importance_single</span>(<span class='no'>model_titanic_glm</span>, <span class='no'>titanic</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
+                  <span class='kw'>response_variable</span> <span class='kw'>=</span> <span class='st'>"survived"</span>)</div><div class='output co'>#&gt;    aspects importance         new observation
+#&gt; 4    class   -1.35631             class = 3rd
+#&gt; 3      age   -0.57289                age = 42
+#&gt; 5 embarked   -0.34431  embarked = Southampton
+#&gt; 7     fare   -0.34389             fare = 7.11
+#&gt; 2   gender   -0.29180           gender = male
+#&gt; 8    sibsp    0.17655               sibsp = 0
+#&gt; 6  country   -0.10405 country = United States
+#&gt; 9    parch    0.03722               parch = 0</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

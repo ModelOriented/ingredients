@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Aspect Importance
-This explainer calculates the feature groups importance (called aspects importance) for a selected observation. — aspect_importance • ingredients</title>
+<title>Calculates the feature groups importance (called aspects importance) for a
+selected observation — aspect_importance • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,13 +36,15 @@ This explainer calculates the feature groups importance (called aspects importan
 
 
 
-<meta property="og:title" content="Aspect Importance
-This explainer calculates the feature groups importance (called aspects importance) for a selected observation. — aspect_importance" />
+<meta property="og:title" content="Calculates the feature groups importance (called aspects importance) for a
+selected observation — aspect_importance" />
 
-<meta property="og:description" content="Aspect Importance function takes a sample from a given dataset and modifies it.
-Modification is made by replacing part of its aspects by values from the observation.
-Then function is calculating the difference between the prediction made on modified sample and the original sample.
-Finally, it measures the impact of aspects on the change of prediction by using the linear model or lasso." />
+<meta property="og:description" content="Aspect Importance function takes a sample from a given dataset and modifies
+it. Modification is made by replacing part of its aspects by values from the
+observation. Then function is calculating the difference between the
+prediction made on modified sample and the original sample. Finally, it
+measures the impact of aspects on the change of prediction by using the
+linear model or lasso." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,7 +89,7 @@ Finally, it measures the impact of aspects on the change of prediction by using 
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -110,20 +112,22 @@ Finally, it measures the impact of aspects on the change of prediction by using 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -136,18 +140,20 @@ Finally, it measures the impact of aspects on the change of prediction by using 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Aspect Importance
-This explainer calculates the feature groups importance (called aspects importance) for a selected observation.</h1>
-    
+    <h1>Calculates the feature groups importance (called aspects importance) for a
+selected observation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/aspect_importance.R'><code>R/aspect_importance.R</code></a></small>
     <div class="hidden name"><code>aspect_importance.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Aspect Importance function takes a sample from a given dataset and modifies it.
-Modification is made by replacing part of its aspects by values from the observation.
-Then function is calculating the difference between the prediction made on modified sample and the original sample.
-Finally, it measures the impact of aspects on the change of prediction by using the linear model or lasso.</p>
+    <p>Aspect Importance function takes a sample from a given dataset and modifies
+it. Modification is made by replacing part of its aspects by values from the
+observation. Then function is calculating the difference between the
+prediction made on modified sample and the original sample. Finally, it
+measures the impact of aspects on the change of prediction by using the
+linear model or lasso.</p>
     
     </div>
 
@@ -155,12 +161,13 @@ Finally, it measures the impact of aspects on the change of prediction by using 
 
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>aspects_list</span>,
-  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>show_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='no'>aspects_list</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+  <span class='no'>new_observation</span>, <span class='no'>aspects_list</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>lime</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
@@ -169,7 +176,8 @@ Finally, it measures the impact of aspects on the change of prediction by using 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a model to be explained or an explainer created with the `DALEX::explain()` function</p></td>
+      <td><p>a model to be explained or an explainer created with the
+`DALEX::explain()` function</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -177,23 +185,34 @@ Finally, it measures the impact of aspects on the change of prediction by using 
     </tr>
     <tr>
       <th>new_observation</th>
-      <td><p>selected observation with columns that corresponds to variables used in the model</p></td>
+      <td><p>selected observation with columns that corresponds to
+variables used in the model</p></td>
     </tr>
     <tr>
       <th>aspects_list</th>
-      <td><p>list containg grouping of features into aspects</p></td>
+      <td><p>list containting grouping of features into aspects</p></td>
     </tr>
     <tr>
       <th>B</th>
       <td><p>number of rows to be sampled from data</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>sampling method in get_sample()</p></td>
+      <th>sample_method</th>
+      <td><p>sampling method in <code><a href='get_sample.html'>get_sample</a></code></p></td>
     </tr>
     <tr>
       <th>n_var</th>
-      <td><p>how many non-zero coefficients for lasso fitting, if zero than linear regression is used</p></td>
+      <td><p>how many non-zero coefficients should be after lasso fitting,
+if zero than linear regression is used</p></td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td><p>frequency in in <code><a href='get_sample.html'>get_sample</a></code></p></td>
+    </tr>
+    <tr>
+      <th>show_cor</th>
+      <td><p>show if all features in aspect are pairwise positivly
+correlated, works only if dataset contains solely numeric values</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -201,14 +220,15 @@ Finally, it measures the impact of aspects on the change of prediction by using 
     </tr>
     <tr>
       <th>predict_function</th>
-      <td><p>predict function, it will be extracted from `x`` if it's an explainer</p></td>
+      <td><p>predict function, it will be extracted from `x`` if
+it's an explainer</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the class 'aspect_importance'.
-Contains dataframe that describes aspects' importance.</p>
+    <p>An object of the class 'aspect_importance'. Contains dataframe that
+  describes aspects' importance.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -230,18 +250,17 @@ Contains dataframe that describes aspects' importance.</p>
 #&gt;   -&gt; residuals         :  numerical, min =  -0.9624611 , mean =  -2.959393e-10 , max =  0.967059  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>aspects</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>wealth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"fare"</span>),
-                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
-                <span class='kw'>age</span> <span class='kw'>=</span> <span class='st'>"age"</span>,
+                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
+                <span class='kw'>personal</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                 <span class='kw'>embarked</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>)
 
 <span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
-                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects  importance
-#&gt; 2   wealth -0.15531370
-#&gt; 3   family -0.09741584
-#&gt; 4      age -0.06130728
-#&gt; 5 embarked -0.02609895</div><div class='input'>
-</div></span><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
+#&gt; 4 personal   -0.18014  gender, age
+#&gt; 2   wealth   -0.13168  class, fare
+#&gt; 5 embarked   -0.05574     embarked
+#&gt; 3   family    0.01448 sibsp, parch</div><div class='input'>
+</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> +
                                    <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
 
@@ -257,11 +276,11 @@ Contains dataframe that describes aspects' importance.</p>
 #&gt;   -&gt; residuals         :  numerical, min =  -0.926 , mean =  0.08636303 , max =  1  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
-                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects  importance
-#&gt; 3   family -0.16623370
-#&gt; 4      age -0.09124492
-#&gt; 2   wealth -0.06429489
-#&gt; 5 embarked  0.01650408</div><div class='input'>
+                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
+#&gt; 4 personal   -0.22873  gender, age
+#&gt; 3   family   -0.04507 sibsp, parch
+#&gt; 2   wealth   -0.04009  class, fare
+#&gt; 5 embarked   -0.02978     embarked</div><div class='input'>
 </div></span><div class='input'>
 </div></pre>
   </div>
@@ -281,7 +300,7 @@ Contains dataframe that describes aspects' importance.</p>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

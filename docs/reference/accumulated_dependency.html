@@ -83,7 +83,7 @@ Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -106,20 +106,22 @@ Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Function 'accumulated_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Accumulated Local Effects Profiles aka ALEPlots</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/accumulated_dependency.R'><code>R/accumulated_dependency.R</code></a></small>
     <div class="hidden name"><code>accumulated_dependency.Rd</code></div>
     </div>
 
@@ -222,10 +224,8 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.6).</span>
-#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span>
-#&gt; <span class='message'>Additional features will be available after installation of: ALEPlot, breakDown, pdp, factorMerger.</span>
-#&gt; <span class='message'>Use 'install_dependencies()' to get all suggested dependencies</span></div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.7).</span>
+#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Dołączanie pakietu: 'DALEX'</span></div><div class='output co'>#&gt; <span class='message'>Następujące obiekty zostały zakryte z 'package:ingredients':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    theme_drwhy, theme_drwhy_colors, theme_drwhy_vertical</span></div><div class='input'><span class='co'># Toy examples, because CRAN angels ask for them</span>
@@ -303,7 +303,7 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

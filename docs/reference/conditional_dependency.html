@@ -83,7 +83,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -106,20 +106,22 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Conditional Dependency Profiles</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/conditional_dependency.R'><code>R/conditional_dependency.R</code></a></small>
     <div class="hidden name"><code>conditional_dependency.Rd</code></div>
     </div>
 
@@ -236,29 +238,14 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
- </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"titanic"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+ </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"titanic"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in library("titanic"): nie ma pakietu o nazwie 'titanic'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
-                                   <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]
-<span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)
-<span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic_small</span>)
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
+                                   <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): nie znaleziono obiektu 'titanic_train'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Survived): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Sex): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Embarked): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in na.omit(titanic_small): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(m$data, parent.frame()): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  RF 
-#&gt;   -&gt; data              :  714  rows  8  cols 
-#&gt;   -&gt; target variable   :  714  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3638936 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.82 , mean =  0.04226891 , max =  0.956  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
-<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explainer_rf</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt;   -&gt; model label       :  RF </div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF"): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explainer_rf</span>)</div><div class='output co'>#&gt; <span class='error'>Error in conditional_dependency(explainer_rf): nie znaleziono obiektu 'explainer_rf'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -280,7 +267,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

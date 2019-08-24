@@ -1,5 +1,7 @@
 ---
-title: "Describing-Explanations"
+title: "Explanations in natural language"
+author: "Adam Izdebski"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Describing-Explanations}

@@ -19,8 +19,9 @@
     conditional_dependency() for conditional dependency plots,
     accumulated_dependency() for accumulated local effects plots,
     aggregate_profiles() and cluster_profiles() for aggregation of ceteris paribus profiles,
-    theme_drwhy() with a 'ggplot2' skin for all plots,
-    generic print() and plot() for better usability of selected explainers.
+    generic print() and plot() for better usability of selected explainers,
+    generic plotD3() for interactive, D3 based explanations, and 
+    generic describe() for explanations in natural language.
     The package 'ingredients' is a part of the 'DrWhy.AI' universe (Biecek 2018) &lt;arXiv:1806.08915&gt;.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -53,7 +54,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -76,20 +77,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -105,7 +108,10 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ingredients-effects-and-importances-of-model-ingredients" class="anchor"></a>ingredients: Effects and Importances of Model Ingredients</h1></div>
 
-<p>Collection of tools for assessment of feature importance and feature effects.</p>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>The <code>ingredients</code> package is a collection of tools for assessment of feature importance and feature effects.</p>
 <p>Key functions are:</p>
 <ul>
 <li>
@@ -125,20 +131,32 @@
 <li>
 <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus Profiles,</li>
 <li>
-<code><a href="reference/theme_drwhy.html">theme_drwhy()</a></code>with a ggplot2 skin for all plots,</li>
-<li>generic <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code> and <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> for better usability of selected explainers.</li>
+<code><a href="reference/aspect_importance.html">aspect_importance()</a></code> for LIME style explanations,</li>
+<li>generic <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code> and <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code> for better usability of selected explainers,</li>
+<li>generic <code><a href="reference/plotD3_ceteris_paribus.html">plotD3()</a></code> for interactive, D3 based explanations,</li>
+<li>generic <code><a href="reference/describe.html">describe()</a></code> for explanations in natural language.</li>
 </ul>
-<p>The package <code>ingredients</code> is a part of the <a href="http://drwhy.ai">DrWhy.AI</a> universe.</p>
-<div id="interactive-plot-in-d3" class="section level2">
+<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/PM_VEE/">Predictive Models: Explore, Explain, and Debug</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
+</div>
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interactive-plot-in-d3" class="anchor"></a>Interactive plot in D3</h2>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<pre class="{r}"><code># the easiest way to get ingredients is to install it from CRAN:
+install.packages("ingredients")
+
+# Or the the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("ModelOriented/ingredients")</code></pre>
+</div>
+<div id="interactive-plots-with-d3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#interactive-plots-with-d3" class="anchor"></a>Interactive plots with D3</h2>
 <p><code><a href="reference/feature_importance.html">feature_importance()</a></code> and <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> also work with <strong>D3</strong>! <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a> <img src="images/plotD3.png" alt="plotD3"></p>
 </div>
-<div id="install" class="section level2">
+<div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
-<p>Install from GitHub</p>
-<pre class="{r}"><code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("ModelOriented/ingredients")</a></code></pre>
+<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+<p>Work on this package was financially supported by the ‘NCN Opus grant 2016/21/B/ST6/02176’.</p>
 </div>
 </div>
   </div>
@@ -148,6 +166,8 @@
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ingredients">https://​cloud.r-project.org/​package=ingredients</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/ModelOriented/ingredients">https://​github.com/​ModelOriented/​ingredients</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ModelOriented/ingredients/issues">https://​github.com/​ModelOriented/​ingredients/​issues</a>
 </li>
@@ -164,16 +184,17 @@
 <ul class="list-unstyled">
 <li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>Hubert Baniecki <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li>Adam Izdebski <br><small class="roles"> Author </small>  </li>
+<li>Katarzyna Pekala <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=ingredients"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/ModelOriented/ingredients"><img src="https://travis-ci.org/ModelOriented/ingredients.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://travis-ci.org/ModelOriented/ingredients"><img src="https://api.travis-ci.org/ModelOriented/ingredients.png" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/github/ModelOriented/ingredients?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/package=ingredients"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a></li>
 <li><a href="http://cranlogs.r-pkg.org/badges/grand-total/ingredients"><img src="http://cranlogs.r-pkg.org/badges/grand-total/ingredients?color=orange" alt="Total Downloads"></a></li>
 </ul>
 </div>
@@ -182,7 +203,7 @@
 
       <footer><div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

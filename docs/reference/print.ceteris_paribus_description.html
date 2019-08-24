@@ -82,7 +82,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -105,20 +105,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -132,7 +134,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prints Ceteris Paribus Descriptions</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/print_ceteris_paribus_descriptions.R'><code>R/print_ceteris_paribus_descriptions.R</code></a></small>
     <div class="hidden name"><code>print.ceteris_paribus_description.Rd</code></div>
     </div>
 
@@ -199,8 +201,10 @@
 #&gt; 1   male  42   3rd Southampton United States 7.11     0     0 0.1857672      lm
 #&gt;   _ids_
 #&gt; 1     1</div><div class='input'><span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='output co'>#&gt; For the selected instance, prediction estimated by Lm is equal to 0.186.
+#&gt; 
 #&gt; Model's prediction would increase substantially if the value of class variable would change to "2nd", "1st", "engineering crew", "victualling crew", "restaurant staff", "deck crew".
-#&gt; The largest change would be marked if class variable would change to "2nd". 
+#&gt; The largest change would be marked if class variable would change to "2nd".
+#&gt; 
 #&gt; All the variables were displayed. </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='print.ceteris_paribus_description-1.png' alt='' width='700' height='433' /></div><div class='input'>
  </div></span><div class='input'> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
  <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
@@ -249,8 +253,10 @@
 #&gt; 557   male  50   2nd Southampton England   13     0     0 0.07494898
 #&gt;              _label_ _ids_
 #&gt; 557 Random Forest v7     1</div><div class='input'><span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='output co'>#&gt; For the selected instance, prediction estimated by Random Forest v7 is equal to 0.075.
+#&gt; 
 #&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st", "engineering crew".
-#&gt; The largest change would be marked if class variable would change to "deck crew". 
+#&gt; The largest change would be marked if class variable would change to "deck crew".
+#&gt; 
 #&gt; Other variables are with less importance and they do not change prediction by more than 0.06%. </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='print.ceteris_paribus_description-2.png' alt='' width='700' height='433' /></div><div class='input'> </div></span><div class='input'>
 </div></pre>
@@ -269,7 +275,7 @@
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

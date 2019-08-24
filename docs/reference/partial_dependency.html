@@ -83,7 +83,7 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -106,20 +106,22 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +135,7 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Partial Dependency Profiles</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/partial_dependency.R'><code>R/partial_dependency.R</code></a></small>
     <div class="hidden name"><code>partial_dependency.Rd</code></div>
     </div>
 
@@ -249,11 +251,11 @@ If "categorical" then only categorical variables will be calculated.</p></td>
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;         OOB estimate of  error rate: 18.96%
+#&gt;         OOB estimate of  error rate: 19.25%
 #&gt; Confusion matrix:
 #&gt;       no yes class.error
-#&gt; no  1323  95  0.06699577
-#&gt; yes  303 378  0.44493392</div><div class='input'>
+#&gt; no  1319  99  0.06981664
+#&gt; yes  305 376  0.44787078</div><div class='input'>
  <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span>,
@@ -265,7 +267,7 @@ If "categorical" then only categorical variables will be calculated.</p></td>
 #&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
 #&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.238041 , max =  1  
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2365088 , max =  1  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
@@ -293,7 +295,7 @@ If "categorical" then only categorical variables will be calculated.</p></td>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

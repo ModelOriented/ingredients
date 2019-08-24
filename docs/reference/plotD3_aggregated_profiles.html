@@ -85,7 +85,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.8</span>
+          <span class="version version-default">0.3.9</span>
         </div>
       </div>
     </div>
@@ -108,20 +108,22 @@ Find more detailes in Ceteris Paribus Chapter." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Describing-Explanations</a>
+      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
     </li>
     <li>
-      <a href="../articles/vignette_aspect_importance.html">Vignette for aspect importance</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_titanic.html">Survival on the RMS Titanic</a>
+      <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/ModelOriented/ingredients">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -135,7 +137,7 @@ Find more detailes in Ceteris Paribus Chapter." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plotD3_aggregated_profiles_explainer.R'><code>R/plotD3_aggregated_profiles_explainer.R</code></a></small>
     <div class="hidden name"><code>plotD3_aggregated_profiles.Rd</code></div>
     </div>
 
@@ -222,15 +224,15 @@ If "categorical" then only categorical variables will be plotted.</p></td>
                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
 <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>8</span>],
-                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
                               <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  Random Forest v7 
 #&gt;   -&gt; data              :  490  rows  7  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; target variable   :  length of 'y; is different than number of rows in 'data' (<span style='color: #BB0000;'>WARNING</span><span>) 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.02717477 , mean =  0.4023973 , max =  0.9848271  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: długość dłuszego obiektu nie jest wielokrotnością długości krótszego obiektu</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  -0.9848271 , mean =  -0.08153978 , max =  0.9662652  
+#&gt;   -&gt; target variable   :  490  values 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predicted values  :  numerical, min =  0.02433216 , mean =  0.402411 , max =  0.9888161  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.6659294 , mean =  -0.0003701378 , max =  0.8484751  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
@@ -247,7 +249,7 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 <span class='no'>pdp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
 <span class='no'>pdp</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
 
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>,<span class='st'>"class"</span>), <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)</div></span></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>,<span class='st'>"class"</span>), <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>70</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -267,7 +269,7 @@ If "categorical" then only categorical variables will be plotted.</p></td>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
