@@ -1,5 +1,5 @@
 ---
-title: "Survival on the RMS Titanic"
+title: "General introduction: Survival on the RMS Titanic"
 author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
@@ -47,9 +47,9 @@ The third step (it's optional but useful) is to create a `DALEX` explainer for r
 
 ```{r}
 library("DALEX")
-explain_titanic_rf <- explain(model_titanic_rf, 
+explain_titanic_rf <- explain(model_titanic_rf,
                       data = titanic[,-9],
-                      y = titanic$survived == "yes", 
+                      y = titanic$survived == "yes",
                       label = "Random Forest v7")
 ```
 
@@ -122,8 +122,8 @@ plot(sp_rf) +
 And for selected categorical variables. Note, that sibsp is numerical but here is presented as a categorical variable.
 
 ```{r}
-plot(sp_rf, 
-     variables = c("class", "embarked", "gender", "sibsp"), 
+plot(sp_rf,
+     variables = c("class", "embarked", "gender", "sibsp"),
      variable_type = "categorical")
 ```
 

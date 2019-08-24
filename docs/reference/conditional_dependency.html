@@ -92,7 +92,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -101,7 +101,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -119,16 +119,16 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
     <span class="fa fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
       </header>
 
 <div class="row">
@@ -140,10 +140,10 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     </div>
 
     <div class="ref-description">
-    
+
     <p>Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.</p>
-    
+
     </div>
 
     <pre class="usage"><span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -162,7 +162,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>local_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -203,19 +203,19 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       <td><p>name of the model. By default it's extracted from the 'class' attribute of the model</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>object of class <code>aggregated_profile_explainer</code></p>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/conditionalProfiles.html'>Local Dependency Profiles Chapter</a>.</p>
-    
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -228,12 +228,12 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; data              :  2099  rows  8  cols
+#&gt;   -&gt; target variable   :  2099  values
 #&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -245,13 +245,13 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 <span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>,
                          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'><span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"1yes"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  RF 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; model label       :  RF
+#&gt;   -&gt; data              :  2099  rows  8  cols
+#&gt;   -&gt; target variable   :  2099  values
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.00736913 , mean =  0.3244965 , max =  0.9956534  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.00736913 , mean =  0.3244965 , max =  0.9956534
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9956534 , mean =  -0.3244965 , max =  -0.00736913  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9956534 , mean =  -0.3244965 , max =  -0.00736913
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explainer_rf</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div></span><div class='input'>
@@ -261,13 +261,13 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
+
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
-      
+
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -284,8 +284,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       </footer>
    </div>
 
-  
+
 
   </body>
 </html>
-

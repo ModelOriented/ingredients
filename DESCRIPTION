@@ -1,42 +1,44 @@
 Package: ingredients
 Title: Effects and Importances of Model Ingredients
-Version: 0.3.8
-Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com", 
+Version: 0.3.9
+Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0001-8423-1823")),
               person("Hubert", "Baniecki", role = "aut"),
-              person("Katarzyna", "Pekala", role = "ctb"),
-              person("Adam", "Izdebski", role = "ctb"))
+              person("Adam", "Izdebski", role = "aut"),
+              person("Katarzyna", "Pekala", role = "aut"))
 Description: Collection of tools for assessment of feature importance and feature effects.
-    Key functions are: 
-    feature_importance() for assessment of global level feature importance, 
+    Key functions are:
+    feature_importance() for assessment of global level feature importance,
     ceteris_paribus() for calculation of the what-if plots,
     partial_dependency() for partial dependency plots,
     conditional_dependency() for conditional dependency plots,
     accumulated_dependency() for accumulated local effects plots,
     aggregate_profiles() and cluster_profiles() for aggregation of ceteris paribus profiles,
-    theme_drwhy() with a 'ggplot2' skin for all plots,
-    generic print() and plot() for better usability of selected explainers.
+    generic print() and plot() for better usability of selected explainers,
+    generic plotD3() for interactive, D3 based explanations, and
+    generic describe() for explanations in natural language.
     The package 'ingredients' is a part of the 'DrWhy.AI' universe (Biecek 2018) <arXiv:1806.08915>.
 Depends: R (>= 3.0)
 License: GPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: 
+Imports:
     DALEX,
     ggplot2,
     glmnet,
     scales
-Suggests: 
+Suggests:
     gower,
     randomForest,
     xgboost,
     testthat,
     r2d3,
+    ggpubr,
     jsonlite,
     knitr,
     rmarkdown
-URL: https://github.com/ModelOriented/ingredients
+URL: https://ModelOriented.github.io/ingredients/, https://github.com/ModelOriented/ingredients
 BugReports: https://github.com/ModelOriented/ingredients/issues
 VignetteBuilder: knitr

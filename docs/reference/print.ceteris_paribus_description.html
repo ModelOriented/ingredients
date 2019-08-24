@@ -91,7 +91,7 @@
         <li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -100,7 +100,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -118,16 +118,16 @@
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
     <span class="fa fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
       </header>
 
 <div class="row">
@@ -139,14 +139,14 @@
     </div>
 
     <div class="ref-description">
-    
+
     <p>Prints Ceteris Paribus Descriptions</p>
-    
+
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_description</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,7 +159,7 @@
       <td><p>other arguments</p></td>
     </tr>
     </table>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -172,14 +172,14 @@
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; data              :  2099  rows  8  cols
+#&gt;   -&gt; target variable   :  2099  values
 #&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic</span>[<span class='fl'>1</span>,])
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    :
 #&gt;       gender        age class    embarked       country fare sibsp parch
 #&gt; 1       male 42.0000000   3rd Southampton United States 7.11     0     0
 #&gt; 1.1   female 42.0000000   3rd Southampton United States 7.11     0     0
@@ -194,44 +194,44 @@
 #&gt; 1.110 0.2423748     age     1      lm
 #&gt; 1.2   0.2392846     age     1      lm
 #&gt; 1.3   0.2347001     age     1      lm
-#&gt; 
-#&gt; 
+#&gt;
+#&gt;
 #&gt; Top observations:
 #&gt;   gender age class    embarked       country fare sibsp parch    _yhat_ _label_
 #&gt; 1   male  42   3rd Southampton United States 7.11     0     0 0.1857672      lm
 #&gt;   _ids_
 #&gt; 1     1</div><div class='input'><span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='output co'>#&gt; For the selected instance, prediction estimated by Lm is equal to 0.186.
-#&gt; 
+#&gt;
 #&gt; Model's prediction would increase substantially if the value of class variable would change to "2nd", "1st", "engineering crew", "victualling crew", "restaurant staff", "deck crew".
 #&gt; The largest change would be marked if class variable would change to "2nd".
-#&gt; 
+#&gt;
 #&gt; All the variables were displayed. </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='print.ceteris_paribus_description-1.png' alt='' width='700' height='433' /></div><div class='input'>
  </div></span><div class='input'> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
  <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
+                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt;
 #&gt; Call:
-#&gt;  randomForest(formula = survived == "yes" ~ gender + age + class +      embarked + fare + sibsp + parch, data = titanic) 
+#&gt;  randomForest(formula = survived == "yes" ~ gender + age + class +      embarked + fare + sibsp + parch, data = titanic)
 #&gt;                Type of random forest: regression
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
-#&gt; 
+#&gt;
 #&gt;           Mean of squared residuals: 0.1428732
 #&gt;                     % Var explained: 34.81</div><div class='input'>
  <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
                            <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  Random Forest v7 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; model label       :  Random Forest v7
+#&gt;   -&gt; data              :  2099  rows  8  cols
+#&gt;   -&gt; target variable   :  2099  values
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008323348 , mean =  0.3244118 , max =  0.9922996  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008323348 , mean =  0.3244118 , max =  0.9922996
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7965509 , mean =  2.838752e-05 , max =  0.9142645  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7965509 , mean =  2.838752e-05 , max =  0.9142645
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    :
 #&gt;         gender        age class    embarked country fare sibsp parch     _yhat_
 #&gt; 557       male 50.0000000   2nd Southampton England   13     0     0 0.07494898
 #&gt; 557.1   female 50.0000000   2nd Southampton England   13     0     0 0.84176717
@@ -246,17 +246,17 @@
 #&gt; 557.110     age   557 Random Forest v7
 #&gt; 557.2       age   557 Random Forest v7
 #&gt; 557.3       age   557 Random Forest v7
-#&gt; 
-#&gt; 
+#&gt;
+#&gt;
 #&gt; Top observations:
 #&gt;     gender age class    embarked country fare sibsp parch     _yhat_
 #&gt; 557   male  50   2nd Southampton England   13     0     0 0.07494898
 #&gt;              _label_ _ids_
 #&gt; 557 Random Forest v7     1</div><div class='input'><span class='fu'><a href='describe.html'>describe</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='output co'>#&gt; For the selected instance, prediction estimated by Random Forest v7 is equal to 0.075.
-#&gt; 
+#&gt;
 #&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st", "engineering crew".
 #&gt; The largest change would be marked if class variable would change to "deck crew".
-#&gt; 
+#&gt;
 #&gt; Other variables are with less importance and they do not change prediction by more than 0.06%. </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='print.ceteris_paribus_description-2.png' alt='' width='700' height='433' /></div><div class='input'> </div></span><div class='input'>
 </div></pre>
@@ -265,7 +265,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -282,8 +282,7 @@
       </footer>
    </div>
 
-  
+
 
   </body>
 </html>
-
