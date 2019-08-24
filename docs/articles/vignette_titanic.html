@@ -137,8 +137,8 @@
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;           Mean of squared residuals: 0.1429724
-#&gt;                     % Var explained: 34.77</code></pre>
+#&gt;           Mean of squared residuals: 0.1428637
+#&gt;                     % Var explained: 34.82</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -154,9 +154,9 @@
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ([33mdefault[39m)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008061687 , mean =  0.3249769 , max =  0.9958097  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008420145 , mean =  0.3245143 , max =  0.9897693  
 #&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7944912 , mean =  -0.0005366561 , max =  0.8974002  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7880242 , mean =  -7.413691e-05 , max =  0.9086892  
 #&gt; [32mA new explainer has been created![39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
@@ -168,12 +168,12 @@
 <a class="sourceLine" id="cb7-3" title="3">fi_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/feature_importance.html">feature_importance</a></span>(explain_titanic_rf)</a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(fi_rf)</a></code></pre></div>
 <pre><code>#&gt;       variable dropout_loss            label
-#&gt; 1 _full_model_    0.3332074 Random Forest v7
-#&gt; 2      country    0.3332074 Random Forest v7
-#&gt; 3        parch    0.3440956 Random Forest v7
-#&gt; 4        sibsp    0.3444510 Random Forest v7
-#&gt; 5     embarked    0.3493227 Random Forest v7
-#&gt; 6          age    0.3751038 Random Forest v7</code></pre>
+#&gt; 1 _full_model_    0.3340511 Random Forest v7
+#&gt; 2      country    0.3340511 Random Forest v7
+#&gt; 3        parch    0.3452415 Random Forest v7
+#&gt; 4        sibsp    0.3469397 Random Forest v7
+#&gt; 5     embarked    0.3503837 Random Forest v7
+#&gt; 6          age    0.3714534 Random Forest v7</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(fi_rf)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -193,12 +193,12 @@
 <a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(pp_age)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_          _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7 0.0000000 0.3197884     0
-#&gt; 2     age Random Forest v7 0.1666667 0.5385441     0
-#&gt; 3     age Random Forest v7 2.0000000 0.5635665     0
-#&gt; 4     age Random Forest v7 4.0000000 0.5697978     0
-#&gt; 5    fare Random Forest v7 6.1904000 0.3012456     0
-#&gt; 6     age Random Forest v7 7.0000000 0.5250941     0</code></pre>
+#&gt; 1    fare Random Forest v7 0.0000000 0.3359852     0
+#&gt; 2     age Random Forest v7 0.1666667 0.5143172     0
+#&gt; 3     age Random Forest v7 2.0000000 0.5569902     0
+#&gt; 4     age Random Forest v7 4.0000000 0.5614858     0
+#&gt; 5    fare Random Forest v7 6.1904000 0.3171541     0
+#&gt; 6     age Random Forest v7 7.0000000 0.5265124     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pp_age)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
@@ -254,12 +254,12 @@
 <a class="sourceLine" id="cb17-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(clust_rf)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_            _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.1927145     0
-#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.1701472     0
-#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.1735108     0
-#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4823757     0
-#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1735192     0
-#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.1658854     0</code></pre>
+#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.2058942     0
+#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.1799357     0
+#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.1821200     0
+#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4309650     0
+#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1820620     0
+#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.1682957     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sp_rf, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span>(clust_rf, <span class="dt">color =</span> <span class="st">"_label_"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>

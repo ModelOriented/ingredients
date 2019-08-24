@@ -20,7 +20,7 @@ r_packages:
   - ALEPlot
   - covr
 
-r_github_packages: pbiecek/DALEX
+r_github_packages: modelOriented/DALEX
 
 after_success:
   - Rscript -e 'library(covr); codecov()'

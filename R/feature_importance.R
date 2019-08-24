@@ -1,6 +1,6 @@
 #' Feature Importance
 #'
-#' This function calculates variable importance based on the drop in the Loss function after single-variable-perturbations.
+#' This function calculates permutation based feature importance.
 #' For this reason it is also called the Variable Dropout Plot.
 #'
 #' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.

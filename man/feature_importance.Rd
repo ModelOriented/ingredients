@@ -52,7 +52,7 @@ An object of the class 'feature_importance'.
 It's a data frame with calculated average response.
 }
 \description{
-This function calculates variable importance based on the drop in the Loss function after single-variable-perturbations.
+This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot.
 }
 \details{

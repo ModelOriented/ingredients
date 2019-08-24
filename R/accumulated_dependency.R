@@ -1,7 +1,7 @@
 #' Accumulated Local Effects Profiles aka ALEPlots
 #'
 #' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-#' Function \code{accumulated_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}..
+#' Function \code{accumulated_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
 #'
 #' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 #'
