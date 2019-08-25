@@ -3,7 +3,7 @@
 #' This function calculates permutation based feature importance.
 #' For this reason it is also called the Variable Dropout Plot.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/featureImportance.html}{Feature Importance Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, or a model to be explained.
 #' @param data validation dataset, will be extracted from \code{x} if it's an explainer

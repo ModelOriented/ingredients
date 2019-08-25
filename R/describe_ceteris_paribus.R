@@ -27,9 +27,8 @@
 #' library("DALEX")
 #' library("ingredients")
 #' library("randomForest")
-#'
 #' titanic <- na.omit(titanic)
-#'
+#' \donttest{
 #' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                  fare + sibsp + parch,  data = titanic)
 #' explain_titanic_rf <- explain(model_titanic_rf,
@@ -42,7 +41,7 @@
 #'
 #' plot(cp_rf, variable_type = "categorical")
 #' describe(cp_rf, variables = "class", label = "the predicted probability")
-#'
+#' }
 #' @export
 #' @rdname describe
 describe <- function(x, ...)

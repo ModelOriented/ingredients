@@ -30,7 +30,7 @@ In different panels variable contributions may not look like sorted if variable
 importance is different in different in different models.
 }
 \details{
-Find more details in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
+Find more details in the \href{https://pbiecek.github.io/PM_VEE/featureImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 library("DALEX")

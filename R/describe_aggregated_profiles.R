@@ -17,7 +17,7 @@
 #' library("randomForest")
 #'
 #' titanic <- na.omit(titanic)
-#'
+#' \donttest{
 #' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
 #'                                   fare + sibsp + parch,  data = titanic)
 #' explain_titanic_rf <- explain(model_titanic_rf,
@@ -29,7 +29,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' describe(pdp, variables = "gender")
-#'
+#' }
 #' @export
 #' @rdname describe
 describe.partial_dependency_explainer <- function(x,

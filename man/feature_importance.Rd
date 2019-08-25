@@ -62,7 +62,7 @@ This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/featureImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 library("DALEX")
