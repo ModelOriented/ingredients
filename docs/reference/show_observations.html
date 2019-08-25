@@ -37,7 +37,8 @@
 
 <meta property="og:title" content="Adds a Layer with Observations to a Profile Plot — show_observations" />
 
-<meta property="og:description" content="Function 'show_observations' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
+<meta property="og:description" content="Function show_observations adds a layer to a plot created with
+plot.ceteris_paribus_explainer for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs." />
 <meta name="twitter:card" content="summary" />
 
@@ -106,7 +107,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -141,7 +142,8 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 
     <div class="ref-description">
     
-    <p>Function 'show_observations' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
+    <p>Function <code>show_observations</code> adds a layer to a plot created with
+<code><a href='plot.ceteris_paribus_explainer.html'>plot.ceteris_paribus_explainer</a></code> for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
     
     </div>
@@ -154,7 +156,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus explainer produced with function `ceteris_paribus()`</p></td>
+      <td><p>a ceteris paribus explainer produced with function <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -179,27 +181,63 @@ If "categorical" then only categorical variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td><p>if not NULL then only `variables` will be presented</p></td>
+      <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a ggplot2 layer</p>
+    <p>a <code>ggplot2</code> layer</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"titanic"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in library("titanic"): nie ma pakietu o nazwie 'titanic'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_train</span>[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Survived"</span>, <span class='st'>"Pclass"</span>, <span class='st'>"Sex"</span>, <span class='st'>"Age"</span>,
-                                  <span class='st'>"SibSp"</span>, <span class='st'>"Parch"</span>, <span class='st'>"Fare"</span>, <span class='st'>"Embarked"</span>)]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): nie znaleziono obiektu 'titanic_train'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Survived</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Survived): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Sex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Sex</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Sex): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span>$<span class='no'>Embarked</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>titanic_small</span>$<span class='no'>Embarked</span>)</div><div class='output co'>#&gt; <span class='error'>Error in factor(titanic_small$Embarked): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in na.omit(titanic_small): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>Survived</span> ~ <span class='no'>Pclass</span> + <span class='no'>Sex</span> + <span class='no'>Age</span> + <span class='no'>SibSp</span> + <span class='no'>Parch</span> + <span class='no'>Fare</span> + <span class='no'>Embarked</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(m$data, parent.frame()): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>,
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>Survived</span> <span class='kw'>==</span> <span class='st'>"1"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  RF </div><div class='output co'>#&gt; <span class='error'>Error in explain(rf_model, data = titanic_small, y = titanic_small$Survived ==     "1", label = "RF"): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'>
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='error'>Error in select_sample(titanic_small, n = 100): nie znaleziono obiektu 'titanic_small'</span></div><div class='input'><span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ceteris_paribus(explainer_rf, selected_passangers): nie znaleziono obiektu 'explainer_rf'</span></div><div class='input'><span class='no'>cp_rf</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): nie znaleziono obiektu 'cp_rf'</span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-<span class='fu'>show_observations</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"Age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(cp_rf, variables = "Age", color = "grey"): nie znaleziono obiektu 'cp_rf'</span></div><div class='input'>
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~<span class='no'>.</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                        <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked country    fare sibsp parch
+#&gt; 515      male  45              2nd Southampton England 10.1000     0     0
+#&gt; 515.1  female  45              2nd Southampton England 10.1000     0     0
+#&gt; 604      male  17              3rd Southampton Denmark  7.1701     1     0
+#&gt; 604.1  female  17              3rd Southampton Denmark  7.1701     1     0
+#&gt; 1430     male  25 engineering crew Southampton England  0.0000     0     0
+#&gt; 1430.1 female  25 engineering crew Southampton England  0.0000     0     0
+#&gt;        survived     _yhat_ _vname_ _ids_ _label_
+#&gt; 515          no 0.08983959  gender   515      RF
+#&gt; 515.1        no 0.85623924  gender   515      RF
+#&gt; 604          no 0.05625796  gender   604      RF
+#&gt; 604.1        no 0.55143514  gender   604      RF
+#&gt; 1430         no 0.25136438  gender  1430      RF
+#&gt; 1430.1       no 0.69669129  gender  1430      RF
+#&gt; 
+#&gt; 
+#&gt; Top observations:
+#&gt;      gender age            class    embarked country    fare sibsp parch
+#&gt; 515    male  45              2nd Southampton England 10.1000     0     0
+#&gt; 604    male  17              3rd Southampton Denmark  7.1701     1     0
+#&gt; 1430   male  25 engineering crew Southampton England  0.0000     0     0
+#&gt; 865    male  20              3rd   Cherbourg Lebanon  7.0406     0     0
+#&gt; 452  female  17              3rd  Queenstown Ireland  7.1408     0     0
+#&gt; 1534   male  38 victualling crew Southampton England  0.0000     0     0
+#&gt;      survived     _yhat_ _label_ _ids_
+#&gt; 515        no 0.08983959      RF     1
+#&gt; 604        no 0.05625796      RF     2
+#&gt; 1430       no 0.25136438      RF     3
+#&gt; 865        no 0.09678625      RF     4
+#&gt; 452       yes 0.62957447      RF     5
+#&gt; 1534       no 0.15166468      RF     6</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
+<span class='fu'>show_observations</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
+  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='show_observations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

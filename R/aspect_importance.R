@@ -9,24 +9,25 @@
 #' linear model or lasso.
 #'
 #'
-#' @param x a model to be explained or an explainer created with the
-#'   `DALEX::explain()` function
-#' @param data dataset, it will be extracted from `x`` if it's an explainer
-#' @param predict_function predict function, it will be extracted from `x`` if
+#' @param x an explainer created with the \code{DALEX::explain()} function
+#' or a model to be explained.
+#' @param data dataset, it will be extracted from \code{x} if it's an explainer
+#' NOTE: It is best when target variable is not present in the \code{data}
+#' @param predict_function predict function, it will be extracted from \code{x} if
 #'   it's an explainer
 #' @param new_observation selected observation with columns that corresponds to
 #'   variables used in the model
-#' @param aspects_list list containting grouping of features into aspects
-#' @param B number of rows to be sampled from data
+#' @param aspects list containting grouping of features into aspects
+#' @param N number of observarions to be sampled from data
 #' @param sample_method sampling method in \code{\link{get_sample}}
 #' @param n_var how many non-zero coefficients should be after lasso fitting,
 #'   if zero than linear regression is used
-#' @param f frequency in in \code{\link{get_sample}}
+#' @param f frequency in \code{\link{get_sample}}
 #' @param show_cor show if all features in aspect are pairwise positivly
 #'   correlated, works only if dataset contains solely numeric values
 #' @param ... other parameters
 #'
-#' @return An object of the class 'aspect_importance'. Contains dataframe that
+#' @return An object of the class \code{aspect_importance}. Contains dataframe that
 #'   describes aspects' importance.
 #'
 #' @importFrom stats lm
@@ -36,34 +37,40 @@
 #'
 #' @examples
 #' library("DALEX")
-#' titanic <- na.omit(titanic)
+#'
+#' titanic_imputed$country <- NULL
+#'
 #' model_titanic_glm <- glm(survived == "yes" ~
-#'                            class+gender+age+sibsp+parch+fare+embarked,
-#'                          data = titanic, family = "binomial")
+#'                          class+gender+age+sibsp+parch+fare+embarked,
+#'                          data = titanic_imputed,
+#'                          family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                                data = titanic[,-9],
-#'                                y = titanic$survived == "yes")
+#'                                data = titanic_imputed[,-8],
+#'                                y = titanic_imputed$survived == "yes")
 #'
 #' aspects <- list(wealth = c("class", "fare"),
 #'                 family = c("sibsp", "parch"),
 #'                 personal = c("gender", "age"),
 #'                 embarked = "embarked")
 #'
-#' aspect_importance(explain_titanic_glm, new_observation = titanic[1,],
-#'                   aspects_list = aspects)
+#' aspect_importance(explain_titanic_glm,
+#'                   new_observation = titanic_imputed[1,],
+#'                   aspects = aspects)
 #'
 #' \donttest{
 #' library("randomForest")
 #' model_titanic_rf <- randomForest(survived ~ class + gender + age + sibsp +
-#'                                    parch + fare + embarked, data = titanic)
+#'                                  parch + fare + embarked,
+#'                                  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#'                               y = titanic$survived == "yes")
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed$survived == "yes")
 #'
-#' aspect_importance(explain_titanic_rf, new_observation = titanic[1,],
-#'                   aspects_list = aspects)
+#' aspect_importance(explain_titanic_rf,
+#'                   new_observation = titanic_imputed[1,],
+#'                   aspects = aspects)
 #'
 #' }
 #'
@@ -75,8 +82,8 @@ aspect_importance <- function(x, ...)
 #' @export
 #' @rdname aspect_importance
 
-aspect_importance.explainer <- function(x, new_observation, aspects_list,
-                                        B = 100, sample_method = "default",
+aspect_importance.explainer <- function(x, new_observation, aspects,
+                                        N = 100, sample_method = "default",
                                         n_var = 0, f = 2, show_cor = FALSE, ...) {
 
   # extracts model, data and predict function from the explainer
@@ -86,7 +93,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects_list,
 
   # calls target function
   aspect_importance.default(model, data, predict_function,
-                            new_observation, aspects_list, B, sample_method,
+                            new_observation, aspects, N, sample_method,
                             n_var, f)
 }
 
@@ -95,7 +102,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects_list,
 
 aspect_importance.default <- function(x, data, predict_function = predict,
                                       new_observation,
-                                      aspects_list, B = 100,
+                                      aspects, N = 100,
                                       sample_method = "default", n_var = 0,
                                       f = 2, show_cor = FALSE, ...) {
 
@@ -108,22 +115,22 @@ aspect_importance.default <- function(x, data, predict_function = predict,
 
   # stop if no common variables are found
   stopifnot(length(common_variables) > 0,
-            length(setdiff(unlist(aspects_list),
+            length(setdiff(unlist(aspects),
                            colnames(new_observation))) == 0)
 
   #number of expected coefficients cannot be negative
   stopifnot(n_var >= 0)
 
   # create empty matrix and data frames
-  n_sample <- select_sample(data, n = B)
+  n_sample <- select_sample(data, n = N)
   n_sample_changed <- n_sample
 
   # sample which aspects will be replaced
-  new_X <- get_sample(B, length(aspects_list), sample_method, f)
+  new_X <- get_sample(N, length(aspects), sample_method, f)
 
   # replace aspects
   for (i in 1:nrow(n_sample)) {
-    vars <- unlist(aspects_list[new_X[i, ] == 1])
+    vars <- unlist(aspects[new_X[i, ] == 1])
     n_sample_changed[i,vars] <- new_observation[vars]
   }
 
@@ -132,7 +139,7 @@ aspect_importance.default <- function(x, data, predict_function = predict,
     predict_function(x, n_sample)
 
   # fit linear model/lasso to estimate aspects importance
-  colnames(new_X) <- names(aspects_list)
+  colnames(new_X) <- names(aspects)
   new_df <- data.frame(y_changed, new_X)
 
   if (n_var == 0) {
@@ -152,8 +159,8 @@ aspect_importance.default <- function(x, data, predict_function = predict,
   res <- res[!res$aspects == "(Intercept)",]
   res <- res[order(-abs(res$importance)),]
 
-  for (i in 1:length(aspects_list)) {
-    res$features[i] <- aspects_list[as.character(res[i,1])]
+  for (i in 1:length(aspects)) {
+    res$features[i] <- aspects[as.character(res[i,1])]
     vars <- unlist(res$features[i])
     if (all(sapply(data[,vars], is.numeric)) & length(vars)>1 & show_cor == T) {
       cor_matrix <- cor(data[,vars], method = "spearman")
@@ -218,7 +225,7 @@ lime <- function(x, ...) {
 #' @param predict_function predict function
 #' @param new_observation selected observation with columns that corresponds to
 #'   variables used in the model
-#' @param B number of rows to be sampled from data
+#' @param N number of rows to be sampled from data
 #' @param sample_method sampling method in \code{\link{get_sample}}
 #' @param n_var how many non-zero coefficients for lasso fitting, if zero than
 #'   linear regression is used
@@ -242,7 +249,7 @@ lime <- function(x, ...) {
 #' @export
 
 aspect_importance_single <- function(x, data, predict_function = predict,
-                                     new_observation, B = 100,
+                                     new_observation, N = 100,
                                      sample_method = "default", n_var = 0,
                                      f = 2, response_variable = "") {
 
@@ -265,7 +272,7 @@ aspect_importance_single <- function(x, data, predict_function = predict,
 
   #call aspect importance function
   res_ai <- aspect_importance(x, data, predict_function,
-                              new_observation_changed, single_aspect_list, B,
+                              new_observation_changed, single_aspect_list, N,
                               sample_method, n_var, f)
 
   #create data frame with results
@@ -349,6 +356,7 @@ get_sample <- function(n, p, sample_method = c("default","binom"), f = 2) {
 #' library("DALEX")
 #' dragons_data <- dragons[,c(2,3,4,7,8)]
 #' group_variables(dragons_data, p = 0.7, clust_method = "complete")
+#'
 #' @export
 #' @rdname group_variables
 

@@ -1,33 +1,33 @@
 #' @title Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.
 #'
 #' @description
-#' Function 'plotD3.aggregated_profiles_explainer' plots an aggregate of ceteris paribus profiles.
-#' It works in a similar way to 'plotD3.ceteris_paribus' but, instead of individual profiles,
-#' show average profiles for each variable listed in the 'variables' vector.
+#' Function \code{\link{plotD3.aggregated_profiles_explainer}} plots an aggregate of ceteris paribus profiles.
+#' It works in a similar way to \code{\link{plotD3.ceteris_paribus_explainer}} but, instead of individual profiles,
+#' show average profiles for each variable listed in the \code{variables} vector.
 #'
 #' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
-#' @param x a aggregated profiles explainer produced with function `aggregate_profiles()`
+#' @param x a aggregated profiles explainer produced with function \code{aggregate_profiles()}
 #' @param ... other explainers that shall be plotted together
 #' @param color a character.  Set line/bar color
 #' @param size a numeric. Set width of lines
 #' @param alpha a numeric between 0 and 1. Opacity of lines
 #' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
 #' If "categorical" then only categorical variables will be plotted.
-#' @param facet_ncol number of columns for the `facet_wrap`
-#' @param scale_plot a logical. Should size of the plot scale with window size? By default it's FALSE
-#' @param variables if not NULL then only `variables` will be presented
+#' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
+#' @param scale_plot a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins in "categorical" type
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return a `r2d3` object.
+#' @return a \code{r2d3} object.
 #'
 #' @examples
 #' library("DALEX")
-#' library("ingredients")
 #' library("randomForest")
+#'
 #' titanic_small <- na.omit(titanic[1:500,-5])
 #' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
 #'                                    fare + sibsp + parch,  data = titanic_small)
@@ -60,8 +60,9 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                                                  color = "#46bac2",
                                                  variable_type = "numerical",
                                                  facet_ncol = 2, scale_plot = FALSE,
-                                                 variables = NULL, chart_title = NULL,
-                                                 label_margin = 60){
+                                                 variables = NULL,
+                                                 chart_title = "Aggregated Profiles",
+                                                 label_margin = 60) {
 
   check_variable_type(variable_type)
 
@@ -146,8 +147,6 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
     ymean <- round(attr(x, "mean_prediction"),3)
   }
-
-  if (is.null(chart_title)) chart_title <- "Ceteris Paribus Profiles"
 
   options <- list(variableNames = as.list(vnames),
                   n = length(vnames), c = length(list(...)) + 1,

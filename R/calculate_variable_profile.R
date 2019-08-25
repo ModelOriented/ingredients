@@ -2,7 +2,7 @@
 #'
 #' This function calculates individual variable profiles (ceteris paribus profiles), i.e. series of predictions from a model calculated for observations with altered single coordinate.
 #'
-#' Note that \code{calculate_variable_profile} function is S3 generic.
+#' Note that \code{\link{calculate_variable_profile}} function is S3 generic.
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
@@ -15,42 +15,15 @@
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @return a data frame with profiles for selected variables and selected observations
-#' @examples
-#' library("DALEX")
-#'  \donttest{
-#' library("randomForest")
-#' set.seed(59)
-#' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'                                       no.rooms + district, data = apartments)
-#' vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
-#' variable_splits <- calculate_variable_split(apartments, vars)
-#' new_apartment <- apartmentsTest[1:10, ]
-#' profiles <- calculate_variable_profile(new_apartment, variable_splits,
-#'                                apartments_rf_model)
-#' head(profiles)
 #'
-#' # only subset of observations
-#' small_apartments <- select_sample(apartmentsTest, n = 10)
-#' small_apartments
-#' small_profiles <- calculate_variable_profile(small_apartments, variable_splits,
-#'                                apartments_rf_model)
-#' head(small_profiles)
-#'
-#' # neighbors for a selected observation
-#' new_apartment <- apartments[1, 2:6]
-#' small_apartments <- select_neighbours(apartmentsTest, new_apartment, n = 10)
-#' small_apartments
-#' small_profiles <- calculate_variable_profile(small_apartments, variable_splits,
-#'                                apartments_rf_model)
-#' head(new_apartment)
-#' head(small_profiles)
-#' }
-#' @export
+#' @rdname calculate_variable_profile
 calculate_variable_profile <- function(data, variable_splits, model, predict_function = predict, ...) {
   UseMethod("calculate_variable_profile")
 }
-#' @export
+
+#' @rdname calculate_variable_profile
 calculate_variable_profile.default <- function(data, variable_splits, model, predict_function = predict, ...) {
+
   variables <- names(variable_splits)
   profiles <- lapply(variables, function(variable) {
     split_points <- variable_splits[[variable]]
@@ -87,7 +60,7 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
 #' (in general uniform quantiles of the length grid_points).
 #' For all other variables splits are calculated as unique values.
 #'
-#' Note that \code{calculate_variable_split} function is S3 generic.
+#' Note that \code{\link{calculate_variable_split}} function is S3 generic.
 #' If you want to work on non standard data sources (like H2O ddf, external databases)
 #' you should overload it.
 #'
@@ -97,21 +70,12 @@ calculate_variable_profile.default <- function(data, variable_splits, model, pre
 #'
 #' @return A named list with splits for selected variables
 #' @importFrom stats predict
-#' @examples
-#' library("DALEX")
-#'  \dontrun{
-#' library("randomForest")
-#' set.seed(59)
-#' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'                                       no.rooms + district, data = apartments)
-#' vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
-#' calculate_variable_split(apartments, vars)
-#' }
-#' @export
+#'
+#' @rdname calculate_variable_split
 calculate_variable_split <- function(data, variables = colnames(data), grid_points = 101) {
   UseMethod("calculate_variable_split")
 }
-#' @export
+#' @rdname calculate_variable_split
 calculate_variable_split.default <- function(data, variables = colnames(data), grid_points = 101) {
   variable_splits <- lapply(variables, function(var) {
     selected_column <- data[,var]

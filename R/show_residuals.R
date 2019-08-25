@@ -1,26 +1,26 @@
 #' Adds a Layer with Residuals to a Profile Plot
 #'
-#' Function 'show_residuals' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
-#' Note that the 'y' argument has to be specified in the `ceteris_paribus()` function.
+#' Function \code{\link{show_residuals}} adds a layer to a plot created with
+#' \code{\link{plot.ceteris_paribus_explainer}} for selected observations.
+#' Note that the \code{y} argument has to be specified in the \code{\link{ceteris_paribus}} function.
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`. Note that `y` parameter shall be supplied in this function.
+#' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}.
+#' Note that \code{y} parameter shall be supplied in this function.
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
-#' @param variables if not NULL then only `variables` will be presented
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #'
-#' @return a ggplot2 layer
+#' @return a \code{ggplot2} layer
+#'
 #' @examples
 #' library("DALEX")
-#'  \dontrun{
 #' library("randomForest")
-#' library("ingredients")
-#' library("ggplot2")
 #'
 #' titanic <- na.omit(titanic)
 #' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                    fare + sibsp + parch,  data = titanic, ntree = 500)
+#'                                  fare + sibsp + parch,  data = titanic, ntree = 500)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic[,-9],
@@ -35,8 +35,7 @@
 #'   sibsp = 0,
 #'   parch = 0,
 #'   fare = 72,
-#'   embarked = factor("Southampton",
-#'              levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
+#'   embarked = factor("Southampton", levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
 #' )
 #'
 #' johny_neighbours <- select_neighbours(data = titanic,
@@ -45,20 +44,24 @@
 #'                                                   "fare", "sibsp", "parch"),
 #'                                       n = 10)
 #'
-#' cp_neighbours <- ceteris_paribus(explain_titanic_rf, johny_neighbours,
-#'                          y = johny_neighbours$survived == "yes",
-#'                          variable_splits = list(age = seq(0,70, length.out = 1000)))
-#' plot(cp_neighbours, variables = "age",) +
+#' cp_neighbours <- ceteris_paribus(explain_titanic_rf,
+#'                                  johny_neighbours,
+#'                                  y = johny_neighbours$survived == "yes",
+#'                                  variable_splits = list(age = seq(0,70, length.out = 1000)))
+#'
+#' plot(cp_neighbours, variables = "age") +
 #'   show_observations(cp_neighbours, variables = "age")
+#'
 #'
 #' cp_johny <- ceteris_paribus(explain_titanic_rf, johny_d,
 #'                             variable_splits = list(age = seq(0,70, length.out = 1000)))
 #'
 #' plot(cp_johny, variables = "age", size = 1.5, color = "#8bdcbe") +
 #'   show_profiles(cp_neighbours, variables = "age", color = "#ceced9") +
-#'  show_observations(cp_johny, variables = "age", size = 5, color = "#371ea3") +
-#'  show_residuals(cp_neighbours, variables = "age")
-#' }
+#'   show_observations(cp_johny, variables = "age", size = 5, color = "#371ea3") +
+#'   show_residuals(cp_neighbours, variables = "age")
+#'
+#'
 #' @export
 show_residuals <- function(x, ...,
                               size = 0.75,

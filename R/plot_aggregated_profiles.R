@@ -1,30 +1,33 @@
 #' Plots Aggregated Profiles
 #'
-#' Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
-#' It works in a similar way to 'plot.ceteris_paribus', but instead of individual profiles show average profiles for each variable
-#' listed in the 'variables' vector.
+#' Function \code{plot.aggregated_profiles_explainer} plots partial dependency plot or accumulated effect plot.
+#' It works in a similar way to \code{plot.ceteris_paribus}, but instead of individual profiles
+#' show average profiles for each variable listed in the \code{variables} vector.
 #'
-#' @param x a ceteris paribus explainer produced with function `aggregate_profiles()`
+#' @param x a ceteris paribus explainer produced with function \code{aggregate_profiles()}
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between 0 and 1. Opacity of lines
-#' @param facet_ncol number of columns for the `facet_wrap()`
-#' @param variables if not NULL then only `variables` will be presented
+#' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
+#' @param variables if not \code{NULL} then only \code{variables} will be presented
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return a ggplot2 object
+#' @return a \code{ggplot2} object
+#'
 #' @examples
 #' library("DALEX")
-#' # Toy example
+#'
 #' titanic <- na.omit(titanic)
+#'
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic, family = "binomial")
+#'                          data = titanic, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes")
+#'                                data = titanic[,-9],
+#'                                y = titanic$survived == "yes",
+#'                                verbose = FALSE)
 #'
 #' pdp_rf_p <- partial_dependency(explain_titanic_glm, N = 50)
 #' pdp_rf_p$`_label_` <- "RF_partial"
@@ -35,17 +38,17 @@
 #' head(pdp_rf_p)
 #' plot(pdp_rf_p, pdp_rf_l, pdp_rf_a, color = "_label_")
 #'
-#'  \donttest{
-#'  library("randomForest")
-#'  titanic <- na.omit(titanic)
-#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic)
-#'  model_titanic_rf
+#' \donttest{
+#' library("randomForest")
 #'
-#'  explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes",
-#'                            label = "Random Forest v7")
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic)
+#'
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic[,-9],
+#'                               y = titanic$survived == "yes",
+#'                               label = "Random Forest v7",
+#'                               verbose = FALSE)
 #'
 #' selected_passangers <- select_sample(titanic, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -57,6 +60,7 @@
 #' pdp_rf_c$`_label_` <- "RF_conditional"
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
+#'
 #' head(pdp_rf_p)
 #' plot(pdp_rf_p)
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a)
@@ -67,13 +71,14 @@
 #'   show_aggregated_profiles(pdp_rf_p, size = 2)
 #'
 #' }
+#'
 #' @export
 plot.aggregated_profiles_explainer <- function(x, ...,
-                                          size = 1,
-                                          alpha = 1,
-                                          color = "_label_",
-                                          facet_ncol = NULL,
-                                          variables = NULL) {
+                                               size = 1,
+                                               alpha = 1,
+                                               color = "_label_",
+                                               facet_ncol = NULL,
+                                               variables = NULL) {
 
   # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -84,7 +89,10 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   if (!is.null(variables)) {
     all_variables <- intersect(all_variables, variables)
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
+
+    aggregated_profiles <- aggregated_profiles[aggregated_profiles$`_vname_` %in% all_variables, ]
   }
+
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
   is_x_numeric <- is.numeric(aggregated_profiles$`_x_`)
 

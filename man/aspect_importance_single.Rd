@@ -5,7 +5,7 @@
 \title{Aspects importance for single aspects}
 \usage{
 aspect_importance_single(x, data, predict_function = predict,
-  new_observation, B = 100, sample_method = "default", n_var = 0,
+  new_observation, N = 100, sample_method = "default", n_var = 0,
   f = 2, response_variable = "")
 }
 \arguments{
@@ -18,7 +18,7 @@ aspect_importance_single(x, data, predict_function = predict,
 \item{new_observation}{selected observation with columns that corresponds to
 variables used in the model}
 
-\item{B}{number of rows to be sampled from data}
+\item{N}{number of rows to be sampled from data}
 
 \item{sample_method}{sampling method in \code{\link{get_sample}}}
 

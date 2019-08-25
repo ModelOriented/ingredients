@@ -37,9 +37,9 @@
 
 <meta property="og:title" content="Plots Aggregated Profiles — plot.aggregated_profiles_explainer" />
 
-<meta property="og:description" content="Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
-It works in a similar way to 'plot.ceteris_paribus', but instead of individual profiles show average profiles for each variable
-listed in the 'variables' vector." />
+<meta property="og:description" content="Function plot.aggregated_profiles_explainer plots partial dependency plot or accumulated effect plot.
+It works in a similar way to plot.ceteris_paribus, but instead of individual profiles
+show average profiles for each variable listed in the variables vector." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -107,7 +107,7 @@ listed in the 'variables' vector." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -136,15 +136,15 @@ listed in the 'variables' vector." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plots Aggregated Profiles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plot_aggregated_profiles_explainer.R'><code>R/plot_aggregated_profiles_explainer.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plot_aggregated_profiles.R'><code>R/plot_aggregated_profiles.R</code></a></small>
     <div class="hidden name"><code>plot.aggregated_profiles_explainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function 'plot.aggregated_profiles_explainer' creates a 'ggplot2' plot with partial dependency plot or accumulated effect plot.
-It works in a similar way to 'plot.ceteris_paribus', but instead of individual profiles show average profiles for each variable
-listed in the 'variables' vector.</p>
+    <p>Function <code>plot.aggregated_profiles_explainer</code> plots partial dependency plot or accumulated effect plot.
+It works in a similar way to <code>plot.ceteris_paribus</code>, but instead of individual profiles
+show average profiles for each variable listed in the <code>variables</code> vector.</p>
     
     </div>
 
@@ -158,7 +158,7 @@ listed in the 'variables' vector.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus explainer produced with function `aggregate_profiles()`</p></td>
+      <td><p>a ceteris paribus explainer produced with function <code><a href='aggregate_profiles.html'>aggregate_profiles()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -178,17 +178,17 @@ listed in the 'variables' vector.</p>
     </tr>
     <tr>
       <th>facet_ncol</th>
-      <td><p>number of columns for the `facet_wrap()`</p></td>
+      <td><p>number of columns for the <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code></p></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td><p>if not NULL then only `variables` will be presented</p></td>
+      <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a ggplot2 object</p>
+    <p>a <code>ggplot2</code> object</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -197,59 +197,41 @@ listed in the 'variables' vector.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='co'># Toy example</span>
+
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
+
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependency.html'>partial_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
 <span class='no'>pdp_rf_l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='conditional_dependency.html'>conditional_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_l</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_local"</span>
 <span class='no'>pdp_rf_a</span><span class='kw'>&lt;-</span> <span class='fu'><a href='accumulated_dependency.html'>accumulated_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt;   _vname_    _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare RF_partial 0.0000000 0.2988248     0
-#&gt; 2   sibsp RF_partial 0.0000000 0.3154990     0
-#&gt; 3   parch RF_partial 0.0000000 0.3154990     0
-#&gt; 4     age RF_partial 0.1666667 0.3623325     0
-#&gt; 5   parch RF_partial 0.2800000 0.3154990     0
-#&gt; 6   sibsp RF_partial 1.0000000 0.3154990     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
- </div></span><div class='input'> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
- <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt;  randomForest(formula = survived == "yes" ~ gender + age + class +      embarked + fare + sibsp + parch, data = titanic) 
-#&gt;                Type of random forest: regression
-#&gt;                      Number of trees: 500
-#&gt; No. of variables tried at each split: 2
-#&gt; 
-#&gt;           Mean of squared residuals: 0.1433532
-#&gt;                     % Var explained: 34.6</div><div class='input'>
- <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  Random Forest v7 
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008668448 , mean =  0.3243843 , max =  0.9921116  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7911037 , mean =  5.592004e-05 , max =  0.9045958  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_    _label_       _x_    _yhat_ _ids_
+#&gt; 1    fare RF_partial 0.0000000 0.2881431     0
+#&gt; 2   sibsp RF_partial 0.0000000 0.3218750     0
+#&gt; 3   parch RF_partial 0.0000000 0.3218750     0
+#&gt; 4     age RF_partial 0.1666667 0.3596722     0
+#&gt; 5   parch RF_partial 0.2800000 0.3218750     0
+#&gt; 6   sibsp RF_partial 1.0000000 0.3218750     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>,
+                              <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
@@ -261,12 +243,12 @@ listed in the 'variables' vector.</p>
 #&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
 #&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
 #&gt;            _yhat_ _vname_ _ids_          _label_
-#&gt; 557    0.08502361  gender   557 Random Forest v7
-#&gt; 557.1  0.82387999  gender   557 Random Forest v7
-#&gt; 660    0.14657646  gender   660 Random Forest v7
-#&gt; 660.1  0.52731540  gender   660 Random Forest v7
-#&gt; 1535   0.06708571  gender  1535 Random Forest v7
-#&gt; 1535.1 0.73391379  gender  1535 Random Forest v7
+#&gt; 557    0.08258545  gender   557 Random Forest v7
+#&gt; 557.1  0.84228127  gender   557 Random Forest v7
+#&gt; 660    0.12586758  gender   660 Random Forest v7
+#&gt; 660.1  0.53719856  gender   660 Random Forest v7
+#&gt; 1535   0.07089093  gender  1535 Random Forest v7
+#&gt; 1535.1 0.78342151  gender  1535 Random Forest v7
 #&gt; 
 #&gt; 
 #&gt; Top observations:
@@ -278,30 +260,33 @@ listed in the 'variables' vector.</p>
 #&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
 #&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
 #&gt;          _yhat_          _label_ _ids_
-#&gt; 557  0.08502361 Random Forest v7     1
-#&gt; 660  0.14657646 Random Forest v7     2
-#&gt; 1535 0.06708571 Random Forest v7     3
-#&gt; 942  0.83533596 Random Forest v7     4
-#&gt; 491  0.10344128 Random Forest v7     5
-#&gt; 1639 0.14238566 Random Forest v7     6</div><div class='input'>
+#&gt; 557  0.08258545 Random Forest v7     1
+#&gt; 660  0.12586758 Random Forest v7     2
+#&gt; 1535 0.07089093 Random Forest v7     3
+#&gt; 942  0.85570371 Random Forest v7     4
+#&gt; 491  0.11030005 Random Forest v7     5
+#&gt; 1639 0.14048483 Random Forest v7     6</div><div class='input'>
 <span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>)
 <span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
 <span class='no'>pdp_rf_c</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"conditional"</span>)
 <span class='no'>pdp_rf_c</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_conditional"</span>
 <span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt;   _vname_    _label_        _x_    _yhat_ _ids_
-#&gt; 1     age RF_partial  0.1666667 0.5362197     0
-#&gt; 2     age RF_partial  2.0000000 0.5667767     0
-#&gt; 3     age RF_partial  4.0000000 0.5671026     0
-#&gt; 4     age RF_partial  7.0000000 0.5270022     0
-#&gt; 5     age RF_partial  9.0000000 0.5256589     0
-#&gt; 6     age RF_partial 13.0000000 0.4746281     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_    _label_        _x_    _yhat_ _ids_
+#&gt; 1     age RF_partial  0.1666667 0.5367072     0
+#&gt; 2     age RF_partial  2.0000000 0.5668012     0
+#&gt; 3     age RF_partial  4.0000000 0.5683220     0
+#&gt; 4     age RF_partial  7.0000000 0.5296927     0
+#&gt; 5     age RF_partial  9.0000000 0.5292418     0
+#&gt; 6     age RF_partial 13.0000000 0.4774436     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf_p</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span></pre>
+</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

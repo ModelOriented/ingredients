@@ -9,11 +9,11 @@ cluster_profiles(x, ..., aggregate_function = mean,
   variables = NULL)
 }
 \arguments{
-\item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
+\item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
 \item{...}{other explainers that shall be plotted together}
 
-\item{aggregate_function}{a function for profile aggregation. By default it's 'mean'}
+\item{aggregate_function}{a function for profile aggregation. By default it's \code{mean}}
 
 \item{variable_type}{a character. If "numerical" then only numerical variables will be computed.
 If "categorical" then only categorical variables will be computed.}
@@ -22,13 +22,13 @@ If "categorical" then only categorical variables will be computed.}
 
 \item{k}{number of clusters for the hclust function}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 }
 \value{
-a 'aggregated_profiles_explainer' layer
+an object of the class \code{aggregated_profiles_explainer}
 }
 \description{
-Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering.
 }
 \details{

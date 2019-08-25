@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Cluster Ceteris Paribus Profiles — cluster_profiles" />
 
-<meta property="og:description" content="Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+<meta property="og:description" content="This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering." />
 <meta name="twitter:card" content="summary" />
 
@@ -106,7 +106,7 @@ hierarchical clustering." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -141,7 +141,7 @@ hierarchical clustering." />
 
     <div class="ref-description">
     
-    <p>Function 'cluster_profiles' calculates aggregates of ceteris paribus profiles based on
+    <p>This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering.</p>
     
     </div>
@@ -155,7 +155,7 @@ hierarchical clustering.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus explainer produced with function `ceteris_paribus()`</p></td>
+      <td><p>a ceteris paribus explainer produced with function <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -163,7 +163,7 @@ hierarchical clustering.</p>
     </tr>
     <tr>
       <th>aggregate_function</th>
-      <td><p>a function for profile aggregation. By default it's 'mean'</p></td>
+      <td><p>a function for profile aggregation. By default it's <code>mean</code></p></td>
     </tr>
     <tr>
       <th>variable_type</th>
@@ -180,13 +180,13 @@ If "categorical" then only categorical variables will be computed.</p></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td><p>if not NULL then only `variables` will be presented</p></td>
+      <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a 'aggregated_profiles_explainer' layer</p>
+    <p>an object of the class <code>aggregated_profiles_explainer</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -274,14 +274,16 @@ If "categorical" then only categorical variables will be computed.</p></td>
 #&gt; 491  0.10220369 Random Forest v7     5
 #&gt; 1639 0.13777356 Random Forest v7     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt;   _vname_          _label_        _x_    _yhat_ _ids_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_          _label_        _x_    _yhat_ _ids_
 #&gt; 1     age Random Forest v7  0.1666667 0.5194556     0
 #&gt; 2     age Random Forest v7  2.0000000 0.5563835     0
 #&gt; 3     age Random Forest v7  4.0000000 0.5656211     0
 #&gt; 4     age Random Forest v7  7.0000000 0.5252146     0
 #&gt; 5     age Random Forest v7  9.0000000 0.5214880     0
 #&gt; 6     age Random Forest v7 13.0000000 0.4533289     0</div><div class='input'><span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
 #&gt; 1     age Random Forest v7_1  0.1666667         1 0.4592337     0
 #&gt; 2     age Random Forest v7_1  2.0000000         1 0.5104573     0
 #&gt; 3     age Random Forest v7_1  4.0000000         1 0.5131416     0
@@ -293,7 +295,8 @@ If "categorical" then only categorical variables will be computed.</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
 #&gt; 1     age Random Forest v7_1  0.1666667         1 0.4386863     0
 #&gt; 2     age Random Forest v7_1  2.0000000         1 0.4810082     0
 #&gt; 3     age Random Forest v7_1  4.0000000         1 0.4875819     0

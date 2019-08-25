@@ -21,6 +21,8 @@ if (m != 1) {
     margin.inner2 = labelMargin;
     margin.left = labelMargin;
   }
+} else if (onlyNumerical === false) {
+  margin.left = labelMargin;
 }
 
 var w = width - margin.left - margin.right;
@@ -116,7 +118,7 @@ function numericalPlot(variableName, lData, mData, pData, i) {
                     .tickFormat("")
             ).call(g => g.select(".domain").remove());
 
-  if (i%m === 1) {
+  if (i == 1 || i%m == 1) {
       var yAxis = d3.axisLeft(y)
               .ticks(5)
               .tickSize(0);

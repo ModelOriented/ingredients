@@ -5,21 +5,15 @@
 #'
 #' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
 #'
-#' @param explainer a model to be explained, preprocessed by the 'DALEX::explain' function
+#' @param explainer a model to be explained, preprocessed by the \code{DALEX::explain()} function
 #' @param observation a new observation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
 #' @param variables if specified, then only these variables will be explained
 #'
-#' @return An object of the class 'ceteris_paribus_2d_explainer'.
-#' It's a data frame with calculated average responses.
-#' @export
-#'
-#' @importFrom stats quantile
-#' @importFrom utils head
+#' @return an object of the class \code{ceteris_paribus_2d_explainer}.
 #'
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
 #' titanic <- na.omit(titanic)
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 #'                        data = titanic, family = "binomial")
@@ -30,7 +24,8 @@
 #' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
 #' head(cp_rf)
 #' plot(cp_rf)
-#'  \donttest{
+#'
+#' \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'
@@ -48,7 +43,16 @@
 #' head(wi_rf_2d)
 #' plot(wi_rf_2d)
 #' }
+#'
+#' @importFrom stats quantile
+#' @importFrom utils head
+#'
+#' @export
+#' @rdname ceteris_paribus_2d
 ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variables = NULL) {
+
+  #:# could use some comments
+
   if (!("explainer" %in% class(explainer)))
     stop("The what_if() function requires an object created with explain() function.")
   if (is.null(explainer$data))
@@ -85,7 +89,8 @@ ceteris_paribus_2d <- function(explainer, observation, grid_points = 101, variab
   new_y_hat <- predict_function(model, observation)
 
   attr(all_responses, "prediction") <- list(observation = observation, new_y_hat = new_y_hat)
-  class(all_responses) = c("ceteris_paribus_2d_explainer", "data.frame")
+  class(all_responses) <- c("ceteris_paribus_2d_explainer", "data.frame")
+
   all_responses
 }
 

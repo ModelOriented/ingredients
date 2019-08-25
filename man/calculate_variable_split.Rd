@@ -2,10 +2,14 @@
 % Please edit documentation in R/calculate_variable_profile.R
 \name{calculate_variable_split}
 \alias{calculate_variable_split}
+\alias{calculate_variable_split.default}
 \title{Internal Function for Split Points for Selected Variables}
 \usage{
 calculate_variable_split(data, variables = colnames(data),
   grid_points = 101)
+
+\method{calculate_variable_split}{default}(data,
+  variables = colnames(data), grid_points = 101)
 }
 \arguments{
 \item{data}{validation dataset. Is used to determine distribution of observations.}
@@ -24,18 +28,7 @@ For numerical variables splits are calculated as percentiles
 For all other variables splits are calculated as unique values.
 }
 \details{
-Note that \code{calculate_variable_split} function is S3 generic.
+Note that \code{\link{calculate_variable_split}} function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.
-}
-\examples{
-library("DALEX")
- \dontrun{
-library("randomForest")
-set.seed(59)
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                      no.rooms + district, data = apartments)
-vars <- c("construction.year", "surface", "floor", "no.rooms", "district")
-calculate_variable_split(apartments, vars)
-}
 }

@@ -105,7 +105,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -145,6 +145,10 @@
     </div>
 
     <pre class="usage"><span class='fu'>calculate_variable_profile</span>(<span class='no'>data</span>, <span class='no'>variable_splits</span>, <span class='no'>model</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>calculate_variable_profile</span>(<span class='no'>data</span>, <span class='no'>variable_splits</span>, <span class='no'>model</span>,
   <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,88 +191,6 @@ you should overload it.</p>
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
-                                      <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"construction.year"</span>, <span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>, <span class='st'>"district"</span>)
-<span class='no'>variable_splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_variable_split.html'>calculate_variable_split</a></span>(<span class='no'>apartments</span>, <span class='no'>vars</span>)
-<span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
-<span class='no'>profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>new_apartment</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
-#&gt; 1001       4644              1920     131     3        5 Srodmiescie 4255.354
-#&gt; 1001.1     4644              1921     131     3        5 Srodmiescie 4300.702
-#&gt; 1001.2     4644              1922     131     3        5 Srodmiescie 4301.926
-#&gt; 1001.3     4644              1923     131     3        5 Srodmiescie 4305.352
-#&gt; 1001.4     4644              1924     131     3        5 Srodmiescie 4267.723
-#&gt; 1001.5     4644              1925     131     3        5 Srodmiescie 4264.109
-#&gt;                  _vname_ _ids_
-#&gt; 1001   construction.year  1001
-#&gt; 1001.1 construction.year  1001
-#&gt; 1001.2 construction.year  1001
-#&gt; 1001.3 construction.year  1001
-#&gt; 1001.4 construction.year  1001
-#&gt; 1001.5 construction.year  1001</div><div class='input'>
-<span class='co'># only subset of observations</span>
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>apartmentsTest</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='no'>small_apartments</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
-#&gt; 9707     5670              2008      98     3        3 Srodmiescie
-#&gt; 9796     2696              1932     110    10        4       Ursus
-#&gt; 9644     3466              1980      73    10        2     Mokotow
-#&gt; 7567     2818              1940      63     8        3       Praga
-#&gt; 4090     3803              1955     105     3        3      Ochota
-#&gt; 8594     3643              1999      36     9        2       Ursus
-#&gt; 6630     3705              1950     119     2        4    Zoliborz
-#&gt; 8494     5350              1986      35     7        2 Srodmiescie
-#&gt; 6321     4848              1972     130     1        5 Srodmiescie
-#&gt; 8628     4457              1970      34     4        2    Zoliborz</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;        m2.price construction.year surface floor no.rooms    district   _yhat_
-#&gt; 9707       5670              1920      98     3        3 Srodmiescie 4833.992
-#&gt; 9707.1     5670              1921      98     3        3 Srodmiescie 4893.628
-#&gt; 9707.2     5670              1922      98     3        3 Srodmiescie 4901.514
-#&gt; 9707.3     5670              1923      98     3        3 Srodmiescie 4897.756
-#&gt; 9707.4     5670              1924      98     3        3 Srodmiescie 4868.728
-#&gt; 9707.5     5670              1925      98     3        3 Srodmiescie 4869.919
-#&gt;                  _vname_ _ids_
-#&gt; 9707   construction.year  9707
-#&gt; 9707.1 construction.year  9707
-#&gt; 9707.2 construction.year  9707
-#&gt; 9707.3 construction.year  9707
-#&gt; 9707.4 construction.year  9707
-#&gt; 9707.5 construction.year  9707</div><div class='input'>
-<span class='co'># neighbors for a selected observation</span>
-<span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments</span>[<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>6</span>]
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_neighbours.html'>select_neighbours</a></span>(<span class='no'>apartmentsTest</span>, <span class='no'>new_apartment</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='no'>small_apartments</span></div><div class='output co'>#&gt;      construction.year surface floor no.rooms district
-#&gt; NA                  NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.1                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.2                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.3                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.4                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.5                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.6                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.7                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.8                NA      NA    NA       NA     &lt;NA&gt;
-#&gt; NA.9                NA      NA    NA       NA     &lt;NA&gt;</div><div class='input'><span class='no'>small_profiles</span> <span class='kw'>&lt;-</span> <span class='fu'>calculate_variable_profile</span>(<span class='no'>small_apartments</span>, <span class='no'>variable_splits</span>,
-                               <span class='no'>apartments_rf_model</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>new_apartment</span>)</div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
-#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_profiles</span>)</div><div class='output co'>#&gt;       construction.year surface floor no.rooms district _yhat_
-#&gt; NA                 1920      NA    NA       NA     &lt;NA&gt;     NA
-#&gt; NA.10              1921      NA    NA       NA     &lt;NA&gt;     NA
-#&gt; NA.11              1922      NA    NA       NA     &lt;NA&gt;     NA
-#&gt; NA.12              1923      NA    NA       NA     &lt;NA&gt;     NA
-#&gt; NA.13              1924      NA    NA       NA     &lt;NA&gt;     NA
-#&gt; NA.14              1925      NA    NA       NA     &lt;NA&gt;     NA
-#&gt;                 _vname_ _ids_
-#&gt; NA    construction.year    NA
-#&gt; NA.10 construction.year    NA
-#&gt; NA.11 construction.year    NA
-#&gt; NA.12 construction.year    NA
-#&gt; NA.13 construction.year    NA
-#&gt; NA.14 construction.year    NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -280,9 +202,7 @@ you should overload it.</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

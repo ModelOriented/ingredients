@@ -1,36 +1,39 @@
 #' Aggregates Ceteris Paribus Profiles
 #'
-#' The function 'aggregate_profiles' calculates an aggregate of ceteris paribus profiles.
+#' The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
 #' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 #' Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 #' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
-#' @param x a ceteris paribus explainer produced with function `ceteris_paribus()`
+#' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
-#' @param variables if not NULL then aggregate only for selected `variables` will be calculated
-#' @param type either 'partial'/'conditional'/'accumulated' for parital dependence, conditional profiles of accumulated local effects
-#' @param groups a variable name that will be used for grouping. By default 'NULL' which means that no groups shall be calculated
+#' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
+#' @param type either "partial"/"conditional"/"accumulated" for parital dependence, conditional profiles of accumulated local effects
+#' @param groups a variable name that will be used for grouping.
+#' By default \code{NULL} which means that no groups shall be calculated
 #' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
 #' If "categorical" then only categorical variables will be calculated.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @importFrom stats na.omit quantile weighted.mean
-#' @return an 'aggregated_profiles_explainer' layer
+#'
+#' @return an object of the class \code{aggregated_profiles_explainer}
+#'
 #' @examples
 #' library("DALEX")
-#'  \donttest{
 #' library("randomForest")
-#' titanic <- na.omit(titanic)
-#'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic)
-#'  model_titanic_rf
 #'
-#'  explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived)
+#' titanic_imputed$country <- NULL
 #'
-#' selected_passangers <- select_sample(titanic, n = 100)
+#' model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+#'                                     fare + sibsp + parch,  data = titanic_imputed)
+#'
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                            data = titanic_imputed[,-8],
+#'                            y = titanic_imputed$survived == "yes")
+#'
+#' selected_passangers <- select_sample(titanic_imputed, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' head(cp_rf)
 #'
@@ -41,8 +44,10 @@
 #' pdp_rf_c$`_label_` <- "RF_conditional"
 #' pdp_rf_a <- aggregate_profiles(cp_rf, variables = "age", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
+#'
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 #'
+#' \donttest{
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
 #'                              groups = "gender")
 #' head(pdp_rf)
@@ -50,7 +55,6 @@
 #'   show_observations(cp_rf, variables = "age") +
 #'   show_rugs(cp_rf, variables = "age", color = "red") +
 #'   show_aggregated_profiles(pdp_rf, size = 3, color = "_label_")
-#'
 #'
 #' # categorical variable
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "class",
@@ -63,6 +67,7 @@
 #'                                variable_type = "categorical", type = "accumulated")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
+#'
 #' # or maybe flipped?
 #' library(ggplot2)
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_") + coord_flip()
@@ -73,13 +78,16 @@
 #' plot(pdp_rf, variables = "class")
 #' # or maybe flipped?
 #' plot(pdp_rf, variables = "class") + coord_flip()
+#'
 #' }
+#'
 #' @export
+#' @rdname aggregate_profiles
 aggregate_profiles <- function(x, ...,
-                      variable_type = "numerical",
-                      groups = NULL,
-                      type = 'partial',
-                      variables = NULL) {
+                               variable_type = "numerical",
+                               groups = NULL,
+                               type = "partial",
+                               variables = NULL) {
 
   check_variable_type(variable_type)
 
@@ -107,6 +115,7 @@ aggregate_profiles <- function(x, ...,
     if (length(vnames) == 0) stop("There are no non-numerical variables")
     all_profiles$`_x_` <- ""
   }
+
   # select only suitable variables
   all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
   # create _x_
@@ -114,10 +123,6 @@ aggregate_profiles <- function(x, ...,
   for (viname in unique(tmp)) {
     all_profiles$`_x_`[tmp == viname] <- all_profiles[tmp == viname, viname]
   }
-#  Old version, much slower
-#  for (i in seq_along(tmp)) {
-#    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
-#  }
 
   if (class(all_profiles) != "data.frame") {
     all_profiles <- as.data.frame(all_profiles)
@@ -130,14 +135,21 @@ aggregate_profiles <- function(x, ...,
 
   # standard partial profiles
   # just average
-  if (type == 'partial')
+  if (type == "partial") {
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
-  if (type == 'conditional')
+    class(aggregated_profiles) <- c("aggregated_profiles_explainer",
+                                    "partial_dependency_explainer", "data.frame")
+  }
+  if (type == "conditional") {
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
-  if (type == 'accumulated')
+    class(aggregated_profiles) <- c("aggregated_profiles_explainer",
+                                    "conditional_dependency_explainer", "data.frame")
+  }
+  if (type == "accumulated") {
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
-
-  class(aggregated_profiles) = c("aggregated_profiles_explainer", "data.frame")
+    class(aggregated_profiles) <- c("aggregated_profiles_explainer",
+                                    "accumulated_dependency_explainer", "data.frame")
+  }
 
   # calculate mean(all observation's _yhat_), mean of prediction
   attr(aggregated_profiles, "mean_prediction") <-
@@ -145,6 +157,7 @@ aggregate_profiles <- function(x, ...,
 
   aggregated_profiles
 }
+
 
 aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
   observations <- attr(all_profiles, "observations")
@@ -234,7 +247,9 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
   aggregated_profiles
 }
 
+
 aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
+
   if (is.null(groups)) {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
     aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = mean)
@@ -246,10 +261,12 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
     aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
   }
   aggregated_profiles$`_ids_` <- 0
+
   aggregated_profiles
 }
 
 aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
+
   observations <- attr(all_profiles, "observations")
   # just initialisation
   if (is.numeric(all_profiles$`_x_`)) {
@@ -309,8 +326,10 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
     }
 
   aggregated_profiles$`_ids_` <- 0
+
   aggregated_profiles
 }
+
 
 #'@noRd
 #'@title Check if variable_type is "numerical" or "categorical"

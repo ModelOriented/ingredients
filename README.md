@@ -41,9 +41,9 @@ devtools::install_github("ModelOriented/ingredients")
 
 ## Interactive plots with D3
 
-`feature_importance()` and `ceteris_paribus()` also work with **D3**! 
+`feature_importance()`, `ceteris_paribus()` and `aggregated_profiles()` also work with **D3**! 
 [see an example](https://modeloriented.github.io/ingredients/ceterisParibusDemo.html) 
-![plotD3](images/plotD3.png)
+![plotD3](images/demo.gif)
 
 
 ## Acknowledgments

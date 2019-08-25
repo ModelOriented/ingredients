@@ -1,41 +1,47 @@
 #' @title Plot Feature Importance Objects in D3 with r2d3 Package.
 #'
 #' @description
-#' Function \code{plotD3.feature_importance_explainer} plots dropouts for variables used in the model.
-#' It uses output from \code{feature_importance} function that corresponds to permutation based measure of feature importance.
+#' Function \code{\link{plotD3.feature_importance_explainer}} plots dropouts for variables used in the model.
+#' It uses output from \code{\link{feature_importance}} function that corresponds to permutation based measure of feature importance.
 #' Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
 #' In different panels variable contributions may not look like sorted if variable importance is different in different models.
 #'
-#' @param x a feature importance explainer produced with the 'feature_importance' function
+#' @param x a feature importance explainer produced with the \code{feature_importance()} function
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model.
-#' By default NULL what means all variables
+#' By default \code{NULL} which means all variables
 #' @param bar_width width of bars in px. By default 12px
-#' @param split either \code{"model"} or \code{"feature"} determines the plot layout
-#' @param scale_height should the height of plot scale with window size? By default it's FALSE
+#' @param split either "model" or "feature" determines the plot layout
+#' @param scale_height a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
 #' @param margin extend x axis domain range to adjust the plot.
 #' Usually value between 0.1 and 0.3, by default it's 0.15
 #' @param chart_title a character. Set custom title
 #'
-#' @return a `r2d3` object.
+#' @return a \code{r2d3} object.
 #'
 #' @examples
-#' \dontrun{
 #' library("DALEX")
-#' library("ingredients")
 #'
 #' lm_model <- lm(m2.price~., data = apartments)
-#' explainer_lm <- explain(lm_model, data = apartments[,2:6],
-#'                         y = apartments$m2.price, label="lm")
+#' explainer_lm <- explain(lm_model,
+#'                         data = apartments[,2:6],
+#'                         y = apartments$m2.price,
+#'                         label = "lm", verbose = FALSE)
+#'
 #' fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
 #'
 #' head(fi_lm)
 #' plotD3(fi_lm)
 #'
+#' \dontrun{
 #' library("randomForest")
+#'
 #' rf_model <- randomForest(m2.price~., data = apartments)
-#' explainer_rf <- explain(rf_model, data = apartments[,2:6],
-#'                         y = apartments$m2.price, label="rf")
+#' explainer_rf <- explain(rf_model,
+#'                         data = apartments[,2:6],
+#'                         y = apartments$m2.price,
+#'                         label = "rf", verbose = FALSE)
+#'
 #' fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
 #'
 #' head(fi_rf)
@@ -47,6 +53,7 @@
 #' plotD3(fi_lm, fi_rf, max_vars = 3, bar_width = 16, split = "feature", scale_height = TRUE)
 #' plotD3(fi_lm, margin = 0.2)
 #' }
+#'
 #' @export
 #' @rdname plotD3_feature_importance
 plotD3.feature_importance_explainer <-  function(x, ...,
@@ -55,13 +62,12 @@ plotD3.feature_importance_explainer <-  function(x, ...,
                                                  split = "model",
                                                  scale_height = FALSE,
                                                  margin = 0.15,
-                                                 chart_title = NULL){
+                                                 chart_title = "Feature importance") {
+
   if (!(split %in% c("model", "feature"))){
     stop("The plotD3.feature_importance_explainer()
          function requires split to be model or feature.")
   }
-
-  if (is.null(chart_title)) chart_title <- "Feature importance"
 
   n <- length(list(...)) + 1
   m <- dim(x)[1] - 2

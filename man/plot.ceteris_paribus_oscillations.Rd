@@ -7,40 +7,42 @@
 \method{plot}{ceteris_paribus_oscillations}(x, ..., bar_width = 10)
 }
 \arguments{
-\item{x}{a ceteris paribus oscillation explainer produced with function `calculate_oscillations()`}
+\item{x}{a ceteris paribus oscillation explainer produced with function \code{calculate_oscillations()}}
 
 \item{...}{other explainers that shall be plotted together}
 
 \item{bar_width}{width of bars. By default 10}
 }
 \value{
-a ggplot2 object
+a \code{ggplot2} object
 }
 \description{
-Function 'plot.ceteris_paribus_oscillations' plots local variable importance plots
+This function plots local variable importance plots
 calculated as oscillations in the Ceteris Paribus Profiles.
 }
 \examples{
 library("DALEX")
- \donttest{
+\donttest{
 library("randomForest")
-set.seed(59)
 
 apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-      no.rooms + district, data = apartments)
+                                    no.rooms + district, data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-      data = apartmentsTest, y = apartmentsTest$m2.price)
+                        data = apartments_test[,2:6],
+                        y = apartments_test$m2.price)
 
-apartment <- apartmentsTest[1:2,]
+apartment <- apartments_test[1:2,]
 
 cp_rf <- ceteris_paribus(explainer_rf, apartment)
 plot(cp_rf, color = "_ids_")
 
 vips <- calculate_oscillations(cp_rf)
 vips
+
 plot(vips)
 }
+
 }
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

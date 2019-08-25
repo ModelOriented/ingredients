@@ -7,50 +7,60 @@
 #'
 #' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
-#' @param x a model to be explained, or an explainer created with the `DALEX::explain()` function.
-#' @param data validation dataset. It will be extracted from `x` if it's an explainer
-#' @param predict_function predict function. It will be extracted from `x` if it's an explainer
+#' @param x an explainer created with the \code{DALEX::explain()} function, or a model to be explained.
+#' @param data validation dataset. It will be extracted from \code{x} if it's an explainer
+#' NOTE: It is best when target variable is not present in the \code{data}
+#' @param predict_function predict function. It will be extracted from \code{x} if it's an explainer
 #' @param new_observation a new observation with columns that corresponds to variables used in the model
-#' @param y true labels for `new_observation`. If specified then will be added to ceteris paribus plots.
-#' @param variables names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.
+#' @param y true labels for \code{new_observation}. If specified then will be added to ceteris paribus plots.
+#' NOTE: It is best when target variable is not present in the \code{new_observation}
+#' @param variables names of variables for which profiles shall be calculated.
+#' Will be passed to \code{\link{calculate_variable_split}}.
+#' If NULL then all variables from the validation data will be used.
 #' @param ... other parameters
-#' @param variable_splits named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data available in the `explainer`.
-#' @param grid_points number of points for profile. Will be passed to `calculate_variable_splits()`.
-#' @param label name of the model. By default it's extracted from the 'class' attribute of the model
+#' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
+#' If NULL then it will be calculated based on validation data available in the \code{explainer}.
+#' @param grid_points number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.
+#' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @return An object of the class 'ceteris_paribus_explainer'.
-#' It's a data frame with calculated average responses.
-#' @export
+#' @return an object of the class \code{ceteris_paribus_explainer}.
 #'
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
-#' titanic <- na.omit(titanic)
+#'
+#' titanic_small <- titanic_imputed[, c(1,2,6,9)]
+#'
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic, family = "binomial")
+#'                          data = titanic_small,
+#'                          family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes")
-#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic[1,])
+#'                                data = titanic_small[,-4],
+#'                                y = titanic_small$survived == "yes",
+#'                                verbose = FALSE)
+#'
+#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 #' cp_rf
+#'
 #' plot(cp_rf, variables = "age")
 #'
 #' \donttest{
-#'  library("randomForest")
-#'  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic)
-#'  model_titanic_rf
+#' library("randomForest")
+#' model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
+#'                                  fare + sibsp + parch,  data = titanic_imputed)
 #'
-#'  explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived,
-#'                            label = "Random Forest v7")
+#'
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic_imputed[,-9],
+#'                               y = titanic_imputed$survived,
+#'                               label = "Random Forest v7",
+#'                               verbose = FALSE,
+#'                               precalculate = FALSE)
 #'
 #' # select few passangers
-#' selected_passangers <- select_sample(titanic, n = 20)
+#' selected_passangers <- select_sample(titanic_imputed, n = 20)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
@@ -59,6 +69,7 @@
 #'   show_rugs(cp_rf, variables = "age", color = "red")
 #'
 #' }
+#'
 #' @export
 #' @rdname ceteris_paribus
 ceteris_paribus <- function(x, ...)
@@ -66,8 +77,12 @@ ceteris_paribus <- function(x, ...)
 
 #' @export
 #' @rdname ceteris_paribus
-ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = NULL,
-                                      variable_splits = NULL, grid_points = 101,
+ceteris_paribus.explainer <- function(x,
+                                      new_observation,
+                                      y = NULL,
+                                      variables = NULL,
+                                      variable_splits = NULL,
+                                      grid_points = 101,
                                       ...) {
   # extracts model, data and predict function from the explainer
   model <- x$model
@@ -75,24 +90,31 @@ ceteris_paribus.explainer <- function(x, new_observation, y = NULL, variables = 
   predict_function <- x$predict_function
   label <- x$label
 
-  ceteris_paribus.default(model, data, predict_function,
+  ceteris_paribus.default(x = model,
+                          data = data,
+                          predict_function = predict_function,
                           new_observation = new_observation,
-                          label = label,
-                          variables = variables,
-                          grid_points = grid_points,
-                          variable_splits = variable_splits,
                           y = y,
+                          variables = variables,
+                          variable_splits = variable_splits,
+                          grid_points = grid_points,
+                          label = label,
                           ...)
 }
 
 
 #' @export
 #' @rdname ceteris_paribus
-ceteris_paribus.default <- function(x, data, predict_function = predict,
-                                    new_observation, y = NULL, variables = NULL,
+ceteris_paribus.default <- function(x,
+                                    data,
+                                    predict_function = predict,
+                                    new_observation,
+                                    y = NULL,
+                                    variables = NULL,
                                     variable_splits = NULL,
                                     grid_points = 101,
-                                    label = class(x)[1], ...) {
+                                    label = class(x)[1],
+                                    ...) {
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
@@ -164,7 +186,7 @@ ceteris_paribus.default <- function(x, data, predict_function = predict,
 
   # prepare final object
   attr(profiles, "observations") <- new_observation
-  class(profiles) = c("ceteris_paribus_explainer", "data.frame")
+  class(profiles) <- c("ceteris_paribus_explainer", "data.frame")
   profiles
 }
 

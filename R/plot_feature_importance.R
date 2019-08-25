@@ -1,80 +1,94 @@
-#' Plots Variable Importance
+#' Plots Feature Importance
 #'
-#' Function \code{plot.feature_importance_explainer} plots variable importance calculated as
-#' changes in the loss function after variable drops.
-#' It uses output from \code{feature_importance} function that corresponds to permutation based measure of variable importance.
+#' This function plots variable importance calculated as changes in the loss function after variable drops.
+#' It uses output from \code{feature_importance} function that corresponds to
+#' permutation based measure of variable importance.
 #' Variables are sorted in the same order in all panels.
 #' The order depends on the average drop out loss.
-#' In different panels variable contributions may not look like sorted if variable importance is different in different in different models.
+#' In different panels variable contributions may not look like sorted if variable
+#' importance is different in different in different models.
 #'
 #' Find more details in the \href{https://pbiecek.github.io/PM_VEE/variableImportance.html}{Feature Importance Chapter}.
 #'
-#' @param x a variable dropout explainer produced with the 'feature_importance' function
+#' @param x a feature importance explainer produced with the \code{feature_importance()} function
 #' @param ... other explainers that shall be plotted together
-#' @param max_vars maximum number of variables that shall be presented for for each model. By default NULL what means all variables
+#' @param max_vars maximum number of variables that shall be presented for for each model.
+#' By default \code{NULL} what means all variables
 #' @param bar_width width of bars. By default 10
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
 #' @importFrom DALEX loss_root_mean_square
-#' @return a ggplot2 object
-#' @export
+#' @importFrom DALEX theme_drwhy theme_drwhy_vertical theme_drwhy_colors
+#'
+#' @return a \code{ggplot2} object
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
 #' @examples
 #' library("DALEX")
-#' # Toy examples, because CRAN angels ask for them
+#'
 #' titanic <- na.omit(titanic)
+#'
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic, family = "binomial")
+#'                          data = titanic, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes")
-#' vd_rf <- feature_importance(explain_titanic_glm)
-#' plot(vd_rf)
+#'                                data = titanic[,-9],
+#'                                y = titanic$survived == "yes")
 #'
-#'  \donttest{
+#' fi_rf <- feature_importance(explain_titanic_glm)
+#' plot(fi_rf)
+#'
+#' \donttest{
 #' library("randomForest")
 #'
-#'  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic)
-#'  explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes")
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                  fare + sibsp + parch,  data = titanic)
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic[,-9],
+#'                               y = titanic$survived == "yes")
 #'
-#' vd_rf <- feature_importance(explain_titanic_rf)
-#' plot(vd_rf)
+#' fi_rf <- feature_importance(explain_titanic_rf)
+#' plot(fi_rf)
 #'
 #' HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
-#' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status)
-#' vd_rf <- feature_importance(explainer_rf, type = "raw",
+#' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
+#'                          verbose = FALSE, precalculate = FALSE)
+#'
+#' fi_rf <- feature_importance(explainer_rf, type = "raw",
 #'                             loss_function = loss_cross_entropy)
-#' head(vd_rf)
-#' plot(vd_rf)
+#' head(fi_rf)
+#' plot(fi_rf)
 #'
 #' HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 #' explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
-#' vd_glm <- feature_importance(explainer_glm, type = "raw",
-#'                         loss_function = loss_root_mean_square)
-#' head(vd_glm)
-#' plot(vd_glm)
+#'
+#' fi_glm <- feature_importance(explainer_glm, type = "raw",
+#'                              loss_function = loss_root_mean_square)
+#' head(fi_glm)
+#' plot(fi_glm)
 #'
 #' library("xgboost")
+#'
 #' model_martix_train <- model.matrix(status == "fired" ~ . -1, HR)
 #' data_train <- xgb.DMatrix(model_martix_train, label = HR$status == "fired")
+#'
 #' param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
 #'               objective = "binary:logistic", eval_metric = "auc")
+#'
 #' HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
+#'
 #' explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
-#'                      y = HR$status == "fired", label = "xgboost")
-#' vd_xgb <- feature_importance(explainer_xgb, type = "raw")
-#' head(vd_xgb)
+#'                          y = HR$status == "fired", label = "xgboost")
 #'
-#' plot(vd_glm, vd_xgb, bar_width = 5)
-#'  }
+#' fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 #'
+#' head(fi_xgb)
+#' plot(fi_glm, fi_xgb, bar_width = 5)
+#' }
+#'
+#' @export
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width = 10) {
   dfl <- c(list(x), list(...))
 
@@ -112,7 +126,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width
     scale_color_manual(values = theme_drwhy_colors(nlabels)) +
     facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
     theme(legend.position = "none") +
-    ylab("Loss-drop after perturbations") + xlab("")
+    ylab("Drop-out loss") + xlab("")
 
 }
 

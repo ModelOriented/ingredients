@@ -12,15 +12,15 @@
 <link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Effects and Importances of Model Ingredients">
 <meta property="og:description" content="Collection of tools for assessment of feature importance and feature effects.
-    Key functions are: 
-    feature_importance() for assessment of global level feature importance, 
+    Key functions are:
+    feature_importance() for assessment of global level feature importance,
     ceteris_paribus() for calculation of the what-if plots,
     partial_dependency() for partial dependency plots,
     conditional_dependency() for conditional dependency plots,
     accumulated_dependency() for accumulated local effects plots,
     aggregate_profiles() and cluster_profiles() for aggregation of ceteris paribus profiles,
     generic print() and plot() for better usability of selected explainers,
-    generic plotD3() for interactive, D3 based explanations, and 
+    generic plotD3() for interactive, D3 based explanations, and
     generic describe() for explanations in natural language.
     The package 'ingredients' is a part of the 'DrWhy.AI' universe (Biecek 2018) &lt;arXiv:1806.08915&gt;.">
 <meta name="twitter:card" content="summary">
@@ -77,7 +77,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -151,7 +151,7 @@ devtools::install_github("ModelOriented/ingredients")</code></pre>
 <div id="interactive-plots-with-d3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interactive-plots-with-d3" class="anchor"></a>Interactive plots with D3</h2>
-<p><code><a href="reference/feature_importance.html">feature_importance()</a></code> and <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> also work with <strong>D3</strong>! <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a> <img src="images/plotD3.png" alt="plotD3"></p>
+<p><code><a href="reference/feature_importance.html">feature_importance()</a></code>, <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> and <code>aggregated_profiles()</code> also work with <strong>D3</strong>! <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a> <img src="images/demo.gif" alt="plotD3"></p>
 </div>
 <div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">

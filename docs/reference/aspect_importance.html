@@ -112,7 +112,7 @@ linear model or lasso." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -160,13 +160,13 @@ linear model or lasso.</p>
     <pre class="usage"><span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>aspects_list</span>,
-  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+<span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='no'>aspects</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>show_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='no'>aspects_list</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='no'>new_observation</span>, <span class='no'>aspects</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>lime</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -176,8 +176,8 @@ linear model or lasso.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a model to be explained or an explainer created with the
-`DALEX::explain()` function</p></td>
+      <td><p>an explainer created with the <code><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>DALEX::explain()</a></code> function
+or a model to be explained.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -189,12 +189,12 @@ linear model or lasso.</p>
 variables used in the model</p></td>
     </tr>
     <tr>
-      <th>aspects_list</th>
+      <th>aspects</th>
       <td><p>list containting grouping of features into aspects</p></td>
     </tr>
     <tr>
-      <th>B</th>
-      <td><p>number of rows to be sampled from data</p></td>
+      <th>N</th>
+      <td><p>number of observarions to be sampled from data</p></td>
     </tr>
     <tr>
       <th>sample_method</th>
@@ -207,7 +207,7 @@ if zero than linear regression is used</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>frequency in in <code><a href='get_sample.html'>get_sample</a></code></p></td>
+      <td><p>frequency in <code><a href='get_sample.html'>get_sample</a></code></p></td>
     </tr>
     <tr>
       <th>show_cor</th>
@@ -216,71 +216,78 @@ correlated, works only if dataset contains solely numeric values</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>dataset, it will be extracted from `x`` if it's an explainer</p></td>
+      <td><p>dataset, it will be extracted from <code>x</code> if it's an explainer
+NOTE: It is best when target variable is not present in the <code>data</code></p></td>
     </tr>
     <tr>
       <th>predict_function</th>
-      <td><p>predict function, it will be extracted from `x`` if
+      <td><p>predict function, it will be extracted from <code>x</code> if
 it's an explainer</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the class 'aspect_importance'. Contains dataframe that
+    <p>An object of the class <code>aspect_importance</code>. Contains dataframe that
   describes aspects' importance.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
+
+<span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
+
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~
-                           <span class='no'>class</span>+<span class='no'>gender</span>+<span class='no'>age</span>+<span class='no'>sibsp</span>+<span class='no'>parch</span>+<span class='no'>fare</span>+<span class='no'>embarked</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+                         <span class='no'>class</span>+<span class='no'>gender</span>+<span class='no'>age</span>+<span class='no'>sibsp</span>+<span class='no'>parch</span>+<span class='no'>fare</span>+<span class='no'>embarked</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                         <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; data              :  2207  rows  7  cols 
+#&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.009091596 , mean =  0.3244402 , max =  0.9804785  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008128381 , mean =  0.3221568 , max =  0.9731431  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9624611 , mean =  -2.959393e-10 , max =  0.967059  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9628583 , mean =  -2.569734e-10 , max =  0.9663346  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>aspects</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>wealth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"fare"</span>),
                 <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
                 <span class='kw'>personal</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                 <span class='kw'>embarked</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>)
 
-<span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
-                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
-#&gt; 4 personal   -0.18014  gender, age
-#&gt; 2   wealth   -0.13168  class, fare
-#&gt; 5 embarked   -0.05574     embarked
-#&gt; 3   family    0.01448 sibsp, parch</div><div class='input'>
+<span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_glm</span>,
+                  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,],
+                  <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
+#&gt; 3   family    0.09559 sibsp, parch
+#&gt; 5 embarked    0.07390     embarked
+#&gt; 4 personal   -0.07312  gender, age
+#&gt; 2   wealth   -0.04942  class, fare</div><div class='input'>
 </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> +
-                                   <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)
+                                 <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>,
+                                 <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)
 
 <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2099  rows  8  cols 
-#&gt;   -&gt; target variable   :  2099  values 
+#&gt;   -&gt; data              :  2207  rows  7  cols 
+#&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2380772 , max =  1  
+#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2351228 , max =  0.998  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.926 , mean =  0.08636303 , max =  1  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.896 , mean =  0.08703398 , max =  1  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
-<span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
-                  <span class='kw'>aspects_list</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
-#&gt; 4 personal   -0.22873  gender, age
-#&gt; 3   family   -0.04507 sibsp, parch
-#&gt; 2   wealth   -0.04009  class, fare
-#&gt; 5 embarked   -0.02978     embarked</div><div class='input'>
+<span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_rf</span>,
+                  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,],
+                  <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
+#&gt; 4 personal  -0.099063  gender, age
+#&gt; 5 embarked   0.077921     embarked
+#&gt; 3   family   0.053727 sibsp, parch
+#&gt; 2   wealth  -0.004811  class, fare</div><div class='input'>
 </div></span><div class='input'>
 </div></pre>
   </div>

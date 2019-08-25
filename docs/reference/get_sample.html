@@ -109,7 +109,7 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -181,107 +181,9 @@ Function doesn't allow the returned matrix to have rows with only zeros.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> </div><div class='input'> <span class='fu'>get_sample</span>(<span class='fl'>100</span>,<span class='fl'>6</span>,<span class='st'>"binom"</span>,<span class='fl'>3</span>)</div><div class='output co'>#&gt;        [,1] [,2] [,3] [,4] [,5] [,6]
-#&gt;   [1,]    1    0    0    0    0    0
-#&gt;   [2,]    1    0    0    1    0    0
-#&gt;   [3,]    1    1    1    1    0    1
-#&gt;   [4,]    0    0    1    0    0    0
-#&gt;   [5,]    0    0    1    0    0    0
-#&gt;   [6,]    0    0    1    1    0    0
-#&gt;   [7,]    0    0    0    0    1    0
-#&gt;   [8,]    1    0    1    0    1    0
-#&gt;   [9,]    0    1    0    0    0    1
-#&gt;  [10,]    0    1    0    0    0    0
-#&gt;  [11,]    0    1    0    0    0    0
-#&gt;  [12,]    1    0    0    0    0    0
-#&gt;  [13,]    0    0    0    1    0    1
-#&gt;  [14,]    0    1    0    1    0    0
-#&gt;  [15,]    1    1    1    1    0    0
-#&gt;  [16,]    0    1    0    0    0    1
-#&gt;  [17,]    1    0    1    0    0    0
-#&gt;  [18,]    1    1    0    0    0    1
-#&gt;  [19,]    1    0    1    0    1    0
-#&gt;  [20,]    0    0    0    1    0    0
-#&gt;  [21,]    0    0    0    1    1    1
-#&gt;  [22,]    1    0    0    0    0    1
-#&gt;  [23,]    1    1    0    1    1    0
-#&gt;  [24,]    0    0    0    1    1    0
-#&gt;  [25,]    0    1    0    0    1    0
-#&gt;  [26,]    1    0    0    1    0    0
-#&gt;  [27,]    1    0    1    0    0    1
-#&gt;  [28,]    1    0    1    0    1    0
-#&gt;  [29,]    0    0    0    0    1    1
-#&gt;  [30,]    1    0    0    1    1    0
-#&gt;  [31,]    1    0    0    0    1    0
-#&gt;  [32,]    0    0    0    1    0    0
-#&gt;  [33,]    0    1    0    1    1    1
-#&gt;  [34,]    1    1    1    0    0    1
-#&gt;  [35,]    0    0    0    0    1    1
-#&gt;  [36,]    1    1    0    0    1    0
-#&gt;  [37,]    0    0    1    1    0    0
-#&gt;  [38,]    1    1    0    0    0    0
-#&gt;  [39,]    0    1    0    0    1    1
-#&gt;  [40,]    1    1    0    1    1    0
-#&gt;  [41,]    1    1    0    0    0    0
-#&gt;  [42,]    1    0    0    0    0    0
-#&gt;  [43,]    0    0    1    0    0    0
-#&gt;  [44,]    1    0    0    1    1    1
-#&gt;  [45,]    1    0    1    1    0    0
-#&gt;  [46,]    0    0    0    1    0    1
-#&gt;  [47,]    0    1    0    0    0    0
-#&gt;  [48,]    1    0    1    0    1    0
-#&gt;  [49,]    1    1    0    0    0    1
-#&gt;  [50,]    0    0    1    0    0    1
-#&gt;  [51,]    0    0    0    0    0    1
-#&gt;  [52,]    1    0    0    0    1    0
-#&gt;  [53,]    1    0    0    0    0    0
-#&gt;  [54,]    0    0    0    1    1    1
-#&gt;  [55,]    1    1    0    1    1    0
-#&gt;  [56,]    0    0    1    1    0    0
-#&gt;  [57,]    1    0    0    1    1    1
-#&gt;  [58,]    1    0    1    1    1    0
-#&gt;  [59,]    1    1    0    1    0    0
-#&gt;  [60,]    0    0    0    1    1    1
-#&gt;  [61,]    1    1    1    1    0    0
-#&gt;  [62,]    1    1    1    0    1    0
-#&gt;  [63,]    0    1    0    0    1    0
-#&gt;  [64,]    0    1    0    0    1    1
-#&gt;  [65,]    0    1    0    1    0    1
-#&gt;  [66,]    0    0    1    0    0    1
-#&gt;  [67,]    0    0    0    0    0    1
-#&gt;  [68,]    1    0    0    1    0    0
-#&gt;  [69,]    1    0    1    0    1    0
-#&gt;  [70,]    0    1    0    0    0    0
-#&gt;  [71,]    0    0    0    0    1    0
-#&gt;  [72,]    0    0    1    0    0    1
-#&gt;  [73,]    0    1    1    0    1    0
-#&gt;  [74,]    1    1    1    1    0    0
-#&gt;  [75,]    0    0    0    1    1    0
-#&gt;  [76,]    1    1    0    0    1    0
-#&gt;  [77,]    0    1    0    1    0    0
-#&gt;  [78,]    1    0    0    1    1    0
-#&gt;  [79,]    1    0    1    0    1    1
-#&gt;  [80,]    0    1    0    1    1    1
-#&gt;  [81,]    1    0    1    1    0    0
-#&gt;  [82,]    1    0    0    0    0    1
-#&gt;  [83,]    0    0    0    0    0    1
-#&gt;  [84,]    1    1    0    0    1    0
-#&gt;  [85,]    1    1    0    0    0    0
-#&gt;  [86,]    0    1    0    1    1    1
-#&gt;  [87,]    0    1    0    0    1    0
-#&gt;  [88,]    1    0    0    1    0    0
-#&gt;  [89,]    0    0    0    0    1    0
-#&gt;  [90,]    0    1    0    0    0    0
-#&gt;  [91,]    0    0    0    1    0    0
-#&gt;  [92,]    0    1    1    0    1    0
-#&gt;  [93,]    0    0    1    1    0    1
-#&gt;  [94,]    0    0    0    0    1    1
-#&gt;  [95,]    0    0    1    0    0    0
-#&gt;  [96,]    1    1    0    0    0    1
-#&gt;  [97,]    1    1    0    0    1    1
-#&gt;  [98,]    0    0    0    0    0    1
-#&gt;  [99,]    0    1    0    1    0    0
-#&gt; [100,]    0    0    1    0    1    1</div></pre>
+    <pre class="examples"><div class='input'> </div><span class='co'># NOT RUN {</span>
+ <span class='fu'>get_sample</span>(<span class='fl'>100</span>,<span class='fl'>6</span>,<span class='st'>"binom"</span>,<span class='fl'>3</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

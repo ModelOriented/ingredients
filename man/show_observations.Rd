@@ -8,7 +8,7 @@ show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
   variable_type = "numerical", variables = NULL)
 }
 \arguments{
-\item{x}{a ceteris paribus explainer produced with function `ceteris_paribus()`}
+\item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
 \item{...}{other explainers that shall be plotted together}
 
@@ -21,39 +21,34 @@ show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
 \item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
 If "categorical" then only categorical variables will be plotted.}
 
-\item{variables}{if not NULL then only `variables` will be presented}
+\item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 }
 \value{
-a ggplot2 layer
+a \code{ggplot2} layer
 }
 \description{
-Function 'show_observations' adds a layer to a plot created with 'plot.ceteris_paribus_explainer' for selected observations.
+Function \code{\link{show_observations}} adds a layer to a plot created with
+\code{\link{plot.ceteris_paribus_explainer}} for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 }
 \examples{
 library("DALEX")
- \dontrun{
-library("titanic")
 library("randomForest")
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-                                  "SibSp", "Parch", "Fare", "Embarked")]
-titanic_small$Survived <- factor(titanic_small$Survived)
-titanic_small$Sex <- factor(titanic_small$Sex)
-titanic_small$Embarked <- factor(titanic_small$Embarked)
-titanic_small <- na.omit(titanic_small)
-rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-                         data = titanic_small)
-explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF")
+rf_model <- randomForest(survived == "yes" ~.,
+                         data = titanic_imputed)
 
-selected_passangers <- select_sample(titanic_small, n = 100)
+explainer_rf <- explain(rf_model, data = titanic_imputed,
+                        y = titanic_imputed$survived == "yes",
+                        label = "RF", verbose = FALSE)
+
+selected_passangers <- select_sample(titanic_imputed, n = 100)
 cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 cp_rf
 
-plot(cp_rf, variables = "Age", color = "grey") +
-show_observations(cp_rf, variables = "Age", color = "grey") +
-  show_rugs(cp_rf, variables = "Age", color = "red")
+plot(cp_rf, variables = "age", color = "grey") +
+show_observations(cp_rf, variables = "age", color = "black") +
+  show_rugs(cp_rf, variables = "age", color = "red")
 
-}
+
 }

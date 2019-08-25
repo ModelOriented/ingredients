@@ -106,7 +106,7 @@ It may be useful to identify or present interactions between two variables." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -154,7 +154,7 @@ It may be useful to identify or present interactions between two variables.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>explainer</th>
-      <td><p>a model to be explained, preprocessed by the 'DALEX::explain' function</p></td>
+      <td><p>a model to be explained, preprocessed by the <code><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>DALEX::explain()</a></code> function</p></td>
     </tr>
     <tr>
       <th>observation</th>
@@ -172,8 +172,7 @@ It may be useful to identify or present interactions between two variables.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of the class 'ceteris_paribus_2d_explainer'.
-It's a data frame with calculated average responses.</p>
+    <p>an object of the class <code>ceteris_paribus_2d_explainer</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -182,7 +181,6 @@ It's a data frame with calculated average responses.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='co'># Toy examples, because CRAN angels ask for them</span>
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
@@ -204,7 +202,8 @@ It's a data frame with calculated average responses.</p>
 #&gt; 1.2 0.2491935 0.1666667 10.241214    age   fare    lm
 #&gt; 1.3 0.2557647 0.1666667 15.361821    age   fare    lm
 #&gt; 1.4 0.2624486 0.1666667 20.482428    age   fare    lm
-#&gt; 1.5 0.2692439 0.1666667 25.603035    age   fare    lm</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: wszystkie wartości 'z' są równe</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not possible to generate contour data</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'> </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+#&gt; 1.5 0.2692439 0.1666667 25.603035    age   fare    lm</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: wszystkie wartości 'z' są równe</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not possible to generate contour data</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>59</span>)
 
 <span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
@@ -231,7 +230,8 @@ It's a data frame with calculated average responses.</p>
 #&gt; 1001.2 4851.829     20   1.18 surface  floor randomForest
 #&gt; 1001.3 4851.829     20   1.27 surface  floor randomForest
 #&gt; 1001.4 4851.829     20   1.36 surface  floor randomForest
-#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div></span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -11,12 +11,13 @@
 conditional_dependency(x, ...)
 
 \method{conditional_dependency}{explainer}(x, variables = NULL,
-  N = 500, variable_splits = NULL, grid_points = 101, ...)
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
 \method{conditional_dependency}{default}(x, data,
   predict_function = predict, label = class(x)[1], variables = NULL,
-  grid_points = grid_points, variable_splits = variable_splits,
-  N = 500, ...)
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
 \method{conditional_dependency}{ceteris_paribus_explainer}(x, ...,
   variables = NULL)
@@ -24,26 +25,33 @@ conditional_dependency(x, ...)
 local_dependency(x, ...)
 }
 \arguments{
-\item{x}{a model to be explained, or an explainer created with function `DALEX::explain()` or  object of the class `ceteris_paribus_explainer`.}
+\item{x}{an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
+or a model to be explained.}
 
 \item{...}{other parameters}
 
-\item{variables}{names of variables for which profiles shall be calculated. Will be passed to `calculate_variable_splits()`. If NULL then all variables from the validation data will be used.}
+\item{variables}{names of variables for which profiles shall be calculated.
+Will be passed to \code{\link{calculate_variable_split}}. If \code{NULL} then all variables from the validation data will be used.}
 
 \item{N}{number of observations used for calculation of partial dependency profiles. By default 500.}
 
-\item{variable_splits}{named list of splits for variables, in most cases created with `calculate_variable_splits()`. If NULL then it will be calculated based on validation data avaliable in the `explainer`.}
+\item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
+If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.}
 
-\item{grid_points}{number of points for profile. Will be passed to `calculate_variable_splits()`.}
+\item{grid_points}{number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.}
 
-\item{data}{validation dataset, will be extracted from `x` if it's an explainer}
+\item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
+If "categorical" then only categorical variables will be calculated.}
 
-\item{predict_function}{predict function, will be extracted from `x` if it's an explainer}
+\item{data}{validation dataset, will be extracted from \code{x} if it's an explainer
+NOTE: It is best when target variable is not present in the \code{data}}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model}
+\item{predict_function}{predict function, will be extracted from \code{x} if it's an explainer}
+
+\item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 }
 \value{
-an 'aggregated_profile_explainer' layer
+an object of the class \code{aggregated_profile_explainer}
 }
 \description{
 Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
@@ -54,36 +62,39 @@ Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles
 }
 \examples{
 library("DALEX")
-# Toy examples, because CRAN angels ask for them
-titanic <- na.omit(titanic)
+
+titanic_imputed$country <- NULL
+
 model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed$survived == "yes",
+                               verbose = FALSE)
 
-pdp_rf <- conditional_dependency(explain_titanic_glm, N = 50)
-plot(pdp_rf)
+cdp_glm <- conditional_dependency(explain_titanic_glm,
+                                  N = 50, variables = c("age", "fare"))
+head(cdp_glm)
+plot(cdp_glm)
 
- \donttest{
-library("titanic")
+\donttest{
 library("randomForest")
 
-titanic_small <- titanic_train[,c("Survived", "Pclass", "Sex", "Age",
-                                   "SibSp", "Parch", "Fare", "Embarked")]
-titanic_small$Survived <- factor(titanic_small$Survived)
-titanic_small$Sex <- factor(titanic_small$Sex)
-titanic_small$Embarked <- factor(titanic_small$Embarked)
-titanic_small <- na.omit(titanic_small)
-rf_model <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
-                         data = titanic_small)
-explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$Survived == "1", label = "RF")
+model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic_imputed)
 
-pdp_rf <- conditional_dependency(explainer_rf)
-plot(pdp_rf)
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed$survived == "yes",
+                              verbose = FALSE)
+
+cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")
+plot(cdp_rf)
+
+cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
+plotD3(cdp_rf, variable_type = "categorical", label_margin = 80, scale_plot = TRUE)
 }
+
 }
 \references{
 Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}

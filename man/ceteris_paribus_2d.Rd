@@ -8,7 +8,7 @@ ceteris_paribus_2d(explainer, observation, grid_points = 101,
   variables = NULL)
 }
 \arguments{
-\item{explainer}{a model to be explained, preprocessed by the 'DALEX::explain' function}
+\item{explainer}{a model to be explained, preprocessed by the \code{DALEX::explain()} function}
 
 \item{observation}{a new observation for which predictions need to be explained}
 
@@ -17,8 +17,7 @@ ceteris_paribus_2d(explainer, observation, grid_points = 101,
 \item{variables}{if specified, then only these variables will be explained}
 }
 \value{
-An object of the class 'ceteris_paribus_2d_explainer'.
-It's a data frame with calculated average responses.
+an object of the class \code{ceteris_paribus_2d_explainer}.
 }
 \description{
 This function calculates ceteris paribus profiles for grid of values spanned by two variables.
@@ -29,7 +28,6 @@ Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ce
 }
 \examples{
 library("DALEX")
-# Toy examples, because CRAN angels ask for them
 titanic <- na.omit(titanic)
 model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
                        data = titanic, family = "binomial")
@@ -40,7 +38,8 @@ explain_titanic_glm <- explain(model_titanic_glm,
 cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
 head(cp_rf)
 plot(cp_rf)
- \donttest{
+
+\donttest{
 library("randomForest")
 set.seed(59)
 
@@ -58,4 +57,5 @@ wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
 head(wi_rf_2d)
 plot(wi_rf_2d)
 }
+
 }

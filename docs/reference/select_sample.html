@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Select Subset of Rows — select_sample" />
 
-<meta property="og:description" content="This function selects subset of rows from data set.
+<meta property="og:description" content="Function select_sample selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles." />
 <meta name="twitter:card" content="summary" />
 
@@ -106,7 +106,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -135,13 +135,13 @@ This is useful if data is large and we need just a sample to calculate profiles.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Subset of Rows</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/select_samples.R'><code>R/select_samples.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/select_sample.R'><code>R/select_sample.R</code></a></small>
     <div class="hidden name"><code>select_sample.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function selects subset of rows from data set.
+    <p>Function <code>select_sample</code> selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles.</p>
     
     </div>
@@ -157,7 +157,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
     </tr>
     <tr>
       <th>n</th>
-      <td><p>named list of vectors. Elements of the list are vectors with points in which profiles should be calculated. See an example for more details.</p></td>
+      <td><p>number of observations to select.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -171,21 +171,23 @@ This is useful if data is large and we need just a sample to calculate profiles.
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that <code>select_subsample</code> function is S3 generic.
+    <p>Note that <code>select_subsample()</code> function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartmentsTest</span>)
+
+<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartments_test</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 9707     5670              2008      98     3        3 Srodmiescie
 #&gt; 9796     2696              1932     110    10        4       Ursus
 #&gt; 9644     3466              1980      73    10        2     Mokotow
 #&gt; 7567     2818              1940      63     8        3       Praga
 #&gt; 4090     3803              1955     105     3        3      Ochota
-#&gt; 8594     3643              1999      36     9        2       Ursus</div></pre>
+#&gt; 8594     3643              1999      36     9        2       Ursus</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -37,7 +37,8 @@
 
 <meta property="og:title" content="Plots Ceteris Paribus Profiles in D3 with r2d3 Package. — plotD3" />
 
-<meta property="og:description" content="Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
+<meta property="og:description" content="Function plotD3.ceteris_paribus_explainer plots Individual Variable Profiles for selected observations.
+It uses output from ceteris_paribus function.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 Find more detailes in Ceteris Paribus Chapter." />
 <meta name="twitter:card" content="summary" />
@@ -107,7 +108,7 @@ Find more detailes in Ceteris Paribus Chapter." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -136,13 +137,14 @@ Find more detailes in Ceteris Paribus Chapter." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plots Ceteris Paribus Profiles in D3 with r2d3 Package.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plotD3_ceteris_paribus_explainer.R'><code>R/plotD3_ceteris_paribus_explainer.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plotD3_ceteris_paribus.R'><code>R/plotD3_ceteris_paribus.R</code></a></small>
     <div class="hidden name"><code>plotD3_ceteris_paribus.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function 'plotD3.ceteris_paribus_explainer' plots Individual Variable Profiles for selected observations.
+    <p>Function <code>plotD3.ceteris_paribus_explainer</code> plots Individual Variable Profiles for selected observations.
+It uses output from <code><a href='ceteris_paribus.html'>ceteris_paribus</a></code> function.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
 <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
     
@@ -153,15 +155,16 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Ceteris Paribus Profiles"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>,
+  <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus explainer produced with function `ceteris_paribus()`</p></td>
+      <td><p>a ceteris paribus explainer produced with function <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -186,15 +189,15 @@ If "categorical" then only categorical variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>facet_ncol</th>
-      <td><p>number of columns for the `facet_wrap`</p></td>
+      <td><p>number of columns for the <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code></p></td>
     </tr>
     <tr>
       <th>scale_plot</th>
-      <td><p>a logical. Should size of the plot scale with window size? By default it's FALSE</p></td>
+      <td><p>a logical. If <code>TRUE</code>, the height of plot scales with window size. By default it's <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>variables</th>
-      <td><p>if not NULL then only `variables` will be presented</p></td>
+      <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     <tr>
       <th>chart_title</th>
@@ -206,22 +209,21 @@ If "categorical" then only categorical variables will be plotted.</p></td>
     </tr>
     <tr>
       <th>show_observations</th>
-      <td><p>a logcal. Adds observations layer to a plot. By default it's TRUE</p></td>
+      <td><p>a logical. Adds observations layer to a plot. By default it's <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>show_rugs</th>
-      <td><p>a logcal. Adds rugs layer to a plot. By default it's TRUE</p></td>
+      <td><p>a logical. Adds rugs layer to a plot. By default it's <code>TRUE</code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `r2d3` object.</p>
+    <p>a <code>r2d3</code> object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"ingredients"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
@@ -249,8 +251,7 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 
 <span class='fu'>plotD3</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>),
-     <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></span><div class='input'>
-</div></pre>
+     <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

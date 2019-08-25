@@ -1,4 +1,4 @@
-#' Natural language description of a DALEX explainer
+#' Natural language description of Ceteris Paribus explainer
 #'
 #' @description  Generic function \code{describe} generates a natural language
 #' description of \code{ceteris_paribus()}, \code{aggregated_profiles()} and
@@ -8,11 +8,11 @@
 #' ceteris paribus profile. The description summarizes variable values, that would change
 #' model's prediction at most. If a ceteris paribus profile for multiple variables is passed,
 #' \code{variables} must specify a single variable to be described. Works only for a ceteris paribus profile
-#' for one observation. For `display_numbers = TRUE`
-#' three most important variable values are displayed, while `display_numbers = FALSE` displays
+#' for one observation. For \code{display_numbers = TRUE}
+#' three most important variable values are displayed, while \code{display_numbers = FALSE} displays
 #' all the important variables, however without further details.
 #'
-#' @param explainer a DALEX explainer
+#' @param x a ceteris paribus explanation produced with function \code{ceteris_paribus()}
 #' @param nonsignificance_treshold a parameter specifying a treshold for variable importance
 #' @param ... other arguments
 #' @param display_values allows for displaying variable values
@@ -24,55 +24,52 @@
 #' @importFrom stats setNames smooth
 #'
 #' @examples
-#'library("DALEX")
-#'library("ingredients")
-#'library("randomForest")
+#' library("DALEX")
+#' library("ingredients")
+#' library("randomForest")
 #'
-#'titanic <- na.omit(titanic)
+#' titanic <- na.omit(titanic)
 #'
-#'model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                   fare + sibsp + parch,  data = titanic)
-#'explain_titanic_rf <- explain(model_titanic_rf,
-#'                              data = titanic[,-9],
-#'                              y = titanic$survived == "yes",
-#'                              label = "rf")
+#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+#'                                  fare + sibsp + parch,  data = titanic)
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic[,-9],
+#'                               y = titanic$survived == "yes",
+#'                               label = "rf")
 #'
-#'selected_passanger <- select_sample(titanic, n = 1, seed = 123)
-#'cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
-#'plot(cp_rf, variable_type = "categorical")
-#'describe(cp_rf, variables = "class", label = "the predicted probability")
+#' selected_passanger <- select_sample(titanic, n = 1, seed = 123)
+#' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
+#'
+#' plot(cp_rf, variable_type = "categorical")
+#' describe(cp_rf, variables = "class", label = "the predicted probability")
 #'
 #' @export
 #' @rdname describe
-#'
-
-
-describe <- function(explainer, nonsignificance_treshold = 0.15, ...)
+describe <- function(x, ...)
   UseMethod("describe")
 
 #' @export
 #' @rdname describe
-
-describe.ceteris_paribus_explainer <- function(explainer,
+describe.ceteris_paribus_explainer <- function(x,
                                                nonsignificance_treshold = 0.15,
                                                ...,
                                                display_values = FALSE,
                                                display_numbers = FALSE,
                                                variables = NULL,
-                                               label = "prediction"){
+                                               label = "prediction") {
   # ERROR HANDLING
-  if (length(unique(explainer[ ,'_vname_'])) == 1) variables <- as.character(explainer[1,'_vname_'])
+  if (length(unique(x[ ,'_vname_'])) == 1) variables <- as.character(x[1,'_vname_'])
   if (is.null(variables)) stop("Choose a single variable to be described.")
   if (!class(variables) == "character") stop("Enter the single variables name as character.")
 
   # Assigning model's name
-  model_name <- as.character(explainer[1,'_label_'])
+  model_name <- as.character(x[1,'_label_'])
   model_name <- paste(toupper(substr(model_name, 1, 1)), substr(model_name, 2, nchar(model_name)), sep="")
 
   # Assigning a value to the choosen variable
-  variables_value <- ifelse(class(attr(explainer, "observations")[,variables]) == 'numeric',
-                            round(attr(explainer, "observations")[,variables],3),
-                            as.character(attr(explainer, "observations")[,variables]))
+  variables_value <- ifelse(class(attr(x, "observations")[,variables]) == 'numeric',
+                            round(attr(x, "observations")[,variables],3),
+                            as.character(attr(x, "observations")[,variables]))
 
   value <- ifelse(display_values,
                   paste0(" (", variables, " = ",
@@ -80,17 +77,8 @@ describe.ceteris_paribus_explainer <- function(explainer,
                   "")
 
   # Generating description
-  if (class(explainer[ ,variables]) == "factor" | class(explainer[ ,variables]) == "character") {
-    description <- describe_ceterisparibus_factor(explainer,
-                                                  nonsignificance_treshold = nonsignificance_treshold,
-                                                  display_values = display_values,
-                                                  display_numbers = display_numbers,
-                                                  variables = variables,
-                                                  label = label,
-                                                  model_name = model_name,
-                                                  value = value)
-  } else if (class(explainer[ ,variables]) == "numeric") {
-    description <- describe_ceterisparibus_continuous(explainer,
+  if (class(x[ ,variables]) == "numeric") {
+    description <- describe_ceteris_paribus_continuous(x = x,
                                                       nonsignificance_treshold = nonsignificance_treshold,
                                                       display_values = display_values,
                                                       display_numbers = display_numbers,
@@ -98,15 +86,28 @@ describe.ceteris_paribus_explainer <- function(explainer,
                                                       label = label,
                                                       model_name = model_name,
                                                       value = value)
+  } else {
+    x[ ,variables] <- as.character(x[ ,variables])
+
+    description <- describe_ceteris_paribus_factor(x = x,
+                                                  nonsignificance_treshold = nonsignificance_treshold,
+                                                  display_values = display_values,
+                                                  display_numbers = display_numbers,
+                                                  variables = variables,
+                                                  label = label,
+                                                  model_name = model_name,
+                                                  value = value)
   }
-  class(description) = c("ceteris_paribus_description", "character")
+
+  class(description) <- c("ceteris_paribus_description", "description", "character")
   description
 }
 
-specify_df <- function(explainer, variables, nonsignificance_treshold) {
+
+specify_df <- function(x, variables, nonsignificance_treshold) {
 
   #Creates a df for easier description generation
-  df <- explainer[which(explainer[ ,'_vname_'] == variables), ]
+  df <- x[which(x[ ,'_vname_'] == variables), ]
 
   #ERROR HANDLING
   if (nrow(df) == 0) stop("There is no such variable.")
@@ -118,20 +119,23 @@ specify_df <- function(explainer, variables, nonsignificance_treshold) {
   treshold <- NULL
   if (class(df[ ,variables]) == "factor" | class(df[ ,variables]) == "character") {
     #choosing the prediction value for the observation being explained
-    baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
+    baseline_prediction <- attr(x, "observations")[1,'_yhat_']
     df['importance'] <- sapply(df[ ,'_yhat_'], function(x) abs(x-baseline_prediction))
     df['importance'] <- round(df['importance'],3)
     df <- df[order(df[ ,'importance'], decreasing = TRUE), ]
     df['variable_name'] <- paste0('"', df[ ,variables],'"')
-    df <- df[-which(df[ ,variables] == attr(explainer, "observations")[1,variables]), ]
+    df <- df[-which(df[ ,variables] == attr(x, "observations")[1,variables]), ]
 
     most_important_prediction <- max(df[ ,'importance'])
     treshold <- most_important_prediction * nonsignificance_treshold
     df['important'] <- sapply(df[ ,'importance'], function(x) if (x < treshold) FALSE else TRUE)
   }
+
   list("df" = df, "treshold" = treshold)
 }
-describe_ceterisparibus_factor <- function(explainer,
+
+
+describe_ceteris_paribus_factor <- function(x,
                                            nonsignificance_treshold,
                                            display_values,
                                            display_numbers,
@@ -142,19 +146,20 @@ describe_ceterisparibus_factor <- function(explainer,
 
   # Specifying a df for easier variable description
 
-  df_list <- specify_df(explainer = explainer,
+  df_list <- specify_df(x = x,
                    variables = variables,
                    nonsignificance_treshold = nonsignificance_treshold)
   df <- df_list$df
   treshold <- df_list$treshold
   #Selecting model's prediction for the observation being explained
-  baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
+  baseline_prediction <- attr(x, "observations")[1,'_yhat_']
 
   # Choosing the mode of the explanation
   if (display_numbers) {
     argument1 <- NULL
     argument2 <- NULL
     argument3 <- NULL
+
     if (nrow(df) > 0) {
       sign1 <- if (df[1,'_yhat_'] > baseline_prediction) "increases" else "decreases"
       argument1 <- paste0("The most important change in ", model_name,
@@ -239,9 +244,12 @@ describe_ceterisparibus_factor <- function(explainer,
                           argumentation, "\n\n",
                           summary)
   }
+
+  description
 }
 
-describe_ceterisparibus_continuous <- function(explainer,
+
+describe_ceteris_paribus_continuous <- function(x,
                                                nonsignificance_treshold,
                                                display_values,
                                                display_numbers,
@@ -251,9 +259,9 @@ describe_ceterisparibus_continuous <- function(explainer,
                                                value) {
 
   # Specifying a df for variable description
-  df <- specify_df(explainer = explainer, variables = variables)$df
+  df <- specify_df(x = x, variables = variables)$df
 
-  baseline_prediction <- attr(explainer, "observations")[1,'_yhat_']
+  baseline_prediction <- attr(x, "observations")[1,'_yhat_']
 
   introduction <- paste0(model_name, " predicts that for the selected instance",
                          " predicts that ", value, ", ", label,
@@ -293,7 +301,7 @@ describe_ceterisparibus_continuous <- function(explainer,
 
 
 
-  sufix <- describe_numeric_variable(original_x = attr(explainer, "observations"),
+  sufix <- describe_numeric_variable(original_x = attr(x, "observations"),
                                      df = df,
                                      cutpoint = cutpoint,
                                      variables = variables)
@@ -301,12 +309,15 @@ describe_ceterisparibus_continuous <- function(explainer,
 
   description <- paste(introduction, prefix, sufix, sep = "\n\n")
 
+  description
 }
 
 
+#:# could use some comments
 find_optimal_cutpoint <- function(vector_predictions) {
   # Finds breakpoints for ceteris_paribus profile description
   vector_observations <- 1:length(vector_predictions)
+
   breakpoints_all <-sapply(vector_observations, function(x) {
     dum_x <- ifelse(vector_observations <= x, 1, 0)
     fit = lm(vector_predictions ~ vector_observations*dum_x)
@@ -315,16 +326,26 @@ find_optimal_cutpoint <- function(vector_predictions) {
                         if (all(unname(p) < 0.5)) abs(summary(fit)$coefficients[2,1] - summary(fit)$coefficients[3,1])  else 0)
     setNames(important, x)
   })
+
   breakpoints_all <- breakpoints_all[order(abs(breakpoints_all), decreasing = TRUE, na.last = TRUE)]
+
   as.numeric(names(breakpoints_all[1]))
 }
+
+
+#:# could use some comments
 find_optimal_cutpoint_average <- function(x) {
+
   diffs <- sapply(1:(length(x) - 1), function(cutpoint) {
     abs(mean(x[1:cutpoint]) - mean(x[-(1:cutpoint)]))
   })
+
   w <- pmin(seq_along(diffs) / length(diffs), 1 - seq_along(diffs) / length(diffs))
+
   which.max(diffs * w^0.25)
 }
+
+
 describe_numeric_variable <- function(original_x, df, cutpoint, variables) {
   # Describes a numeric variable given a cutpoint
 
@@ -335,43 +356,40 @@ describe_numeric_variable <- function(original_x, df, cutpoint, variables) {
   if (default <= df[cutpoint, variables]) {
     # point is higher than the average
     if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
-      sufix = paste0("Average model responses are *lower* for variable values *higher* than breakpoint ")
+      sufix <- paste0("Average model responses are *lower* for variable values *higher* than breakpoint ")
     } else {
-      sufix = paste0("Average model responses are *higher* for variable values *higher* than breakpoint ")
+      sufix <- paste0("Average model responses are *higher* for variable values *higher* than breakpoint ")
     }
   } else {
     # point is higher than the average
     if (mean(df[1:cutpoint, "_yhat_"]) > mean(df[, "_yhat_"])) {
-      sufix = paste0("Average model responses are *higher* for variable values *lower* than breakpoint ")
+      sufix <- paste0("Average model responses are *higher* for variable values *lower* than breakpoint ")
     } else {
-      sufix = paste0("Average model responses are *lower* for variable values *lower* than breakpoint")
+      sufix <- paste0("Average model responses are *lower* for variable values *lower* than breakpoint")
     }
   }
+
   paste0(sufix, "(= ", round(df[cutpoint, variables], 3), ").")
 }
+
+
 describe_numeric_variable_average <- function(original_x, x_part, cutpoint, vname) {
-      # selected point is on the left from cutpoint
-    if (original_x[1, vname] <= x_part[cutpoint, vname]) {
-      # point is higher than the average
-      if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
-        sufix = paste0("Model responses are *lower* for *higher* values of ", vname, " \n")
-      } else {
-        sufix = paste0("Model responses are *higher* for *higher* values of ", vname, " \n")
-      }
+  # selected point is on the left from cutpoint
+  if (original_x[1, vname] <= x_part[cutpoint, vname]) {
+    # point is higher than the average
+    if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
+      sufix <- paste0("Model responses are *lower* for *higher* values of ", vname, " \n")
     } else {
-      # point is higher than the average
-      if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
-        sufix = paste0("Model responses are *higher* for *lower* values of ", vname, " \n")
-      } else {
-        sufix = paste0("Model responses are *lower* for *lower* values of ", vname, " \n")
-      }
+      sufix <- paste0("Model responses are *higher* for *higher* values of ", vname, " \n")
     }
-    sufix
+  } else {
+    # point is higher than the average
+    if (mean(x_part[1:cutpoint, "_yhat_"]) > mean(x_part[, "_yhat_"])) {
+      sufix <- paste0("Model responses are *higher* for *lower* values of ", vname, " \n")
+    } else {
+      sufix <- paste0("Model responses are *lower* for *lower* values of ", vname, " \n")
+    }
   }
 
-
-
-
-
-
-
+  sufix
+}

@@ -114,19 +114,20 @@ test_that("feature_importance performs at least one permutation", {
 
 test_that("feature_importance averaged over many permutations are stable", {
   # this test uses many permutations, so make a very small titanic dataset for speed
-  tiny <- titanic_small[titanic_small$Age > 50,]
-  tiny$Parch <- tiny$SibSp <- tiny$Embarked <- tiny$Sex <- NULL
-  tiny_rf <- randomForest(Survived ~ Pclass + Fare + Age, data = tiny)
+  tiny <- titanic_small[titanic_small$age > 50,]
+  tiny$country <- tiny$class <- tiny$sibsp <- tiny$embarked <- tiny$gender <- NULL
+
+  tiny_rf <- randomForest(survived ~ parch + fare + age, data = tiny)
   tiny_explainer = explain(tiny_rf, data = tiny,
-                           y = tiny$Survived=="1", label = "RF")
+                           y = tiny$survived == "yes", label = "RF")
   # compute single permutations importance values
   result_1 <- feature_importance(tiny_explainer)
   result_2 <- feature_importance(tiny_explainer)
-  # compute feature importance with several permutations 
+  # compute feature importance with several permutations
   result_A <- feature_importance(tiny_explainer, B = 40)
   result_B <- feature_importance(tiny_explainer, B = 40)
   # two rounds with many permutation should give results closer together
-  # than two rounds with single permutations 
+  # than two rounds with single permutations
   change_12 <- abs(result_1$dropout_loss - result_2$dropout_loss)
   change_AB <- abs(result_A$dropout_loss - result_B$dropout_loss)
   # this test should succeed most of the time... but in principle could fail by accident
@@ -142,20 +143,20 @@ test_that("Variable groupings validation with data frame", {
   vd_rf <- feature_importance(explainer_rf,
                               loss_function = loss_root_mean_square,
                               variable_groups = list(
-                                siblings_souse = c("SibSp"),
-                                demographics = c("Sex", "Age"),
-                                ticket_type = c("Pclass", "Fare"))
+                                siblings_souse = c("sibsp"),
+                                demographics = c("gender", "age"),
+                                ticket_type = c("class", "fare"))
                               )
   expect_is(vd_rf, "feature_importance_explainer")
 })
 
 
 test_that("Variable groupings validation with matrix", {
-  result <- feature_importance(explainer_xgb,
+  result <- feature_importance(explainer_rf,
                                variable_groups = list(
-                                 siblings_souse = c("SibSp"),
-                                 demographics = c("Sex", "Age"),
-                                 ticket_type = c("Pclass", "Fare"))
+                                 siblings_souse = c("sibsp"),
+                                 demographics = c("gender", "age"),
+                                 ticket_type = c("class", "fare"))
                                )
   expect_is(result, "feature_importance_explainer")
 })
@@ -164,25 +165,25 @@ test_that("Variable groupings validation with matrix", {
 test_that("Variable groupings input validation checks", {
   expect_warning(feature_importance(explainer_rf,
                                     loss_function = loss_root_mean_square,
-                                    variable_groups = list(c("Sex", "Age"),
-                                                           c("Pclass", "Fare"))),
+                                    variable_groups = list(c("gender", "age"),
+                                                           c("class", "fare"))),
                  "You have passed an unnamed list. The names of variable groupings will be created from variables names.")
-  
+
   expect_error( feature_importance(explainer_rf,
                                    loss_function = loss_root_mean_square,
-                                   variable_groups = c("Sex", "Age")
+                                   variable_groups = c("gender", "age")
                                    ),
                "variable_groups should be of class list")
-  
+
   expect_error(feature_importance(explainer_rf,
                                   loss_function = loss_root_mean_square,
-                                  variable_groups = list("demographics" = c("wrong_name", "Age"))
+                                  variable_groups = list("demographics" = c("wrong_name", "age"))
                                   ),
                "You have passed wrong variables names in variable_groups argument")
-  
+
   expect_error(feature_importance(explainer_rf,
                                   loss_function = loss_root_mean_square,
-                                  variable_groups = list("demographics" = list("Sex", "Age"))
+                                  variable_groups = list("demographics" = list("gender", "age"))
                                   ),
                "Elements of variable_groups argument should be of class character")
 })

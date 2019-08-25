@@ -4,7 +4,6 @@ test_that("plot show_residuals",{
  library("DALEX")
  library("randomForest")
  library("ingredients")
- library("ggplot2")
 
  titanic <- na.omit(titanic)
  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
@@ -13,7 +12,7 @@ test_that("plot show_residuals",{
  explain_titanic_rf <- explain(model_titanic_rf,
                                data = titanic[,-9],
                                y = titanic$survived == "yes",
-                               label = "Random Forest v7")
+                               label = "Random Forest v7", verbose = FALSE)
 
  johny_d <- data.frame(
    class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
@@ -63,17 +62,15 @@ test_that("Multiple observatins",{
   # we predict embarked instead of survived for generating the bug
   model_titanic_rf <- randomForest(embarked ~ gender + age + class + survived +
                                      fare + sibsp + parch,  data = titanic)
-  model_titanic_rf
 
   explain_titanic_rf <- explain(model_titanic_rf,
-                                data = titanic[,-4],
-                                y = titanic$survived,
-                                label = "Random Forest v7")
+                                data = titanic[,-9],
+                                y = titanic$survived == "yes",
+                                label = "Random Forest v7", verbose = FALSE)
 
   # select few passangers
   selected_passangers <- select_sample(titanic, n = 20)
-  cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 
-  expect_true("ceteris_paribus_explainer" %in% class(cp_rf))
+  expect_error(ceteris_paribus(explain_titanic_rf, selected_passangers))
 })
 

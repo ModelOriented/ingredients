@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plots Variable Importance — plot.feature_importance_explainer • ingredients</title>
+<title>Plots Feature Importance — plot.feature_importance_explainer • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,14 +35,15 @@
 
 
 
-<meta property="og:title" content="Plots Variable Importance — plot.feature_importance_explainer" />
+<meta property="og:title" content="Plots Feature Importance — plot.feature_importance_explainer" />
 
-<meta property="og:description" content="Function plot.feature_importance_explainer plots variable importance calculated as
-changes in the loss function after variable drops.
-It uses output from feature_importance function that corresponds to permutation based measure of variable importance.
+<meta property="og:description" content="This function plots variable importance calculated as changes in the loss function after variable drops.
+It uses output from feature_importance function that corresponds to
+permutation based measure of variable importance.
 Variables are sorted in the same order in all panels.
 The order depends on the average drop out loss.
-In different panels variable contributions may not look like sorted if variable importance is different in different in different models." />
+In different panels variable contributions may not look like sorted if variable
+importance is different in different in different models." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,7 +111,7 @@ In different panels variable contributions may not look like sorted if variable 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Describing-Explanations.html">Explanations in natural language</a>
+      <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
@@ -138,19 +139,20 @@ In different panels variable contributions may not look like sorted if variable 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plots Variable Importance</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plot_feature_importance_explainer.R'><code>R/plot_feature_importance_explainer.R</code></a></small>
+    <h1>Plots Feature Importance</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/plot_feature_importance.R'><code>R/plot_feature_importance.R</code></a></small>
     <div class="hidden name"><code>plot.feature_importance_explainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function <code>plot.feature_importance_explainer</code> plots variable importance calculated as
-changes in the loss function after variable drops.
-It uses output from <code>feature_importance</code> function that corresponds to permutation based measure of variable importance.
+    <p>This function plots variable importance calculated as changes in the loss function after variable drops.
+It uses output from <code>feature_importance</code> function that corresponds to
+permutation based measure of variable importance.
 Variables are sorted in the same order in all panels.
 The order depends on the average drop out loss.
-In different panels variable contributions may not look like sorted if variable importance is different in different in different models.</p>
+In different panels variable contributions may not look like sorted if variable
+importance is different in different in different models.</p>
     
     </div>
 
@@ -163,7 +165,7 @@ In different panels variable contributions may not look like sorted if variable 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a variable dropout explainer produced with the 'feature_importance' function</p></td>
+      <td><p>a feature importance explainer produced with the <code><a href='feature_importance.html'>feature_importance()</a></code> function</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -171,7 +173,8 @@ In different panels variable contributions may not look like sorted if variable 
     </tr>
     <tr>
       <th>max_vars</th>
-      <td><p>maximum number of variables that shall be presented for for each model. By default NULL what means all variables</p></td>
+      <td><p>maximum number of variables that shall be presented for for each model.
+By default <code>NULL</code> what means all variables</p></td>
     </tr>
     <tr>
       <th>bar_width</th>
@@ -181,7 +184,7 @@ In different panels variable contributions may not look like sorted if variable 
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a ggplot2 object</p>
+    <p>a <code>ggplot2</code> object</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -194,14 +197,15 @@ In different panels variable contributions may not look like sorted if variable 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='co'># Toy examples, because CRAN angels ask for them</span>
+
 <span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/na.fail'>na.omit</a></span>(<span class='no'>titanic</span>)
+
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
@@ -209,45 +213,38 @@ In different panels variable contributions may not look like sorted if variable 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.110794e-14 , max =  0.8437859  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
- </div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
 
- <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
-                                    <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
-                           <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+                                 <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'><span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.007911313 , mean =  0.3245188 , max =  0.9959239  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.009770547 , mean =  0.3249102 , max =  0.9882128  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.791543 , mean =  -7.856883e-05 , max =  0.9028798  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8056796 , mean =  -0.0004699629 , max =  0.903955  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
-<span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_rf</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_rf</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>status</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  7847  rows  6  cols 
-#&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; target variable   :  Please note that 'y' is a factor.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
-#&gt;   -&gt; target variable   :  Consider changing the 'y' to a logical or numerical vector.
-#&gt;   -&gt; target variable   :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
-#&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: warunek posiada długość &gt; 1 i tylko pierwszy element będzie użyty</span></div><div class='output co'>#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3333333 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: '-' nie ma sensu dla czynników</span></div><div class='output co'>#&gt;   -&gt; residuals         :  numerical, min =  NA , mean =  NA , max =  NA  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
+<span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>,
+                         <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>precalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>vd_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
-#&gt; 1 _full_model_     1947.160 randomForest
-#&gt; 2       status     1947.160 randomForest
-#&gt; 3       gender     3723.507 randomForest
-#&gt; 4          age     4969.606 randomForest
-#&gt; 5       salary     5414.841 randomForest
-#&gt; 6   evaluation     8239.249 randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
+#&gt; 1 _full_model_     1953.093 randomForest
+#&gt; 2       status     1953.093 randomForest
+#&gt; 3       gender     3788.917 randomForest
+#&gt; 4          age     4997.104 randomForest
+#&gt; 5       salary     5620.666 randomForest
+#&gt; 6   evaluation     7938.978 randomForest</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (</span><span style='color: #BBBB00;'>default</span><span>)
@@ -257,24 +254,45 @@ In different panels variable contributions may not look like sorted if variable 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.294707e-13 , max =  0.9820537  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
-                        <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>vd_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+<span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
+                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
 #&gt; 1 _full_model_    0.4148305    lm
 #&gt; 2       status    0.4148305    lm
-#&gt; 3       gender    0.4148483    lm
-#&gt; 4       salary    0.4148608    lm
-#&gt; 5          age    0.4149018    lm
-#&gt; 6   evaluation    0.4316230    lm</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"xgboost"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in library("xgboost"): nie ma pakietu o nazwie 'xgboost'</span></div><div class='input'><span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/model.matrix'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
-<span class='no'>data_train</span> <span class='kw'>&lt;-</span> <span class='fu'>xgb.DMatrix</span>(<span class='no'>model_martix_train</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in xgb.DMatrix(model_martix_train, label = HR$status == "fired"): nie udało się znaleźć funkcji 'xgb.DMatrix'</span></div><div class='input'><span class='no'>param</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+#&gt; 3       gender    0.4148531    lm
+#&gt; 4          age    0.4149186    lm
+#&gt; 5       salary    0.4149359    lm
+#&gt; 6   evaluation    0.4324595    lm</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"xgboost"</span>)
+
+<span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/model.matrix'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
+<span class='no'>data_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/xgboost/topics/xgb.DMatrix'>xgb.DMatrix</a></span>(<span class='no'>model_martix_train</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
+
+<span class='no'>param</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>2</span>,
               <span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>"binary:logistic"</span>, <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>"auc"</span>)
-<span class='no'>HR_xgb_model</span> <span class='kw'>&lt;-</span> <span class='fu'>xgb.train</span>(<span class='no'>param</span>, <span class='no'>data_train</span>, <span class='kw'>nrounds</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='error'>Error in xgb.train(param, data_train, nrounds = 50): nie udało się znaleźć funkcji 'xgb.train'</span></div><div class='input'><span class='no'>explainer_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_xgb_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>model_martix_train</span>,
-                     <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"xgboost"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+
+<span class='no'>HR_xgb_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/xgboost/topics/xgb.train'>xgb.train</a></span>(<span class='no'>param</span>, <span class='no'>data_train</span>, <span class='kw'>nrounds</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+
+<span class='no'>explainer_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>HR_xgb_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>model_martix_train</span>,
+                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"xgboost"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  xgboost 
 #&gt;   -&gt; data              :  7847  rows  6  cols 
-#&gt;   -&gt; target variable   :  7847  values </div><div class='output co'>#&gt; <span class='error'>Error in paste0("yhat.", class(model)): nie znaleziono obiektu 'HR_xgb_model'</span></div><div class='input'><span class='no'>vd_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in feature_importance(explainer_xgb, type = "raw"): nie znaleziono obiektu 'explainer_xgb'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>vd_xgb</span>)</div><div class='output co'>#&gt; <span class='error'>Error in head(vd_xgb): nie znaleziono obiektu 'vd_xgb'</span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vd_glm</span>, <span class='no'>vd_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.feature_importance_explainer(vd_glm, vd_xgb, bar_width = 5): nie znaleziono obiektu 'vd_xgb'</span></div><div class='input'> </div></span><div class='input'>
+#&gt;   -&gt; target variable   :  7847  values 
+#&gt;   -&gt; predict function  : yhat.default will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predicted values  :  numerical, min =  1.687903e-06 , mean =  0.363713 , max =  0.9996712  
+#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203497 , max =  0.9970635  
+#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+<span class='no'>fi_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>fi_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
+#&gt; 1 _full_model_    0.3142729 xgboost
+#&gt; 2   gendermale    0.3142729 xgboost
+#&gt; 3   evaluation    0.3375344 xgboost
+#&gt; 4 genderfemale    0.3921380 xgboost
+#&gt; 5          age    0.3993731 xgboost
+#&gt; 6       salary    0.4130118 xgboost</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>fi_glm</span>, <span class='no'>fi_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-5.png' alt='' width='700' height='433' /></div></span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -9,20 +9,19 @@
 #'
 #' @examples
 #' library("DALEX")
-#'library("ingredients")
+#' library("ingredients")
 #'
-#'lm_model <- lm(m2.price~., data = apartments)
-#'explainer_lm <- explain(lm_model, data = apartments[,2:6],
-#'                        y = apartments$m2.price, label="lm")
-#'fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
+#' lm_model <- lm(m2.price~., data = apartments)
+#' explainer_lm <- explain(lm_model, data = apartments[,2:6],
+#'                         y = apartments$m2.price, label="lm")
+#' fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
 #'
-#'plot(fi_lm)
-#'describe(fi_lm)
+#' plot(fi_lm)
+#' describe(fi_lm)
 #'
 #' @export
 #' @rdname describe
-
-describe.feature_importance_explainer <- function(explainer,
+describe.feature_importance_explainer <- function(x,
                                                   nonsignificance_treshold = 0.15,
                                                   ...) {
 
@@ -31,13 +30,13 @@ describe.feature_importance_explainer <- function(explainer,
     stop("Arguments are not valid")
   }
 
-  model_name <- explainer[1, 'label']
+  model_name <- x[1, 'label']
 
-  dropout_full_model <- explainer[1, 'dropout_loss']
-  dropout_baseline <- explainer[nrow(explainer), 'dropout_loss']
+  dropout_full_model <- x[1, 'dropout_loss']
+  dropout_baseline <- x[nrow(x), 'dropout_loss']
   treshold <- dropout_full_model + abs(dropout_full_model - dropout_baseline)*nonsignificance_treshold
 
-  df <- explainer[-c(1,nrow(explainer)), c('variable', 'dropout_loss')]
+  df <- x[-c(1,nrow(x)), c('variable', 'dropout_loss')]
   n_of_all <- nrow(df)
   df <- df[order(df$dropout_loss, decreasing = TRUE), ]
   df <- df[which(df$dropout_loss > treshold), ] #treshold
@@ -53,7 +52,8 @@ describe.feature_importance_explainer <- function(explainer,
                         n_of_all,". \n Variables ",
                         important_variables,
                         " have the highest importantance.")
-  class(description) = c("ceteris_paribus_description", "character")
-  description
 
+  class(description) <- c("feature_importance_description", "description", "character")
+
+  description
 }
