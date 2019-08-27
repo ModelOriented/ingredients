@@ -4,7 +4,7 @@ author: "Przemyslaw Biecek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{Survival on the RMS Titanic}
+  %\VignetteIndexEntry{General introduction: Survival on the RMS Titanic}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

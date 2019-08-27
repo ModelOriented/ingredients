@@ -4,7 +4,7 @@ author: "Adam Izdebski"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Describing-Explanations}
+  %\VignetteIndexEntry{Explanations in natural language}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
