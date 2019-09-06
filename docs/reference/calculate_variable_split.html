@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Internal Function for Split Points for Selected Variables — calculate_variable_split" />
-
 <meta property="og:description" content="This function calculate candidate splits for each selected variable.
 For numerical variables splits are calculated as percentiles
 (in general uniform quantiles of the length grid_points).
 For all other variables splits are calculated as unique values." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -62,6 +63,7 @@ For all other variables splits are calculated as unique values." />
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -78,9 +80,6 @@ For all other variables splits are calculated as unique values." />
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -93,7 +92,7 @@ For all other variables splits are calculated as unique values." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +119,7 @@ For all other variables splits are calculated as unique values." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,6 +130,7 @@ For all other variables splits are calculated as unique values." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -142,21 +142,19 @@ For all other variables splits are calculated as unique values." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function calculate candidate splits for each selected variable.
 For numerical variables splits are calculated as percentiles
 (in general uniform quantiles of the length grid_points).
 For all other variables splits are calculated as unique values.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>data</span>),
+    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
   <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>data</span>), <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)</pre>
-    
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>), <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -173,31 +171,28 @@ For all other variables splits are calculated as unique values.</p>
       <td><p>number of points used for response path</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A named list with splits for selected variables</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>calculate_variable_split</code> function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -206,11 +201,14 @@ you should overload it.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

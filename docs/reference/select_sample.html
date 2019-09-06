@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Select Subset of Rows — select_sample" />
-
 <meta property="og:description" content="Function select_sample selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -60,6 +61,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -76,9 +78,6 @@ This is useful if data is large and we need just a sample to calculate profiles.
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -91,7 +90,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +117,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,6 +128,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -140,14 +140,12 @@ This is useful if data is large and we need just a sample to calculate profiles.
     </div>
 
     <div class="ref-description">
-    
     <p>Function <code>select_sample</code> selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>select_sample</span>(<span class='no'>data</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1313</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -164,23 +162,21 @@ This is useful if data is large and we need just a sample to calculate profiles.
       <td><p>seed for random number generator.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a data frame with selected rows</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>select_subsample()</code> function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartments_test</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 9707     5670              2008      98     3        3 Srodmiescie
 #&gt; 9796     2696              1932     110    10        4       Ursus
 #&gt; 9644     3466              1980      73    10        2     Mokotow
@@ -193,16 +189,14 @@ you should overload it.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -211,11 +205,14 @@ you should overload it.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Plot Ceteris Paribus Oscillations — plot.ceteris_paribus_oscillations" />
-
 <meta property="og:description" content="This function plots local variable importance plots
 calculated as oscillations in the Ceteris Paribus Profiles." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -60,6 +61,7 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -76,9 +78,6 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -91,7 +90,7 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +117,7 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,6 +128,7 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -140,15 +140,13 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function plots local variable importance plots
 calculated as oscillations in the Ceteris Paribus Profiles.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_oscillations</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
-    
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -165,23 +163,23 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
       <td><p>width of bars. By default 10</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
                                     <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>2</span>:<span class='fl'>6</span>],
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
@@ -195,7 +193,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 <span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,]
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vips</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_oscillations.html'>calculate_oscillations</a></span>(<span class='no'>cp_rf</span>)
 <span class='no'>vips</span></div><div class='output co'>#&gt;              _vname_ _ids_ oscillations
 #&gt; 9           district  1001   1175.60868
@@ -208,23 +206,22 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 #&gt; 7           no.rooms  1001    164.63709
 #&gt; 2  construction.year  1002    152.83025
 #&gt; 1  construction.year  1001     53.33294</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div></span><div class='input'>
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -233,11 +230,14 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

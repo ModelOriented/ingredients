@@ -38,14 +38,15 @@ selected observation — aspect_importance • ingredients</title>
 
 <meta property="og:title" content="Calculates the feature groups importance (called aspects importance) for a
 selected observation — aspect_importance" />
-
 <meta property="og:description" content="Aspect Importance function takes a sample from a given dataset and modifies
 it. Modification is made by replacing part of its aspects by values from the
 observation. Then function is calculating the difference between the
 prediction made on modified sample and the original sample. Finally, it
 measures the impact of aspects on the change of prediction by using the
 linear model or lasso." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -66,6 +67,7 @@ linear model or lasso." />
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -82,9 +84,6 @@ linear model or lasso." />
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -97,7 +96,7 @@ linear model or lasso." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -124,7 +123,7 @@ linear model or lasso." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,6 +134,7 @@ linear model or lasso." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -147,14 +147,12 @@ selected observation</h1>
     </div>
 
     <div class="ref-description">
-    
     <p>Aspect Importance function takes a sample from a given dataset and modifies
 it. Modification is made by replacing part of its aspects by values from the
 observation. Then function is calculating the difference between the
 prediction made on modified sample and the original sample. Finally, it
 measures the impact of aspects on the change of prediction by using the
 linear model or lasso.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>aspect_importance</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -170,13 +168,13 @@ linear model or lasso.</p>
   <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>show_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>lime</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an explainer created with the <code><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>DALEX::explain()</a></code> function
+      <td><p>an explainer created with the <code><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>DALEX::explain()</a></code> function
 or a model to be explained.</p></td>
     </tr>
     <tr>
@@ -225,24 +223,23 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 it's an explainer</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of the class <code>aspect_importance</code>. Contains dataframe that
   describes aspects' importance.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~
                          <span class='no'>class</span>+<span class='no'>gender</span>+<span class='no'>age</span>+<span class='no'>sibsp</span>+<span class='no'>parch</span>+<span class='no'>fare</span>+<span class='no'>embarked</span>,
                          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
                          <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
@@ -253,9 +250,9 @@ it's an explainer</p></td>
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; residuals         :  numerical, min =  -0.9628583 , mean =  -2.569734e-10 , max =  0.9663346  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
-<span class='no'>aspects</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>wealth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"fare"</span>),
-                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
-                <span class='kw'>personal</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
+<span class='no'>aspects</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>wealth</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"fare"</span>),
+                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
+                <span class='kw'>personal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
                 <span class='kw'>embarked</span> <span class='kw'>=</span> <span class='st'>"embarked"</span>)
 
 <span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_glm</span>,
@@ -265,15 +262,16 @@ it's an explainer</p></td>
 #&gt; 5 embarked    0.07390     embarked
 #&gt; 4 personal   -0.07312  gender, age
 #&gt; 2   wealth   -0.04942  class, fare</div><div class='input'>
-</div></span><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> +
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> +
                                  <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>,
                                  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)
 
-<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
@@ -288,21 +286,21 @@ it's an explainer</p></td>
 #&gt; 5 embarked   0.077921     embarked
 #&gt; 3   family   0.053727 sibsp, parch
 #&gt; 2   wealth  -0.004811  class, fare</div><div class='input'>
-</div></span><div class='input'>
-</div></pre>
+# }
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -311,11 +309,14 @@ it's an explainer</p></td>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

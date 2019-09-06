@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Conditional Dependency Profiles — conditional_dependency" />
-
 <meta property="og:description" content="Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -60,6 +61,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -76,9 +78,6 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -91,7 +90,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +117,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,6 +128,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -140,10 +140,8 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     </div>
 
     <div class="ref-description">
-    
     <p>Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -155,7 +153,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>data</span>,
-  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>], <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='no'>...</span>,
   <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
 
@@ -164,13 +162,13 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>local_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>an explainer created with function <code><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>DALEX::explain()</a></code>, an object of the class <code>ceteris_paribus_explainer</code>
+      <td><p>an explainer created with function <code><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>DALEX::explain()</a></code>, an object of the class <code>ceteris_paribus_explainer</code>
 or a model to be explained.</p></td>
     </tr>
     <tr>
@@ -214,73 +212,69 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>name of the model. By default it's extracted from the <code>class</code> attribute of the model</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profile_explainer</code></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/conditionalProfiles.html'>Local Dependency Profiles Chapter</a>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
                                <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>cdp_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_glm</span>,
-                                  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>cdp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
+                                  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cdp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;                     _vname_ _label_        _x_    _yhat_ _ids_
 #&gt; age.lm.0.1666666667     age      lm  0.1666667 0.3689261     0
 #&gt; age.lm.2                age      lm  2.0000000 0.3681417     0
 #&gt; age.lm.4                age      lm  4.0000000 0.3675531     0
 #&gt; age.lm.7                age      lm  7.0000000 0.3672989     0
 #&gt; age.lm.9                age      lm  9.0000000 0.3676335     0
-#&gt; age.lm.13               age      lm 13.0000000 0.3698060     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cdp_glm</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+#&gt; age.lm.13               age      lm 13.0000000 0.3698060     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cdp_glm</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>cdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>cdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>cdp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>cdp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘r2d3’</span></div><div class='input'># }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -289,11 +283,14 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

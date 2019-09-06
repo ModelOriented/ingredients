@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Aggregates Ceteris Paribus Profiles — aggregate_profiles" />
-
 <meta property="og:description" content="The function aggregate_profiles() calculates an aggregate of ceteris paribus profiles.
 It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles)." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -62,6 +63,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -78,9 +80,6 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -93,7 +92,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +119,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,6 +130,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -142,17 +142,15 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
     </div>
 
     <div class="ref-description">
-    
     <p>The function <code>aggregate_profiles()</code> calculates an aggregate of ceteris paribus profiles.
 It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>aggregate_profiles</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -183,26 +181,24 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
       <td><p>if not <code>NULL</code> then aggregate only for selected <code>variables</code> will be calculated</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profiles_explainer</code></p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/randomForest/topics/randomForest'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>class</span> + <span class='no'>embarked</span> +
                                     <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)
 
-<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/DALEX/topics/explain'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  (<span style='color: #BBBB00;'>default</span><span>)
@@ -215,7 +211,7 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        gender age            class    embarked    fare sibsp parch _yhat_
 #&gt; 515      male  45              2nd Southampton 10.1000     0     0  0.006
 #&gt; 515.1  female  45              2nd Southampton 10.1000     0     0  0.942
@@ -255,17 +251,18 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 <span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></span><div class='input'><span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>,
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>,
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_             _label_        _x_ _groups_    _yhat_ _ids_
 #&gt; 1     age randomForest_female  0.1666667   female 0.7712941     0
 #&gt; 2     age randomForest_female  2.0000000   female 0.7569412     0
 #&gt; 3     age randomForest_female  4.0000000   female 0.7812941     0
 #&gt; 4     age randomForest_female  7.0000000   female 0.7682353     0
 #&gt; 5     age randomForest_female  9.0000000   female 0.7703529     0
-#&gt; 6     age randomForest_female 13.0000000   female 0.7783529     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+#&gt; 6     age randomForest_female 13.0000000   female 0.7783529     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -279,40 +276,39 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 <span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>,
                                <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># or maybe flipped?</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: pakiet 'ggplot2' został zbudowany w wersji R 3.6.1</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Dołączanie pakietu: 'ggplot2'</span></div><div class='output co'>#&gt; <span class='message'>Następujący obiekt został zakryty z 'package:randomForest':</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>,
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_             _label_              _x_ _groups_    _yhat_ _ids_
 #&gt; 1   class randomForest_female              1st   female 0.8964706     0
 #&gt; 2   class randomForest_female              2nd   female 0.8922353     0
 #&gt; 3   class randomForest_female              3rd   female 0.5583529     0
 #&gt; 4   class randomForest_female        deck crew   female 0.8129412     0
 #&gt; 5   class randomForest_female engineering crew   female 0.7151765     0
-#&gt; 6   class randomForest_female restaurant staff   female 0.7087059     0</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='img'><img src='aggregate_profiles-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-6.png' alt='' width='700' height='433' /></div><div class='input'>
-</div><div class='input'>
-</div></pre>
+#&gt; 6   class randomForest_female restaurant staff   female 0.7087059     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='img'><img src='aggregate_profiles-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-6.png' alt='' width='700' height='433' /></div><div class='input'>
+# }
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -321,11 +317,14 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

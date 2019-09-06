@@ -36,13 +36,14 @@
 
 
 <meta property="og:title" content="Function for getting binary matrix — get_sample" />
-
 <meta property="og:description" content="Function creates binary matrix, to be used in aspect_importance method. It
 starts with a zero matrix. Then it replaces some zeros with ones. It either
 randomly replaces one or two zeros per row. Or replace random number of zeros
 per row - average number of replaced zeros can be controled by parameter f.
 Function doesn't allow the returned matrix to have rows with only zeros." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -63,6 +64,7 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
 
  gtag('config', 'UA-5650686-14');
 </script>
+
   </head>
 
   <body>
@@ -79,9 +81,6 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
       </button>
 
       <div class="navbar-brand-container">
-      <a class = "navbar-mi2logo" href="http://DrWhy.AI/">
-    <img src = "https://github.com/ModelOriented/DrWhyTemplate/blob/master/inst/pkgdown/assets/drwhy_znak_violet_small.jpg?raw=true" alt = "MI2" height = 46 title = "MI2">
-	  </a>
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
@@ -94,7 +93,7 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -121,7 +120,7 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,6 +131,7 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -143,17 +143,15 @@ Function doesn't allow the returned matrix to have rows with only zeros." />
     </div>
 
     <div class="ref-description">
-    
     <p>Function creates binary matrix, to be used in aspect_importance method. It
 starts with a zero matrix. Then it replaces some zeros with ones. It either
 randomly replaces one or two zeros per row. Or replace random number of zeros
 per row - average number of replaced zeros can be controled by parameter f.
 Function doesn't allow the returned matrix to have rows with only zeros.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>get_sample</span>(<span class='no'>n</span>, <span class='no'>p</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"default"</span>, <span class='st'>"binom"</span>), <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>get_sample</span>(<span class='no'>n</span>, <span class='no'>p</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"default"</span>, <span class='st'>"binom"</span>), <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -174,29 +172,127 @@ Function doesn't allow the returned matrix to have rows with only zeros.</p>
       <td><p>frequency for binomial sampling</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a binary matrix</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> </div><span class='co'># NOT RUN {</span>
- <span class='fu'>get_sample</span>(<span class='fl'>100</span>,<span class='fl'>6</span>,<span class='st'>"binom"</span>,<span class='fl'>3</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'> <span class='co'># \dontrun{</span>
+ <span class='fu'>get_sample</span>(<span class='fl'>100</span>,<span class='fl'>6</span>,<span class='st'>"binom"</span>,<span class='fl'>3</span>)</div><div class='output co'>#&gt;        [,1] [,2] [,3] [,4] [,5] [,6]
+#&gt;   [1,]    1    0    0    0    0    0
+#&gt;   [2,]    1    0    0    1    0    0
+#&gt;   [3,]    1    1    1    1    0    1
+#&gt;   [4,]    0    0    1    0    0    0
+#&gt;   [5,]    0    0    1    0    0    0
+#&gt;   [6,]    0    0    1    1    0    0
+#&gt;   [7,]    0    0    0    0    1    0
+#&gt;   [8,]    1    0    1    0    1    0
+#&gt;   [9,]    0    1    0    0    0    1
+#&gt;  [10,]    0    1    0    0    0    0
+#&gt;  [11,]    0    1    0    0    0    0
+#&gt;  [12,]    1    0    0    0    0    0
+#&gt;  [13,]    0    0    0    1    0    1
+#&gt;  [14,]    0    1    0    1    0    0
+#&gt;  [15,]    1    1    1    1    0    0
+#&gt;  [16,]    0    1    0    0    0    1
+#&gt;  [17,]    1    0    1    0    0    0
+#&gt;  [18,]    1    1    0    0    0    1
+#&gt;  [19,]    1    0    1    0    1    0
+#&gt;  [20,]    0    0    0    1    0    0
+#&gt;  [21,]    0    0    0    1    1    1
+#&gt;  [22,]    1    0    0    0    0    1
+#&gt;  [23,]    1    1    0    1    1    0
+#&gt;  [24,]    0    0    0    1    1    0
+#&gt;  [25,]    0    1    0    0    1    0
+#&gt;  [26,]    1    0    0    1    0    0
+#&gt;  [27,]    1    0    1    0    0    1
+#&gt;  [28,]    1    0    1    0    1    0
+#&gt;  [29,]    0    0    0    0    1    1
+#&gt;  [30,]    1    0    0    1    1    0
+#&gt;  [31,]    1    0    0    0    1    0
+#&gt;  [32,]    0    0    0    1    0    0
+#&gt;  [33,]    0    1    0    1    1    1
+#&gt;  [34,]    1    1    1    0    0    1
+#&gt;  [35,]    0    0    0    0    1    1
+#&gt;  [36,]    1    1    0    0    1    0
+#&gt;  [37,]    0    0    1    1    0    0
+#&gt;  [38,]    1    1    0    0    0    0
+#&gt;  [39,]    0    1    0    0    1    1
+#&gt;  [40,]    1    1    0    1    1    0
+#&gt;  [41,]    1    1    0    0    0    0
+#&gt;  [42,]    1    0    0    0    0    0
+#&gt;  [43,]    0    0    1    0    0    0
+#&gt;  [44,]    1    0    0    1    1    1
+#&gt;  [45,]    1    0    1    1    0    0
+#&gt;  [46,]    0    0    0    1    0    1
+#&gt;  [47,]    0    1    0    0    0    0
+#&gt;  [48,]    1    0    1    0    1    0
+#&gt;  [49,]    1    1    0    0    0    1
+#&gt;  [50,]    0    0    1    0    0    1
+#&gt;  [51,]    0    0    0    0    0    1
+#&gt;  [52,]    1    0    0    0    1    0
+#&gt;  [53,]    1    0    0    0    0    0
+#&gt;  [54,]    0    0    0    1    1    1
+#&gt;  [55,]    1    1    0    1    1    0
+#&gt;  [56,]    0    0    1    1    0    0
+#&gt;  [57,]    1    0    0    1    1    1
+#&gt;  [58,]    1    0    1    1    1    0
+#&gt;  [59,]    1    1    0    1    0    0
+#&gt;  [60,]    0    0    0    1    1    1
+#&gt;  [61,]    1    1    1    1    0    0
+#&gt;  [62,]    1    1    1    0    1    0
+#&gt;  [63,]    0    1    0    0    1    0
+#&gt;  [64,]    0    1    0    0    1    1
+#&gt;  [65,]    0    1    0    1    0    1
+#&gt;  [66,]    0    0    1    0    0    1
+#&gt;  [67,]    0    0    0    0    0    1
+#&gt;  [68,]    1    0    0    1    0    0
+#&gt;  [69,]    1    0    1    0    1    0
+#&gt;  [70,]    0    1    0    0    0    0
+#&gt;  [71,]    0    0    0    0    1    0
+#&gt;  [72,]    0    0    1    0    0    1
+#&gt;  [73,]    0    1    1    0    1    0
+#&gt;  [74,]    1    1    1    1    0    0
+#&gt;  [75,]    0    0    0    1    1    0
+#&gt;  [76,]    1    1    0    0    1    0
+#&gt;  [77,]    0    1    0    1    0    0
+#&gt;  [78,]    1    0    0    1    1    0
+#&gt;  [79,]    1    0    1    0    1    1
+#&gt;  [80,]    0    1    0    1    1    1
+#&gt;  [81,]    1    0    1    1    0    0
+#&gt;  [82,]    1    0    0    0    0    1
+#&gt;  [83,]    0    0    0    0    0    1
+#&gt;  [84,]    1    1    0    0    1    0
+#&gt;  [85,]    1    1    0    0    0    0
+#&gt;  [86,]    0    1    0    1    1    1
+#&gt;  [87,]    0    1    0    0    1    0
+#&gt;  [88,]    1    0    0    1    0    0
+#&gt;  [89,]    0    0    0    0    1    0
+#&gt;  [90,]    0    1    0    0    0    0
+#&gt;  [91,]    0    0    0    1    0    0
+#&gt;  [92,]    0    1    1    0    1    0
+#&gt;  [93,]    0    0    1    1    0    1
+#&gt;  [94,]    0    0    0    0    1    1
+#&gt;  [95,]    0    0    1    0    0    0
+#&gt;  [96,]    1    1    0    0    0    1
+#&gt;  [97,]    1    1    0    0    1    1
+#&gt;  [98,]    0    0    0    0    0    1
+#&gt;  [99,]    0    1    0    1    0    0
+#&gt; [100,]    0    0    1    0    1    1</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="author">
@@ -205,11 +301,14 @@ Function doesn't allow the returned matrix to have rows with only zeros.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
