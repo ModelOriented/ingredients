@@ -1,4 +1,4 @@
-# ingredients: Effects and Importances of Model Ingredients
+# Model Ingredients <img src="man/figures/logo.png" align="right" width="150"/>
 
 [![Build Status](https://api.travis-ci.org/ModelOriented/ingredients.png)](https://travis-ci.org/ModelOriented/ingredients)
 [![Coverage
@@ -10,17 +10,17 @@ Status](https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master
 
 The `ingredients` package is a collection of tools for assessment of feature importance and feature effects.
 
-Key functions are: 
+Key functions: 
 
 * `feature_importance()` for assessment of global level feature importance, 
 * `ceteris_paribus()` for calculation of the Ceteris Paribus / What-If Profiles (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus.html),
-* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html),
-* `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html),
 * `partial_dependency()` for Partial Dependency Plots,
 * `conditional_dependency()` for Conditional Dependency Plots also called M Plots,
 * `accumulated_dependency()` for Accumulated Local Effects Plots,
 * `aggregate_profiles()` and `cluster_profiles()` for aggregation of Ceteris Paribus Profiles,
 * `aspect_importance()` for LIME style explanations,
+* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html),
+* `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html),
 * generic `print()` and `plot()` for better usability of selected explainers,
 * generic `plotD3()` for interactive, D3 based explanations,
 * generic `describe()` for explanations in natural language.
