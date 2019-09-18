@@ -31,11 +31,11 @@ variables used in the model}
 
 \item{aspects}{list containting grouping of features into aspects}
 
-\item{N}{number of observarions to be sampled from data}
+\item{N}{number of observations to be sampled (with replacement) from data}
 
 \item{sample_method}{sampling method in \code{\link{get_sample}}}
 
-\item{n_var}{how many non-zero coefficients should be after lasso fitting,
+\item{n_var}{maximum number of non-zero coefficients after lasso fitting,
 if zero than linear regression is used}
 
 \item{f}{frequency in \code{\link{get_sample}}}
@@ -73,7 +73,8 @@ model_titanic_glm <- glm(survived == "yes" ~
 
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
-                               y = titanic_imputed$survived == "yes")
+                               y = titanic_imputed$survived == "yes",
+                               verbose = FALSE)
 
 aspects <- list(wealth = c("class", "fare"),
                 family = c("sibsp", "parch"),
@@ -92,7 +93,8 @@ model_titanic_rf <- randomForest(survived ~ class + gender + age + sibsp +
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
-                              y = titanic_imputed$survived == "yes")
+                              y = titanic_imputed$survived == "yes",
+                              verbose = FALSE)
 
 aspect_importance(explain_titanic_rf,
                   new_observation = titanic_imputed[1,],

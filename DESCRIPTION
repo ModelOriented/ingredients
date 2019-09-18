@@ -28,7 +28,9 @@ Imports:
     DALEX,
     ggplot2,
     glmnet,
-    scales
+    scales,
+    ggdendro,
+    gridExtra
 Suggests:
     gower,
     randomForest,
@@ -38,7 +40,8 @@ Suggests:
     ggpubr,
     jsonlite,
     knitr,
-    rmarkdown
+    rmarkdown,
+    mlbench
 URL: https://ModelOriented.github.io/ingredients/, https://github.com/ModelOriented/ingredients
 BugReports: https://github.com/ModelOriented/ingredients/issues
 VignetteBuilder: knitr

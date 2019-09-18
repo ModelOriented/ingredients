@@ -62,10 +62,11 @@ test_that("check aspects_importance for explainer",{
   library("DALEX")
   library("ingredients")
 
+  titanic_without_target <- titanic_data[,colnames(titanic_data)!="survived"]
 
   titanic_explainer <- explain(model = titanic_glm_model,
-                               data = titanic_data,
-                               y = titanic_data$survived)
+                               data = titanic_without_target,
+                               verbose = FALSE)
 
   aspect_importance_titanic_glm <- aspect_importance(titanic_explainer,
                                                      new_observation = titanic_new_observation,
@@ -119,9 +120,15 @@ test_that("check for aspect_importance with lasso",{
   aspect_importance_apartments <- aspect_importance(apartments_lm_model, apartments,
                                                     new_observation = apartments_new_observation,
                                                     aspects =  apartments_aspects, n_var = 3)
+  aspect_importance_apartments_0 <- aspect_importance(apartments_lm_model, apartments,
+                                                      new_observation = apartments_new_observation,
+                                                      aspects =  apartments_aspects, n_var = 1)
+
 
   expect_true("aspect_importance" %in% class(aspect_importance_apartments))
   expect_true(sum(aspect_importance_apartments[,2] != 0) == 3)
+  expect_true(sum(aspect_importance_apartments_0[,2] != 0) == 0)
+
 })
 
 test_that("check for aspect_importance with show_cor",{
@@ -169,20 +176,33 @@ test_that("check group_variables function",{
   library("DALEX")
   library("ingredients")
 
-  titanic_num <- titanic_data[,unlist(lapply(titanic, is.numeric))]
-  aspect_list <- group_variables(titanic_num, 0.5)
-  expect_true(length(aspect_list) == 3)
-  expect_error(group_variables(titanic, 0.6))
-  expect_error(group_variables(titanic, 1.6))
+  aspect_list <- group_variables(apartments_num, 0.52, draw_tree = T,
+                                 draw_abline = TRUE)
+  expect_true(length(aspect_list) == 4)
+  expect_error(group_variables(apartments, 0.6))
+  expect_error(group_variables(apartments_num, 1.6))
 
 })
+
+test_that("check plot_group_variables function",{
+  library("DALEX")
+  library("ingredients")
+
+  apartments_hc <- hclust(as.dist(1 - abs(cor(apartments_num, method = "spearman"))))
+  p <- plot_group_variables(apartments_hc, p = 0.5, draw_abline = TRUE)
+  expect_true("ggplot" %in% class(p))
+})
+
+
 
 test_that("check aspect_importance_single function",{
   library("DALEX")
   library("ingredients")
 
-  aspect_importance_titanic_single <- aspect_importance_single(x = apartments_lm_model, data = apartments,
-                                                               new_observation = apartments_new_observation)
+  aspect_importance_titanic_single <-
+    aspect_importance_single(x = apartments_lm_model,
+                             data = apartments[,colnames(apartments) != "m2.price"],
+                             new_observation = apartments_new_observation)
 
   expect_true("data.frame" %in% class(aspect_importance_titanic_single))
   expect_true(dim(aspect_importance_titanic_single)[1] == 5)
@@ -190,4 +210,75 @@ test_that("check aspect_importance_single function",{
 
 })
 
+test_that("check aspect_importance_single.explainer function",{
+  library("DALEX")
+  library("ingredients")
+
+  titanic_without_target <- titanic_data[,colnames(titanic_data)!="survived"]
+
+  titanic_explainer <- explain(model = titanic_glm_model,
+                               data = titanic_without_target,
+                               verbose = FALSE)
+
+  aspect_importance_titanic_glm_single <- aspect_importance_single(titanic_explainer,
+                                                                   new_observation = titanic_new_observation)
+
+  expect_true("data.frame" %in% class(aspect_importance_titanic_glm_single))
+
+})
+
+
+test_that("check custom_tree_cutting function",{
+  library("DALEX")
+  library("ingredients")
+
+  apartments_hc <- hclust(as.dist(1 - abs(cor(apartments_num, method = "spearman"))))
+  aspect_list <- custom_tree_cutting(apartments_hc, 0.6)
+  one_aspect <- custom_tree_cutting(apartments_hc, 0)
+
+  expect_true(class(aspect_list) == "list")
+  expect_true(length(aspect_list) == 4)
+  expect_true(length(one_aspect) == 1)
+  expect_true("surface" %in% aspect_list$aspect.group3)
+
+})
+
+test_that("check plot_aspects_importance_grouping function",{
+  library("DALEX")
+  library("ingredients")
+
+  p <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
+                                        data = apartments_num_mod,
+                                        new_observation = apartments_num_new_observation,
+                                        cumulative_max = TRUE, absolute_value = TRUE)
+
+  expect_true("ggplot" %in% class(p))
+})
+
+
+test_that("check triplot function",{
+  library("DALEX")
+  library("ingredients")
+
+  p <- triplot(x = apartments_num_lm_model,
+               data = apartments_num_mod, new_observation = apartments_num_new_observation)
+
+  expect_true("gtable" %in% class(p))
+  expect_true(nrow(p$layout) == 3)
+})
+
+test_that("check triplot.explainer function",{
+  library("DALEX")
+  library("ingredients")
+
+  apartments_explainer <- explain(model = apartments_num_lm_model,
+                                  data = apartments_num_mod,
+                                  verbose = FALSE)
+
+  p <- triplot(x = apartments_explainer,
+               new_observation = apartments_num_new_observation)
+
+  expect_true("gtable" %in% class(p))
+  expect_true(nrow(p$layout) == 3)
+})
 
