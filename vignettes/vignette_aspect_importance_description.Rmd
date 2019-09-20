@@ -1,0 +1,150 @@
+---
+title: "Aspect importance function examples"
+author: "Katarzyna Pękala"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Aspect importance function examples}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+# Introduction
+
+Aspect importance method takes on the challenge of interpreting model built on highly dimensional data. There exists number of methods for local explanation of black-box models, like Break Down, Shap or LIME. However, the problem arise when the explanatory variables are highly correlated.
+
+Aspect importance goal is to increase the interpretability of the black box model by providing instance-level explainer for the groups of explanatory variables. It allows us to group predictors into entities called aspects. Afterwards, it can calculate the contribution of those aspects to the prediction.
+
+# Intuition
+
+Our goal is to calculate aspects importance in the prediction of observation of interest. To achieve that, we will use subset of observations from the original dataset. We will modify it, so every observation will have at least one aspect (meaning at least one group of explanatory variables) replaced by the data from the observation of interest. Then we will build linear model that will predict how those replacements change the prediction of the modified data. 
+
+# Method
+
+We start by having dataset $\mathcal{X}$ and model $f$ built on this dataset. We would like to explain the prediction for the observation of interest $x_*$.
+
+Before we can use the method, we need to group the explanatory variables into aspects. We can use two different approaches: we can built the aspect list arbitrarily by using domain expertise or we can use `group_variables()` function that will do the grouping for us by using variables correlations. In the second approach, we are going to get aspects where every absolute value of pair-wise correlation of explanatory variables is no smaller than a given level. It should be noted that `group_variables()` works only for numerical variables.
+
+The aspect importance function algorithm starts with sampling observations from the dataset $\mathcal{X}$ into matrix $A$. 
+
+Afterwards, it creates binary matrix $X'$. The number of rows of this matrix is equal to number of sampled observations in $A$. The number of columns is equal to the number of aspects. 
+
+In the next step, matrix $A$ is modified into matrix $A'$. The binary matrix $X'$ directs how the modification will work: for given observation from $A$, function checks in binary matrix $X'$ which aspects should be replaced by aspects from the observation of interest $x_*$. 
+
+In result, we obtain a modified matrix $A'$ where for every observation at least one aspects is replaced with the data from the observation of interest. 
+
+Next, the method checks how the aspects replacement changed the prediction. In other words, it looks at the the difference between predictions for modified matrix $A'$ and matrix $A$.
+
+Finally, we use linear model on the binary matrix $X'$ where the difference in predictions is the dependent variable. Model's coefficients are the results we are looking for - the values of aspects importance.
+
+We can interpret coefficient $\beta_i$ as the average change in prediction caused by replacing in $A$ the variables (gruped in aspect $i$) by the variables from $x_*$. 
+
+Aspect importance algorithm: 
+
+* $f$ - model  
+* $\mathcal{X}$ - dataset  
+* $x_*$ - observation to be explained   
+* $\mathcal{P}$ - aspects list, $\mathcal{P} = {q_1, ..., q_m}$, partition of set of indexes $J = {1, ..., p}$  
+* $b$ - size of sample  
+
+
+1. $A$ = $[a_i^j]_{b \times p}$ = select\_sample($\mathcal{X}$, $b$)  
+sample (with replacement) B rows from $\mathcal{X}$
+
+2. $X'$ = $[{x'}_i^k]_{b \times m}$ = sample\_aspects($m$, $b$)  
+sample binary matrix of size $b \times m$
+
+3. $A'$ = $[{a'} _i^j]_{b\times p}$ = replace\_aspects($A$, $X'$)  
+$[{a'}_i^j] = [a_i^j]$, if $[{x'}_i^k] = 0$ where $j \in q_k$  
+$[{a'}_i^j] = x_{*j}$, if $[{x'}_i^k] = 1$ where $j \in q_k$  
+  
+4. $Y_m = f(A') - f(A)$  
+
+5. fit linear model $g$, $g(X') = Y_m$
+
+return coefficients of $g$ 
+
+# Examples
+
+To illustrate how the method works, we will use `Boston Housing` dataset from `mlbench` package. We are going to build two models on the `Boston Housing` dataset: linear regression model and random forest. Those models will be built only on numerical variables.
+We would like to understand the predictions for the observation $x_*$.  
+
+In the beginning we use `group_variables()` function with cut off level set on 0.6. As a result, we get a list of variables groups (aspects) where absolute value of features' pairwise correlation is at least at 0.6. Then we call `aspects_importance()` to see which aspects are most important, to show how variables are grouped into aspects, what is minimal value of pairwise absolute correlation in each group and to check whether any pair of features is negatively correlated (`neg`) or not (`pos`).  
+
+
+```{r import BostonHousing2}
+library(ingredients)
+library(mlbench)
+library("randomForest")
+library(gridExtra)
+data("BostonHousing2")
+set.seed(123)
+data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
+x <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
+new_observation <- data[4,]
+Boston_lm <- lm(cmedv ~., data = data)
+Boston_rf <- randomForest(cmedv ~ ., data = data)
+predict(Boston_lm, new_observation)
+predict(Boston_rf, new_observation)
+aspects <- group_variables(x, 0.6)
+ai_lm <- aspect_importance(Boston_lm, data, predict_function = predict,
+                  new_observation, aspects, N = 5500, show_cor = T)
+ai_rf <- aspect_importance(Boston_rf, data, predict_function = predict, 
+                  new_observation, aspects, N = 5500, show_cor = T)
+ai_lm
+ai_rf
+grid.arrange(plot(ai_lm), plot(ai_rf), nrow = 1)
+```
+
+
+# Lasso
+
+Function `aspect_importance()` can calculate coefficients (that is aspects' importance) by using either linear regression or lasso regression. Using lasso, we can control how many nonzero coefficients (nonzero aspects importance values) are present in the final explanation. To use `aspect_importance()` with lasso, we have to provide `n_var` parameter, which declares how many aspects importance values we would like to get in `aspect_importance()` results. 
+
+With the help of lasso technique, we would like to check the importance of variables' aspects, while controlling that two of them should be equal to 0. We will call `aspect_importance()` with `n_var` parameter set to 3. 
+
+ 
+```{r lasso demo}
+aspect_importance(Boston_lm, data, predict_function = predict,
+                  new_observation, aspects, N = 5500, show_cor = T, n_var = 3)
+aspect_importance(Boston_rf, data, predict_function = predict, 
+                  new_observation, aspects, N = 5500, show_cor = T, n_var = 3)
+```
+
+
+# Hierarchical aspects importance
+
+When the dataset contains only numerical varaibles, we can use `triplot()` to verify the values of aspects importance at different levels of variables grouping. 
+
+`Triplot` allows us to check importance of ....
+
+```{r triplot}
+triplot(Boston_lm, data, predict_function = predict,
+                  new_observation, N = 5500)
+triplot(Boston_rf,data, predict_function = predict, 
+                  new_observation, N = 5500)
+```
+
+
+# Summary
+...
+
+
+# Session info
+
+```{r}
+sessionInfo()
+```
+
