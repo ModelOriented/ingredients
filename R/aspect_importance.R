@@ -208,7 +208,9 @@ plot.aspect_importance <- function(x, bar_width = 10, ...) {
   ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
-    theme(legend.position = "none")
+    theme(legend.position = "none",
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
 }
 
 #' @export

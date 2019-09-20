@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-Aspect importance method takes on the challenge of interpreting model built on highly dimensional data. There exists number of methods for local explanation of black-box models, like Break Down, Shap or LIME. However, the problem arise when the explanatory variables are highly correlated.
+Aspect importance method takes on the challenge of interpreting model built on highly dimensional data. There exists a number of methods for local explanation of black-box models, like Break Down, Shap or LIME. However, the problem arise when the explanatory variables are correlated. 
 
 Aspect importance goal is to increase the interpretability of the black box model by providing instance-level explainer for the groups of explanatory variables. It allows us to group predictors into entities called aspects. Afterwards, it can calculate the contribution of those aspects to the prediction.
 
@@ -126,9 +126,7 @@ aspect_importance(Boston_rf, data, predict_function = predict,
 
 # Hierarchical aspects importance
 
-When the dataset contains only numerical varaibles, we can use `triplot()` to verify the values of aspects importance at different levels of variables grouping. 
-
-`Triplot` allows us to check importance of ....
+When the dataset contains only numerical varaibles, we can use `triplot()` to verify the values of aspects importance for the different levels of variables grouping. Method starts with looking at the aspect importance where every aspect has one, single variable. Afterwards, it interatively creates bigger aspects by merging the ones with the highest level of absolute correlation into one aspect and calculating it's contribution to the prediction.
 
 ```{r triplot}
 triplot(Boston_lm, data, predict_function = predict,
