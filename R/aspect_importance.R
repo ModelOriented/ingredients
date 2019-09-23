@@ -18,9 +18,9 @@
 #' @param new_observation selected observation with columns that corresponds to
 #'   variables used in the model
 #' @param aspects list containting grouping of features into aspects
-#' @param N number of observarions to be sampled from data
+#' @param N number of observations to be sampled (with replacement) from data
 #' @param sample_method sampling method in \code{\link{get_sample}}
-#' @param n_var how many non-zero coefficients should be after lasso fitting,
+#' @param n_var maximum number of non-zero coefficients after lasso fitting,
 #'   if zero than linear regression is used
 #' @param f frequency in \code{\link{get_sample}}
 #' @param show_cor show if all features in aspect are pairwise positivly
@@ -47,7 +47,8 @@
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
-#'                                y = titanic_imputed$survived == "yes")
+#'                                y = titanic_imputed$survived == "yes",
+#'                                verbose = FALSE)
 #'
 #' aspects <- list(wealth = c("class", "fare"),
 #'                 family = c("sibsp", "parch"),
@@ -66,7 +67,8 @@
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
-#'                               y = titanic_imputed$survived == "yes")
+#'                               y = titanic_imputed$survived == "yes",
+#'                               verbose = FALSE)
 #'
 #' aspect_importance(explain_titanic_rf,
 #'                   new_observation = titanic_imputed[1,],
@@ -94,7 +96,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects,
   # calls target function
   aspect_importance.default(model, data, predict_function,
                             new_observation, aspects, N, sample_method,
-                            n_var, f)
+                            n_var, f, show_cor)
 }
 
 #' @export
@@ -149,7 +151,7 @@ aspect_importance.default <- function(x, data, predict_function = predict,
     x_new_df <- model.matrix(y_changed ~ ., data = new_df)[,-1]
     y_new_df <- y_changed
     glmnet_model <- glmnet(x_new_df, y_new_df, alpha = 1)
-    indx <- min(which(glmnet_model$df >= n_var))
+    indx <- max(which(glmnet_model$df <= n_var))
     model_coef <- coef(glmnet_model)[,indx]
   }
 
@@ -199,15 +201,17 @@ plot.aspect_importance <- function(x, bar_width = 10, ...) {
 
   importance <- a_sign <- aspects <- NULL
   x$a_sign <- ifelse(x$importance > 0,"positive","negative")
+
   x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
 
   # plot it
   ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
     geom_linerange(size = bar_width) + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
-    theme(legend.position = "none")
+    theme(legend.position = "none",
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
 }
-
 
 #' @export
 #' @rdname aspect_importance
@@ -220,67 +224,87 @@ lime <- function(x, ...) {
 #' Calculates aspect_importance for single aspects (every aspect contains only
 #' one feature).
 #'
-#' @param x a model to be explained
-#' @param data dataset
-#' @param predict_function predict function
+#' @param x an explainer created with the \code{DALEX::explain()} function
+#' or a model to be explained.
+#' @param data dataset, it will be extracted from \code{x} if it's an explainer
+#' NOTE: Target variable shouldn't be present in the \code{data}
+#' @param predict_function predict function, it will be extracted from \code{x} if
+#' it's an explainer
 #' @param new_observation selected observation with columns that corresponds to
-#'   variables used in the model
-#' @param N number of rows to be sampled from data
+#' variables used in the model, should be without target variable
+#' @param N number of observations to be sampled (with replacement) from data
 #' @param sample_method sampling method in \code{\link{get_sample}}
 #' @param n_var how many non-zero coefficients for lasso fitting, if zero than
 #'   linear regression is used
 #' @param f frequency in in \code{\link{get_sample}}
-#' @param response_variable name of response variable, should be provided if it is
-#'   included in data
+#' @param ... other parameters
 #'
 #' @return An object of the class 'aspect_importance'. Contains dataframe that
 #'   describes aspects' importance.
 #'
 #' @examples
 #' library("DALEX")
-#' titanic <- na.omit(titanic)
-#' model_titanic_glm <- glm(survived == "yes" ~
-#'                            class+gender+age+sibsp+parch+fare+embarked,
-#'                          data = titanic, family = "binomial")
 #'
-#' aspect_importance_single(model_titanic_glm, titanic, new_observation = titanic[1,],
-#'                   response_variable = "survived")
+#' model_titanic_glm <- glm(survived == "yes" ~ class + gender + age +
+#'                          sibsp + parch + fare + embarked,
+#'                          data = titanic_imputed,
+#'                          family = "binomial")
+#'
+#' aspect_importance_single(model_titanic_glm, data = titanic_imputed[,-9],
+#'                          new_observation = titanic_imputed[1,-9])
 #'
 #' @export
 
-aspect_importance_single <- function(x, data, predict_function = predict,
-                                     new_observation, N = 100,
-                                     sample_method = "default", n_var = 0,
-                                     f = 2, response_variable = "") {
+aspect_importance_single <- function(x, ...)
+  UseMethod("aspect_importance_single")
 
-  #remove response variable
-  new_observation_changed <-
-    try(new_observation <-
-          new_observation[,!colnames(new_observation) == response_variable])
+#' @export
+#' @rdname aspect_importance_single
 
-  if("try-error" %in% class(t)) {
-    new_observation_changed <- new_observation
-  }
+aspect_importance_single.explainer <- function(x, new_observation,
+                                               N = 100, sample_method = "default",
+                                               n_var = 0, f = 2, ...) {
+
+  # extracts model, data and predict function from the explainer
+  model <- x$model
+  data <- x$data
+  predict_function <- x$predict_function
+
+  # calls target function
+  aspect_importance_single.default(x = model, data = data,
+                                   predict_function = predict_function,
+                                   new_observation = new_observation, N = N,
+                                   sample_method = sample_method,
+                                   n_var = n_var, f = f)
+}
+
+#' @export
+#' @rdname aspect_importance_single
+
+aspect_importance_single.default <- function(x, data, predict_function = predict,
+                                             new_observation, N = 100,
+                                             sample_method = "default", n_var = 0,
+                                             f = 2, ...) {
 
   #create aspect list
-  single_aspect_list <- vector("list", length(new_observation_changed))
-  names(single_aspect_list) <- names(new_observation_changed)
+  single_aspect_list <- vector("list", length(colnames(data)))
+  names(single_aspect_list) <- colnames(data)
 
   for (i in c(1:length(single_aspect_list))) {
-    single_aspect_list[i] <- names(new_observation_changed)[i]
+    single_aspect_list[i] <- colnames(data)[i]
   }
 
   #call aspect importance function
   res_ai <- aspect_importance(x, data, predict_function,
-                              new_observation_changed, single_aspect_list, N,
+                              new_observation, single_aspect_list, N,
                               sample_method, n_var, f)
 
   #create data frame with results
   res_ai[,3] <- as.character(res_ai[,1])
-  for (i in c(1:length(new_observation_changed))) {
-    tmp_val <- new_observation_changed[as.character(res_ai[i,1])]
-    if (is.numeric(tmp_val)) {
-      tmp_val <- round(tmp_val, digits = 2)
+  for (i in c(1:dim(res_ai)[1])) {
+    tmp_val <- new_observation[as.character(res_ai[i,1])]
+    if (is.numeric(tmp_val[1,1])) {
+      tmp_val <- round(tmp_val[1,1], digits = 2)
     } else {
       tmp_val <- as.character(tmp_val[1,1])
     }
@@ -313,6 +337,7 @@ aspect_importance_single <- function(x, data, predict_function = predict,
 #'  get_sample(100,6,"binom",3)
 #' }
 #' @export
+#'
 #' @rdname get_sample
 
 get_sample <- function(n, p, sample_method = c("default","binom"), f = 2) {
@@ -343,14 +368,12 @@ get_sample <- function(n, p, sample_method = c("default","binom"), f = 2) {
 #' @param clust_method the agglomeration method to be used,
 #' see \code{\link[stats]{hclust}} methods
 #' @param draw_tree if TRUE, function plots tree that illustrates grouping
+#' @param draw_abline if TRUE, function plots vertical line at cut-off level
 #'
 #' @return list of aspects
-#' @export
 #'
 #' @importFrom stats hclust
 #' @importFrom stats cor
-#' @importFrom graphics plot
-#' @importFrom graphics abline
 #'
 #' @examples
 #' library("DALEX")
@@ -358,18 +381,114 @@ get_sample <- function(n, p, sample_method = c("default","binom"), f = 2) {
 #' group_variables(dragons_data, p = 0.7, clust_method = "complete")
 #'
 #' @export
+#'
 #' @rdname group_variables
 
 group_variables <- function(x, p = 0.5, clust_method = "complete",
-                            draw_tree = FALSE) {
+                            draw_tree = FALSE, draw_abline = TRUE) {
   stopifnot(all(sapply(x, is.numeric) ))
   stopifnot(p >= 0, p <= 1)
-  val <- NULL
 
   # build and cut a tree
   x_hc <- hclust(as.dist(1 - abs(cor(x, method = "spearman"))),
                  method = clust_method)
-  clust_list <- cutree(x_hc, h = (1 - p))
+
+  res <- custom_tree_cutting(x_hc, p)
+
+  # plot a tree
+  if (draw_tree == TRUE) {
+    plot(plot_group_variables(x_hc, p, draw_abline))
+  }
+
+  return(res)
+}
+
+
+#' Plots tree with correlation values
+#'
+#' Plots tree that illustrates the results of group_variables function.
+#'
+#' @param x hclust object
+#' @param p correlation value for cutoff level
+#' @param draw_abline if TRUE, cutoff line will be drawn
+#'
+#' @return tree plot
+#'
+#' @importFrom stats hclust
+#' @importFrom ggdendro dendro_data
+#' @importFrom ggdendro segment
+#' @importFrom ggdendro label
+#'
+#' @examples
+#' library("DALEX")
+#' dragons_data <- dragons[,c(2,3,4,7,8)]
+#' group_variables(dragons_data, p = 0.7, clust_method = "complete",
+#'                 draw_tree = TRUE)
+#'
+#' @export
+
+plot_group_variables <- function(x, p, draw_abline = TRUE) {
+  stopifnot(p>=0, p<=1)
+  stopifnot(class(x) == "hclust")
+
+  y <- xend <- yend <- h <- NULL
+
+  #convert tree to dendogram
+  dhc <- as.dendrogram(x)
+  ddata <- dendro_data(dhc, type = "rectangle")
+
+  #get correlation values
+  xy <- ddata$segments[ddata$segments$x == ddata$segments$xend,][,c(1,4)]
+  xy <- xy[xy$yend != 0,]
+  xy <- cbind(xy,1 - xy[,2])
+  colnames(xy) <- c("x", "y", "h")
+
+  #build plot
+  cor_plot <- ggplot(segment(ddata)) +
+    geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
+    geom_text(aes(x = x, y = y, label = label, hjust = 1), data = label(ddata),
+              nudge_y = -0.01, colour = theme_drwhy()$axis.title$colour) +
+    geom_text(data = xy, aes(x = x, y = y, label = round(h, digits=2)),
+              hjust = 1.1, size = 3) +
+    coord_flip() +
+    scale_y_continuous(expand = c(0.2, 0)) +
+    theme(axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = theme_drwhy()$axis.title,
+          panel.background = element_rect(fill="white"),
+          panel.grid = element_blank()) +
+    labs(y = "Spearman correlations")
+
+  #add line that shows correlation cut off level
+  if (draw_abline == TRUE) {
+    cor_plot <- cor_plot + geom_hline(yintercept = 1-p, linetype="dashed")
+  }
+
+  return(cor_plot)
+}
+
+
+#' Custom tree cutting
+#'
+#' This function creates aspect list after cutting a tree at a given height.
+#'
+#' @param x hclust object
+#' @param h correlation value for tree cutting
+#'
+#' @return dataframe with aspect
+#'
+#' @importFrom stats cutree
+#'
+#' @noRd
+
+custom_tree_cutting <- function(x, h) {
+  val <- NULL
+  clust_list <- cutree(x, h = 1 - h)
 
   #prepare a list with aspects grouping
   df <- data.frame(names(clust_list), unname(clust_list))
@@ -381,11 +500,293 @@ group_variables <- function(x, p = 0.5, clust_method = "complete",
     res[i] <- list(as.character(subset(df,val == i)$name))
   }
 
-  if (draw_tree == TRUE) {
-    plot(x_hc, hang = -1)
-    abline(h = 1 - p, lty = 2)
+  return(res)
+}
+
+#' Function plots tree with aspect importance values
+#'
+#' This function plots tree that shows order of feature grouping and aspect
+#' importance values of every newly created aspect.
+#'
+#' @param x a model to be explained
+#' @param data dataset, should be without target variable
+#' @param predict_function predict function
+#' @param new_observation selected observation with columns that corresponds to
+#'   variables used in the model, should be without target variable
+#' @param N number of observations to be sampled (with replacement) from data
+#' @param clust_method the agglomeration method to be used, see
+#'   \code{\link[stats]{hclust}} methods
+#' @param absolute_value if TRUE, aspect importance values will be drawn as
+#'   absolute values
+#' @param cumulative_max if TRUE, aspect importance shown on tree will be max value
+#'   of children and node aspect importance values
+#'
+#' @return ggplot
+#'
+#' @import stats
+#' @import ggplot2
+#' @importFrom ggdendro dendro_data
+#' @importFrom ggdendro segment
+#' @importFrom ggdendro label
+#'
+#' @examples
+#' library(DALEX)
+#' apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
+#' apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
+#' apartments_num_new_observation <- apartments_num[2,-1]
+#' apartments_num_mod <- apartments_num[,-1]
+#' plot_aspects_importance_grouping(x = apartments_num_lm_model,
+#' data = apartments_num_mod, new_observation = apartments_num_new_observation)
+#'
+#' \donttest{
+#' library("randomForest")
+#' library("mlbench")
+#' data("BostonHousing2")
+#' data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
+#' model <- lm(cmedv ~., data = data)
+#' new_observation <- data[10,]
+#' data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
+#' plot_aspects_importance_grouping(x = model, data = data,
+#' new_observation = new_observation)
+#' }
+#'
+#' @export
+#'
+
+
+plot_aspects_importance_grouping <- function(x, data, predict_function = predict,
+                                             new_observation, N = 100,
+                                             clust_method = "complete",
+                                             absolute_value = FALSE,
+                                             cumulative_max = FALSE) {
+
+  #building additional objects
+  y <- xend <- yend <- yend_val <- NULL
+
+  aspect_importance_leaves <- aspect_importance_single(x, data, predict_function,
+                                                       new_observation, N)
+  x_hc <- hclust(as.dist(1 - abs(cor(data, method = "spearman"))),
+                 method = clust_method)
+  cutting_heights <- x_hc$height
+  aspects_list_previous <-  custom_tree_cutting(x_hc,1)
+  int_node_importance <- as.data.frame(NULL)
+
+  #calculating aspect importance
+  for (i in c(1:(length(cutting_heights)-1))) {
+
+    aspects_list_current <- custom_tree_cutting(x_hc,1-cutting_heights[i])
+
+    t1 <- match(aspects_list_current,setdiff(aspects_list_current,aspects_list_previous))
+    t2 <- which(t1 == 1)
+    t3 <- aspects_list_current[t2]
+    group_name <- names(t3)
+
+    res_ai <- aspect_importance(x = x, data = data, predict_function = predict_function,
+                                new_observation = new_observation,
+                                aspects = aspects_list_current, N = N)
+
+    int_node_importance[i,1] <- res_ai[res_ai$aspects == group_name,]$importance
+    int_node_importance[i,2] <- group_name
+    int_node_importance[i,3] <- cutting_heights[i]
+    aspects_list_previous <- aspects_list_current
   }
 
-  return(res)
+  int_node_importance[length(cutting_heights),1] <- NA
+
+  #inserting importance values into x_hc tree
+  x_hc$height <- int_node_importance$V1
+
+  #modifing importance if cumulative_max/absolute_value are true
+  if (cumulative_max == TRUE) {
+    for (i in 1:length(x_hc$height)) {
+      if (x_hc$merge[i,1] < 0) {
+        a1 <- aspect_importance_leaves[
+          aspect_importance_leaves[,1] == x_hc$labels[-x_hc$merge[i,1]],]$importance
+      } else {
+        a1 <- x_hc$height[x_hc$merge[i,1]]
+      }
+      if (x_hc$merge[i,2] < 0) {
+        a2 <- aspect_importance_leaves[
+          aspect_importance_leaves[,1] == x_hc$labels[-x_hc$merge[i,2]],]$importance
+      } else {
+        a2 <- x_hc$height[x_hc$merge[i,2]]
+      }
+      a3 <- x_hc$height[i]
+
+      if (absolute_value == TRUE) {
+        x_hc$height[i] <- max(abs(a1), abs(a2), abs(a3))
+      } else {
+        x_hc$height[i] <- max(a1, a2, a3)
+      }
+    }}
+
+  #buidling dendogram
+  dend_mod <- NULL
+  dend_mod <- as.dendrogram(x_hc, hang = -1)
+  ddata <- dendro_data(dend_mod, type = "rectangle")
+
+  #preparing labels for aspect_importance values
+  ai_labels <-  na.omit(segment(ddata))
+  ai_labels <- ai_labels[ai_labels$yend!=0,]
+  ai_labels$yend_val <- ai_labels$yend
+
+  #removing values of aspect_importance for single aspects
+  cc_vector <- !complete.cases(ddata$segments)
+  ddata$segments[cc_vector,] <- 0
+  ddata$segments[min(which(cc_vector == TRUE)),c(1,3)] <- min(ddata$labels$x)
+  ddata$segments[min(which(cc_vector == TRUE)) + 1,c(1,3)] <- max(ddata$labels$x)
+
+  #modifing importance if absolute_value is true
+  if (absolute_value == TRUE) {
+    ddata$segments$y <- abs(ddata$segments$y)
+    ddata$segments$yend <- abs(ddata$segments$yend)
+    ai_labels$yend_val <- abs(ai_labels$yend)
+  }
+
+  #adding new observation values to labels
+  ddata$labels[,3] <- as.character(ddata$labels[,3])
+  for (i in c(1:length(ddata$labels[,3]))) {
+    ddata$labels[i,3] <- paste0(ddata$labels[i,3], " = ",
+                                round(new_observation[ddata$labels[i,3]],
+                                      digits=2))
+  }
+
+  #moving labels
+  nudge_value <- ifelse(min(ddata$segments$yend) == 0, -0.2,
+                        min(ddata$segments$yend)*1.35)
+
+  #building plot
+  p <- ggplot(segment(ddata)) +
+    geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
+    geom_text(aes(x = x, y = y, label = label, hjust = 1), data = label(ddata),
+              colour = theme_drwhy()$axis.title$colour, nudge_y = nudge_value) +
+    geom_text(data = ai_labels, aes(x = x, y = yend_val,
+                                    label = round(yend, digits = 2)),
+              hjust = 1.3, size = 3) +
+    coord_flip() +
+    scale_y_continuous(expand = c(.3, .3)) +
+    theme(
+      axis.line.y = element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank(),
+      axis.line.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.title.x = theme_drwhy()$axis.title,
+      panel.background = element_rect(fill = "white"),
+      panel.grid = element_blank()
+    ) +
+    labs(y = "Aspect importance for correlated variables")
+
+  return(p)
+}
+
+#' Three plots that sum up automatic aspect importance grouping
+#'
+#' This function shows: \itemize{ \item plot for aspect_importance with
+#' single aspect \item tree that shows aspect_importance for every newly
+#' expanded aspect
+#' \item clustering tree. }
+#'
+#' @param x an explainer created with the \code{DALEX::explain()} function
+#' or a model to be explained.
+#' @param data dataset, it will be extracted from \code{x} if it's an explainer
+#' NOTE: Target variable shouldn't be present in the \code{data}
+#' @param predict_function predict function, it will be extracted from \code{x} if
+#' it's an explainer
+#' @param new_observation selected observation with columns that corresponds to
+#'   variables used in the model, should be without target variable
+#' @param N number of rows to be sampled from data
+#' @param clust_method the agglomeration method to be used, see
+#'   \code{\link[stats]{hclust}} methods
+#' @param absolute_value if TRUE, aspect importance values will be drawn as
+#'   absolute values
+#' @param cumulative_max if TRUE, aspect importance shown on tree will be max value
+#'   of children and node aspect importance values
+#' @param ... other parameters
+#'
+#' @import stats
+#' @import ggplot2
+#' @importFrom gridExtra grid.arrange
+#'
+#' @examples
+#' library(DALEX)
+#' apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
+#' apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
+#' apartments_num_new_observation <- apartments_num[2,-1]
+#' apartments_num_mod <- apartments_num[,-1]
+#' triplot(x = apartments_num_lm_model,
+#' data = apartments_num_mod, new_observation = apartments_num_new_observation)
+#'
+#' \donttest{
+#' library("randomForest")
+#' library("mlbench")
+#' data("BostonHousing2")
+#' data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
+#' model <- lm(cmedv ~., data = data)
+#' new_observation <- data[10,]
+#' data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
+#' triplot(x = model, data = data,
+#' new_observation = new_observation)
+#' }
+#'
+#' @export
+
+triplot <- function(x, ...)
+  UseMethod("triplot")
+
+#' @export
+#' @rdname triplot
+
+triplot.explainer <- function(x, new_observation, N = 500, clust_method = "complete",
+                              absolute_value = FALSE, cumulative_max = FALSE,
+                              ...) {
+
+  # extracts model, data and predict function from the explainer
+  data <- x$data
+  model <- x$model
+  predict_function <- x$predict_function
+
+  # calls target function
+  triplot.default(model, data, predict_function, new_observation, N,
+                  clust_method, absolute_value = FALSE, cumulative_max = FALSE)
+}
+
+#' @export
+#' @rdname triplot
+
+
+triplot.default <- function(x, data, predict_function = predict, new_observation,
+                            N = 500, clust_method = "complete",
+                            absolute_value = FALSE, cumulative_max = FALSE,
+                            ...) {
+
+  stopifnot(all(sapply(data, is.numeric) ))
+
+  # Build plot 1
+  aspect_importance_leaves <- aspect_importance_single(x, data, predict_function,
+                                                       new_observation, N)
+  aspect_importance_leaves[,1] <- aspect_importance_leaves[,3]
+  p1 <- plot(aspect_importance_leaves)
+  p1$labels$y <- "Single aspects importance"
+
+  # Build plot 2
+  p2 <- plot_aspects_importance_grouping(x, data, predict_function,
+                                         new_observation, N, clust_method,
+                                         absolute_value,
+                                         cumulative_max)
+  p2$labels$y <- "Hierarchical aspect importance"
+
+  # Build plot 3
+  x_hc <- hclust(as.dist(1 - abs(cor(data, method = "spearman"))),
+                 method = clust_method)
+  p3 <- plot_group_variables(x_hc, 0, draw_abline = FALSE)
+
+  # Plot
+
+  plot_list <- list(p1,p2,p3)
+  do.call("grid.arrange", c(plot_list, nrow = 1))
+
 }
 

@@ -2,23 +2,29 @@
 % Please edit documentation in R/aspect_importance.R
 \name{aspect_importance_single}
 \alias{aspect_importance_single}
+\alias{aspect_importance_single.explainer}
+\alias{aspect_importance_single.default}
 \title{Aspects importance for single aspects}
 \usage{
-aspect_importance_single(x, data, predict_function = predict,
-  new_observation, N = 100, sample_method = "default", n_var = 0,
-  f = 2, response_variable = "")
+aspect_importance_single(x, ...)
+
+\method{aspect_importance_single}{explainer}(x, new_observation, N = 100,
+  sample_method = "default", n_var = 0, f = 2, ...)
+
+\method{aspect_importance_single}{default}(x, data,
+  predict_function = predict, new_observation, N = 100,
+  sample_method = "default", n_var = 0, f = 2, ...)
 }
 \arguments{
-\item{x}{a model to be explained}
+\item{x}{an explainer created with the \code{DALEX::explain()} function
+or a model to be explained.}
 
-\item{data}{dataset}
-
-\item{predict_function}{predict function}
+\item{...}{other parameters}
 
 \item{new_observation}{selected observation with columns that corresponds to
-variables used in the model}
+variables used in the model, should be without target variable}
 
-\item{N}{number of rows to be sampled from data}
+\item{N}{number of observations to be sampled (with replacement) from data}
 
 \item{sample_method}{sampling method in \code{\link{get_sample}}}
 
@@ -27,8 +33,11 @@ linear regression is used}
 
 \item{f}{frequency in in \code{\link{get_sample}}}
 
-\item{response_variable}{name of response variable, should be provided if it is
-included in data}
+\item{data}{dataset, it will be extracted from \code{x} if it's an explainer
+NOTE: Target variable shouldn't be present in the \code{data}}
+
+\item{predict_function}{predict function, it will be extracted from \code{x} if
+it's an explainer}
 }
 \value{
 An object of the class 'aspect_importance'. Contains dataframe that
@@ -40,12 +49,13 @@ one feature).
 }
 \examples{
 library("DALEX")
-titanic <- na.omit(titanic)
-model_titanic_glm <- glm(survived == "yes" ~
-                           class+gender+age+sibsp+parch+fare+embarked,
-                         data = titanic, family = "binomial")
 
-aspect_importance_single(model_titanic_glm, titanic, new_observation = titanic[1,],
-                  response_variable = "survived")
+model_titanic_glm <- glm(survived == "yes" ~ class + gender + age +
+                         sibsp + parch + fare + embarked,
+                         data = titanic_imputed,
+                         family = "binomial")
+
+aspect_importance_single(model_titanic_glm, data = titanic_imputed[,-9],
+                         new_observation = titanic_imputed[1,-9])
 
 }

@@ -37,7 +37,10 @@ explainer_xgb <- explain(xgb_model,
                          y = titanic_small_survived, label="xgboost", verbose = FALSE)
 
 # helper objects for aspect_importance tests
-titanic_data <- na.omit(titanic)
+# titanic
+titanic_data <- titanic_imputed
+titanic_data$country <- NULL
+
 titanic_glm_model <- glm(survived == "yes" ~ class+gender+age+sibsp+parch+fare+embarked,
                          titanic_data, family = "binomial")
 
@@ -60,6 +63,8 @@ titanic_aspects <- list(wealth = c("class", "fare"),
                         embarked = "embarked")
 
 
+# apartments
+
 apartments_lm_model <- lm(m2.price ~ ., data = apartments)
 
 apartments_aspects <- list(space = c("surface", "no.rooms"),
@@ -74,4 +79,7 @@ apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
 apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
 
 apartments_num_new_observation <- apartments_num[2,-1]
+
+apartments_num_mod <- apartments_num[,-1]
+
 

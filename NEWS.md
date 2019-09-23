@@ -1,3 +1,9 @@
+ingredients 0.3.10
+---------------------------------------------------------------
+* added `triplot` function that illustrates hierarchical `aspect_importance()` groupings
+* changes in `aspect_importance()` functions
+* added back the vigniette for `aspect_importance()`
+
 ingredients 0.3.9
 ---------------------------------------------------------------
 * change `only_numerical` parameter to `variable_type` in functions aggregated_profiles(),
