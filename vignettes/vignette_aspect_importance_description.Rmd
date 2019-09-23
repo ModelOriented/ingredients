@@ -1,10 +1,10 @@
 ---
-title: "Aspect importance function examples"
+title: "Description of aspect importance method"
 author: "Katarzyna Pękala"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{Aspect importance function examples}
+  %\VignetteIndexEntry{Description of aspect importance method}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
