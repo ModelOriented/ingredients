@@ -462,7 +462,7 @@ plot_group_variables <- function(x, p, draw_abline = TRUE) {
           axis.title.x = theme_drwhy()$axis.title,
           panel.background = element_rect(fill="white"),
           panel.grid = element_blank()) +
-    labs(y = "Correlations")
+    labs(y = "Spearman correlations")
 
   #add line that shows correlation cut off level
   if (draw_abline == TRUE) {
