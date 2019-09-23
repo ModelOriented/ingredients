@@ -82,7 +82,7 @@ one feature)." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,12 @@ one feature)." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -144,33 +150,37 @@ one feature)." />
 one feature).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>aspect_importance_single</span>(<span class='no'>x</span>, <span class='no'>data</span>, <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
-  <span class='no'>new_observation</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>response_variable</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>aspect_importance_single</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for explainer</span>
+<span class='fu'>aspect_importance_single</span>(<span class='no'>x</span>, <span class='no'>new_observation</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>aspect_importance_single</span>(<span class='no'>x</span>, <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>, <span class='no'>new_observation</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>sample_method</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>n_var</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a model to be explained</p></td>
+      <td><p>an explainer created with the <code><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>DALEX::explain()</a></code> function
+or a model to be explained.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>dataset</p></td>
-    </tr>
-    <tr>
-      <th>predict_function</th>
-      <td><p>predict function</p></td>
+      <th>...</th>
+      <td><p>other parameters</p></td>
     </tr>
     <tr>
       <th>new_observation</th>
       <td><p>selected observation with columns that corresponds to
-variables used in the model</p></td>
+variables used in the model, should be without target variable</p></td>
     </tr>
     <tr>
       <th>N</th>
-      <td><p>number of rows to be sampled from data</p></td>
+      <td><p>number of observations to be sampled (with replacement) from data</p></td>
     </tr>
     <tr>
       <th>sample_method</th>
@@ -186,9 +196,14 @@ linear regression is used</p></td>
       <td><p>frequency in in <code><a href='get_sample.html'>get_sample</a></code></p></td>
     </tr>
     <tr>
-      <th>response_variable</th>
-      <td><p>name of response variable, should be provided if it is
-included in data</p></td>
+      <th>data</th>
+      <td><p>dataset, it will be extracted from <code>x</code> if it's an explainer
+NOTE: Target variable shouldn't be present in the <code>data</code></p></td>
+    </tr>
+    <tr>
+      <th>predict_function</th>
+      <td><p>predict function, it will be extracted from <code>x</code> if
+it's an explainer</p></td>
     </tr>
     </table>
 
@@ -199,21 +214,22 @@ included in data</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='no'>titanic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>(<span class='no'>titanic</span>)
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~
-                           <span class='no'>class</span>+<span class='no'>gender</span>+<span class='no'>age</span>+<span class='no'>sibsp</span>+<span class='no'>parch</span>+<span class='no'>fare</span>+<span class='no'>embarked</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='fu'>aspect_importance_single</span>(<span class='no'>model_titanic_glm</span>, <span class='no'>titanic</span>, <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic</span>[<span class='fl'>1</span>,],
-                  <span class='kw'>response_variable</span> <span class='kw'>=</span> <span class='st'>"survived"</span>)</div><div class='output co'>#&gt;    aspects importance         new observation
-#&gt; 4    class   -1.35631             class = 3rd
-#&gt; 3      age   -0.57289                age = 42
-#&gt; 5 embarked   -0.34431  embarked = Southampton
-#&gt; 7     fare   -0.34389             fare = 7.11
-#&gt; 2   gender   -0.29180           gender = male
-#&gt; 8    sibsp    0.17655               sibsp = 0
-#&gt; 6  country   -0.10405 country = United States
-#&gt; 9    parch    0.03722               parch = 0</div><div class='input'>
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> +
+                         <span class='no'>sibsp</span> + <span class='no'>parch</span> + <span class='no'>fare</span> + <span class='no'>embarked</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                         <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+
+<span class='fu'>aspect_importance_single</span>(<span class='no'>model_titanic_glm</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>9</span>],
+                         <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,-<span class='fl'>9</span>])</div><div class='output co'>#&gt;    aspects importance         new observation
+#&gt; 4    class   -1.02558             class = 3rd
+#&gt; 2   gender   -0.89150           gender = male
+#&gt; 3      age   -0.56875                age = 42
+#&gt; 5 embarked   -0.37953  embarked = Southampton
+#&gt; 7     fare   -0.20715             fare = 7.11
+#&gt; 6  country   -0.11921 country = United States
+#&gt; 9    parch    0.08722               parch = 0
+#&gt; 8    sibsp   -0.03254               sibsp = 0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

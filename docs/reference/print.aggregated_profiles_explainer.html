@@ -81,7 +81,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -103,6 +103,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -180,46 +186,46 @@
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>selected_passangers</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country    fare sibsp parch
-#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
-#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
-#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
-#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
-#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
-#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
+#&gt;        gender age            class    embarked country   fare sibsp parch
+#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
+#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
 #&gt;           _yhat_ _vname_ _ids_ _label_
-#&gt; 557    0.1816347  gender   557      lm
-#&gt; 557.1  0.6650408  gender   557      lm
-#&gt; 660    0.2164257  gender   660      lm
-#&gt; 660.1  0.7118800  gender   660      lm
-#&gt; 1535   0.2074819  gender  1535      lm
-#&gt; 1535.1 0.7007726  gender  1535      lm
+#&gt; 1960   0.1861246  gender  1960      lm
+#&gt; 1960.1 0.6716727  gender  1960      lm
+#&gt; 883    0.2141873  gender   883      lm
+#&gt; 883.1  0.7091549  gender   883      lm
+#&gt; 1594   0.1760995  gender  1594      lm
+#&gt; 1594.1 0.6565935  gender  1594      lm
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked       country    fare sibsp parch
-#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
-#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
-#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
-#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
-#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
-#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
+#&gt;      gender age            class    embarked country   fare sibsp parch
+#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0
+#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0
+#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0
+#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0
 #&gt;         _yhat_ _label_ _ids_
-#&gt; 557  0.1816347      lm     1
-#&gt; 660  0.2164257      lm     2
-#&gt; 1535 0.2074819      lm     3
-#&gt; 942  0.6677830      lm     4
-#&gt; 491  0.2081213      lm     5
-#&gt; 1639 0.1724511      lm     6</div><div class='input'>
+#&gt; 1960 0.6716727      lm     1
+#&gt; 883  0.2141873      lm     2
+#&gt; 1594 0.1760995      lm     3
+#&gt; 1131 0.1933234      lm     4
+#&gt; 1445 0.2074819      lm     5
+#&gt; 1432 0.1899958      lm     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_        _x_    _yhat_ _ids_
-#&gt; 1     age      lm  0.1666667 0.3600860     0
-#&gt; 2     age      lm  2.0000000 0.3572098     0
-#&gt; 3     age      lm  4.0000000 0.3540871     0
-#&gt; 4     age      lm  7.0000000 0.3494324     0
-#&gt; 5     age      lm  9.0000000 0.3463490     0
-#&gt; 6     age      lm 13.0000000 0.3402298     0</div><div class='input'>
+#&gt; 1     age      lm  0.1666667 0.3702429     0
+#&gt; 2     age      lm  2.0000000 0.3674409     0
+#&gt; 3     age      lm  4.0000000 0.3643986     0
+#&gt; 4     age      lm  7.0000000 0.3598637     0
+#&gt; 5     age      lm  9.0000000 0.3568595     0
+#&gt; 6     age      lm 13.0000000 0.3508973     0</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -233,46 +239,46 @@
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country    fare sibsp parch
-#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
-#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
-#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
-#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
-#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
-#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
+#&gt;        gender age            class    embarked country   fare sibsp parch
+#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
+#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
+#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
+#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
 #&gt;        _yhat_ _vname_ _ids_      _label_
-#&gt; 557     0.000  gender   557 randomForest
-#&gt; 557.1   0.932  gender   557 randomForest
-#&gt; 660     0.050  gender   660 randomForest
-#&gt; 660.1   0.550  gender   660 randomForest
-#&gt; 1535    0.000  gender  1535 randomForest
-#&gt; 1535.1  0.802  gender  1535 randomForest
+#&gt; 1960    0.002  gender  1960 randomForest
+#&gt; 1960.1  0.862  gender  1960 randomForest
+#&gt; 883     0.002  gender   883 randomForest
+#&gt; 883.1   0.538  gender   883 randomForest
+#&gt; 1594    0.002  gender  1594 randomForest
+#&gt; 1594.1  0.950  gender  1594 randomForest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked       country    fare sibsp parch
-#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
-#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
-#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
-#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
-#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
-#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
-#&gt;      _yhat_      _label_ _ids_
-#&gt; 557   0.000 randomForest     1
-#&gt; 660   0.050 randomForest     2
-#&gt; 1535  0.000 randomForest     3
-#&gt; 942   0.914 randomForest     4
-#&gt; 491   0.008 randomForest     5
-#&gt; 1639  0.004 randomForest     6</div><div class='input'>
+#&gt;      gender age            class    embarked country   fare sibsp parch _yhat_
+#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0  0.862
+#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0  0.002
+#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0  0.002
+#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0  0.004
+#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0  0.002
+#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0  0.002
+#&gt;           _label_ _ids_
+#&gt; 1960 randomForest     1
+#&gt; 883  randomForest     2
+#&gt; 1594 randomForest     3
+#&gt; 1131 randomForest     4
+#&gt; 1445 randomForest     5
+#&gt; 1432 randomForest     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_      _label_        _x_  _yhat_ _ids_
-#&gt; 1     age randomForest  0.1666667 0.50576     0
-#&gt; 2     age randomForest  2.0000000 0.53630     0
-#&gt; 3     age randomForest  4.0000000 0.53578     0
-#&gt; 4     age randomForest  7.0000000 0.49010     0
-#&gt; 5     age randomForest  9.0000000 0.48850     0
-#&gt; 6     age randomForest 13.0000000 0.42540     0</div><div class='input'># }
+#&gt; 1     age randomForest  0.1666667 0.51946     0
+#&gt; 2     age randomForest  2.0000000 0.56250     0
+#&gt; 3     age randomForest  4.0000000 0.56690     0
+#&gt; 4     age randomForest  7.0000000 0.51762     0
+#&gt; 5     age randomForest  9.0000000 0.51634     0
+#&gt; 6     age randomForest 13.0000000 0.44654     0</div><div class='input'># }
 
 </div></span></pre>
   </div>

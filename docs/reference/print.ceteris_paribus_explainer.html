@@ -81,7 +81,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -103,6 +103,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -173,45 +179,45 @@
 #&gt;   -&gt; data              :  9000  rows  5  cols 
 #&gt;   -&gt; target variable   :  9000  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  1958.359 , mean =  3505.693 , max =  5848.287  
+#&gt;   -&gt; predicted values  :  numerical, min =  1984.188 , mean =  3507.309 , max =  5799.08  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -729.4403 , mean =  5.830721 , max =  1233.567  
+#&gt;   -&gt; residuals         :  numerical, min =  -721.1441 , mean =  4.214872 , max =  1287.353  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>apartments_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>apartmentsTest</span>, <span class='fl'>10</span>)
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_small</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        construction.year surface floor no.rooms    district   _yhat_
-#&gt; 9707                1920      98     3        3 Srodmiescie 4843.721
-#&gt; 9707.1              1921      98     3        3 Srodmiescie 4889.789
-#&gt; 9707.2              1922      98     3        3 Srodmiescie 4928.400
-#&gt; 9707.3              1923      98     3        3 Srodmiescie 4946.327
-#&gt; 9707.4              1924      98     3        3 Srodmiescie 4913.568
-#&gt; 9707.5              1925      98     3        3 Srodmiescie 4914.022
+#&gt;        construction.year surface floor no.rooms district   _yhat_
+#&gt; 8946                1920     123     8        4     Wola 2905.873
+#&gt; 8946.1              1921     123     8        4     Wola 2923.381
+#&gt; 8946.2              1922     123     8        4     Wola 2932.218
+#&gt; 8946.3              1923     123     8        4     Wola 2918.361
+#&gt; 8946.4              1924     123     8        4     Wola 2903.207
+#&gt; 8946.5              1925     123     8        4     Wola 2903.666
 #&gt;                  _vname_ _ids_      _label_
-#&gt; 9707   construction.year  9707 randomForest
-#&gt; 9707.1 construction.year  9707 randomForest
-#&gt; 9707.2 construction.year  9707 randomForest
-#&gt; 9707.3 construction.year  9707 randomForest
-#&gt; 9707.4 construction.year  9707 randomForest
-#&gt; 9707.5 construction.year  9707 randomForest
+#&gt; 8946   construction.year  8946 randomForest
+#&gt; 8946.1 construction.year  8946 randomForest
+#&gt; 8946.2 construction.year  8946 randomForest
+#&gt; 8946.3 construction.year  8946 randomForest
+#&gt; 8946.4 construction.year  8946 randomForest
+#&gt; 8946.5 construction.year  8946 randomForest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
 #&gt;      construction.year surface floor no.rooms    district   _yhat_      _label_
-#&gt; 9707              2008      98     3        3 Srodmiescie 4713.492 randomForest
-#&gt; 9796              1932     110    10        4       Ursus 2906.935 randomForest
-#&gt; 9644              1980      73    10        2     Mokotow 3786.312 randomForest
-#&gt; 7567              1940      63     8        3       Praga 3059.011 randomForest
-#&gt; 4090              1955     105     3        3      Ochota 3819.471 randomForest
-#&gt; 8594              1999      36     9        2       Ursus 3599.852 randomForest
+#&gt; 8946              1959     123     8        4        Wola 2389.074 randomForest
+#&gt; 4458              1927      68     8        2      Ochota 4234.660 randomForest
+#&gt; 7384              1929      95     5        3 Srodmiescie 4658.555 randomForest
+#&gt; 5450              1982     124    10        5      Ochota 3085.094 randomForest
+#&gt; 6744              1982     143     9        6     Ursynow 2145.316 randomForest
+#&gt; 6688              1938      75     7        3        Wola 3040.773 randomForest
 #&gt;      _ids_
-#&gt; 9707     1
-#&gt; 9796     2
-#&gt; 9644     3
-#&gt; 7567     4
-#&gt; 4090     5
-#&gt; 8594     6</div><div class='input'>
+#&gt; 8946     1
+#&gt; 4458     2
+#&gt; 7384     3
+#&gt; 5450     4
+#&gt; 6744     5
+#&gt; 6688     6</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

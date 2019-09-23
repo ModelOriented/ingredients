@@ -83,7 +83,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -105,6 +105,12 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -204,37 +210,37 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country    fare sibsp parch
-#&gt; 515      male  45              2nd Southampton England 10.1000     0     0
-#&gt; 515.1  female  45              2nd Southampton England 10.1000     0     0
-#&gt; 604      male  17              3rd Southampton Denmark  7.1701     1     0
-#&gt; 604.1  female  17              3rd Southampton Denmark  7.1701     1     0
-#&gt; 1430     male  25 engineering crew Southampton England  0.0000     0     0
-#&gt; 1430.1 female  25 engineering crew Southampton England  0.0000     0     0
+#&gt;        gender age            class    embarked country fare sibsp parch
+#&gt; 1949     male  24 engineering crew Southampton England  0.0     0     0
+#&gt; 1949.1 female  24 engineering crew Southampton England  0.0     0     0
+#&gt; 848      male  18              3rd  Queenstown Ireland 15.1     1     0
+#&gt; 848.1  female  18              3rd  Queenstown Ireland 15.1     1     0
+#&gt; 1566     male  29 victualling crew Southampton England  0.0     0     0
+#&gt; 1566.1 female  29 victualling crew Southampton England  0.0     0     0
 #&gt;        survived     _yhat_ _vname_ _ids_ _label_
-#&gt; 515          no 0.08961666  gender   515      RF
-#&gt; 515.1        no 0.87487507  gender   515      RF
-#&gt; 604          no 0.04514332  gender   604      RF
-#&gt; 604.1        no 0.56018125  gender   604      RF
-#&gt; 1430         no 0.25140189  gender  1430      RF
-#&gt; 1430.1       no 0.68372704  gender  1430      RF
+#&gt; 1949        yes 0.26150275  gender  1949      RF
+#&gt; 1949.1      yes 0.67593288  gender  1949      RF
+#&gt; 848         yes 0.08957916  gender   848      RF
+#&gt; 848.1       yes 0.59412716  gender   848      RF
+#&gt; 1566        yes 0.22255440  gender  1566      RF
+#&gt; 1566.1      yes 0.84070760  gender  1566      RF
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked country    fare sibsp parch
-#&gt; 515    male  45              2nd Southampton England 10.1000     0     0
-#&gt; 604    male  17              3rd Southampton Denmark  7.1701     1     0
-#&gt; 1430   male  25 engineering crew Southampton England  0.0000     0     0
-#&gt; 865    male  20              3rd   Cherbourg Lebanon  7.0406     0     0
-#&gt; 452  female  17              3rd  Queenstown Ireland  7.1408     0     0
-#&gt; 1534   male  38 victualling crew Southampton England  0.0000     0     0
-#&gt;      survived     _yhat_ _label_ _ids_
-#&gt; 515        no 0.08961666      RF     1
-#&gt; 604        no 0.04514332      RF     2
-#&gt; 1430       no 0.25140189      RF     3
-#&gt; 865        no 0.10617784      RF     4
-#&gt; 452       yes 0.63722647      RF     5
-#&gt; 1534       no 0.15267919      RF     6</div><div class='input'>
+#&gt;      gender age            class    embarked country fare sibsp parch survived
+#&gt; 1949   male  24 engineering crew Southampton England  0.0     0     0      yes
+#&gt; 848  female  18              3rd  Queenstown Ireland 15.1     1     0      yes
+#&gt; 1566   male  29 victualling crew Southampton England  0.0     0     0      yes
+#&gt; 1092   male  10              3rd   Cherbourg Lebanon  4.0     0     0       no
+#&gt; 1409   male  40 victualling crew     Belfast England  0.0     0     0       no
+#&gt; 1395   male  23 engineering crew Southampton England  0.0     0     0       no
+#&gt;         _yhat_ _label_ _ids_
+#&gt; 1949 0.2615027      RF     1
+#&gt; 848  0.5941272      RF     2
+#&gt; 1566 0.2225544      RF     3
+#&gt; 1092 0.2731389      RF     4
+#&gt; 1409 0.1666665      RF     5
+#&gt; 1395 0.2624227      RF     6</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
 <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
   <span class='fu'>show_rugs</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='show_rugs-1.png' alt='' width='700' height='433' /></div><div class='input'>

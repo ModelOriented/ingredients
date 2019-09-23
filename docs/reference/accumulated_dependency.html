@@ -82,7 +82,7 @@ Function accumulated_dependency calls ceteris_paribus and then aggregate_profile
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,12 @@ Function accumulated_dependency calls ceteris_paribus and then aggregate_profile
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -225,10 +231,8 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.7).</span>
-#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span>
-#&gt; <span class='message'>Additional features will be available after installation of: ALEPlot, breakDown.</span>
-#&gt; <span class='message'>Use 'install_dependencies()' to get all suggested dependencies</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘DALEX’ was built under R version 3.5.2</span></div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.7).</span>
+#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span></div><div class='input'>
 <span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
@@ -244,11 +248,11 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>adp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;                     _vname_ _label_        _x_       _yhat_ _ids_
 #&gt; age.lm.0.1666666667     age      lm  0.1666667  0.000000000     0
-#&gt; age.lm.2                age      lm  2.0000000 -0.002542092     0
-#&gt; age.lm.4                age      lm  4.0000000 -0.005306014     0
-#&gt; age.lm.7                age      lm  7.0000000 -0.009435941     0
-#&gt; age.lm.9                age      lm  9.0000000 -0.012179345     0
-#&gt; age.lm.13               age      lm 13.0000000 -0.017654109     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>adp_glm</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Please note that 'theme_drwhy_colors()' is now deprecated, it is better to use 'colors_discrete_drwhy()' instead.</span></div><div class='img'><img src='accumulated_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; age.lm.2                age      lm  2.0000000 -0.002475063     0
+#&gt; age.lm.4                age      lm  4.0000000 -0.005169996     0
+#&gt; age.lm.7                age      lm  7.0000000 -0.009204777     0
+#&gt; age.lm.9                age      lm  9.0000000 -0.011889025     0
+#&gt; age.lm.13               age      lm 13.0000000 -0.017257810     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>adp_glm</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Please note that 'theme_drwhy_colors()' is now deprecated, it is better to use 'colors_discrete_drwhy()' instead.</span></div><div class='img'><img src='accumulated_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'>
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
@@ -260,9 +264,8 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
 <span class='no'>adp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>adp_rf</span>)</div><div class='img'><img src='accumulated_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>adp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>adp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘r2d3’</span></div><div class='input'># }
-
-</div></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>adp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

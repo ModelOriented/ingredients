@@ -82,7 +82,7 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,12 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -210,20 +216,20 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  (</span><span style='color: #BB0000;'>WARNING</span><span>)
 #&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  1963.901 , mean =  3507.125 , max =  5783.263  
+#&gt;   -&gt; predicted values  :  numerical, min =  1976.927 , mean =  3506.754 , max =  5775.27  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -672.9745 , mean =  4.398909 , max =  1304.476  
+#&gt;   -&gt; residuals         :  numerical, min =  -769.2212 , mean =  4.769412 , max =  1264.229  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,]
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
 
 <span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;             _vname_ _ids_ oscillations
-#&gt; 6          district  1001   1135.72091
-#&gt; 3           surface  1001    277.62706
-#&gt; 4             floor  1001    260.07539
-#&gt; 5          no.rooms  1001    146.56685
-#&gt; 2 construction.year  1001     57.82813
+#&gt; 6          district  1001   1153.24777
+#&gt; 4             floor  1001    284.20894
+#&gt; 3           surface  1001    248.96800
+#&gt; 5          no.rooms  1001    152.69279
+#&gt; 2 construction.year  1001     54.67198
 #&gt; 1          m2.price  1001      0.00000</div><div class='input'># }
 
 </div></span></pre>

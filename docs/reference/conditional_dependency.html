@@ -82,7 +82,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,12 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -240,12 +246,12 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
                                   <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cdp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;                     _vname_ _label_        _x_    _yhat_ _ids_
-#&gt; age.lm.0.1666666667     age      lm  0.1666667 0.3689261     0
-#&gt; age.lm.2                age      lm  2.0000000 0.3681417     0
-#&gt; age.lm.4                age      lm  4.0000000 0.3675531     0
-#&gt; age.lm.7                age      lm  7.0000000 0.3672989     0
-#&gt; age.lm.9                age      lm  9.0000000 0.3676335     0
-#&gt; age.lm.13               age      lm 13.0000000 0.3698060     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cdp_glm</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; age.lm.0.1666666667     age      lm  0.1666667 0.2821849     0
+#&gt; age.lm.2                age      lm  2.0000000 0.2775268     0
+#&gt; age.lm.4                age      lm  4.0000000 0.2724952     0
+#&gt; age.lm.7                age      lm  7.0000000 0.2652753     0
+#&gt; age.lm.9                age      lm  9.0000000 0.2609377     0
+#&gt; age.lm.13               age      lm 13.0000000 0.2548410     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cdp_glm</span>)</div><div class='img'><img src='conditional_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -258,9 +264,8 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>cdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cdp_rf</span>)</div><div class='img'><img src='conditional_dependency-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>cdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>conditional_dependency</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>cdp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘r2d3’</span></div><div class='input'># }
-
-</div></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>cdp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
