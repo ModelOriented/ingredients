@@ -20,7 +20,7 @@
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If NULL then it will be calculated based on validation data available in the \code{explainer}.
-#' @param grid_points number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.
+#' @param grid_points maximum number of points for profile calculations. Note that the finaln number of points may be lower than \code{grid_points}, eg. if there is not enough unique values for a given variable. Will be passed to \code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
