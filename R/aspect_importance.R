@@ -195,22 +195,30 @@ aspect_importance.default <- function(x, data, predict_function = predict,
 #' @export
 
 
-plot.aspect_importance <- function(x, bar_width = 10, ...) {
+plot.aspect_importance <- function(x, aspects_on_axis = TRUE, bar_width = 10, ...) {
 
   stopifnot("aspect_importance" %in% class(x))
 
   importance <- a_sign <- aspects <- NULL
   x$a_sign <- ifelse(x$importance > 0,"positive","negative")
 
-  x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
+  if (aspects_on_axis == TRUE) {
+    x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
+    p <- ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
+      geom_linerange(size = bar_width)
+  } else {
+    x$features <- sapply(x$features, paste0, collapse=", ")
+    x$features <- reorder(x$features , abs(x[,2]), na.rm = TRUE)
+    p <- ggplot(x, aes(features, ymin = 0, ymax = importance, color = a_sign)) +
+      geom_linerange(size = bar_width)
+  }
 
-  # plot it
-  ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
-    geom_linerange(size = bar_width) + coord_flip() +
+  p <- p + coord_flip() +
     ylab("Aspects importance") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none",
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank())
+  p
 }
 
 #' @export

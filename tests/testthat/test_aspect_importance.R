@@ -141,7 +141,7 @@ test_that("check for aspect_importance with show_cor",{
   aspect_importance_apartments_num <- aspect_importance(
     apartments_num_lm_model, apartments_num,
     new_observation = apartments_num_new_observation,
-    aspects =  aspect_list_apartments_num, show_cor = T)
+    aspects =  aspect_list_apartments_num, show_cor = TRUE)
 
   expect_true("aspect_importance" %in% class(aspect_importance_apartments_num))
   expect_true(dim(aspect_importance_apartments_num)[2] == 5)
@@ -176,7 +176,7 @@ test_that("check group_variables function",{
   library("DALEX")
   library("ingredients")
 
-  aspect_list <- group_variables(apartments_num, 0.52, draw_tree = T,
+  aspect_list <- group_variables(apartments_num, 0.52, draw_tree = TRUE,
                                  draw_abline = TRUE)
   expect_true(length(aspect_list) == 4)
   expect_error(group_variables(apartments, 0.6))

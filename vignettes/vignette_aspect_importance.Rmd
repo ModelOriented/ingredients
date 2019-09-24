@@ -159,7 +159,7 @@ aspects <- group_variables(x, 0.6)
 
 BostonHousing2_ai <- aspect_importance(model,data, predict_function = predict,
                             new_observation,
-                            aspects, N = 200, show_cor = T)
+                            aspects, N = 200, show_cor = TRUE)
 BostonHousing2_ai
 ```
 

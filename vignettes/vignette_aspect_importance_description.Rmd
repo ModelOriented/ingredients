@@ -100,12 +100,12 @@ predict(Boston_lm, new_observation)
 predict(Boston_rf, new_observation)
 aspects <- group_variables(x, 0.6)
 ai_lm <- aspect_importance(Boston_lm, data, predict_function = predict,
-                  new_observation, aspects, N = 5500, show_cor = T)
+                  new_observation, aspects, N = 5500, show_cor = TRUE)
 ai_rf <- aspect_importance(Boston_rf, data, predict_function = predict, 
-                  new_observation, aspects, N = 5500, show_cor = T)
+                  new_observation, aspects, N = 5500, show_cor = TRUE)
 ai_lm
 ai_rf
-grid.arrange(plot(ai_lm), plot(ai_rf), nrow = 1)
+grid.arrange(plot(ai_lm, aspects_on_axis = FALSE), plot(ai_rf, aspects_on_axis = FALSE), nrow = 1)
 ```
 
 
@@ -118,9 +118,9 @@ With the help of lasso technique, we would like to check the importance of varia
  
 ```{r lasso demo}
 aspect_importance(Boston_lm, data, predict_function = predict,
-                  new_observation, aspects, N = 5500, show_cor = T, n_var = 3)
+                  new_observation, aspects, N = 5500, show_cor  = TRUE, n_var = 3)
 aspect_importance(Boston_rf, data, predict_function = predict, 
-                  new_observation, aspects, N = 5500, show_cor = T, n_var = 3)
+                  new_observation, aspects, N = 5500, show_cor  = TRUE, n_var = 3)
 ```
 
 
