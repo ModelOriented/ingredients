@@ -33,7 +33,7 @@ If NULL then all variables from the validation data will be used.}
 \item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 If NULL then it will be calculated based on validation data available in the \code{explainer}.}
 
-\item{grid_points}{number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.}
+\item{grid_points}{maximum number of points for profile calculations. Note that the finaln number of points may be lower than \code{grid_points}, eg. if there is not enough unique values for a given variable. Will be passed to \code{\link{calculate_variable_split}}.}
 
 \item{data}{validation dataset. It will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}

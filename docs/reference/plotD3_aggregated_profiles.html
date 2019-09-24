@@ -84,7 +84,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -106,6 +106,12 @@ Find more detailes in Ceteris Paribus Chapter." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -226,9 +232,9 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 #&gt;   -&gt; data              :  490  rows  7  cols 
 #&gt;   -&gt; target variable   :  490  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.02270234 , mean =  0.4000623 , max =  0.9923381  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.02541291 , mean =  0.4017618 , max =  0.9879733  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.6608558 , mean =  0.001978525 , max =  0.8441071  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.6813068 , mean =  0.0002790341 , max =  0.841785  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
@@ -240,12 +246,12 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 <span class='no'>pdp_rf_a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"accumulated"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘r2d3’</span></div><div class='input'>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='no'>pdp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
 <span class='no'>pdp</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
 
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gender"</span>,<span class='st'>"class"</span>), <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>70</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘r2d3’</span></div><div class='input'>
-</div></span></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gender"</span>,<span class='st'>"class"</span>), <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>70</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

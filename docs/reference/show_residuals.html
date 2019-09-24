@@ -83,7 +83,7 @@ Note that the y argument has to be specified in the ceteris_paribus function." /
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -105,6 +105,12 @@ Note that the y argument has to be specified in the ceteris_paribus function." /
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -198,9 +204,9 @@ Note that <code>y</code> parameter shall be supplied in this function.</p></td>
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008323348 , mean =  0.3244118 , max =  0.9922996  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.01108607 , mean =  0.3246469 , max =  0.9923357  
 #&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7965509 , mean =  2.838752e-05 , max =  0.9142645  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8017601 , mean =  -0.0002067152 , max =  0.9129487  
 #&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
 <span class='no'>johny_d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>class</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='st'>"1st"</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1st"</span>, <span class='st'>"2nd"</span>, <span class='st'>"3rd"</span>, <span class='st'>"deck crew"</span>, <span class='st'>"engineering crew"</span>,
@@ -217,13 +223,15 @@ Note that <code>y</code> parameter shall be supplied in this function.</p></td>
                                       <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>johny_d</span>,
                                       <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"gender"</span>, <span class='st'>"class"</span>,
                                                   <span class='st'>"fare"</span>, <span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
-                                      <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘gower’</span></div><div class='input'>
+                                      <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
 <span class='no'>cp_neighbours</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>,
                                  <span class='no'>johny_neighbours</span>,
                                  <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>johny_neighbours</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
-                                 <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>70</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'johny_neighbours' not found</span></div><div class='input'>
+                                 <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>70</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)))
+
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(cp_neighbours, variables = "age"): object 'cp_neighbours' not found</span></div><div class='input'>
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='show_residuals-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='no'>cp_johny</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>johny_d</span>,
                             <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>70</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>1000</span>)))
@@ -231,7 +239,7 @@ Note that <code>y</code> parameter shall be supplied in this function.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_johny</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#8bdcbe"</span>) +
   <span class='fu'><a href='show_profiles.html'>show_profiles</a></span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#ceced9"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_johny</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#371ea3"</span>) +
-  <span class='fu'>show_residuals</span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show_profiles(cp_neighbours, variables = "age", color = "#ceced9"): object 'cp_neighbours' not found</span></div><div class='input'>
+  <span class='fu'>show_residuals</span>(<span class='no'>cp_neighbours</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='show_residuals-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></span></pre>
   </div>

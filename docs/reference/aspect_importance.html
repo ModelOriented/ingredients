@@ -88,7 +88,7 @@ linear model or lasso." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -110,6 +110,12 @@ linear model or lasso." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -192,7 +198,7 @@ variables used in the model</p></td>
     </tr>
     <tr>
       <th>N</th>
-      <td><p>number of observarions to be sampled from data</p></td>
+      <td><p>number of observations to be sampled (with replacement) from data</p></td>
     </tr>
     <tr>
       <th>sample_method</th>
@@ -200,7 +206,7 @@ variables used in the model</p></td>
     </tr>
     <tr>
       <th>n_var</th>
-      <td><p>how many non-zero coefficients should be after lasso fitting,
+      <td><p>maximum number of non-zero coefficients after lasso fitting,
 if zero than linear regression is used</p></td>
     </tr>
     <tr>
@@ -241,15 +247,9 @@ it's an explainer</p></td>
 
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2207  rows  7  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008128381 , mean =  0.3221568 , max =  0.9731431  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9628583 , mean =  -2.569734e-10 , max =  0.9663346  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>aspects</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>wealth</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"fare"</span>),
                 <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sibsp"</span>, <span class='st'>"parch"</span>),
                 <span class='kw'>personal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gender"</span>, <span class='st'>"age"</span>),
@@ -258,10 +258,10 @@ it's an explainer</p></td>
 <span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_glm</span>,
                   <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,],
                   <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
-#&gt; 3   family    0.09559 sibsp, parch
-#&gt; 5 embarked    0.07390     embarked
-#&gt; 4 personal   -0.07312  gender, age
-#&gt; 2   wealth   -0.04942  class, fare</div><div class='input'>
+#&gt; 2   wealth  -0.141919  class, fare
+#&gt; 4 personal  -0.140710  gender, age
+#&gt; 5 embarked  -0.019205     embarked
+#&gt; 3   family   0.006887 sibsp, parch</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 <span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~ <span class='no'>class</span> + <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>sibsp</span> +
@@ -270,25 +270,19 @@ it's an explainer</p></td>
 
 <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; data              :  2207  rows  7  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.2351228 , max =  0.998  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.896 , mean =  0.08703398 , max =  1  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
+                              <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='fu'>aspect_importance</span>(<span class='no'>explain_titanic_rf</span>,
                   <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,],
                   <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='no'>aspects</span>)</div><div class='output co'>#&gt;    aspects importance     features
-#&gt; 4 personal  -0.099063  gender, age
-#&gt; 5 embarked   0.077921     embarked
-#&gt; 3   family   0.053727 sibsp, parch
-#&gt; 2   wealth  -0.004811  class, fare</div><div class='input'>
+#&gt; 4 personal   -0.11158  gender, age
+#&gt; 2   wealth   -0.10722  class, fare
+#&gt; 5 embarked   -0.02662     embarked
+#&gt; 3   family    0.01313 sibsp, parch</div><div class='input'>
 # }
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

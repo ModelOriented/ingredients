@@ -82,7 +82,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.9</span>
+          <span class="version version-default">0.3.10</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,12 @@ This is useful if data is large and we need just a sample to calculate profiles.
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
+    </li>
+    <li>
+      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
+    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -145,7 +151,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
     </div>
 
     <pre class="usage"><span class='fu'>select_neighbours</span>(<span class='no'>observation</span>, <span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='kw pkg'>gower</span><span class='kw ns'>::</span><span class='no'>gower_dist</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>frac</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='kw pkg'>gower</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/gower/man/gower_dist.html'>gower_dist</a></span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>frac</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,9 +197,20 @@ you should overload it.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments</span>[<span class='fl'>1</span>,<span class='fl'>2</span>:<span class='fl'>6</span>]
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_neighbours</span>(<span class='no'>new_apartment</span>, <span class='no'>apartments_test</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘gower’</span></div><div class='input'>
+<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_neighbours</span>(<span class='no'>new_apartment</span>, <span class='no'>apartments_test</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;   construction.year surface floor no.rooms    district
-#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='no'>small_apartments</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'small_apartments' not found</span></div><div class='input'>
+#&gt; 1              1953      25     3        1 Srodmiescie</div><div class='input'><span class='no'>small_apartments</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+#&gt; 2285     5875              1970      27     3        1 Srodmiescie
+#&gt; 1073     5886              1960      36     2        1 Srodmiescie
+#&gt; 8110     5614              1957      44     4        1 Srodmiescie
+#&gt; 9527     6080              1947      27     1        1 Srodmiescie
+#&gt; 3261     5859              1945      39     2        1 Srodmiescie
+#&gt; 4309     5794              1947      31     3        2 Srodmiescie
+#&gt; 1198     5821              1947      43     2        1 Srodmiescie
+#&gt; 6647     5952              1938      30     2        1 Srodmiescie
+#&gt; 4027     6457              1926      29     3        1 Srodmiescie
+#&gt; 2655     5596              1950      25     6        1 Srodmiescie</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
