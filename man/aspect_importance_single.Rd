@@ -12,7 +12,7 @@ aspect_importance_single(x, ...)
   sample_method = "default", n_var = 0, f = 2, ...)
 
 \method{aspect_importance_single}{default}(x, data,
-  predict_function = predict, new_observation, N = 100,
+  predict_function = predict, new_observation, N = 100, label = "",
   sample_method = "default", n_var = 0, f = 2, ...)
 }
 \arguments{

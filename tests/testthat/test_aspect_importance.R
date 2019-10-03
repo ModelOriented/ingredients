@@ -87,6 +87,24 @@ test_that("check plot for aspects importance",{
   expect_is(plot(aspect_importance_apartments), "gg")
 })
 
+test_that("check plot (facets) for aspects importance",{
+  library("DALEX")
+  library("ingredients")
+
+  aspect_importance_apartments1 <- aspect_importance(apartments_lm_model, apartments,
+                                                    new_observation = apartments_new_observation,
+                                                    aspects =  apartments_aspects, method = "binom",
+                                                    label = "model 1")
+
+  aspect_importance_apartments2 <- aspect_importance(apartments_lm_model, apartments,
+                                                    new_observation = apartments_new_observation,
+                                                    aspects =  apartments_aspects, label = "model 2")
+
+  expect_is(plot(aspect_importance_apartments1, aspect_importance_apartments2,
+                 add_contributions = TRUE, aspects_on_axis = FALSE, digits_to_round = 0), "gg")
+})
+
+
 test_that("check alias for aspect_importance",{
   library("DALEX")
   library("ingredients")
@@ -102,7 +120,6 @@ test_that("check alias for aspect_importance",{
 test_that("plot for aspect_importance works",{
   library("DALEX")
   library("ingredients")
-
 
   aspect_importance_apartments <- aspect_importance(apartments_lm_model, apartments,
                                                     new_observation = apartments_new_observation,
@@ -264,7 +281,6 @@ test_that("check triplot function",{
                data = apartments_num_mod, new_observation = apartments_num_new_observation)
 
   expect_true("gtable" %in% class(p))
-  expect_true(nrow(p$layout) == 3)
 })
 
 test_that("check triplot.explainer function",{
@@ -279,6 +295,5 @@ test_that("check triplot.explainer function",{
                new_observation = apartments_num_new_observation)
 
   expect_true("gtable" %in% class(p))
-  expect_true(nrow(p$layout) == 3)
 })
 

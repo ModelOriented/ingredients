@@ -57,16 +57,5 @@ apartments_num_mod <- apartments_num[,-1]
 triplot(x = apartments_num_lm_model,
 data = apartments_num_mod, new_observation = apartments_num_new_observation)
 
-\donttest{
-library("randomForest")
-library("mlbench")
-data("BostonHousing2")
-data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
-model <- lm(cmedv ~., data = data)
-new_observation <- data[10,]
-data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
-triplot(x = model, data = data,
-new_observation = new_observation)
-}
 
 }

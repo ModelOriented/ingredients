@@ -4,14 +4,15 @@
 \alias{plot.aspect_importance}
 \title{Function for plotting aspect_importance results}
 \usage{
-\method{plot}{aspect_importance}(x, bar_width = 10, ...)
+\method{plot}{aspect_importance}(x, ..., aspects_on_axis = TRUE,
+  add_contributions = FALSE, bar_width = 10, digits_to_round = 2)
 }
 \arguments{
 \item{x}{object of aspect_importance class}
 
-\item{bar_width}{bar width}
-
 \item{...}{other parameters}
+
+\item{bar_width}{bar width}
 }
 \value{
 a ggplot2 object

@@ -15,8 +15,9 @@ aspect_importance(x, ...)
   show_cor = FALSE, ...)
 
 \method{aspect_importance}{default}(x, data, predict_function = predict,
-  new_observation, aspects, N = 100, sample_method = "default",
-  n_var = 0, f = 2, show_cor = FALSE, ...)
+  new_observation, aspects, N = 100, label = class(x)[1],
+  sample_method = "default", n_var = 0, f = 2, show_cor = FALSE,
+  ...)
 
 lime(x, ...)
 }
@@ -48,6 +49,8 @@ NOTE: It is best when target variable is not present in the \code{data}}
 
 \item{predict_function}{predict function, it will be extracted from \code{x} if
 it's an explainer}
+
+\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
 }
 \value{
 An object of the class \code{aspect_importance}. Contains dataframe that

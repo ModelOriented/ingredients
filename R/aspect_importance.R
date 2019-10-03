@@ -26,6 +26,7 @@
 #' @param show_cor show if all features in aspect are pairwise positivly
 #'   correlated, works only if dataset contains solely numeric values
 #' @param ... other parameters
+#' @param label name of the model. By default it's extracted from the 'class' attribute of the model.
 #'
 #' @return An object of the class \code{aspect_importance}. Contains dataframe that
 #'   describes aspects' importance.
@@ -92,10 +93,11 @@ aspect_importance.explainer <- function(x, new_observation, aspects,
   data <- x$data
   model <- x$model
   predict_function <- x$predict_function
+  label <- x$label
 
   # calls target function
   aspect_importance.default(model, data, predict_function,
-                            new_observation, aspects, N, sample_method,
+                            new_observation, aspects, N, label, sample_method,
                             n_var, f, show_cor)
 }
 
@@ -105,6 +107,7 @@ aspect_importance.explainer <- function(x, new_observation, aspects,
 aspect_importance.default <- function(x, data, predict_function = predict,
                                       new_observation,
                                       aspects, N = 100,
+                                      label = class(x)[1],
                                       sample_method = "default", n_var = 0,
                                       f = 2, show_cor = FALSE, ...) {
 
@@ -177,6 +180,8 @@ aspect_importance.default <- function(x, data, predict_function = predict,
   res$importance <- as.numeric(format(res$importance, digits = 4))
   class(res) <- c("aspect_importance", "data.frame")
 
+  attr(res, "label") <- rep(label, length.out = nrow(res))
+
   return(res)
 }
 
@@ -195,22 +200,57 @@ aspect_importance.default <- function(x, data, predict_function = predict,
 #' @export
 
 
-plot.aspect_importance <- function(x, aspects_on_axis = TRUE, bar_width = 10, ...) {
+plot.aspect_importance <- function(x, ..., aspects_on_axis = TRUE,
+                                   add_contributions = FALSE, bar_width = 10,
+                                   digits_to_round = 2) {
 
   stopifnot("aspect_importance" %in% class(x))
 
-  importance <- a_sign <- aspects <- NULL
-  x$a_sign <- ifelse(x$importance > 0,"positive","negative")
+  importance <- a_sign <- aspects <- features <- NULL
 
-  if (aspects_on_axis == TRUE) {
+  if (aspects_on_axis) {
     x$aspects <- reorder(x$aspects, abs(x[,2]), na.rm = TRUE)
-    p <- ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
-      geom_linerange(size = bar_width)
+    y <- rbind(...)
   } else {
     x$features <- sapply(x$features, paste0, collapse=", ")
-    x$features <- reorder(x$features , abs(x[,2]), na.rm = TRUE)
+    x$features <- reorder(x$features, abs(x[,2]), na.rm = TRUE)
+    y <- rbind(...)
+    y$features <- sapply(y$features, paste0, collapse=", ")
+  }
+
+  if (!missing(...)) {
+    labels_list <- c(attr(x, "label"), attr(..., "label"))
+  } else {
+    labels_list <- attr(x, "label")
+  }
+
+  x <- rbind(x, y)
+  x <- cbind(x, labels_list)
+  colnames(x)[ncol(x)] <- "label"
+
+  x$a_sign <- ifelse(x$importance > 0, "positive", "negative")
+  x$hjust <- ifelse(x$importance > 0, 1.1, -0.1)
+
+  if (aspects_on_axis) {
+    p <- ggplot(x, aes(aspects, ymin = 0, ymax = importance, color = a_sign)) +
+      geom_linerange(size = bar_width) +
+      facet_wrap(~label, scales = "free_y", nrow = 1)
+  } else {
     p <- ggplot(x, aes(features, ymin = 0, ymax = importance, color = a_sign)) +
-      geom_linerange(size = bar_width)
+      geom_linerange(size = bar_width) +
+    facet_wrap(~label, scales = "free_y", nrow = 1)
+  }
+
+  if (add_contributions & aspects_on_axis) {
+    p <- p + geom_text(aes(x=aspects, y=importance,
+                           label=round(importance, digits_to_round),
+                           hjust = hjust),
+                       vjust = 0.5, color = "#371ea3", size = 3)
+  } else if (add_contributions & !aspects_on_axis) {
+    p <- p + geom_text(aes(x=features, y=importance,
+                           label=round(importance, digits_to_round),
+                           hjust = hjust),
+                       vjust = 0.5, color = "#371ea3", size = 3)
   }
 
   p <- p + coord_flip() +
@@ -277,11 +317,13 @@ aspect_importance_single.explainer <- function(x, new_observation,
   model <- x$model
   data <- x$data
   predict_function <- x$predict_function
+  label <- x$label
 
   # calls target function
   aspect_importance_single.default(x = model, data = data,
                                    predict_function = predict_function,
                                    new_observation = new_observation, N = N,
+                                   label = label,
                                    sample_method = sample_method,
                                    n_var = n_var, f = f)
 }
@@ -290,7 +332,7 @@ aspect_importance_single.explainer <- function(x, new_observation,
 #' @rdname aspect_importance_single
 
 aspect_importance_single.default <- function(x, data, predict_function = predict,
-                                             new_observation, N = 100,
+                                             new_observation, N = 100, label = "",
                                              sample_method = "default", n_var = 0,
                                              f = 2, ...) {
 
@@ -305,7 +347,7 @@ aspect_importance_single.default <- function(x, data, predict_function = predict
   #call aspect importance function
   res_ai <- aspect_importance(x, data, predict_function,
                               new_observation, single_aspect_list, N,
-                              sample_method, n_var, f)
+                              label, sample_method, n_var, f)
 
   #create data frame with results
   res_ai[,3] <- as.character(res_ai[,1])
@@ -436,7 +478,7 @@ group_variables <- function(x, p = 0.5, clust_method = "complete",
 #' @export
 
 plot_group_variables <- function(x, p, draw_abline = TRUE) {
-  stopifnot(p>=0, p<=1)
+  stopifnot(p >= 0, p <= 1)
   stopifnot(class(x) == "hclust")
 
   y <- xend <- yend <- h <- NULL
@@ -455,27 +497,29 @@ plot_group_variables <- function(x, p, draw_abline = TRUE) {
   cor_plot <- ggplot(segment(ddata)) +
     geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_text(aes(x = x, y = y, label = label, hjust = 1), data = label(ddata),
-              nudge_y = -0.01, colour = theme_drwhy()$axis.title$colour) +
-    geom_text(data = xy, aes(x = x, y = y, label = round(h, digits=2)),
-              hjust = 1.1, size = 3) +
+              nudge_y = -0.01, size = 3, colour = theme_drwhy()$axis.title$colour) +
+    geom_text(data = xy, aes(x = x, y = y, label = round(h, digits = 2)),
+              hjust = 1.3, size = 3) +
     coord_flip() +
-    scale_y_continuous(expand = c(0.2, 0)) +
+    scale_y_continuous(expand = c(0.3, 0.3)) +
     theme(axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
           axis.text.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.line.x = element_blank(),
+          axis.text.x = element_text(colour = "white"),
           axis.ticks.x = element_blank(),
-          axis.text.x = element_blank(),
           axis.title.x = theme_drwhy()$axis.title,
-          panel.background = element_rect(fill="white"),
+          panel.background = element_rect(fill = "white"),
           panel.grid = element_blank()) +
     labs(y = "Spearman correlations")
 
   #add line that shows correlation cut off level
   if (draw_abline == TRUE) {
-    cor_plot <- cor_plot + geom_hline(yintercept = 1-p, linetype="dashed")
+    cor_plot <- cor_plot + geom_hline(yintercept = 1 - p, linetype = "dashed")
   }
+
+  attr(cor_plot, "order") <- x$order
+  attr(cor_plot, "labels") <- x$labels
 
   return(cor_plot)
 }
@@ -546,17 +590,6 @@ custom_tree_cutting <- function(x, h) {
 #' plot_aspects_importance_grouping(x = apartments_num_lm_model,
 #' data = apartments_num_mod, new_observation = apartments_num_new_observation)
 #'
-#' \donttest{
-#' library("randomForest")
-#' library("mlbench")
-#' data("BostonHousing2")
-#' data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
-#' model <- lm(cmedv ~., data = data)
-#' new_observation <- data[10,]
-#' data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
-#' plot_aspects_importance_grouping(x = model, data = data,
-#' new_observation = new_observation)
-#' }
 #'
 #' @export
 #'
@@ -640,7 +673,7 @@ plot_aspects_importance_grouping <- function(x, data, predict_function = predict
 
   #removing values of aspect_importance for single aspects
   cc_vector <- !complete.cases(ddata$segments)
-  ddata$segments[cc_vector,] <- 0
+  ddata$segments[cc_vector,] <- 1
   ddata$segments[min(which(cc_vector == TRUE)),c(1,3)] <- min(ddata$labels$x)
   ddata$segments[min(which(cc_vector == TRUE)) + 1,c(1,3)] <- max(ddata$labels$x)
 
@@ -667,7 +700,8 @@ plot_aspects_importance_grouping <- function(x, data, predict_function = predict
   p <- ggplot(segment(ddata)) +
     geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_text(aes(x = x, y = y, label = label, hjust = 1), data = label(ddata),
-              colour = theme_drwhy()$axis.title$colour, nudge_y = nudge_value) +
+              colour = theme_drwhy()$axis.title$colour,
+              size = 3, nudge_y = nudge_value) +
     geom_text(data = ai_labels, aes(x = x, y = yend_val,
                                     label = round(yend, digits = 2)),
               hjust = 1.3, size = 3) +
@@ -680,7 +714,7 @@ plot_aspects_importance_grouping <- function(x, data, predict_function = predict
       axis.title.y = element_blank(),
       axis.line.x = element_blank(),
       axis.ticks.x = element_blank(),
-      axis.text.x = element_blank(),
+      axis.text.x = element_text(colour = "white"),
       axis.title.x = theme_drwhy()$axis.title,
       panel.background = element_rect(fill = "white"),
       panel.grid = element_blank()
@@ -727,17 +761,6 @@ plot_aspects_importance_grouping <- function(x, data, predict_function = predict
 #' triplot(x = apartments_num_lm_model,
 #' data = apartments_num_mod, new_observation = apartments_num_new_observation)
 #'
-#' \donttest{
-#' library("randomForest")
-#' library("mlbench")
-#' data("BostonHousing2")
-#' data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
-#' model <- lm(cmedv ~., data = data)
-#' new_observation <- data[10,]
-#' data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
-#' triplot(x = model, data = data,
-#' new_observation = new_observation)
-#' }
 #'
 #' @export
 
@@ -772,29 +795,38 @@ triplot.default <- function(x, data, predict_function = predict, new_observation
 
   stopifnot(all(sapply(data, is.numeric) ))
 
-  # Build plot 1
-  aspect_importance_leaves <- aspect_importance_single(x, data, predict_function,
-                                                       new_observation, N)
-  aspect_importance_leaves[,1] <- aspect_importance_leaves[,3]
-  p1 <- plot(aspect_importance_leaves)
-  p1$labels$y <- "Single aspects importance"
-
   # Build plot 2
   p2 <- plot_aspects_importance_grouping(x, data, predict_function,
                                          new_observation, N, clust_method,
                                          absolute_value,
                                          cumulative_max)
   p2$labels$y <- "Hierarchical aspect importance"
+  #p2 <- p2 + theme(geom.text=element_text(size=4))
+  p2 <- p2 + theme(axis.text = element_text(size=10))
 
   # Build plot 3
   x_hc <- hclust(as.dist(1 - abs(cor(data, method = "spearman"))),
                  method = clust_method)
   p3 <- plot_group_variables(x_hc, 0, draw_abline = FALSE)
+  #p3 <- p3 + theme(geom.text=element_text(size=4))
+  p3 <- p3 + theme(axis.text = element_text(size=10))
+
+
+  # Build plot 1*
+  aspect_importance_leaves <- aspect_importance_single(x, data, predict_function,
+                                                       new_observation, N)
+  #aspect_importance_leaves[,1] <- aspect_importance_leaves[,3]
+  p1 <- plot(aspect_importance_leaves)
+  p1$labels$y <- "Single aspects importance"
+  p1$data$aspects <- droplevels(p1$data$aspects)
+  lev_mod <- attr(p3,"labels")[reorder(attr(p3,"labels"),attr(p3,"order"))]
+  p1$data$aspects <- factor(p1$data$aspects, levels = lev_mod)
+  p1$data <- p1$data[order(p1$data$aspects),]
+  p1 <- p1 + theme(axis.text = element_text(size=10))
 
   # Plot
-
   plot_list <- list(p1,p2,p3)
-  do.call("grid.arrange", c(plot_list, nrow = 1))
+  do.call("grid.arrange", c(plot_list, nrow = 1, top = "Triplot"))
 
 }
 

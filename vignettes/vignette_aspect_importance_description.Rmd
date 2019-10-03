@@ -88,7 +88,7 @@ In the beginning we use `group_variables()` function with cut off level set on 0
 library(ingredients)
 library(mlbench)
 library("randomForest")
-library(gridExtra)
+#library(gridExtra)
 data("BostonHousing2")
 set.seed(123)
 data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
@@ -105,7 +105,10 @@ ai_rf <- aspect_importance(Boston_rf, data, predict_function = predict,
                   new_observation, aspects, N = 5500, show_cor = TRUE)
 ai_lm
 ai_rf
-grid.arrange(plot(ai_lm, aspects_on_axis = FALSE), plot(ai_rf, aspects_on_axis = FALSE), nrow = 1)
+#grid.arrange(plot(ai_lm, aspects_on_axis = FALSE), plot(ai_rf, aspects_on_axis = FALSE), nrow = 1)
+
+plot(ai_lm, ai_rf, aspects_on_axis = FALSE, add_contributions = TRUE)
+
 ```
 
 
