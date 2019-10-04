@@ -249,14 +249,14 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.25433e-14 , max =  0.8437859  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_glm</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vd_rf_joint1</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_glm</span>,
@@ -289,14 +289,14 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
                                     <span class='no'>fare</span> + <span class='no'>sibsp</span> + <span class='no'>parch</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'> <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic</span>[,-<span class='fl'>9</span>],
                            <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00977121 , mean =  0.3239698 , max =  0.9964  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7900378 , mean =  0.0004704316 , max =  0.9056507  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>5</span>) <span class='co'># 5 replications</span>
@@ -324,14 +324,14 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt; 6   evaluation     7962.279 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; model label       :  lm  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  7847  rows  6  cols 
 #&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.293796e-13 , max =  0.9820537  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                         <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>vd_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
 #&gt; 1 _full_model_    0.4148305    lm
@@ -351,11 +351,11 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; model label       :  xgboost 
 #&gt;   -&gt; data              :  7847  rows  6  cols 
 #&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; predict function  : yhat.default will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  : yhat.default will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  1.687903e-06 , mean =  0.363713 , max =  0.9996712  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203494 , max =  0.9970635  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>vd_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
 #&gt; 1 _full_model_    0.3142729 xgboost

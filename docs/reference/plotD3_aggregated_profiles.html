@@ -231,11 +231,11 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 #&gt;   -&gt; model label       :  Random Forest v7 
 #&gt;   -&gt; data              :  490  rows  7  cols 
 #&gt;   -&gt; target variable   :  490  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.02541291 , mean =  0.4017618 , max =  0.9879733  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.6813068 , mean =  0.0002790341 , max =  0.841785  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_small</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 

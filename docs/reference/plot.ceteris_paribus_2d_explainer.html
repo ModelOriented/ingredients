@@ -241,9 +241,9 @@
 #&gt;   -&gt; target variable   :  7847  values 
 #&gt;   -&gt; predict function  :  pred1 
 #&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3757089 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.724 , mean =  -0.01187562 , max =  0.704  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>new_emp</span> <span class='kw'>&lt;-</span> <span class='no'>HR</span>[<span class='fl'>1</span>, ]
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>new_emp</span> <span class='kw'>&lt;-</span> <span class='no'>HR</span>[<span class='fl'>1</span>, ]
 <span class='no'>new_emp</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
 #&gt; 1   male 32.58267 41.88626          3      1  fired</div><div class='input'>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus_2d.html'>ceteris_paribus_2d</a></span>(<span class='no'>explainer_rf_fired</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_emp</span>)

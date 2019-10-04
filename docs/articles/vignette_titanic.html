@@ -103,7 +103,7 @@
       <h1>General introduction: Survival on the RMS Titanic</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2019-09-23</h4>
+            <h4 class="date">2019-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_titanic.Rmd"><code>vignettes/vignette_titanic.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_titanic.Rmd</code></div>
@@ -143,8 +143,8 @@
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;           Mean of squared residuals: 0.1428779
-#&gt;                     % Var explained: 34.81</code></pre>
+#&gt;           Mean of squared residuals: 0.1429118
+#&gt;                     % Var explained: 34.8</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -159,11 +159,11 @@
 #&gt;   -&gt; model label       :  Random Forest v7 
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ([33mdefault[39m)
-#&gt;   -&gt; predicted values  :  numerical, min =  0.007116464 , mean =  0.3242331 , max =  0.9907806  
-#&gt;   -&gt; residual function :  difference between y and yhat ([33mdefault[39m)
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7923618 , mean =  0.0002071287 , max =  0.8977945  
-#&gt; [32mA new explainer has been created![39m</code></pre>
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008763982 , mean =  0.3251439 , max =  0.9945588  
+#&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7969743 , mean =  -0.0007036989 , max =  0.9075956  
+#&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
 <h1 class="hasAnchor">
@@ -174,12 +174,12 @@
 <a class="sourceLine" id="cb7-3" data-line-number="3">fi_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/feature_importance.html">feature_importance</a></span>(explain_titanic_rf)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fi_rf)</a></code></pre></div>
 <pre><code>#&gt;       variable dropout_loss            label
-#&gt; 1 _full_model_    0.3329043 Random Forest v7
-#&gt; 2      country    0.3329043 Random Forest v7
-#&gt; 3        parch    0.3440288 Random Forest v7
-#&gt; 4        sibsp    0.3455702 Random Forest v7
-#&gt; 5     embarked    0.3517578 Random Forest v7
-#&gt; 6          age    0.3732382 Random Forest v7</code></pre>
+#&gt; 1 _full_model_    0.3334053 Random Forest v7
+#&gt; 2      country    0.3334053 Random Forest v7
+#&gt; 3        sibsp    0.3446515 Random Forest v7
+#&gt; 4        parch    0.3448281 Random Forest v7
+#&gt; 5     embarked    0.3491494 Random Forest v7
+#&gt; 6         fare    0.3716437 Random Forest v7</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fi_rf)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -199,12 +199,12 @@
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pp_age)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_          _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7 0.0000000 0.3229389     0
-#&gt; 2     age Random Forest v7 0.1666667 0.5196609     0
-#&gt; 3     age Random Forest v7 2.0000000 0.5423352     0
-#&gt; 4     age Random Forest v7 4.0000000 0.5464652     0
-#&gt; 5    fare Random Forest v7 6.1904000 0.3064928     0
-#&gt; 6     age Random Forest v7 7.0000000 0.5100637     0</code></pre>
+#&gt; 1    fare Random Forest v7 0.0000000 0.2999478     0
+#&gt; 2     age Random Forest v7 0.1666667 0.5144511     0
+#&gt; 3     age Random Forest v7 2.0000000 0.5355181     0
+#&gt; 4     age Random Forest v7 4.0000000 0.5408431     0
+#&gt; 5    fare Random Forest v7 6.1904000 0.2875479     0
+#&gt; 6     age Random Forest v7 7.0000000 0.4950566     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pp_age)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
@@ -260,12 +260,12 @@
 <a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(clust_rf)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_            _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.7410116     0
-#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.8873325     0
-#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.8449547     0
-#&gt; 4     age Random Forest v7_1 0.1666667         1 0.8228762     0
-#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.8451085     0
-#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.8354096     0</code></pre>
+#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.7403863     0
+#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.8904811     0
+#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.8460678     0
+#&gt; 4     age Random Forest v7_1 0.1666667         1 0.8166653     0
+#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.8465293     0
+#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.8367994     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sp_rf, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span>(clust_rf, <span class="dt">color =</span> <span class="st">"_label_"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
@@ -289,12 +289,12 @@
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] ingredients_0.3.10  randomForest_4.6-14 DALEX_0.4.7        
+#&gt; [1] ingredients_0.3.10  randomForest_4.6-14 DALEX_0.4.8        
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_1.0.2       compiler_3.5.0   pillar_1.4.2     iterators_1.0.12
-#&gt;  [5] tools_3.5.0      digest_0.6.20    lattice_0.20-38  evaluate_0.14   
-#&gt;  [9] memoise_1.1.0    tibble_2.1.3     gtable_0.3.0     pkgconfig_2.0.2 
+#&gt;  [5] tools_3.5.0      digest_0.6.21    lattice_0.20-38  evaluate_0.14   
+#&gt;  [9] memoise_1.1.0    tibble_2.1.3     gtable_0.3.0     pkgconfig_2.0.3 
 #&gt; [13] rlang_0.4.0      foreach_1.4.7    Matrix_1.2-17    rstudioapi_0.10 
 #&gt; [17] yaml_2.2.0       pkgdown_1.4.1    xfun_0.9         ggdendro_0.1-20 
 #&gt; [21] gridExtra_2.3    stringr_1.4.0    dplyr_0.8.3      knitr_1.24      

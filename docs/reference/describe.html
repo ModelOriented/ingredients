@@ -237,11 +237,11 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; model label       :  rf 
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (<span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.007278617 , mean =  0.3239244 , max =  0.9925638  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8086334 , mean =  0.0005157982 , max =  0.9024273  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>pdp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
@@ -264,11 +264,11 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; model label       :  rf 
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.008675681 , mean =  0.3239261 , max =  0.9937424  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7896028 , mean =  0.0005141274 , max =  0.8928476  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'>
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 
@@ -287,11 +287,11 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; model label       :  lm 
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; predict function  :  yhat.lm  will be used (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; predict function  :  yhat.lm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  1781.848 , mean =  3487.019 , max =  6176.032  
-#&gt;   -&gt; residual function :  difference between y and yhat (</span><span style='color: #BBBB00;'>default</span><span>)
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -247.4728 , mean =  2.093656e-14 , max =  469.0023  
-#&gt; </span><span style='color: #00BB00;'>A new explainer has been created!</span><span></div><div class='input'><span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_lm</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt; The number of important variables for lm's prediction is 3 out of 5. 
 #&gt;  Variables district, surface, floor have the highest importantance. </div><div class='input'>
