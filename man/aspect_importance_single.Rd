@@ -12,8 +12,9 @@ aspect_importance_single(x, ...)
   sample_method = "default", n_var = 0, f = 2, ...)
 
 \method{aspect_importance_single}{default}(x, data,
-  predict_function = predict, new_observation, N = 100, label = "",
-  sample_method = "default", n_var = 0, f = 2, ...)
+  predict_function = predict, new_observation, N = 100,
+  label = class(x)[1], sample_method = "default", n_var = 0, f = 2,
+  ...)
 }
 \arguments{
 \item{x}{an explainer created with the \code{DALEX::explain()} function
@@ -36,8 +37,11 @@ linear regression is used}
 \item{data}{dataset, it will be extracted from \code{x} if it's an explainer
 NOTE: Target variable shouldn't be present in the \code{data}}
 
-\item{predict_function}{predict function, it will be extracted from \code{x} if
-it's an explainer}
+\item{predict_function}{predict function, it will be extracted from \code{x}
+if it's an explainer}
+
+\item{label}{name of the model. By default it's extracted from the 'class'
+attribute of the model.}
 }
 \value{
 An object of the class 'aspect_importance'. Contains dataframe that

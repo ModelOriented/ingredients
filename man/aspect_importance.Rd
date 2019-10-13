@@ -47,14 +47,15 @@ correlated, works only if dataset contains solely numeric values}
 \item{data}{dataset, it will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}
 
-\item{predict_function}{predict function, it will be extracted from \code{x} if
-it's an explainer}
+\item{predict_function}{predict function, it will be extracted from \code{x}
+if it's an explainer}
 
-\item{label}{name of the model. By default it's extracted from the 'class' attribute of the model.}
+\item{label}{name of the model. By default it's extracted from the 'class'
+attribute of the model.}
 }
 \value{
-An object of the class \code{aspect_importance}. Contains dataframe that
-  describes aspects' importance.
+An object of the class \code{aspect_importance}. Contains dataframe
+  that describes aspects' importance.
 }
 \description{
 Aspect Importance function takes a sample from a given dataset and modifies

@@ -100,8 +100,13 @@ test_that("check plot (facets) for aspects importance",{
                                                     new_observation = apartments_new_observation,
                                                     aspects =  apartments_aspects, label = "model 2")
 
+  aspect_importance_apartments3 <- aspect_importance(apartments_lm_model, apartments,
+                                                     new_observation = apartments_new_observation,
+                                                     aspects =  apartments_aspects, label = "model 3")
+
   expect_is(plot(aspect_importance_apartments1, aspect_importance_apartments2,
-                 add_contributions = TRUE, aspects_on_axis = FALSE, digits_to_round = 0), "gg")
+                 aspect_importance_apartments3, add_importance = TRUE,
+                 aspects_on_axis = FALSE, digits_to_round = 0), "gg")
 })
 
 
@@ -264,12 +269,17 @@ test_that("check plot_aspects_importance_grouping function",{
   library("DALEX")
   library("ingredients")
 
-  p <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
+  p1 <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
                                         data = apartments_num_mod,
                                         new_observation = apartments_num_new_observation,
                                         cumulative_max = TRUE, absolute_value = TRUE)
+  p2 <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
+                                        data = apartments_num_mod,
+                                        new_observation = apartments_num_new_observation,
+                                        cumulative_max = TRUE, absolute_value = FALSE)
 
-  expect_true("ggplot" %in% class(p))
+  expect_true("ggplot" %in% class(p1))
+  expect_true("ggplot" %in% class(p2))
 })
 
 

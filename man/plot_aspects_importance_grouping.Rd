@@ -6,7 +6,7 @@
 \usage{
 plot_aspects_importance_grouping(x, data, predict_function = predict,
   new_observation, N = 100, clust_method = "complete",
-  absolute_value = FALSE, cumulative_max = FALSE)
+  absolute_value = FALSE, cumulative_max = FALSE, show_labels = TRUE)
 }
 \arguments{
 \item{x}{a model to be explained}
@@ -26,8 +26,10 @@ variables used in the model, should be without target variable}
 \item{absolute_value}{if TRUE, aspect importance values will be drawn as
 absolute values}
 
-\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max value
-of children and node aspect importance values}
+\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max
+value of children and node aspect importance values}
+
+\item{show_labels}{if TRUE, plot will have annotated axis Y}
 }
 \value{
 ggplot
