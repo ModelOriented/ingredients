@@ -220,6 +220,7 @@ describe_ceteris_paribus_factor <- function(x,
                            label," estimated by ", model_name, " is equal to ",
                            round(baseline_prediction,3), ".")
 
+
     argumentation <- ifelse((is.null(arguments_increasing) | is.null(arguments_decreasing)),
                             paste0("Model's prediction would ", arguments_increasing,
                                    arguments_decreasing, ".\n",
@@ -262,9 +263,8 @@ describe_ceteris_paribus_continuous <- function(x,
 
   baseline_prediction <- attr(x, "observations")[1,'_yhat_']
 
-  introduction <- paste0(model_name, " predicts that for the selected instance",
-                         " predicts that ", value, ", ", label,
-                         " is equal to ", round(baseline_prediction, 3), ".")
+  introduction <- paste0(model_name," predicts that for the selected instance", value, ", ",
+                         label, " is equal to ", round(baseline_prediction, 3))
 
   # prefix
   max_name <- df[which.max(df$`_yhat_`), variables]
