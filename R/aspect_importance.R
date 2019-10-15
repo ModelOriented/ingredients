@@ -243,7 +243,7 @@ plot.aspect_importance <- function(x, ..., bar_width = 10,
 
   stopifnot("aspect_importance" %in% class(x))
 
-  importance <- a_sign <- aspects <- features <- hjust<- NULL
+  importance <- a_sign <- aspects <- features <- hjust <- NULL
 
   # order bars
   x$aspects <- reorder(x$aspects, abs(x[, 2]), na.rm = TRUE)

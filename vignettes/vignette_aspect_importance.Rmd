@@ -77,7 +77,7 @@ predict(model_titanic_glm, passenger, type = "response")
 
 # Calculating aspect importance (logistic regression)
 
-Now we can call aspect_importance() function and see that features included in `wealth` (that is `class` and `fare`) have the biggest contribution on survival prediction for the passenger. That contribution is of negative type. Rest of the aspects have significally smaller influence. However, in case of `family` and `personal`, it's a positive type of influence.
+Now we can call aspect_importance() function and see that features included in `wealth` (that is `class` and `fare`) have the biggest contribution on survival prediction for the passenger. That contribution is of negative type. Rest of the aspects have significantly smaller influence. However, in case of `family` and `personal`, it's a positive type of influence.
 
 ```{r Calculating aspect importance (logistic regression)}
 library("ggplot2")
@@ -166,7 +166,7 @@ model_apartments <- lm(m2.price ~ ., data = apartments_num)
 
 We run group_variables() function with cut off level set on 0.6. As a result, we get a list of variables groups (aspects) where absolute value of features' pairwise correlation is at least at 0.6.
 
-Afterwards, we call aspect_importance() function with parameter `show_cor = TRUE`, to show how features are grouped into aspects, what is minimal value of pairwise correlation in each group and to check whether any pair of features is negatively correlated (`neg`) or not (`pos`). 
+Afterwards, we call aspect_importance() function with parameter `show_cor = TRUE`, to check how features are grouped into aspects, what is minimal value of pairwise correlation in each group and to check whether any pair of features is negatively correlated (`neg`) or not (`pos`). 
 
 ```{r}
 aspects_apartments <- group_variables(apartments_no_target, 0.6)
@@ -176,8 +176,15 @@ apartments_ai
 
 # Hierarchical aspects importance
 
-To increase our understaning of different s
+`Triplot` is one more tool that allows us to better understand the inner workings a of black box model. It illustrates, in one place: 
 
+* the importance of every single feature,
+* hierarchical aspects importance (explained below), 
+* order of grouping features into aspects in `group_variables()`.
+
+Hierarchical aspects importance allows us to check the values of aspects importance for the different levels of variables grouping. Method starts with looking at the aspect importance where every aspect has one, single variable. Afterwards, it iteratively creates bigger aspects by merging the ones with the highest level of absolute correlation into one aspect and calculating it's contribution to the prediction. 
+
+It should be noted that similarly to `group_variables()`, `triplot()` works for the datasets with only numerical variables. 
 
 ```{r}
 triplot(model_apartments, apartments_no_target, 

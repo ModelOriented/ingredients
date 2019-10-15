@@ -1,3 +1,8 @@
+ingredients 0.3.11
+---------------------------------------------------------------
+* modified `plot.aspect_importance` - it can plot more than single figure  
+* modified `triplot`, `plot.aspect_importance` and `plot_group_variables` to add more clarity in plots and allow some parameterization
+
 ingredients 0.3.10
 ---------------------------------------------------------------
 * added `triplot` function that illustrates hierarchical `aspect_importance()` groupings
@@ -20,7 +25,7 @@ ingredients 0.3.7
 
 ingredients 0.3.6
 ----------------------------------------------------------------
-* a new verion of `lime` is implemented in the `lime()`/`aspect_importance()` function.
+* a new version of `lime` is implemented in the `lime()`/`aspect_importance()` function.
 * Kasia Pekala and Huber Baniecki are added as contributors.
 
 ingredients 0.3.5
