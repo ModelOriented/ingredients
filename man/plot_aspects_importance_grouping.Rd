@@ -6,7 +6,8 @@
 \usage{
 plot_aspects_importance_grouping(x, data, predict_function = predict,
   new_observation, N = 100, clust_method = "complete",
-  absolute_value = FALSE, cumulative_max = FALSE, show_labels = TRUE)
+  absolute_value = FALSE, cumulative_max = FALSE, show_labels = TRUE,
+  axis_lab_size = 10, text_size = 3)
 }
 \arguments{
 \item{x}{a model to be explained}
@@ -30,6 +31,10 @@ absolute values}
 value of children and node aspect importance values}
 
 \item{show_labels}{if TRUE, plot will have annotated axis Y}
+
+\item{axis_lab_size}{size of labels on axis Y, if applicable}
+
+\item{text_size}{size of labels annotating values of aspects importance}
 }
 \value{
 ggplot

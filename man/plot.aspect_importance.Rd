@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{aspect_importance}(x, ..., bar_width = 10,
   aspects_on_axis = TRUE, add_importance = FALSE,
-  digits_to_round = 2)
+  digits_to_round = 2, text_size = 3)
 }
 \arguments{
 \item{x}{object of aspect_importance class}
@@ -23,6 +23,9 @@ importance}
 
 \item{digits_to_round}{integer indicating the number of decimal places used
 for rounding values of aspects importance shown on the plot}
+
+\item{text_size}{size of labels annotating values of aspects importance,
+if applicable}
 }
 \value{
 a ggplot2 object

@@ -200,6 +200,8 @@ aspect_importance.default <- function(x, data, predict_function = predict,
 #'   importance
 #' @param digits_to_round integer indicating the number of decimal places used
 #'   for rounding values of aspects importance shown on the plot
+#' @param text_size size of labels annotating values of aspects importance,
+#'   if applicable
 #' @param ... other parameters
 #'
 #' @return a ggplot2 object
@@ -236,7 +238,8 @@ aspect_importance.default <- function(x, data, predict_function = predict,
 plot.aspect_importance <- function(x, ..., bar_width = 10,
                                    aspects_on_axis = TRUE,
                                    add_importance = FALSE,
-                                   digits_to_round = 2) {
+                                   digits_to_round = 2,
+                                   text_size = 3) {
 
   stopifnot("aspect_importance" %in% class(x))
 
@@ -278,12 +281,12 @@ plot.aspect_importance <- function(x, ..., bar_width = 10,
     p <- p + geom_text(aes(x = aspects, y = importance,
                            label = round(importance, digits_to_round),
                            hjust = hjust), vjust = 0.5, color = "#371ea3",
-                       size = 3)
+                       size = text_size)
   } else if (add_importance & !aspects_on_axis) {
     p <- p + geom_text(aes(x = features, y = importance,
                            label = round(importance, digits_to_round),
                            hjust = hjust),
-                       vjust = 0.5, color = "#371ea3", size = 3)
+                       vjust = 0.5, color = "#371ea3", size = text_size)
   }
 
   p <- p + coord_flip() +
@@ -503,6 +506,8 @@ group_variables <- function(x, p = 0.5, clust_method = "complete",
 #' @param p correlation value for cutoff level
 #' @param show_labels if TRUE, plot will have annotated axis Y
 #' @param draw_abline if TRUE, cutoff line will be drawn
+#' @param axis_lab_size size of labels on axis Y, if applicable
+#' @param text_size size of labels annotating values of correlations
 #'
 #' @return tree plot
 #'
@@ -520,7 +525,8 @@ group_variables <- function(x, p = 0.5, clust_method = "complete",
 #'
 #' @export
 
-plot_group_variables <- function(x, p, show_labels = TRUE, draw_abline = TRUE) {
+plot_group_variables <- function(x, p, show_labels = TRUE, draw_abline = TRUE,
+                                 axis_lab_size = 10, text_size = 3) {
   stopifnot(p >= 0, p <= 1)
   stopifnot(class(x) == "hclust")
 
@@ -540,7 +546,7 @@ plot_group_variables <- function(x, p, show_labels = TRUE, draw_abline = TRUE) {
   cor_plot <- ggplot(segment(ddata)) +
     geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_text(data = xy, aes(x = x, y = y, label = round(h, digits = 2)),
-              hjust = 1.3, size = 3) +
+              hjust = 1.3, size = text_size) +
     coord_flip() +
     scale_y_continuous(expand = c(0.3, 0.3)) +
     theme(axis.line.y = element_blank(),
@@ -558,7 +564,7 @@ plot_group_variables <- function(x, p, show_labels = TRUE, draw_abline = TRUE) {
     cor_plot <- cor_plot +
       geom_text(aes(x = x, y = y, label = label, hjust = 1),
                 data = label(ddata), nudge_y = -0.01,
-                size = 10 / .pt,
+                size = axis_lab_size / .pt,
                 colour = theme_drwhy()$axis.title$colour)
   }
 
@@ -622,6 +628,8 @@ custom_tree_cutting <- function(x, h) {
 #' @param cumulative_max if TRUE, aspect importance shown on tree will be max
 #'   value of children and node aspect importance values
 #' @param show_labels if TRUE, plot will have annotated axis Y
+#' @param axis_lab_size size of labels on axis Y, if applicable
+#' @param text_size size of labels annotating values of aspects importance
 #'
 #' @return ggplot
 #'
@@ -651,7 +659,9 @@ plot_aspects_importance_grouping <- function(x, data,
                                              clust_method = "complete",
                                              absolute_value = FALSE,
                                              cumulative_max = FALSE,
-                                             show_labels = TRUE) {
+                                             show_labels = TRUE,
+                                             axis_lab_size = 10,
+                                             text_size = 3) {
 
   #building additional objects
   y <- xend <- yend <- yend_val <- NULL
@@ -756,7 +766,7 @@ plot_aspects_importance_grouping <- function(x, data,
     geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_text(data = ai_labels, aes(x = x, y = yend_val,
                                     label = round(yend, digits = 2)),
-              hjust = 1.3, size = 3) +
+              hjust = 1.3, size = text_size) +
     coord_flip() +
     scale_y_continuous(expand = c(.3, .3)) +
     theme(
@@ -777,7 +787,7 @@ plot_aspects_importance_grouping <- function(x, data,
     p <- p + geom_text(aes(x = x, y = y, label = label, hjust = 1),
                            data = label(ddata),
                            colour = theme_drwhy()$axis.title$colour,
-                           size = 10 / .pt, nudge_y = nudge_value)
+                           size = axis_lab_size / .pt, nudge_y = nudge_value)
   }
 
   return(p)
@@ -811,6 +821,9 @@ plot_aspects_importance_grouping <- function(x, data,
 #'   axis Y
 #' @param abbrev_labels if greater than 0, labels for axis Y in single aspect
 #'   importance plot will be abbreviated according to this parameter
+#' @param axis_lab_size size of labels on axis
+#' @param text_size size of labels annotating values of aspects importance and
+#'   correlations
 #' @param ... other parameters
 #'
 #' @import stats
@@ -821,7 +834,7 @@ plot_aspects_importance_grouping <- function(x, data,
 #' library(DALEX)
 #' apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
 #' apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
-#' apartments_num_new_observation <- apartments_num[20,-1]
+#' apartments_num_new_observation <- apartments_num[30,-1]
 #' apartments_num_mod <- apartments_num[,-1]
 #' triplot(x = apartments_num_lm_model,
 #'   data = apartments_num_mod,
@@ -842,6 +855,8 @@ triplot.explainer <- function(x, new_observation, N = 500,
                               absolute_value = FALSE, cumulative_max = FALSE,
                               add_importance_labels = TRUE,
                               show_axis_y_duplicated_labels = FALSE,
+                              axis_lab_size = 10,
+                              text_size = 3,
                               ...) {
 
   # extracts model, data and predict function from the explainer
@@ -852,7 +867,8 @@ triplot.explainer <- function(x, new_observation, N = 500,
   # calls target function
   triplot.default(model, data, predict_function, new_observation, N,
                   clust_method, absolute_value = FALSE, cumulative_max = FALSE,
-                  add_importance_labels, show_axis_y_duplicated_labels)
+                  add_importance_labels, show_axis_y_duplicated_labels,
+                  axis_lab_size = axis_lab_size, text_size = text_size)
 }
 
 #' @export
@@ -865,6 +881,8 @@ triplot.default <- function(x, data, predict_function = predict, new_observation
                             add_importance_labels = TRUE,
                             show_axis_y_duplicated_labels = FALSE,
                             abbrev_labels = 0,
+                            axis_lab_size = 10,
+                            text_size = 3,
                             ...) {
 
   stopifnot(all(sapply(data, is.numeric)))
@@ -874,21 +892,28 @@ triplot.default <- function(x, data, predict_function = predict, new_observation
                                          new_observation, N, clust_method,
                                          absolute_value,
                                          cumulative_max,
-                                         show_labels = show_axis_y_duplicated_labels)
+                                         show_labels = show_axis_y_duplicated_labels,
+                                         axis_lab_size = axis_lab_size,
+                                         text_size = text_size)
   p2$labels$y <- "Hierarchical aspect importance"
+
+  p2 <- p2 + theme(axis.title = element_text(size = axis_lab_size))
 
   # Build plot 3
   x_hc <- hclust(as.dist(1 - abs(cor(data, method = "spearman"))),
                  method = clust_method)
   p3 <- plot_group_variables(x_hc, 0, show_labels = show_axis_y_duplicated_labels,
-                             draw_abline = FALSE)
+                             draw_abline = FALSE, text_size = text_size,
+                             axis_lab_size = axis_lab_size)
+  p3 <- p3 + theme(axis.title = element_text(size = axis_lab_size))
 
   # Build plot 1
   aspect_importance_leaves <- aspect_importance_single(x, data,
                                                        predict_function,
                                                        new_observation, N,
                                                        label = "")
-  p1 <- plot(aspect_importance_leaves, add_importance = add_importance_labels)
+  p1 <- plot(aspect_importance_leaves, add_importance = add_importance_labels,
+             text_size = text_size)
   p1$labels$y <- "Single aspects importance"
   if (abbrev_labels > 0) {
     p1$data$`new observation` <- abbreviate(p1$data$`new observation`,
@@ -900,7 +925,8 @@ triplot.default <- function(x, data, predict_function = predict, new_observation
   p1$data$`new observation` <- factor(p1$data$`new observation`,
                                       levels = lev_mod)
   p1$data$aspects <- p1$data$`new observation`
-  p1 <- p1 + theme(axis.text = element_text(size = 10)) +
+  p1 <- p1 + theme(axis.text = element_text(size = axis_lab_size),
+                   axis.title = element_text(size = axis_lab_size)) +
     scale_x_discrete(expand = expand_scale(mult = .01))
 
   # Plot

@@ -11,13 +11,14 @@ triplot(x, ...)
 \method{triplot}{explainer}(x, new_observation, N = 500,
   clust_method = "complete", absolute_value = FALSE,
   cumulative_max = FALSE, add_importance_labels = TRUE,
-  show_axis_y_duplicated_labels = FALSE, ...)
+  show_axis_y_duplicated_labels = FALSE, axis_lab_size = 10,
+  text_size = 3, ...)
 
 \method{triplot}{default}(x, data, predict_function = predict,
   new_observation, N = 500, clust_method = "complete",
   absolute_value = FALSE, cumulative_max = FALSE,
   add_importance_labels = TRUE, show_axis_y_duplicated_labels = FALSE,
-  abbrev_labels = 0, ...)
+  abbrev_labels = 0, axis_lab_size = 10, text_size = 3, ...)
 }
 \arguments{
 \item{x}{an explainer created with the \code{DALEX::explain()} function
@@ -45,6 +46,11 @@ importance}
 \item{show_axis_y_duplicated_labels}{if TRUE, every plot will have annotated
 axis Y}
 
+\item{axis_lab_size}{size of labels on axis}
+
+\item{text_size}{size of labels annotating values of aspects importance and
+correlations}
+
 \item{data}{dataset, it will be extracted from \code{x} if it's an explainer
 NOTE: Target variable shouldn't be present in the \code{data}}
 
@@ -64,7 +70,7 @@ expanded aspect
 library(DALEX)
 apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
 apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
-apartments_num_new_observation <- apartments_num[20,-1]
+apartments_num_new_observation <- apartments_num[30,-1]
 apartments_num_mod <- apartments_num[,-1]
 triplot(x = apartments_num_lm_model,
   data = apartments_num_mod,
