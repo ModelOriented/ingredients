@@ -68,44 +68,39 @@ The current design of DALEX explainer does not allow for displaying variables va
 library("DALEX")
 library("randomForest")
 
-titanic <- na.omit(titanic)
-\donttest{
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                  fare + sibsp + parch,  data = titanic)
-explain_titanic_rf <- explain(model_titanic_rf,
-                             data = titanic[,-9],
-                             y = titanic$survived == "yes",
-                             label = "rf")
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
-selected_passangers <- select_sample(titanic, n = 10)
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
+                              label = "rf")
+
+selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 describe(pdp, variables = "gender")
-}
+
 library("DALEX")
-library("ingredients")
 library("randomForest")
-titanic <- na.omit(titanic)
-\donttest{
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                 fare + sibsp + parch,  data = titanic)
+
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived == "yes",
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
                               label = "rf")
 
-selected_passanger <- select_sample(titanic, n = 1, seed = 123)
+selected_passanger <- select_sample(titanic_imputed, n = 1, seed = 123)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 
 plot(cp_rf, variable_type = "categorical")
 describe(cp_rf, variables = "class", label = "the predicted probability")
-}
+
 library("DALEX")
-library("ingredients")
 
 lm_model <- lm(m2.price~., data = apartments)
-explainer_lm <- explain(lm_model, data = apartments[,2:6],
-                        y = apartments$m2.price, label="lm")
+explainer_lm <- explain(lm_model, data = apartments[,-1], y = apartments[,1])
+
 fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
 
 plot(fi_lm)

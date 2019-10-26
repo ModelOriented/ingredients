@@ -18,14 +18,13 @@ Prints Individual Variable Explainer Summary
 library("DALEX")
 library("randomForest")
 
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                    no.rooms + district, data = apartments)
+apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-                        data = apartmentsTest[,2:6],
-                        y = apartmentsTest$m2.price)
+                        data = apartments_test[,-1],
+                        y = apartments_test[,1])
 
-apartments_small <- select_sample(apartmentsTest, 10)
+apartments_small <- select_sample(apartments_test, 10)
 
 cp_rf <- ceteris_paribus(explainer_rf, apartments_small)
 cp_rf

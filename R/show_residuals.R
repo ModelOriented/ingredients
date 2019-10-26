@@ -9,7 +9,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
-#' @param alpha a numeric between 0 and 1. Opacity of lines
+#' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #'
 #' @return a \code{ggplot2} layer
@@ -18,13 +18,11 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
-#' titanic <- na.omit(titanic)
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                  fare + sibsp + parch,  data = titanic, ntree = 500)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed, ntree = 500)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#'                               y = titanic$survived == "yes",
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8],
 #'                               label = "Random Forest v7")
 #'
 #' johny_d <- data.frame(
@@ -38,7 +36,7 @@
 #'   embarked = factor("Southampton", levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
 #' )
 #'
-#' johny_neighbours <- select_neighbours(data = titanic,
+#' johny_neighbours <- select_neighbours(data = titanic_imputed,
 #'                                       observation = johny_d,
 #'                                       variables = c("age", "gender", "class",
 #'                                                   "fare", "sibsp", "parch"),

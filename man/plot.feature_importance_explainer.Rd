@@ -15,7 +15,7 @@
 \item{max_vars}{maximum number of variables that shall be presented for for each model.
 By default \code{NULL} what means all variables}
 
-\item{bar_width}{width of bars. By default 10}
+\item{bar_width}{width of bars. By default \code{10}}
 }
 \value{
 a \code{ggplot2} object
@@ -35,14 +35,12 @@ Find more details in the \href{https://pbiecek.github.io/PM_VEE/featureImportanc
 \examples{
 library("DALEX")
 
-titanic <- na.omit(titanic)
-
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                         data = titanic, family = "binomial")
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                               data = titanic[,-9],
-                               y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed[,8])
 
 fi_rf <- feature_importance(explain_titanic_glm)
 plot(fi_rf)
@@ -50,16 +48,17 @@ plot(fi_rf)
 \donttest{
 library("randomForest")
 
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                 fare + sibsp + parch,  data = titanic)
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived == "yes")
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8])
 
 fi_rf <- feature_importance(explain_titanic_rf)
 plot(fi_rf)
 
 HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
+
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
                          verbose = FALSE, precalculate = FALSE)
 

@@ -9,7 +9,7 @@ calculate_oscillations(x, sort = TRUE, ...)
 \arguments{
 \item{x}{a ceteris_paribus explainer produced with the \code{ceteris_paribus()} function}
 
-\item{sort}{a logical value. If TRUE then rows are sorted along the oscillations}
+\item{sort}{a logical value. If \code{TRUE} then rows are sorted along the oscillations}
 
 \item{...}{other arguments}
 }
@@ -26,12 +26,12 @@ library("DALEX")
 titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
 # build a model
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+model_titanic_glm <- glm(survived ~ gender + age + fare,
                          data = titanic_small, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                               data = titanic_small[,-4],
-                               y = titanic_small$survived == "yes")
+                               data = titanic_small[,-8],
+                               y = titanic_small[,8])
 
 cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 
@@ -44,10 +44,10 @@ apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + flo
                                     no.rooms + district, data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-                        data = apartmentsTest,
-                         y = apartmentsTest$m2.price)
+                        data = apartments_test[,-1],
+                         y = apartments_test$m2.price)
 
-apartment <- apartmentsTest[1,]
+apartment <- apartments_test[1,]
 
 cp_rf <- ceteris_paribus(explainer_rf, apartment)
 

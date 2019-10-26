@@ -25,23 +25,21 @@
 #'
 #' @examples
 #' library("DALEX")
-#' library("ingredients")
 #' library("randomForest")
-#' titanic <- na.omit(titanic)
-#' \donttest{
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                  fare + sibsp + parch,  data = titanic)
+#'
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#'                               y = titanic$survived == "yes",
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8],
 #'                               label = "rf")
 #'
-#' selected_passanger <- select_sample(titanic, n = 1, seed = 123)
+#' selected_passanger <- select_sample(titanic_imputed, n = 1, seed = 123)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 #'
 #' plot(cp_rf, variable_type = "categorical")
 #' describe(cp_rf, variables = "class", label = "the predicted probability")
-#' }
+#'
 #' @export
 #' @rdname describe
 describe <- function(x, ...)

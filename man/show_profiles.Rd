@@ -14,7 +14,7 @@ show_profiles(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
 
 \item{size}{a numeric. Size of lines to be plotted}
 
-\item{alpha}{a numeric between 0 and 1. Opacity of lines}
+\item{alpha}{a numeric between \code{0} and \code{1}. Opacity of lines}
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
@@ -30,18 +30,16 @@ Function \code{\link{show_profiles}} adds a layer to a plot created with
 \examples{
 library("DALEX")
 
-titanic <- na.omit(titanic)
+selected_passangers <- select_sample(titanic_imputed, n = 100)
+selected_john <- titanic_imputed[1,]
 
-selected_passangers <- select_sample(titanic, n = 100)
-selected_john <- titanic[1,]
-
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                         data = titanic, family = "binomial")
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes",
-                           label = "cool_model", verbose = FALSE)
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed[,8],
+                               label = "cool_model", verbose = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
 cp_rf_john <- ceteris_paribus(explain_titanic_glm, selected_john)
@@ -51,12 +49,11 @@ plot(cp_rf, variables = "age") +
 \donttest{
 library("randomForest")
 
-model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                 fare + sibsp + parch,  data = titanic)
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
                               verbose = FALSE, precalculate = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -71,7 +68,6 @@ plot(cp_rf, variables = "age") +
   show_observations(cp_rf, variables = "age") +
   show_rugs(cp_rf, variables = "age", color = "red") +
   show_profiles(cp_rf_john, variables = "age", color = "red", size = 2)
-
 }
 
 }

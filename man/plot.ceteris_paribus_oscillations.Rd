@@ -25,12 +25,11 @@ library("DALEX")
 \donttest{
 library("randomForest")
 
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                    no.rooms + district, data = apartments)
+apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-                        data = apartments_test[,2:6],
-                        y = apartments_test$m2.price)
+                        data = apartments_test[,-1],
+                        y = apartments_test[,1])
 
 apartment <- apartments_test[1:2,]
 

@@ -8,11 +8,11 @@
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
 #' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
-#' @param type either "partial"/"conditional"/"accumulated" for parital dependence, conditional profiles of accumulated local effects
+#' @param type either \code{partial/conditional/accumulated} for parital dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
-#' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
-#' If "categorical" then only categorical variables will be calculated.
+#' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
+#' If \code{categorical} then only categorical variables will be calculated.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -24,14 +24,11 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
-#' titanic_imputed$country <- NULL
-#'
-#' model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic_imputed)
+#' model_titanic_rf <- randomForest(survived ~ .,  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                            data = titanic_imputed[,-8],
-#'                            y = titanic_imputed$survived == "yes")
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8])
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -50,6 +47,7 @@
 #' \donttest{
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
 #'                              groups = "gender")
+#'
 #' head(pdp_rf)
 #' plot(cp_rf, variables = "age") +
 #'   show_observations(cp_rf, variables = "age") +

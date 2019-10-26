@@ -18,12 +18,11 @@
 #' \donttest{
 #' library("randomForest")
 #'
-#' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'                                     no.rooms + district, data = apartments)
+#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
-#'                         data = apartments_test[,2:6],
-#'                         y = apartments_test$m2.price)
+#'                         data = apartments_test[,-1],
+#'                         y = apartments_test[,1])
 #'
 #' apartment <- apartments_test[1:2,]
 #'
@@ -51,6 +50,6 @@ plot.ceteris_paribus_oscillations <- function(x, ..., bar_width = 10) {
     facet_wrap(~`_ids_`, scales = "free_y") +
     ylab("Oscillations") + xlab("") + theme_drwhy_vertical() +
     theme(legend.position = "none") +
-    scale_color_manual(values = theme_drwhy_colors(nlabels))
+    scale_color_manual(values = colors_discrete_drwhy(nlabels))
 
 }

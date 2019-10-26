@@ -10,11 +10,11 @@
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model.
 #' By default \code{NULL} which means all variables
-#' @param bar_width width of bars in px. By default 12px
+#' @param bar_width width of bars in px. By default \code{12px}
 #' @param split either "model" or "feature" determines the plot layout
 #' @param scale_height a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
 #' @param margin extend x axis domain range to adjust the plot.
-#' Usually value between 0.1 and 0.3, by default it's 0.15
+#' Usually value between \code{0.1} and \code{0.3}, by default it's \code{0.15}
 #' @param chart_title a character. Set custom title
 #'
 #' @return a \code{r2d3} object.
@@ -22,11 +22,11 @@
 #' @examples
 #' library("DALEX")
 #'
-#' lm_model <- lm(m2.price~., data = apartments)
+#' lm_model <- lm(m2.price ~., data = apartments)
 #' explainer_lm <- explain(lm_model,
-#'                         data = apartments[,2:6],
-#'                         y = apartments$m2.price,
-#'                         label = "lm", verbose = FALSE)
+#'                         data = apartments[,-1],
+#'                         y = apartments[,1],
+#'                         verbose = FALSE)
 #'
 #' fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
 #'
@@ -37,9 +37,10 @@
 #' library("randomForest")
 #'
 #' rf_model <- randomForest(m2.price~., data = apartments)
+#'
 #' explainer_rf <- explain(rf_model,
-#'                         data = apartments[,2:6],
-#'                         y = apartments$m2.price,
+#'                         data = apartments[,-1],
+#'                         y = apartments[,1],
 #'                         label = "rf", verbose = FALSE)
 #'
 #' fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)

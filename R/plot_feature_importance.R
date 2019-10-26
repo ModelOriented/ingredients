@@ -14,12 +14,12 @@
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model.
 #' By default \code{NULL} what means all variables
-#' @param bar_width width of bars. By default 10
+#' @param bar_width width of bars. By default \code{10}
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
 #' @importFrom DALEX loss_root_mean_square
-#' @importFrom DALEX theme_drwhy theme_drwhy_vertical theme_drwhy_colors
+#' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_discrete_drwhy
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -28,14 +28,12 @@
 #' @examples
 #' library("DALEX")
 #'
-#' titanic <- na.omit(titanic)
-#'
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                          data = titanic, family = "binomial")
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#'                          data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                                data = titanic[,-9],
-#'                                y = titanic$survived == "yes")
+#'                                data = titanic_imputed[,-8],
+#'                                y = titanic_imputed[,8])
 #'
 #' fi_rf <- feature_importance(explain_titanic_glm)
 #' plot(fi_rf)
@@ -43,16 +41,17 @@
 #' \donttest{
 #' library("randomForest")
 #'
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                  fare + sibsp + parch,  data = titanic)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#'                               y = titanic$survived == "yes")
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8])
 #'
 #' fi_rf <- feature_importance(explain_titanic_rf)
 #' plot(fi_rf)
 #'
 #' HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
+#'
 #' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
 #'                          verbose = FALSE, precalculate = FALSE)
 #'
@@ -123,7 +122,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width
   ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x, color = label)) +
     geom_hline(data = bestFits, aes(yintercept = dropout_loss, color = label), lty= 3) +
     geom_linerange(size = bar_width) + coord_flip() +
-    scale_color_manual(values = theme_drwhy_colors(nlabels)) +
+    scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
     facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
     theme(legend.position = "none") +
     ylab("Drop-out loss") + xlab("")

@@ -16,7 +16,7 @@
 
 \item{size}{a numeric. Set width of lines}
 
-\item{alpha}{a numeric between 0 and 1. Opacity of lines}
+\item{alpha}{a numeric between \code{0} and \code{1}. Opacity of lines}
 
 \item{color}{a character.  Set line/bar color}
 
@@ -31,7 +31,7 @@ If "categorical" then only categorical variables will be plotted.}
 
 \item{chart_title}{a character. Set custom title}
 
-\item{label_margin}{a numeric. Set width of label margins in "categorical" type}
+\item{label_margin}{a numeric. Set width of label margins in \code{categorical} type}
 }
 \value{
 a \code{r2d3} object.
@@ -51,12 +51,11 @@ library("randomForest")
 titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
 # build a model
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
-                                   fare + sibsp + parch,  data = titanic_small)
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_small)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_small[,-8],
-                              y = titanic_small$survived == "yes",
+                              y = titanic_small[,8],
                               label = "Random Forest v7")
 
 selected_passangers <- select_sample(titanic_small, n = 100)

@@ -35,18 +35,16 @@ This function plots What-If Plots for a single prediction / observation.
 }
 \examples{
 library("DALEX")
-\donttest{
 library("randomForest")
 
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                    no.rooms + district, data = apartments)
+apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-                        data = apartments_test[,2:6],
-                        y = apartments_test$m2.price,
+                        data = apartments_test[,-1],
+                        y = apartments_test[,1],
                         verbose = FALSE)
 
-new_apartment <- apartments_test[1, ]
+new_apartment <- apartments_test[1,]
 new_apartment
 
 wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment)
@@ -56,7 +54,7 @@ plot(wi_rf_2d)
 plot(wi_rf_2d, add_contour = FALSE)
 plot(wi_rf_2d, add_observation = FALSE)
 plot(wi_rf_2d, add_raster = FALSE)
-
+\donttest{
 # HR data
 model <- randomForest(status ~ gender + age + hours + evaluation + salary, data = HR)
 
@@ -67,7 +65,7 @@ explainer_rf_fired <- explain(model,
                               y = HR$status == "fired",
                               predict_function = pred1,
                               label = "fired")
-new_emp <- HR[1, ]
+new_emp <- HR[1,]
 new_emp
 
 wi_rf_2d <- ceteris_paribus_2d(explainer_rf_fired, observation = new_emp)
