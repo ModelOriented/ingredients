@@ -8,7 +8,7 @@ test_that("plot calculate_oscillations",{
                                         no.rooms + district, data = apartments)
 
   explainer_rf <- explain(apartments_rf_model,
-                          data = apartmentsTest, y = apartmentsTest$m2.price, verbose = FALSE)
+                          data = apartments_test, y = apartments_test$m2.price, verbose = FALSE)
 
   apartment <- apartmentsTest[1,]
 

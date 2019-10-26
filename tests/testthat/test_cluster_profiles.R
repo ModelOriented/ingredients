@@ -6,8 +6,7 @@ test_that("plot cluster_profiles",{
 
   titanic_small <- na.omit(titanic[1:500,])
 
-  rf_model <- randomForest(survived ~ gender + age + class + embarked +
-                             fare + sibsp + parch,  data = titanic_small)
+  rf_model <- randomForest(survived ~.,  data = titanic_small)
 
   explainer_rf <- explain(rf_model, data = titanic_small,
                           y = titanic_small$survived == "yes", label = "RF", verbose = FALSE)

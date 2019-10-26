@@ -17,7 +17,7 @@ loss_cross_entropy <- function (observed, predicted, p_min = 0.0001) {
 # Random Forest
 # Example of a model built using a data frame
 titanic_small <- na.omit(titanic[1:1000,])
-rf_model <- randomForest(survived == "yes" ~ gender + age + class + embarked +
+rf_model <- randomForest(survived ~ gender + age + class + embarked +
                            fare + sibsp + parch,  data = titanic_small)
 
 explainer_rf <- explain(rf_model, data = titanic_small,
@@ -39,9 +39,8 @@ explainer_xgb <- explain(xgb_model,
 # helper objects for aspect_importance tests
 # titanic
 titanic_data <- titanic_imputed
-titanic_data$country <- NULL
 
-titanic_glm_model <- glm(survived == "yes" ~ class+gender+age+sibsp+parch+fare+embarked,
+titanic_glm_model <- glm(survived ~ .,
                          titanic_data, family = "binomial")
 
 titanic_new_observation <- data.frame(
