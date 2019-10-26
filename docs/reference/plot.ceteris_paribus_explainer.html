@@ -83,7 +83,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -105,12 +105,6 @@ Find more detailes in Ceteris Paribus Chapter." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -253,43 +247,43 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked country   fare sibsp parch
-#&gt; 1960     male  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 1960.1 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883      male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 883.1  female  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594     male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1594.1 female  44 victualling crew Southampton England 0.0000     0     0
-#&gt;           _yhat_ _vname_ _ids_          _label_
-#&gt; 1960   0.1565283  gender  1960 Random Forest v7
-#&gt; 1960.1 0.7848031  gender  1960 Random Forest v7
-#&gt; 883    0.1241188  gender   883 Random Forest v7
-#&gt; 883.1  0.4881691  gender   883 Random Forest v7
-#&gt; 1594   0.1403411  gender  1594 Random Forest v7
-#&gt; 1594.1 0.8810750  gender  1594 Random Forest v7
+#&gt;        gender age            class    embarked country    fare sibsp parch
+#&gt; 557      male  50              2nd Southampton England 13.0000     0     0
+#&gt; 557.1  female  50              2nd Southampton England 13.0000     0     0
+#&gt; 660      male  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 660.1  female  25              3rd   Cherbourg Lebanon 14.0901     1     0
+#&gt; 1535     male  20 restaurant staff Southampton England  0.0000     0     0
+#&gt; 1535.1 female  20 restaurant staff Southampton England  0.0000     0     0
+#&gt;            _yhat_ _vname_ _ids_          _label_
+#&gt; 557    0.07952837  gender   557 Random Forest v7
+#&gt; 557.1  0.84114389  gender   557 Random Forest v7
+#&gt; 660    0.13834187  gender   660 Random Forest v7
+#&gt; 660.1  0.50716184  gender   660 Random Forest v7
+#&gt; 1535   0.06469664  gender  1535 Random Forest v7
+#&gt; 1535.1 0.77099026  gender  1535 Random Forest v7
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked country   fare sibsp parch
-#&gt; 1960 female  36 victualling crew Southampton England 0.0000     0     0
-#&gt; 883    male  21              3rd Southampton  Sweden 7.1701     0     0
-#&gt; 1594   male  44 victualling crew Southampton England 0.0000     0     0
-#&gt; 1131   male  37              3rd Southampton Croatia 8.1303     0     0
-#&gt; 1445   male  20 victualling crew Southampton England 0.0000     0     0
-#&gt; 1432   male  33 victualling crew     Belfast England 0.0000     0     0
+#&gt;      gender age            class    embarked       country    fare sibsp parch
+#&gt; 557    male  50              2nd Southampton       England 13.0000     0     0
+#&gt; 660    male  25              3rd   Cherbourg       Lebanon 14.0901     1     0
+#&gt; 1535   male  20 restaurant staff Southampton       England  0.0000     0     0
+#&gt; 942  female  59              2nd Southampton United States 26.0000     0     1
+#&gt; 491    male  30              2nd Southampton       England 13.0000     0     0
+#&gt; 1639   male  47 victualling crew Southampton       England  0.0000     0     0
 #&gt;          _yhat_          _label_ _ids_
-#&gt; 1960 0.78480312 Random Forest v7     1
-#&gt; 883  0.12411882 Random Forest v7     2
-#&gt; 1594 0.14034106 Random Forest v7     3
-#&gt; 1131 0.08216252 Random Forest v7     4
-#&gt; 1445 0.22594365 Random Forest v7     5
-#&gt; 1432 0.17175286 Random Forest v7     6</div><div class='input'>
+#&gt; 557  0.07952837 Random Forest v7     1
+#&gt; 660  0.13834187 Random Forest v7     2
+#&gt; 1535 0.06469664 Random Forest v7     3
+#&gt; 942  0.85922559 Random Forest v7     4
+#&gt; 491  0.11213393 Random Forest v7     5
+#&gt; 1639 0.13416900 Random Forest v7     6</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='plot.ceteris_paribus_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>selected_passangers</span></div><div class='output co'>#&gt;      gender age            class    embarked country fare sibsp parch survived
-#&gt; 1960 female  36 victualling crew Southampton England    0     0     0      yes</div><div class='input'>
+<span class='no'>selected_passangers</span></div><div class='output co'>#&gt;     gender age class    embarked country fare sibsp parch survived
+#&gt; 557   male  50   2nd Southampton England   13     0     0       no</div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>) +

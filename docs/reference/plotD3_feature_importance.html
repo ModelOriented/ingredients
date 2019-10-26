@@ -84,7 +84,7 @@ In different panels variable contributions may not look like sorted if variable 
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -106,12 +106,6 @@ In different panels variable contributions may not look like sorted if variable 
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -215,11 +209,11 @@ Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
 #&gt; 1      _full_model_     279.3262    lm
-#&gt; 2 construction.year     279.1979    lm
-#&gt; 3          no.rooms     288.7652    lm
-#&gt; 4             floor     498.8014    lm
-#&gt; 5           surface     603.5279    lm
-#&gt; 6          district     992.5898    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
+#&gt; 2 construction.year     279.2987    lm
+#&gt; 3          no.rooms     289.6181    lm
+#&gt; 4             floor     503.1583    lm
+#&gt; 5           surface     620.3488    lm
+#&gt; 6          district     990.7506    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
 
 <span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -233,12 +227,12 @@ Usually value between 0.1 and 0.3, by default it's 0.15</p></td>
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
-#&gt; 1      _full_model_     192.5765    rf
-#&gt; 2          no.rooms     363.1937    rf
-#&gt; 3 construction.year     366.0378    rf
-#&gt; 4             floor     413.9383    rf
-#&gt; 5           surface     449.4348    rf
-#&gt; 6          district     803.9825    rf</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
+#&gt; 1      _full_model_     193.7468    rf
+#&gt; 2          no.rooms     363.8721    rf
+#&gt; 3 construction.year     371.8760    rf
+#&gt; 4             floor     419.2892    rf
+#&gt; 5           surface     460.8222    rf
+#&gt; 6          district     791.1243    rf</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
 
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
 

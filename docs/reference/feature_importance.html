@@ -82,7 +82,7 @@ For this reason it is also called the Variable Dropout Plot." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -104,12 +104,6 @@ For this reason it is also called the Variable Dropout Plot." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -256,6 +250,7 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1483104 , mean =  0.3244402 , max =  0.9822194  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8840083 , mean =  1.25433e-14 , max =  0.8437859  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_glm</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -293,9 +288,10 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.00977121 , mean =  0.3239698 , max =  0.9964  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.01178198 , mean =  0.3244052 , max =  0.9919286  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7900378 , mean =  0.0004704316 , max =  0.9056507  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7737936 , mean =  3.50473e-05 , max =  0.8966971  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_rf</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-4.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -316,12 +312,12 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>vd_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>vd_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
-#&gt; 1 _full_model_     2011.130 randomForest
-#&gt; 2       status     2011.130 randomForest
-#&gt; 3       gender     3808.234 randomForest
-#&gt; 4          age     4988.463 randomForest
-#&gt; 5       salary     5555.493 randomForest
-#&gt; 6   evaluation     7962.279 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-7.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1 _full_model_     2005.931 randomForest
+#&gt; 2       status     2005.931 randomForest
+#&gt; 3       gender     3868.208 randomForest
+#&gt; 4          age     4989.332 randomForest
+#&gt; 5       salary     5752.865 randomForest
+#&gt; 6   evaluation     7995.928 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_rf</span>)</div><div class='img'><img src='feature_importance-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( </span><span style='color: #BBBB00;'> default </span><span> )
@@ -331,16 +327,18 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.293796e-13 , max =  0.9820537  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>vd_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                         <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>vd_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
 #&gt; 1 _full_model_    0.4148305    lm
 #&gt; 2       status    0.4148305    lm
-#&gt; 3       gender    0.4148308    lm
-#&gt; 4          age    0.4148318    lm
-#&gt; 5       salary    0.4148369    lm
-#&gt; 6   evaluation    0.4314777    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-8.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"xgboost"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘xgboost’ was built under R version 3.5.2</span></div><div class='input'><span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
+#&gt; 3          age    0.4148777    lm
+#&gt; 4       salary    0.4150200    lm
+#&gt; 5       gender    0.4150348    lm
+#&gt; 6   evaluation    0.4311162    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-8.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"xgboost"</span>)
+<span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
 <span class='no'>data_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/xgboost/man/xgb.DMatrix.html'>xgb.DMatrix</a></span>(<span class='no'>model_martix_train</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)
 <span class='no'>param</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nthread</span> <span class='kw'>=</span> <span class='fl'>2</span>,
               <span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>"binary:logistic"</span>, <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>"auc"</span>)
@@ -355,15 +353,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predicted values  :  numerical, min =  1.687903e-06 , mean =  0.363713 , max =  0.9996712  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203494 , max =  0.9970635  
+#&gt;   -&gt; model_info        :  package Model of class: xgb.Booster package unrecognized , ver. Unknown , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>vd_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>vd_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
 #&gt; 1 _full_model_    0.3142729 xgboost
 #&gt; 2   gendermale    0.3142729 xgboost
-#&gt; 3   evaluation    0.3398369 xgboost
-#&gt; 4 genderfemale    0.3930730 xgboost
-#&gt; 5          age    0.4011729 xgboost
-#&gt; 6       salary    0.4157093 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_xgb</span>, <span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-9.png' alt='' width='700' height='433' /></div><div class='input'> # }
+#&gt; 3   evaluation    0.3393612 xgboost
+#&gt; 4 genderfemale    0.3886182 xgboost
+#&gt; 5          age    0.4010823 xgboost
+#&gt; 6       salary    0.4141850 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vd_xgb</span>, <span class='no'>vd_glm</span>)</div><div class='img'><img src='feature_importance-9.png' alt='' width='700' height='433' /></div><div class='input'> # }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

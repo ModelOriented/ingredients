@@ -13,9 +13,10 @@
 #'
 #' @examples
 #' library("DALEX")
+#' # smaller data, quicker example
+#' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 #'
-#' titanic_small <- titanic_imputed[1:500, c(1,2,6,9)]
-#'
+#' # build a model
 #' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
 #'                          data = titanic_small, family = "binomial")
 #'

@@ -1,10 +1,11 @@
 Package: ingredients
 Title: Effects and Importances of Model Ingredients
-Version: 0.3.10
+Version: 0.3.12
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0001-8423-1823")),
-              person("Hubert", "Baniecki", role = "aut"),
+              person("Hubert", "Baniecki", role = "aut",
+                  comment = c(ORCID = "0000-0001-6661-5364")),
               person("Adam", "Izdebski", role = "aut"),
               person("Katarzyna", "Pekala", role = "aut"))
 Description: Collection of tools for assessment of feature importance and feature effects.
@@ -27,9 +28,7 @@ RoxygenNote: 6.1.1
 Imports:
     DALEX,
     ggplot2,
-    glmnet,
     scales,
-    ggdendro,
     gridExtra
 Suggests:
     gower,

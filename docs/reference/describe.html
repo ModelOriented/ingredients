@@ -83,7 +83,7 @@ feature_importance() explanations what enchaces their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -105,12 +105,6 @@ feature_importance() explanations what enchaces their interpretability." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -238,19 +232,20 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.007278617 , mean =  0.3239244 , max =  0.9925638  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.005633843 , mean =  0.3243149 , max =  0.9924926  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8086334 , mean =  0.0005157982 , max =  0.9024273  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8091285 , mean =  0.0001253466 , max =  0.9012374  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>pdp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"partial"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'>describe</span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)</div><div class='output co'>#&gt; Rf's mean prediction is equal to 0.34.
+<span class='fu'>describe</span>(<span class='no'>pdp</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)</div><div class='output co'>#&gt; Rf's mean prediction is equal to 0.244.
 #&gt; 
 #&gt; Model's prediction would .
 #&gt; The largest change would be marked if gender variable would change to NA.
 #&gt; 
-#&gt; Other variables are with less importance and they do not change prediction by more than 0.06%. </div><div class='input'><span class='co'># }</span>
+#&gt; Other variables are with less importance and they do not change prediction by more than 0.08%. </div><div class='input'><span class='co'># }</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ingredients"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
@@ -265,19 +260,20 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008675681 , mean =  0.3239261 , max =  0.9937424  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.008285691 , mean =  0.3240717 , max =  0.9942538  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7896028 , mean =  0.0005141274 , max =  0.8928476  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7882385 , mean =  0.0003684667 , max =  0.9010557  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>123</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"the predicted probability"</span>)</div><div class='output co'>#&gt; For the selected instance, the predicted probability estimated by Rf is equal to 0.133.
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)</div><div class='img'><img src='describe-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"the predicted probability"</span>)</div><div class='output co'>#&gt; For the selected instance, the predicted probability estimated by Rf is equal to 0.136.
 #&gt; 
-#&gt; Model's prediction would increase substantially if the value of class variable would change to "1st", "deck crew", "engineering crew", "victualling crew".
-#&gt; The largest change would be marked if class variable would change to "1st".
+#&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st".
+#&gt; The largest change would be marked if class variable would change to "deck crew".
 #&gt; 
-#&gt; Other variables are with less importance and they do not change the predicted probability by more than 0.05%. </div><div class='input'><span class='co'># }</span>
+#&gt; Other variables are with less importance and they do not change the predicted probability by more than 0.06%. </div><div class='input'><span class='co'># }</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ingredients"</span>)
 
@@ -291,6 +287,7 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; predicted values  :  numerical, min =  1781.848 , mean =  3487.019 , max =  6176.032  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -247.4728 , mean =  2.093656e-14 , max =  469.0023  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_lm</span>)</div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt; The number of important variables for lm's prediction is 3 out of 5. 

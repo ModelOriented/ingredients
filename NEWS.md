@@ -1,7 +1,14 @@
+ingredients 0.3.12
+---------------------------------------------------------------
+* `aspect_importance` is moved to `DALEXtra` ([#66](https://github.com/ModelOriented/ingredients/issues/66))
+* examples are updated in order to reflect changes in `titanic_imputed` from `DALEX` ([#65](https://github.com/ModelOriented/ingredients/issues/65))
+
+
 ingredients 0.3.11
 ---------------------------------------------------------------
 * modified `plot.aspect_importance` - it can plot more than single figure  
 * modified `triplot`, `plot.aspect_importance` and `plot_group_variables` to add more clarity in plots and allow some parameterization
+
 
 ingredients 0.3.10
 ---------------------------------------------------------------

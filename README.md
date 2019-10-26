@@ -18,7 +18,6 @@ Key functions:
 * `conditional_dependency()` for Conditional Dependency Plots also called M Plots,
 * `accumulated_dependency()` for Accumulated Local Effects Plots,
 * `aggregate_profiles()` and `cluster_profiles()` for aggregation of Ceteris Paribus Profiles,
-* `aspect_importance()` for LIME style explanations,
 * `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html),
 * `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html),
 * generic `print()` and `plot()` for better usability of selected explainers,

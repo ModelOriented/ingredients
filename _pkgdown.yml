@@ -1,3 +1,48 @@
 template:
   package: DrWhyTemplate
   default_assets: false
+
+reference:
+  - title: Model Level Explanations
+    desc: Functions that generate model level explanations
+    contents:
+    - feature_importance
+    - partial_dependency
+    - accumulated_dependency
+    - conditional_dependency
+    - aggregate_profiles
+    - cluster_profiles
+  - title: Instance Level Explanations
+    desc: Functions that generate instance level explanations
+    contents:
+    - ceteris_paribus
+    - ceteris_paribus_2d
+    - calculate_oscillations
+  - title: Generics
+    desc: Generic functions for explanations
+    contents:
+    - describe
+    - print.aggregated_profiles_explainer
+    - print.ceteris_paribus_explainer
+    - print.description
+  - title: Plots
+    desc: Plotting functions for explanations
+    contents:
+    - plot.aggregated_profiles_explainer
+    - plot.ceteris_paribus_2d_explainer
+    - plot.ceteris_paribus_explainer
+    - plot.ceteris_paribus_oscillations
+    - plot.feature_importance_explainer
+    - show_aggregated_profiles
+    - show_observations
+    - show_profiles
+    - show_residuals
+    - show_rugs
+    - plotD3
+    - plotD3.aggregated_profiles_explainer
+    - plotD3.feature_importance_explainer
+  - title: Utils
+    desc: Utils for explanations
+    contents:
+    - select_neighbours
+    - select_sample

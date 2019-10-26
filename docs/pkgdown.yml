@@ -2,8 +2,6 @@ pandoc: 2.3.1
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
-  vignette_aspect_importance: vignette_aspect_importance.html
-  vignette_aspect_importance_description: vignette_aspect_importance_description.html
   vignette_describe: vignette_describe.html
   vignette_titanic: vignette_titanic.html
 

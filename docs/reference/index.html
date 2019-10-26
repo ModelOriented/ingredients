@@ -80,7 +80,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -102,12 +102,6 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -152,16 +146,34 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-model-level-explanations" class="hasAnchor"><a href="#section-model-level-explanations" class="anchor"></a>Model Level Explanations</h2>
+          <p class="section-desc"><p>Functions that generate model level explanations</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
+          <p><code><a href="feature_importance.html">feature_importance()</a></code> </p>
+        </td>
+        <td><p>Feature Importance</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="partial_dependency.html">partial_dependency()</a></code> </p>
+        </td>
+        <td><p>Partial Dependency Profiles</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="accumulated_dependency.html">accumulated_dependency()</a></code> </p>
         </td>
         <td><p>Accumulated Local Effects Profiles aka ALEPlots</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="conditional_dependency.html">conditional_dependency()</a></code> <code><a href="conditional_dependency.html">local_dependency()</a></code> </p>
+        </td>
+        <td><p>Conditional Dependency Profiles</p></td>
       </tr><tr>
         
         <td>
@@ -171,35 +183,18 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="aspect_importance.html">aspect_importance()</a></code> <code><a href="aspect_importance.html">lime()</a></code> </p>
+          <p><code><a href="cluster_profiles.html">cluster_profiles()</a></code> </p>
         </td>
-        <td><p>Calculates the feature groups importance (called aspects importance) for a
-selected observation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aspect_importance_single.html">aspect_importance_single()</a></code> </p>
-        </td>
-        <td><p>Aspects importance for single aspects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_oscillations.html">calculate_oscillations()</a></code> </p>
-        </td>
-        <td><p>Calculate Oscillations for Ceteris Paribus Explainer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_variable_profile.html">calculate_variable_profile()</a></code> </p>
-        </td>
-        <td><p>Internal Function for Individual Variable Profiles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_variable_split.html">calculate_variable_split()</a></code> </p>
-        </td>
-        <td><p>Internal Function for Split Points for Selected Variables</p></td>
-      </tr><tr>
+        <td><p>Cluster Ceteris Paribus Profiles</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-instance-level-explanations" class="hasAnchor"><a href="#section-instance-level-explanations" class="anchor"></a>Instance Level Explanations</h2>
+          <p class="section-desc"><p>Functions that generate instance level explanations</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="ceteris_paribus.html">ceteris_paribus()</a></code> </p>
@@ -214,16 +209,18 @@ selected observation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="cluster_profiles.html">cluster_profiles()</a></code> </p>
+          <p><code><a href="calculate_oscillations.html">calculate_oscillations()</a></code> </p>
         </td>
-        <td><p>Cluster Ceteris Paribus Profiles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="conditional_dependency.html">conditional_dependency()</a></code> <code><a href="conditional_dependency.html">local_dependency()</a></code> </p>
-        </td>
-        <td><p>Conditional Dependency Profiles</p></td>
-      </tr><tr>
+        <td><p>Calculate Oscillations for Ceteris Paribus Explainer</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-generics" class="hasAnchor"><a href="#section-generics" class="anchor"></a>Generics</h2>
+          <p class="section-desc"><p>Generic functions for explanations</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="describe.html">describe()</a></code> </p>
@@ -232,39 +229,29 @@ selected observation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="feature_importance.html">feature_importance()</a></code> </p>
+          <p><code><a href="print.aggregated_profiles_explainer.html">print(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Feature Importance</p></td>
+        <td><p>Prints Aggregated Profiles</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_sample.html">get_sample()</a></code> </p>
+          <p><code><a href="print.ceteris_paribus_explainer.html">print(<i>&lt;ceteris_paribus_explainer&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Function for getting binary matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="group_variables.html">group_variables()</a></code> </p>
-        </td>
-        <td><p>Groups numeric features into aspects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="partial_dependency.html">partial_dependency()</a></code> </p>
-        </td>
-        <td><p>Partial Dependency Profiles</p></td>
-      </tr><tr>
+        <td><p>Prints Individual Variable Explainer Summary</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plots" class="hasAnchor"><a href="#section-plots" class="anchor"></a>Plots</h2>
+          <p class="section-desc"><p>Plotting functions for explanations</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="plot.aggregated_profiles_explainer.html">plot(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plots Aggregated Profiles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot.aspect_importance.html">plot(<i>&lt;aspect_importance&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Function for plotting aspect_importance results</p></td>
       </tr><tr>
         
         <td>
@@ -289,60 +276,6 @@ selected observation</p></td>
           <p><code><a href="plot.feature_importance_explainer.html">plot(<i>&lt;feature_importance_explainer&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plots Feature Importance</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotD3_aggregated_profiles.html">plotD3(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotD3_ceteris_paribus.html">plotD3()</a></code> </p>
-        </td>
-        <td><p>Plots Ceteris Paribus Profiles in D3 with r2d3 Package.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotD3_feature_importance.html">plotD3(<i>&lt;feature_importance_explainer&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot Feature Importance Objects in D3 with r2d3 Package.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_aspects_importance_grouping.html">plot_aspects_importance_grouping()</a></code> </p>
-        </td>
-        <td><p>Function plots tree with aspect importance values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_group_variables.html">plot_group_variables()</a></code> </p>
-        </td>
-        <td><p>Plots tree with correlation values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.aggregated_profiles_explainer.html">print(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Prints Aggregated Profiles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.ceteris_paribus_explainer.html">print(<i>&lt;ceteris_paribus_explainer&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Prints Individual Variable Explainer Summary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="select_neighbours.html">select_neighbours()</a></code> </p>
-        </td>
-        <td><p>Select Subset of Rows Closest to a Specified Observation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="select_sample.html">select_sample()</a></code> </p>
-        </td>
-        <td><p>Select Subset of Rows</p></td>
       </tr><tr>
         
         <td>
@@ -376,9 +309,41 @@ selected observation</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="triplot.html">triplot()</a></code> </p>
+          <p><code><a href="plotD3_ceteris_paribus.html">plotD3()</a></code> </p>
         </td>
-        <td><p>Three plots that sum up automatic aspect importance grouping</p></td>
+        <td><p>Plots Ceteris Paribus Profiles in D3 with r2d3 Package.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plotD3_aggregated_profiles.html">plotD3(<i>&lt;aggregated_profiles_explainer&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plotD3_feature_importance.html">plotD3(<i>&lt;feature_importance_explainer&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot Feature Importance Objects in D3 with r2d3 Package.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utils" class="hasAnchor"><a href="#section-utils" class="anchor"></a>Utils</h2>
+          <p class="section-desc"><p>Utils for explanations</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="select_neighbours.html">select_neighbours()</a></code> </p>
+        </td>
+        <td><p>Select Subset of Rows Closest to a Specified Observation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="select_sample.html">select_sample()</a></code> </p>
+        </td>
+        <td><p>Select Subset of Rows</p></td>
       </tr>
     </tbody>
     </table>
@@ -387,7 +352,11 @@ selected observation</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-model-level-explanations">Model Level Explanations</a></li>
+      <li><a href="#section-instance-level-explanations">Instance Level Explanations</a></li>
+      <li><a href="#section-generics">Generics</a></li>
+      <li><a href="#section-plots">Plots</a></li>
+      <li><a href="#section-utils">Utils</a></li>
     </ul>
   </div>
 </div>
