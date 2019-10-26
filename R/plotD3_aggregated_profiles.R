@@ -28,7 +28,10 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
-#' titanic_small <- na.omit(titanic[1:500,-5])
+#' # smaller data, quicker example
+#' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
+#'
+#' # build a model
 #' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
 #'                                    fare + sibsp + parch,  data = titanic_small)
 #'

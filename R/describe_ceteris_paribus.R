@@ -21,7 +21,7 @@
 #' @param label label for model's prediction
 #'
 #' @importFrom graphics plot
-#' @importFrom stats setNames smooth
+#' @importFrom stats setNames smooth lm
 #'
 #' @examples
 #' library("DALEX")

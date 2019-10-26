@@ -56,9 +56,10 @@ Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}
 }
 \examples{
 library("DALEX")
+# smaller data, quicker example
+titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
-titanic_small <- titanic_imputed[, c(1,2,6,9)]
-
+# build a model
 model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
                          data = titanic_small,
                          family = "binomial")
