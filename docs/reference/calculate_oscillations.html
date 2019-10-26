@@ -82,7 +82,7 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -104,12 +104,6 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -178,29 +172,34 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='co'># smaller data, quicker example</span>
+<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1313</span>)
 
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>:<span class='fl'>500</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>6</span>,<span class='fl'>9</span>)]
-
+<span class='co'># build a model</span>
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='input'>
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>4</span>],
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  500  rows  3  cols 
+#&gt;   -&gt; data              :  500  rows  7  cols 
 #&gt;   -&gt; target variable   :  500  values 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1326294 , mean =  0.394 , max =  0.9979131  
+#&gt;   -&gt; predicted values  :  numerical, min =  2.900701e-12 , mean =  2.900701e-12 , max =  2.900701e-12  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9169588 , mean =  2.789793e-15 , max =  0.8565415  
+#&gt;   -&gt; residuals         :  numerical, min =  -2.900701e-12 , mean =  -2.900701e-12 , max =  -2.900701e-12  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>,])
 
-<span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;   _vname_ _ids_ oscillations
-#&gt; 1  gender     1   0.25729141
-#&gt; 3    fare     1   0.08003131
-#&gt; 2     age     1   0.00782373</div><div class='input'>
+<span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;    _vname_ _ids_ oscillations
+#&gt; 2      age   515 1.235772e-25
+#&gt; 1   gender   515 3.594681e-26
+#&gt; 4     fare   515 1.813796e-26
+#&gt; 3    class   515 0.000000e+00
+#&gt; 5    sibsp   515 0.000000e+00
+#&gt; 6    parch   515 0.000000e+00
+#&gt; 7 survived   515 0.000000e+00</div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -216,20 +215,21 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt;   -&gt; data              :  A column identical to the target variable `y` has been found in the `data`.  ( </span><span style='color: #BB0000;'> WARNING </span><span> )
 #&gt;   -&gt; data              :  It is highly recommended to pass `data` without the target variable column
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  1976.927 , mean =  3506.754 , max =  5775.27  
+#&gt;   -&gt; predicted values  :  numerical, min =  1979.109 , mean =  3507.828 , max =  5832.287  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -769.2212 , mean =  4.769412 , max =  1264.229  
+#&gt;   -&gt; residuals         :  numerical, min =  -736.7624 , mean =  3.695662 , max =  1247.71  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartmentsTest</span>[<span class='fl'>1</span>,]
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
 
 <span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;             _vname_ _ids_ oscillations
-#&gt; 6          district  1001   1153.24777
-#&gt; 4             floor  1001    284.20894
-#&gt; 3           surface  1001    248.96800
-#&gt; 5          no.rooms  1001    152.69279
-#&gt; 2 construction.year  1001     54.67198
+#&gt; 6          district  1001   1146.23567
+#&gt; 3           surface  1001    274.15654
+#&gt; 4             floor  1001    228.76663
+#&gt; 5          no.rooms  1001    172.02984
+#&gt; 2 construction.year  1001     57.86286
 #&gt; 1          m2.price  1001      0.00000</div><div class='input'># }
 
 </div></span></pre>

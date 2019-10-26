@@ -84,7 +84,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -106,12 +106,6 @@ Find more detailes in Ceteris Paribus Chapter." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -240,9 +234,10 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.006882789 , mean =  0.3239399 , max =  0.9925355  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.007286942 , mean =  0.3239753 , max =  0.9941219  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7863399 , mean =  0.000500275 , max =  0.8998572  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7885791 , mean =  0.0004649289 , max =  0.8984564  
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)

@@ -82,7 +82,7 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.10</span>
+          <span class="version version-default">0.3.12</span>
         </div>
       </div>
     </div>
@@ -104,12 +104,6 @@ Function 'partial_dependency' calls 'ceteris_paribus' and then 'aggregate_profil
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_aspect_importance.html">Aspect importance function examples</a>
-    </li>
-    <li>
-      <a href="../articles/vignette_aspect_importance_description.html">Description of aspect importance method</a>
-    </li>
     <li>
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
@@ -233,8 +227,7 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>titanic_imputed</span>$<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='input'>
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span> <span class='kw'>==</span> <span class='st'>"yes"</span>,
@@ -243,13 +236,13 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>pdp_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependency</span>(<span class='no'>explain_titanic_glm</span>,
                               <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
-#&gt;   _vname_ _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare      lm 0.0000000 0.2537215     0
-#&gt; 2     age      lm 0.1666667 0.3246518     0
-#&gt; 3     age      lm 2.0000000 0.3221709     0
-#&gt; 4     age      lm 4.0000000 0.3194797     0
-#&gt; 5    fare      lm 6.1793080 0.2609707     0
-#&gt; 6     age      lm 7.0000000 0.3154730     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_glm</span>)</div><div class='img'><img src='partial_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   _vname_ _label_       _x_       _yhat_ _ids_
+#&gt; 1    fare      lm 0.0000000 2.900701e-12     0
+#&gt; 2     age      lm 0.1666667 2.900701e-12     0
+#&gt; 3     age      lm 2.0000000 2.900701e-12     0
+#&gt; 4     age      lm 4.0000000 2.900701e-12     0
+#&gt; 5    fare      lm 6.1793080 2.900701e-12     0
+#&gt; 6     age      lm 7.0000000 2.900701e-12     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_glm</span>)</div><div class='img'><img src='partial_dependency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
