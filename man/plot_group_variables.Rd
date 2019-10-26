@@ -4,14 +4,21 @@
 \alias{plot_group_variables}
 \title{Plots tree with correlation values}
 \usage{
-plot_group_variables(x, p, draw_abline = TRUE)
+plot_group_variables(x, p, show_labels = TRUE, draw_abline = TRUE,
+  axis_lab_size = 10, text_size = 3)
 }
 \arguments{
 \item{x}{hclust object}
 
 \item{p}{correlation value for cutoff level}
 
+\item{show_labels}{if TRUE, plot will have annotated axis Y}
+
 \item{draw_abline}{if TRUE, cutoff line will be drawn}
+
+\item{axis_lab_size}{size of labels on axis Y, if applicable}
+
+\item{text_size}{size of labels annotating values of correlations}
 }
 \value{
 tree plot

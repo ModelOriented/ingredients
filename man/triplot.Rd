@@ -10,11 +10,15 @@ triplot(x, ...)
 
 \method{triplot}{explainer}(x, new_observation, N = 500,
   clust_method = "complete", absolute_value = FALSE,
-  cumulative_max = FALSE, ...)
+  cumulative_max = FALSE, add_importance_labels = TRUE,
+  show_axis_y_duplicated_labels = FALSE, axis_lab_size = 10,
+  text_size = 3, ...)
 
 \method{triplot}{default}(x, data, predict_function = predict,
   new_observation, N = 500, clust_method = "complete",
-  absolute_value = FALSE, cumulative_max = FALSE, ...)
+  absolute_value = FALSE, cumulative_max = FALSE,
+  add_importance_labels = TRUE, show_axis_y_duplicated_labels = FALSE,
+  abbrev_labels = 0, axis_lab_size = 10, text_size = 3, ...)
 }
 \arguments{
 \item{x}{an explainer created with the \code{DALEX::explain()} function
@@ -33,14 +37,28 @@ variables used in the model, should be without target variable}
 \item{absolute_value}{if TRUE, aspect importance values will be drawn as
 absolute values}
 
-\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max value
-of children and node aspect importance values}
+\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max
+value of children and node aspect importance values}
+
+\item{add_importance_labels}{if TRUE, first plot is annotated with values of aspects
+importance}
+
+\item{show_axis_y_duplicated_labels}{if TRUE, every plot will have annotated
+axis Y}
+
+\item{axis_lab_size}{size of labels on axis}
+
+\item{text_size}{size of labels annotating values of aspects importance and
+correlations}
 
 \item{data}{dataset, it will be extracted from \code{x} if it's an explainer
 NOTE: Target variable shouldn't be present in the \code{data}}
 
-\item{predict_function}{predict function, it will be extracted from \code{x} if
-it's an explainer}
+\item{predict_function}{predict function, it will be extracted from \code{x}
+if it's an explainer}
+
+\item{abbrev_labels}{if greater than 0, labels for axis Y in single aspect
+importance plot will be abbreviated according to this parameter}
 }
 \description{
 This function shows: \itemize{ \item plot for aspect_importance with
@@ -52,21 +70,12 @@ expanded aspect
 library(DALEX)
 apartments_num <- apartments[,unlist(lapply(apartments, is.numeric))]
 apartments_num_lm_model <- lm(m2.price ~ ., data = apartments_num)
-apartments_num_new_observation <- apartments_num[2,-1]
+apartments_num_new_observation <- apartments_num[30,-1]
 apartments_num_mod <- apartments_num[,-1]
 triplot(x = apartments_num_lm_model,
-data = apartments_num_mod, new_observation = apartments_num_new_observation)
+  data = apartments_num_mod,
+  new_observation = apartments_num_new_observation,
+  add_importance_labels = FALSE)
 
-\donttest{
-library("randomForest")
-library("mlbench")
-data("BostonHousing2")
-data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
-model <- lm(cmedv ~., data = data)
-new_observation <- data[10,]
-data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
-triplot(x = model, data = data,
-new_observation = new_observation)
-}
 
 }

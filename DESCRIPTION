@@ -40,8 +40,7 @@ Suggests:
     ggpubr,
     jsonlite,
     knitr,
-    rmarkdown,
-    mlbench
+    rmarkdown
 URL: https://ModelOriented.github.io/ingredients/, https://github.com/ModelOriented/ingredients
 BugReports: https://github.com/ModelOriented/ingredients/issues
 VignetteBuilder: knitr

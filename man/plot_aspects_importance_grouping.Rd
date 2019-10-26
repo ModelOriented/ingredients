@@ -6,7 +6,8 @@
 \usage{
 plot_aspects_importance_grouping(x, data, predict_function = predict,
   new_observation, N = 100, clust_method = "complete",
-  absolute_value = FALSE, cumulative_max = FALSE)
+  absolute_value = FALSE, cumulative_max = FALSE, show_labels = TRUE,
+  axis_lab_size = 10, text_size = 3)
 }
 \arguments{
 \item{x}{a model to be explained}
@@ -26,8 +27,14 @@ variables used in the model, should be without target variable}
 \item{absolute_value}{if TRUE, aspect importance values will be drawn as
 absolute values}
 
-\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max value
-of children and node aspect importance values}
+\item{cumulative_max}{if TRUE, aspect importance shown on tree will be max
+value of children and node aspect importance values}
+
+\item{show_labels}{if TRUE, plot will have annotated axis Y}
+
+\item{axis_lab_size}{size of labels on axis Y, if applicable}
+
+\item{text_size}{size of labels annotating values of aspects importance}
 }
 \value{
 ggplot
@@ -45,16 +52,5 @@ apartments_num_mod <- apartments_num[,-1]
 plot_aspects_importance_grouping(x = apartments_num_lm_model,
 data = apartments_num_mod, new_observation = apartments_num_new_observation)
 
-\donttest{
-library("randomForest")
-library("mlbench")
-data("BostonHousing2")
-data <- BostonHousing2[,-c(1:5, 10)] #excluding non numeric features
-model <- lm(cmedv ~., data = data)
-new_observation <- data[10,]
-data <- BostonHousing2[,-c(1:6, 10)] #excluding non numeric features and target variable
-plot_aspects_importance_grouping(x = model, data = data,
-new_observation = new_observation)
-}
 
 }

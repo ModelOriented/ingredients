@@ -87,6 +87,29 @@ test_that("check plot for aspects importance",{
   expect_is(plot(aspect_importance_apartments), "gg")
 })
 
+test_that("check plot (facets) for aspects importance",{
+  library("DALEX")
+  library("ingredients")
+
+  aspect_importance_apartments1 <- aspect_importance(apartments_lm_model, apartments,
+                                                    new_observation = apartments_new_observation,
+                                                    aspects =  apartments_aspects, method = "binom",
+                                                    label = "model 1")
+
+  aspect_importance_apartments2 <- aspect_importance(apartments_lm_model, apartments,
+                                                    new_observation = apartments_new_observation,
+                                                    aspects =  apartments_aspects, label = "model 2")
+
+  aspect_importance_apartments3 <- aspect_importance(apartments_lm_model, apartments,
+                                                     new_observation = apartments_new_observation,
+                                                     aspects =  apartments_aspects, label = "model 3")
+
+  expect_is(plot(aspect_importance_apartments1, aspect_importance_apartments2,
+                 aspect_importance_apartments3, add_importance = TRUE,
+                 aspects_on_axis = FALSE, digits_to_round = 0), "gg")
+})
+
+
 test_that("check alias for aspect_importance",{
   library("DALEX")
   library("ingredients")
@@ -102,7 +125,6 @@ test_that("check alias for aspect_importance",{
 test_that("plot for aspect_importance works",{
   library("DALEX")
   library("ingredients")
-
 
   aspect_importance_apartments <- aspect_importance(apartments_lm_model, apartments,
                                                     new_observation = apartments_new_observation,
@@ -141,7 +163,7 @@ test_that("check for aspect_importance with show_cor",{
   aspect_importance_apartments_num <- aspect_importance(
     apartments_num_lm_model, apartments_num,
     new_observation = apartments_num_new_observation,
-    aspects =  aspect_list_apartments_num, show_cor = T)
+    aspects =  aspect_list_apartments_num, show_cor = TRUE)
 
   expect_true("aspect_importance" %in% class(aspect_importance_apartments_num))
   expect_true(dim(aspect_importance_apartments_num)[2] == 5)
@@ -176,7 +198,7 @@ test_that("check group_variables function",{
   library("DALEX")
   library("ingredients")
 
-  aspect_list <- group_variables(apartments_num, 0.52, draw_tree = T,
+  aspect_list <- group_variables(apartments_num, 0.52, draw_tree = TRUE,
                                  draw_abline = TRUE)
   expect_true(length(aspect_list) == 4)
   expect_error(group_variables(apartments, 0.6))
@@ -247,12 +269,17 @@ test_that("check plot_aspects_importance_grouping function",{
   library("DALEX")
   library("ingredients")
 
-  p <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
+  p1 <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
                                         data = apartments_num_mod,
                                         new_observation = apartments_num_new_observation,
                                         cumulative_max = TRUE, absolute_value = TRUE)
+  p2 <- plot_aspects_importance_grouping(x = apartments_num_lm_model,
+                                        data = apartments_num_mod,
+                                        new_observation = apartments_num_new_observation,
+                                        cumulative_max = TRUE, absolute_value = FALSE)
 
-  expect_true("ggplot" %in% class(p))
+  expect_true("ggplot" %in% class(p1))
+  expect_true("ggplot" %in% class(p2))
 })
 
 
@@ -264,7 +291,6 @@ test_that("check triplot function",{
                data = apartments_num_mod, new_observation = apartments_num_new_observation)
 
   expect_true("gtable" %in% class(p))
-  expect_true(nrow(p$layout) == 3)
 })
 
 test_that("check triplot.explainer function",{
@@ -279,6 +305,5 @@ test_that("check triplot.explainer function",{
                new_observation = apartments_num_new_observation)
 
   expect_true("gtable" %in% class(p))
-  expect_true(nrow(p$layout) == 3)
 })
 
