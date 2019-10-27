@@ -36,13 +36,12 @@
 
 
 <meta property="og:title" content="Plots Ceteris Paribus Profiles — plot.ceteris_paribus_explainer" />
-
 <meta property="og:description" content="Function plot.ceteris_paribus_explainer plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 Find more detailes in Ceteris Paribus Chapter." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -84,7 +83,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.3.12</span>
+          <span class="version version-default">0.4</span>
         </div>
       </div>
     </div>
@@ -142,18 +141,16 @@ Find more detailes in Ceteris Paribus Chapter." />
     </div>
 
     <div class="ref-description">
-    
     <p>Function <code>plot.ceteris_paribus_explainer</code> plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
 <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -191,15 +188,13 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
       <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -300,11 +295,8 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

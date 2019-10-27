@@ -1,3 +1,7 @@
+ingredients 0.4
+---------------------------------------------------------------
+* CRAN release
+
 ingredients 0.3.12
 ---------------------------------------------------------------
 * `aspect_importance` is moved to `DALEXtra` ([#66](https://github.com/ModelOriented/ingredients/issues/66))
