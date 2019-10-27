@@ -15,18 +15,19 @@
 #' @examples
 #' library("DALEX")
 #'
-#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#' model_titanic_glm <- glm(survived ~ age + fare,
 #'                        data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
 #'                                y = titanic_imputed[,8])
 #'
-#' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic_imputed[1,])
+#' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic_imputed[1,],
+#'                        variables = c("age", "fare", "sibsp"))
 #' head(cp_rf)
+#' \donttest{
 #' plot(cp_rf)
 #'
-#' \donttest{
 #' library("randomForest")
 #' set.seed(59)
 #'
