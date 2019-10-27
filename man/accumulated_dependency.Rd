@@ -62,29 +62,27 @@ Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLoca
 \examples{
 library("DALEX")
 
-titanic_imputed$country <- NULL
-
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+model_titanic_glm <- glm(survived ~ gender + age + fare,
                          data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
-                               y = titanic_imputed$survived == "yes",
+                               y = titanic_imputed[,8],
                                verbose = FALSE)
 
 adp_glm <- accumulated_dependency(explain_titanic_glm,
-                                  N = 50, variables = c("age", "fare"))
+                                  N = 150, variables = c("age", "fare"))
 head(adp_glm)
 plot(adp_glm)
 
 \donttest{
 library("randomForest")
 
-model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic_imputed)
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
-                              y = titanic_imputed$survived == "yes",
+                              y = titanic_imputed[,8],
                               verbose = FALSE)
 
 adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")

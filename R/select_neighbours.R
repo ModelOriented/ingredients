@@ -21,7 +21,7 @@
 #' @examples
 #' library("DALEX")
 #'
-#' new_apartment <- apartments[1,2:6]
+#' new_apartment <- apartments[1,]
 #' small_apartments <- select_neighbours(new_apartment, apartments_test, n = 10)
 #'
 #' new_apartment

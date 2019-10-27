@@ -16,20 +16,18 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
-#' titanic <- na.omit(titanic)
-#' \donttest{
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                   fare + sibsp + parch,  data = titanic)
-#' explain_titanic_rf <- explain(model_titanic_rf,
-#'                              data = titanic[,-9],
-#'                              y = titanic$survived == "yes",
-#'                              label = "rf")
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 #'
-#' selected_passangers <- select_sample(titanic, n = 10)
+#' explain_titanic_rf <- explain(model_titanic_rf,
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8],
+#'                               label = "rf")
+#'
+#' selected_passangers <- select_sample(titanic_imputed, n = 10)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' describe(pdp, variables = "gender")
-#' }
+#'
 #' @export
 #' @rdname describe
 describe.partial_dependency_explainer <- function(x,

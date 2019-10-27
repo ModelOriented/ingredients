@@ -3,7 +3,6 @@ context("Check show_residuals() functions")
 test_that("plot show_residuals",{
  library("DALEX")
  library("randomForest")
- library("ingredients")
 
  titanic <- na.omit(titanic)
  model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +

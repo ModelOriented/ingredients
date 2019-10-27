@@ -18,8 +18,8 @@
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
 #' @param grid_points number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
-#' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
-#' If "categorical" then only categorical variables will be calculated.
+#' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
+#' If \code{categorical} then only categorical variables will be calculated.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -28,29 +28,27 @@
 #' @examples
 #' library("DALEX")
 #'
-#' titanic_imputed$country <- NULL
-#'
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
-#'                                y = titanic_imputed$survived == "yes",
+#'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
 #' cdp_glm <- conditional_dependency(explain_titanic_glm,
-#'                                   N = 50, variables = c("age", "fare"))
+#'                                   N = 150, variables = c("age", "fare"))
 #' head(cdp_glm)
 #' plot(cdp_glm)
 #'
 #' \donttest{
 #' library("randomForest")
 #'
-#' model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic_imputed)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
-#'                               y = titanic_imputed$survived == "yes",
+#'                               y = titanic_imputed[,8],
 #'                               verbose = FALSE)
 #'
 #' cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")

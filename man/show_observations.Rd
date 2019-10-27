@@ -14,12 +14,12 @@ show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
 
 \item{size}{a numeric. Size of lines to be plotted}
 
-\item{alpha}{a numeric between 0 and 1. Opacity of lines}
+\item{alpha}{a numeric between \code{0} and \code{1}. Opacity of lines}
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
-\item{variable_type}{a character. If "numerical" then only numerical variables will be plotted.
-If "categorical" then only categorical variables will be plotted.}
+\item{variable_type}{a character. If \code{numerical} then only numerical variables will be plotted.
+If \code{categorical} then only categorical variables will be plotted.}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 }
@@ -35,11 +35,12 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 library("DALEX")
 library("randomForest")
 
-rf_model <- randomForest(survived == "yes" ~.,
+rf_model <- randomForest(survived ~.,
                          data = titanic_imputed)
 
-explainer_rf <- explain(rf_model, data = titanic_imputed,
-                        y = titanic_imputed$survived == "yes",
+explainer_rf <- explain(rf_model,
+                        data = titanic_imputed[,-8],
+                        y = titanic_imputed[,8],
                         label = "RF", verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)

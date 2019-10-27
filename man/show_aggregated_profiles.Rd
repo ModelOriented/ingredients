@@ -14,7 +14,7 @@ show_aggregated_profiles(x, ..., size = 0.5, alpha = 1,
 
 \item{size}{a numeric. Size of lines to be plotted}
 
-\item{alpha}{a numeric between 0 and 1. Opacity of lines}
+\item{alpha}{a numeric between \code{0} and \code{1}. Opacity of lines}
 
 \item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
 
@@ -30,16 +30,14 @@ with \code{\link{plot.ceteris_paribus_explainer}}.
 \examples{
 library("DALEX")
 
-titanic <- na.omit(titanic)
+selected_passangers <- select_sample(titanic_imputed, n = 100)
 
-selected_passangers <- select_sample(titanic, n = 100)
-
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                         data = titanic, family = "binomial")
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                               data = titanic[,-9],
-                               y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed[,8])
 
 cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
 
@@ -52,12 +50,11 @@ plot(cp_rf, variables = "age") +
 \donttest{
 library("randomForest")
 
-model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                 fare + sibsp + parch, data = titanic)
+model_titanic_rf <- randomForest(survived ~., data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
                               verbose = FALSE, precalculate = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)

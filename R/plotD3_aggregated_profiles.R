@@ -11,14 +11,14 @@
 #' @param ... other explainers that shall be plotted together
 #' @param color a character.  Set line/bar color
 #' @param size a numeric. Set width of lines
-#' @param alpha a numeric between 0 and 1. Opacity of lines
+#' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
 #' If "categorical" then only categorical variables will be plotted.
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param scale_plot a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param chart_title a character. Set custom title
-#' @param label_margin a numeric. Set width of label margins in "categorical" type
+#' @param label_margin a numeric. Set width of label margins in \code{categorical} type
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
@@ -32,12 +32,11 @@
 #' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 #'
 #' # build a model
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + embarked + class +
-#'                                    fare + sibsp + parch,  data = titanic_small)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_small)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_small[,-8],
-#'                               y = titanic_small$survived == "yes",
+#'                               y = titanic_small[,8],
 #'                               label = "Random Forest v7")
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)

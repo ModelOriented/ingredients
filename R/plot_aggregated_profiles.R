@@ -8,7 +8,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param color a character. Either name of a color or name of a variable that should be used for coloring
 #' @param size a numeric. Size of lines to be plotted
-#' @param alpha a numeric between 0 and 1. Opacity of lines
+#' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #'
@@ -19,14 +19,12 @@
 #' @examples
 #' library("DALEX")
 #'
-#' titanic <- na.omit(titanic)
-#'
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                          data = titanic, family = "binomial")
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#'                          data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                                data = titanic[,-9],
-#'                                y = titanic$survived == "yes",
+#'                                data = titanic_imputed[,-8],
+#'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
 #' pdp_rf_p <- partial_dependency(explain_titanic_glm, N = 50)
@@ -41,16 +39,15 @@
 #' \donttest{
 #' library("randomForest")
 #'
-#' model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-#'                                     fare + sibsp + parch,  data = titanic)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic[,-9],
-#'                               y = titanic$survived == "yes",
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8],
 #'                               label = "Random Forest v7",
 #'                               verbose = FALSE)
 #'
-#' selected_passangers <- select_sample(titanic, n = 100)
+#' selected_passangers <- select_sample(titanic_imputed, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
 #'
@@ -106,7 +103,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
-      scale_color_manual(name = "", values = theme_drwhy_colors(nlabels))
+      scale_color_manual(name = "", values = colors_discrete_drwhy(nlabels))
   }
   if (!is_color_a_variable & is_x_numeric) {
     res <- res +
@@ -118,7 +115,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_col(aes_string(y = "`_yhat_`", fill = paste0("`",color,"`")), size = size, alpha = alpha, position = "dodge") +
-      scale_fill_manual(name = "", values = theme_drwhy_colors(nlabels))
+      scale_fill_manual(name = "", values = colors_discrete_drwhy(nlabels))
   }
   if (!is_color_a_variable & !is_x_numeric) {
     res <- res +

@@ -33,13 +33,13 @@
 #' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 #'
 #' # build a model
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_small,
 #'                          family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                                data = titanic_small[,-4],
-#'                                y = titanic_small$survived == "yes",
+#'                                data = titanic_small[,-8],
+#'                                y = titanic_small[,8],
 #'                                verbose = FALSE)
 #'
 #' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
@@ -49,16 +49,14 @@
 #'
 #' \donttest{
 #' library("randomForest")
-#' model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-#'                                  fare + sibsp + parch,  data = titanic_imputed)
+#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 #'
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
-#'                               data = titanic_imputed[,-9],
-#'                               y = titanic_imputed$survived,
+#'                               data = titanic_imputed[,-8],
+#'                               y = titanic_imputed[,8],
 #'                               label = "Random Forest v7",
-#'                               verbose = FALSE,
-#'                               precalculate = FALSE)
+#'                               verbose = FALSE)
 #'
 #' # select few passangers
 #' selected_passangers <- select_sample(titanic_imputed, n = 20)

@@ -15,8 +15,8 @@ cluster_profiles(x, ..., aggregate_function = mean,
 
 \item{aggregate_function}{a function for profile aggregation. By default it's \code{mean}}
 
-\item{variable_type}{a character. If "numerical" then only numerical variables will be computed.
-If "categorical" then only categorical variables will be computed.}
+\item{variable_type}{a character. If \code{numerical} then only numerical variables will be computed.
+If \code{categorical} then only categorical variables will be computed.}
 
 \item{center}{shall profiles be centered before clustering}
 
@@ -36,28 +36,28 @@ Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependen
 }
 \examples{
 library("DALEX")
-titanic <- na.omit(titanic)
-selected_passangers <- select_sample(titanic, n = 100)
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
+
+selected_passangers <- select_sample(titanic_imputed, n = 100)
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed[,8])
+
 cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
 clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
 plot(clust_rf)
 
 \donttest{
- library("randomForest")
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- model_titanic_rf
+library("randomForest")
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf
 
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes",
-                           label = "Random Forest v7")
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
+                              label = "Random Forest v7")
 
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf

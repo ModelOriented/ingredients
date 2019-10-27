@@ -14,14 +14,15 @@
 #'
 #' @examples
 #' library("DALEX")
-#' titanic <- na.omit(titanic)
-#' model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-#'                        data = titanic, family = "binomial")
+#'
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#'                        data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
-#'                            data = titanic[,-9],
-#'                            y = titanic$survived == "yes")
-#' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic[1,])
+#'                                data = titanic_imputed[,-8],
+#'                                y = titanic_imputed[,8])
+#'
+#' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic_imputed[1,])
 #' head(cp_rf)
 #' plot(cp_rf)
 #'
@@ -29,17 +30,17 @@
 #' library("randomForest")
 #' set.seed(59)
 #'
-#' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-#'       no.rooms + district, data = apartments)
+#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
-#'       data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
+#'                         data = apartments_test[,-1],
+#'                          y = apartments_test[,1])
 #'
-#' new_apartment <- apartmentsTest[1, ]
+#' new_apartment <- apartments_test[1,]
 #' new_apartment
 #'
 #' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment,
-#'          variables = c("surface", "floor", "no.rooms"))
+#'                                variables = c("surface", "floor", "no.rooms"))
 #' head(wi_rf_2d)
 #' plot(wi_rf_2d)
 #' }

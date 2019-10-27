@@ -5,8 +5,7 @@ library("randomForest")
 
 titanic <- na.omit(titanic)
 
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                   fare + sibsp + parch,  data = titanic)
+model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic)
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic[,-9],
                               y = titanic$survived == "yes",

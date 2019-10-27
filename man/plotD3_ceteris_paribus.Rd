@@ -20,7 +20,7 @@ plotD3(x, ...)
 
 \item{size}{a numeric. Set width of lines}
 
-\item{alpha}{a numeric between 0 and 1. Opacity of lines}
+\item{alpha}{a numeric between \code{0} and \code{1}. Opacity of lines}
 
 \item{color}{a character.  Set line color}
 
@@ -35,7 +35,7 @@ If "categorical" then only categorical variables will be plotted.}
 
 \item{chart_title}{a character. Set custom title}
 
-\item{label_margin}{a numeric. Set width of label margins in "categorical" type}
+\item{label_margin}{a numeric. Set width of label margins in \code{categorical} type}
 
 \item{show_observations}{a logical. Adds observations layer to a plot. By default it's \code{TRUE}}
 
@@ -55,22 +55,20 @@ Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html
 library("DALEX")
 library("randomForest")
 
-titanic <- na.omit(titanic)
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                 fare + sibsp + parch,  data = titanic)
 explain_titanic_rf <- explain(model_titanic_rf,
-                             data = titanic[,-9],
-                             y = titanic$survived == "yes",
-                             label = "rf")
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
+                              label = "rf")
 
-selected_passangers <- select_sample(titanic, n = 10)
+selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 
 plotD3(cp_rf, variables = c("age","parch","fare","sibsp"),
      facet_ncol = 2, scale_plot = TRUE)
 
-selected_passanger <- select_sample(titanic, n = 1)
+selected_passanger <- select_sample(titanic_imputed, n = 1)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 
 plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),

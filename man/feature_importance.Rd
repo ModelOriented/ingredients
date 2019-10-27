@@ -66,77 +66,75 @@ Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/featureImportan
 }
 \examples{
 library("DALEX")
-titanic <- na.omit(titanic)
-model_titanic_glm <- glm(survived == "yes" ~ gender + age + fare,
-                       data = titanic, family = "binomial")
+
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
+                               data = titanic_imputed[,-8],
+                               y = titanic_imputed[,8])
 
-vd_rf <- feature_importance(explain_titanic_glm)
-plot(vd_rf)
+fi_glm <- feature_importance(explain_titanic_glm)
+plot(fi_glm)
 
-vd_rf_joint1 <- feature_importance(explain_titanic_glm,
+fi_glm_joint1 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "ticket_type" = c("fare")),
-                   label = "lm 2 groups",
-)
+                   label = "lm 2 groups")
 
-plot(vd_rf_joint1)
+plot(fi_glm_joint1)
 
-vd_rf_joint2 <- feature_importance(explain_titanic_glm,
+fi_glm_joint2 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
-                   "wealth" = c("fare", "class"),
-                   "family" = c("sibsp", "parch"),
-                   "embarked" = "embarked"),
-                   label = "lm 5 groups",
-)
+                                          "wealth" = c("fare", "class"),
+                                          "family" = c("sibsp", "parch"),
+                                          "embarked" = "embarked"),
+                   label = "lm 5 groups")
 
-plot(vd_rf_joint2, vd_rf_joint1)
+plot(fi_glm_joint2, fi_glm_joint1)
 
 explain_titanic_glm
 
  \donttest{
 library("randomForest")
 
- titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic)
- explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic[,-9],
-                           y = titanic$survived == "yes")
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
-vd_rf <- feature_importance(explain_titanic_rf)
-plot(vd_rf)
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8])
 
-vd_rf <- feature_importance(explain_titanic_rf, B = 5) # 5 replications
-plot(vd_rf)
+fi_rf <- feature_importance(explain_titanic_rf)
+plot(fi_rf)
 
-vd_rf_group <- feature_importance(explain_titanic_rf,
+fi_rf <- feature_importance(explain_titanic_rf, B = 5) # 5 replications
+plot(fi_rf)
+
+fi_rf_group <- feature_importance(explain_titanic_rf,
                    variable_groups = list("demographics" = c("gender", "age"),
                    "wealth" = c("fare", "class"),
                    "family" = c("sibsp", "parch"),
                    "embarked" = "embarked"),
-                   label = "rf 4 groups",
-)
-plot(vd_rf_group, vd_rf)
+                   label = "rf 4 groups")
 
-HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
+plot(fi_rf_group, fi_rf)
+
+HR_rf_model <- randomForest(status ~., data = HR, ntree = 100)
+
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
                          verbose = FALSE, precalculate = FALSE)
 
-vd_rf <- feature_importance(explainer_rf, type = "raw",
+fi_rf <- feature_importance(explainer_rf, type = "raw",
                             loss_function = loss_cross_entropy)
-head(vd_rf)
-plot(vd_rf)
+head(fi_rf)
+plot(fi_rf)
 
 HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
-vd_glm <- feature_importance(explainer_glm, type = "raw",
-                        loss_function = loss_root_mean_square)
-head(vd_glm)
-plot(vd_glm)
+fi_glm <- feature_importance(explainer_glm, type = "raw",
+                             loss_function = loss_root_mean_square)
+head(fi_glm)
+plot(fi_glm)
 
 library("xgboost")
 model_martix_train <- model.matrix(status == "fired" ~ . -1, HR)
@@ -146,11 +144,11 @@ param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
 HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
 
 explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
-                     y = HR$status == "fired", label = "xgboost")
+                         y = HR$status == "fired", label = "xgboost")
 
-vd_xgb <- feature_importance(explainer_xgb, type = "raw")
-head(vd_xgb)
-plot(vd_xgb, vd_glm)
+fi_xgb <- feature_importance(explainer_xgb, type = "raw")
+head(fi_xgb)
+plot(fi_xgb, fi_glm)
  }
 }
 \references{

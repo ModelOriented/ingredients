@@ -12,13 +12,13 @@ aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
 
 \item{...}{other explainers that shall be calculated together}
 
-\item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
-If "categorical" then only categorical variables will be calculated.}
+\item{variable_type}{a character. If \code{numerical} then only numerical variables will be calculated.
+If \code{categorical} then only categorical variables will be calculated.}
 
 \item{groups}{a variable name that will be used for grouping.
 By default \code{NULL} which means that no groups shall be calculated}
 
-\item{type}{either "partial"/"conditional"/"accumulated" for parital dependence, conditional profiles of accumulated local effects}
+\item{type}{either \code{partial/conditional/accumulated} for parital dependence, conditional profiles of accumulated local effects}
 
 \item{variables}{if not \code{NULL} then aggregate only for selected \code{variables} will be calculated}
 }
@@ -35,14 +35,11 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
 library("DALEX")
 library("randomForest")
 
-titanic_imputed$country <- NULL
-
-model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic_imputed)
+model_titanic_rf <- randomForest(survived ~ .,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                           data = titanic_imputed[,-8],
-                           y = titanic_imputed$survived == "yes")
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8])
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -61,6 +58,7 @@ plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 \donttest{
 pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
                              groups = "gender")
+
 head(pdp_rf)
 plot(cp_rf, variables = "age") +
   show_observations(cp_rf, variables = "age") +
