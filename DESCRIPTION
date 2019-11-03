@@ -28,8 +28,7 @@ RoxygenNote: 6.1.1
 Imports:
     DALEX,
     ggplot2,
-    scales,
-    gridExtra
+    scales
 Suggests:
     gower,
     randomForest,
