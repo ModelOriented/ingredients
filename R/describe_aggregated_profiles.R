@@ -208,7 +208,11 @@ describe_aggregated_profiles_continuous <- function(x,
   max_name <- df[which.max(df$`_yhat_`), variables]
   min_name <- df[which.min(df$`_yhat_`), variables]
   cutpoint <- find_optimal_cutpoint(smooth(df$`_yhat_`))
-  cut_name <- round(df[cutpoint, variables], 3)
+  # do not round if it's below minimum #76
+  cut_name <- max(
+    round(df[cutpoint, variables], 3),
+    min(c(df[, variables])) # never get smaller than min
+  )
 
   # Test if the break point is between max_name and min_name
   multiple_breakpoints <- ifelse((cut_name < min(min_name, max_name) | cut_name > max(min_name, max_name)),

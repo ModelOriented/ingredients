@@ -1,3 +1,7 @@
+ingredients 0.4.1
+---------------------------------------------------------------
+* fixed rounding problem in the describe function ([#76](https://github.com/ModelOriented/ingredients/issues/76))
+
 ingredients 0.4
 ---------------------------------------------------------------
 * CRAN release
