@@ -89,7 +89,7 @@ aggregate_profiles <- function(x, ...,
 
   check_variable_type(variable_type)
 
-  # if there is more explainers, they should be merged into a single data frame
+  # if there is more ceteris paribuses, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"
@@ -99,8 +99,9 @@ aggregate_profiles <- function(x, ...,
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
   if (!is.null(variables)) {
-    all_variables <- intersect(all_variables, variables)
-    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
+    all_variables_intersect <- intersect(all_variables, variables)
+    if (length(all_variables_intersect) == 0) stop(paste0("parameter variables do not overlap with ", paste(all_variables, collapse = ", ")))
+    all_variables <- all_variables_intersect
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
