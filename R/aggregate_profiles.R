@@ -88,6 +88,7 @@ aggregate_profiles <- function(x, ...,
                                variables = NULL) {
 
   check_variable_type(variable_type)
+  check_type(type)
 
   # if there is more ceteris paribuses, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -130,6 +131,10 @@ aggregate_profiles <- function(x, ...,
   # change x column to proper character values
   if (variable_type == "categorical") {
     all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
+  }
+  
+  if (!is.null(groups) & ! groups %in% colnames(all_profiles)) {
+    stop("groups parameter is not a name of any column")
   }
 
   # standard partial profiles
@@ -338,4 +343,14 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
 check_variable_type <- function(variable_type) {
   if (!(variable_type %in% c("numerical", "categorical")))
     stop("variable_type needs to be 'numerical' or 'categorical'")
+}
+
+#'@noRd
+#'@title Check if type is partial/conditional/accumulated
+#'
+#'@param type a character
+#'
+check_type <- function(type) {
+  if (!(type %in% c("partial", "conditional", "accumulated")))
+    stop("type needs to be 'partial', 'conditional' or 'accumulated'")
 }
