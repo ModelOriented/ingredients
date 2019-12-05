@@ -5,11 +5,21 @@
 \alias{calculate_variable_profile.default}
 \title{Internal Function for Individual Variable Profiles}
 \usage{
-calculate_variable_profile(data, variable_splits, model,
-  predict_function = predict, ...)
+calculate_variable_profile(
+  data,
+  variable_splits,
+  model,
+  predict_function = predict,
+  ...
+)
 
-\method{calculate_variable_profile}{default}(data, variable_splits, model,
-  predict_function = predict, ...)
+\method{calculate_variable_profile}{default}(
+  data,
+  variable_splits,
+  model,
+  predict_function = predict,
+  ...
+)
 }
 \arguments{
 \item{data}{set of observations. Profile will be calculated for every observation (every row)}

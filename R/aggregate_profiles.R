@@ -8,7 +8,7 @@
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
 #' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
-#' @param type either \code{partial/conditional/accumulated} for parital dependence, conditional profiles of accumulated local effects
+#' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
@@ -133,7 +133,7 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
   }
   
-  if (!is.null(groups) & ! groups %in% colnames(all_profiles)) {
+  if (!is.null(groups) && ! groups %in% colnames(all_profiles)) {
     stop("groups parameter is not a name of any column")
   }
 

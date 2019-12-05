@@ -4,9 +4,15 @@
 \alias{cluster_profiles}
 \title{Cluster Ceteris Paribus Profiles}
 \usage{
-cluster_profiles(x, ..., aggregate_function = mean,
-  variable_type = "numerical", center = FALSE, k = 3,
-  variables = NULL)
+cluster_profiles(
+  x,
+  ...,
+  aggregate_function = mean,
+  variable_type = "numerical",
+  center = FALSE,
+  k = 3,
+  variables = NULL
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

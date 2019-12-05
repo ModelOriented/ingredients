@@ -7,11 +7,21 @@
 \usage{
 plotD3(x, ...)
 
-\method{plotD3}{ceteris_paribus_explainer}(x, ..., size = 2, alpha = 1,
-  color = "#46bac2", variable_type = "numerical", facet_ncol = 2,
-  scale_plot = FALSE, variables = NULL,
-  chart_title = "Ceteris Paribus Profiles", label_margin = 60,
-  show_observations = TRUE, show_rugs = TRUE)
+\method{plotD3}{ceteris_paribus_explainer}(
+  x,
+  ...,
+  size = 2,
+  alpha = 1,
+  color = "#46bac2",
+  variable_type = "numerical",
+  facet_ncol = 2,
+  scale_plot = FALSE,
+  variables = NULL,
+  chart_title = "Ceteris Paribus Profiles",
+  label_margin = 60,
+  show_observations = TRUE,
+  show_rugs = TRUE
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

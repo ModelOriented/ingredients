@@ -4,9 +4,17 @@
 \alias{plot.ceteris_paribus_2d_explainer}
 \title{Plot Ceteris Paribus 2D Explanations}
 \usage{
-\method{plot}{ceteris_paribus_2d_explainer}(x, ..., facet_ncol = NULL,
-  add_raster = TRUE, add_contour = TRUE, bins = 3,
-  add_observation = TRUE, pch = "+", size = 6)
+\method{plot}{ceteris_paribus_2d_explainer}(
+  x,
+  ...,
+  facet_ncol = NULL,
+  add_raster = TRUE,
+  add_contour = TRUE,
+  bins = 3,
+  add_observation = TRUE,
+  pch = "+",
+  size = 6
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with the \code{ceteris_paribus_2d()} function}

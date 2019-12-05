@@ -4,8 +4,16 @@
 \alias{show_rugs}
 \title{Adds a Layer with Rugs to a Profile Plot}
 \usage{
-show_rugs(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
-  variable_type = "numerical", sides = "b", variables = NULL)
+show_rugs(
+  x,
+  ...,
+  size = 0.5,
+  alpha = 1,
+  color = "#371ea3",
+  variable_type = "numerical",
+  sides = "b",
+  variables = NULL
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
