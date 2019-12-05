@@ -4,8 +4,14 @@
 \alias{aggregate_profiles}
 \title{Aggregates Ceteris Paribus Profiles}
 \usage{
-aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
-  type = "partial", variables = NULL)
+aggregate_profiles(
+  x,
+  ...,
+  variable_type = "numerical",
+  groups = NULL,
+  type = "partial",
+  variables = NULL
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
@@ -18,7 +24,7 @@ If \code{categorical} then only categorical variables will be calculated.}
 \item{groups}{a variable name that will be used for grouping.
 By default \code{NULL} which means that no groups shall be calculated}
 
-\item{type}{either \code{partial/conditional/accumulated} for parital dependence, conditional profiles of accumulated local effects}
+\item{type}{either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects}
 
 \item{variables}{if not \code{NULL} then aggregate only for selected \code{variables} will be calculated}
 }

@@ -8,7 +8,7 @@
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
 #' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
-#' @param type either \code{partial/conditional/accumulated} for parital dependence, conditional profiles of accumulated local effects
+#' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
@@ -88,8 +88,9 @@ aggregate_profiles <- function(x, ...,
                                variables = NULL) {
 
   check_variable_type(variable_type)
+  check_type(type)
 
-  # if there is more explainers, they should be merged into a single data frame
+  # if there is more ceteris paribuses, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"
@@ -99,8 +100,9 @@ aggregate_profiles <- function(x, ...,
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
   if (!is.null(variables)) {
-    all_variables <- intersect(all_variables, variables)
-    if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
+    all_variables_intersect <- intersect(all_variables, variables)
+    if (length(all_variables_intersect) == 0) stop(paste0("parameter variables do not overlap with ", paste(all_variables, collapse = ", ")))
+    all_variables <- all_variables_intersect
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
@@ -129,6 +131,10 @@ aggregate_profiles <- function(x, ...,
   # change x column to proper character values
   if (variable_type == "categorical") {
     all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
+  }
+  
+  if (!is.null(groups) && ! groups %in% colnames(all_profiles)) {
+    stop("groups parameter is not a name of any column")
   }
 
   # standard partial profiles
@@ -337,4 +343,14 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
 check_variable_type <- function(variable_type) {
   if (!(variable_type %in% c("numerical", "categorical")))
     stop("variable_type needs to be 'numerical' or 'categorical'")
+}
+
+#'@noRd
+#'@title Check if type is partial/conditional/accumulated
+#'
+#'@param type a character
+#'
+check_type <- function(type) {
+  if (!(type %in% c("partial", "conditional", "accumulated")))
+    stop("type needs to be 'partial', 'conditional' or 'accumulated'")
 }
