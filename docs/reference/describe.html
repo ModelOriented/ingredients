@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Natural language description of feature importance explainer — describe.partial_dependency_explainer" />
+
 <meta property="og:description" content="Generic function describe generates a natural language
 description of ceteris_paribus(), aggregated_profiles() and
 feature_importance() explanations what enchaces their interpretability." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -83,7 +84,7 @@ feature_importance() explanations what enchaces their interpretability." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.4.2</span>
         </div>
       </div>
     </div>
@@ -141,27 +142,40 @@ feature_importance() explanations what enchaces their interpretability." />
     </div>
 
     <div class="ref-description">
+    
     <p>Generic function <code>describe</code> generates a natural language
 description of <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code>, <code>aggregated_profiles()</code> and
 <code><a href='feature_importance.html'>feature_importance()</a></code> explanations what enchaces their interpretability.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for partial_dependency_explainer</span>
-<span class='fu'>describe</span>(<span class='no'>x</span>,
-  <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='no'>...</span>, <span class='kw'>display_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"prediction"</span>)
+<span class='fu'>describe</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>display_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"prediction"</span>
+)
 
 <span class='fu'>describe</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'>describe</span>(<span class='no'>x</span>,
-  <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='no'>...</span>, <span class='kw'>display_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"prediction"</span>)
+<span class='fu'>describe</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>display_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>display_numbers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"prediction"</span>
+)
 
 <span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'>describe</span>(<span class='no'>x</span>,
-  <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='no'>...</span>)</pre>
-
+<span class='fu'>describe</span>(<span class='no'>x</span>, <span class='kw'>nonsignificance_treshold</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='no'>...</span>)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -194,7 +208,7 @@ description of <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code>
       <td><p>label for model's prediction</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Function <code>describe.ceteris_paribus()</code> generates a natural language description of
@@ -216,6 +230,7 @@ description of feature importance explanation. It prints the number of important
 have significant dropout difference from the full model, depending on <code>nonsignificance_treshold</code>.
 The description prints the three most important variables for the model's prediction.
 The current design of DALEX explainer does not allow for displaying variables values.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -281,7 +296,7 @@ The current design of DALEX explainer does not allow for displaying variables va
 #&gt;   -&gt; predicted values  :  numerical, min =  1781.848 , mean =  3487.019 , max =  6176.032  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -247.4728 , mean =  2.093656e-14 , max =  469.0023  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
@@ -293,7 +308,9 @@ The current design of DALEX explainer does not allow for displaying variables va
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -304,7 +321,7 @@ The current design of DALEX explainer does not allow for displaying variables va
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

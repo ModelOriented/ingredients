@@ -12,8 +12,6 @@
 #' @param color a character.  Set line/bar color
 #' @param size a numeric. Set width of lines
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
-#' @param variable_type a character. If "numerical" then only numerical variables will be plotted.
-#' If "categorical" then only categorical variables will be plotted.
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param scale_plot a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
@@ -49,24 +47,21 @@
 #' pdp_rf_a <- aggregate_profiles(cp_rf, type = "accumulated", variable_type = "numerical")
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #'
-#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, variable_type = "numerical", scale_plot = TRUE)
+#' plotD3(pdp_rf_p, pdp_rf_c, pdp_rf_a, scale_plot = TRUE)
 #'
 #' pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 #' pdp$`_label_` <- "RF_partial"
 #'
-#' plotD3(pdp, variables = c("gender","class"), variable_type = "categorical", label_margin = 70)
+#' plotD3(pdp, variables = c("gender","class"), label_margin = 70)
 #'
 #' @export
 #' @rdname plotD3_aggregated_profiles
 plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
                                                  color = "#46bac2",
-                                                 variable_type = "numerical",
                                                  facet_ncol = 2, scale_plot = FALSE,
                                                  variables = NULL,
                                                  chart_title = "Aggregated Profiles",
                                                  label_margin = 60) {
-
-  check_variable_type(variable_type)
 
   # if there is more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -77,35 +72,13 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   if (!is.null(variables)) {
     all_variables <- intersect(all_variables, variables)
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
+
+    aggregated_profiles <- aggregated_profiles[aggregated_profiles$`_vname_` %in% all_variables, ]
   }
 
-  hl <- split(aggregated_profiles, f = as.character(aggregated_profiles$`_vname_`), drop = FALSE)[all_variables]
-
-  # only numerical or only factor?
-  is_numeric <- unlist(lapply(hl, function(x){
-    is.numeric(x$`_x_`)
-  }))
-
-  if (variable_type == "numerical") {
-    vnames <- names(which(is_numeric))
-
-    if (length(vnames) == 0) {
-      # but `variables` are selected, then change to factor
-      if (length(variables) > 0) {
-        variable_type <- "categorical"
-        vnames <- variables
-      } else {
-        stop("There are no numerical variables")
-      }
-    }
-  } else {
-    vnames <- names(which(!is_numeric))
-    # there are no numerical features
-    if (length(vnames) == 0) stop("There are no non-numerical variables")
-  }
+  is_x_numeric <- is.numeric(aggregated_profiles$`_x_`)
 
   # prepare profiles data
-  aggregated_profiles <- aggregated_profiles[aggregated_profiles$`_vname_` %in% vnames, ]
   aggregated_profiles$`_vname_` <- droplevels(aggregated_profiles$`_vname_`)
   rownames(aggregated_profiles) <- NULL
 
@@ -118,7 +91,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   min_max_list <- ymean <- label_names <- NULL
 
   # line plot or bar plot?
-  if (variable_type == "numerical") {
+  if (is_x_numeric) {
     aggregated_profiles_list <- lapply(aggregated_profiles_list, function(x){
       ret <- x[, c('_x_', "_yhat_", "_vname_", "_label_")]
       colnames(ret) <- c("xhat", "yhat", "vname", "label")
@@ -150,12 +123,12 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
     ymean <- round(attr(x, "mean_prediction"),3)
   }
 
-  options <- list(variableNames = as.list(vnames),
-                  n = length(vnames), c = length(list(...)) + 1,
+  options <- list(variableNames = as.list(all_variables),
+                  n = length(all_variables), c = length(list(...)) + 1,
                   yMax = ymax + ymargin, yMin = ymin - ymargin,
                   yMean = ymean, labelNames = label_names,
                   size = size, alpha = alpha, color = color,
-                  onlyNumerical = variable_type == "numerical",
+                  onlyNumerical = is_x_numeric,
                   facetNcol = facet_ncol, scalePlot = scale_plot,
                   chartTitle = chart_title, labelMargin = label_margin)
 

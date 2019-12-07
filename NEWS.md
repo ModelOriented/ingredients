@@ -1,3 +1,13 @@
+ingredients 0.4.2
+---------------------------------------------------------------
+* change `variable_type` and `variables` arguments usage   in the 
+`aggregate_profiles`, `plot.ceteris_paribus` and `plotD3.ceteris_paribus`
+* remove `variable_type` argument from `plotD3.aggregated_profiles`
+(now the same as in `plot.aggregated_profiles`)
+* Kasia Pekala is removed from the contributors as `aspect_importance` is moved to `DALEXtra`
+([See v0.3.12 changelog](https://modeloriented.github.io/ingredients/news/index.html#ingredients-0-3-12))
+* added Travis-CI for OSX
+
 ingredients 0.4.1
 ---------------------------------------------------------------
 * fixed rounding problem in the describe function ([#76](https://github.com/ModelOriented/ingredients/issues/76))
@@ -31,7 +41,7 @@ cluster_profiles(), plot() and others, as requested in #15
 
 ingredients 0.3.8
 ----------------------------------------------------------------
-* Natural language description generated with `describe()` function for `ceteris_paribus()`, `feature_importance()` and `aggregated_profiles()` explanations. 
+* Natural language description generated with `describe()` function for `ceteris_paribus()`, `feature_importance()` and `aggregate_profiles()` explanations. 
 
 
 ingredients 0.3.7

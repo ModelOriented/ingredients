@@ -104,16 +104,38 @@ aggregate_profiles <- function(x, ...,
     if (length(all_variables_intersect) == 0) stop(paste0("parameter variables do not overlap with ", paste(all_variables, collapse = ", ")))
     all_variables <- all_variables_intersect
   }
+
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
+
   if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
-    if (length(vnames) == 0) stop("There are no numerical variables")
     all_profiles$`_x_` <- 0
+
+    # there are no numerical variables
+    if (length(vnames) == 0) {
+      # change to categorical
+      variable_type <- "categorical"
+      all_profiles$`_x_` <- ""
+      # send message
+      message("'variable_type' changed to 'categorical' due to lack of numerical variables.")
+      # take all
+      vnames <- all_variables
+    } else if (length(vnames) != length(variables)) {
+      message("Non-numerical variables (from the 'variables' argument) are rejected.")
+    }
   } else {
     vnames <- names(which(!is_numeric))
-    if (length(vnames) == 0) stop("There are no non-numerical variables")
     all_profiles$`_x_` <- ""
+
+    # there are variables selected
+    if (!is.null(variables)) {
+      # take all
+      vnames <- all_variables
+    } else if (length(vnames) == 0) {
+      # there were no variables selected and there are no categorical variables
+      stop("There are no non-numerical variables.")
+    }
   }
 
   # select only suitable variables
@@ -132,7 +154,7 @@ aggregate_profiles <- function(x, ...,
   if (variable_type == "categorical") {
     all_profiles$`_x_` <- as.character(apply(all_profiles, 1, function(x) x[x["_vname_"]]))
   }
-  
+
   if (!is.null(groups) && ! groups %in% colnames(all_profiles)) {
     stop("groups parameter is not a name of any column")
   }

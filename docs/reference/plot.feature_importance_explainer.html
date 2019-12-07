@@ -36,6 +36,7 @@
 
 
 <meta property="og:title" content="Plots Feature Importance — plot.feature_importance_explainer" />
+
 <meta property="og:description" content="This function plots variable importance calculated as changes in the loss function after variable drops.
 It uses output from feature_importance function that corresponds to
 permutation based measure of variable importance.
@@ -43,9 +44,9 @@ Variables are sorted in the same order in all panels.
 The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable
 importance is different in different in different models." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -87,7 +88,7 @@ importance is different in different in different models." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.4.2</span>
         </div>
       </div>
     </div>
@@ -145,6 +146,7 @@ importance is different in different in different models." />
     </div>
 
     <div class="ref-description">
+    
     <p>This function plots variable importance calculated as changes in the loss function after variable drops.
 It uses output from <code>feature_importance</code> function that corresponds to
 permutation based measure of variable importance.
@@ -152,12 +154,12 @@ Variables are sorted in the same order in all panels.
 The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable
 importance is different in different in different models.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -179,16 +181,19 @@ By default <code>NULL</code> what means all variables</p></td>
       <td><p>width of bars. By default <code>10</code></p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more details in the <a href='https://pbiecek.github.io/PM_VEE/featureImportance.html'>Feature Importance Chapter</a>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -205,8 +210,8 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -250,8 +255,8 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.293796e-13 , max =  0.9820537  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.294707e-13 , max =  0.9820537  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                              <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
@@ -280,7 +285,7 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;   -&gt; predict function  : yhat.default will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  1.687903e-06 , mean =  0.363713 , max =  0.9996712  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203494 , max =  0.9970635  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203497 , max =  0.9970635  
 #&gt;   -&gt; model_info        :  package Model of class: xgb.Booster package unrecognized , ver. Unknown , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
@@ -289,8 +294,8 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt; 1 _full_model_    0.3142729 xgboost
 #&gt; 2   gendermale    0.3142729 xgboost
 #&gt; 3   evaluation    0.3382124 xgboost
-#&gt; 4 genderfemale    0.3929837 xgboost
-#&gt; 5          age    0.3974173 xgboost
+#&gt; 4 genderfemale    0.3922907 xgboost
+#&gt; 5          age    0.4005795 xgboost
 #&gt; 6       salary    0.4131654 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>, <span class='no'>fi_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></span></pre>
@@ -299,9 +304,13 @@ By default <code>NULL</code> what means all variables</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -312,7 +321,7 @@ By default <code>NULL</code> what means all variables</p></td>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

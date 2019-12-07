@@ -36,11 +36,12 @@
 
 
 <meta property="og:title" content="Calculate Oscillations for Ceteris Paribus Explainer — calculate_oscillations" />
+
 <meta property="og:description" content="Oscillations are proxies for local feature importance at the instance level.
 Find more detailes in Ceteris Paribus Oscillations Chapter." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -82,7 +83,7 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.4.2</span>
         </div>
       </div>
     </div>
@@ -140,12 +141,14 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
     </div>
 
     <div class="ref-description">
+    
     <p>Oscillations are proxies for local feature importance at the instance level.
 Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html'>Ceteris Paribus Oscillations Chapter</a>.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>calculate_oscillations</span>(<span class='no'>x</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -162,13 +165,15 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
       <td><p>other arguments</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>ceteris_paribus_oscillations</code></p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -189,7 +194,7 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
 #&gt;   -&gt; predicted values  :  numerical, min =  0.0795294 , mean =  0.302 , max =  0.9859411  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8204691 , mean =  8.796651e-12 , max =  0.8567173  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>,])
 
@@ -236,8 +241,11 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -248,7 +256,7 @@ Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibusOs
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

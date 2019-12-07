@@ -102,29 +102,38 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   }
   # is color a variable or literal?
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
+
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
+
   if (variable_type == "numerical") {
     vnames <- names(which(is_numeric))
     all_profiles$`_x_` <- 0
 
+    # there are no numerical variables
     if (length(vnames) == 0) {
-      # but `variables` are selected, then change to factor
-      if (length(variables) > 0) {
-        variable_type <- "categorical"
-        vnames <- variables
-        all_profiles$`_x_` <- ""
-      } else {
-        stop("There are no numerical variables")
-      }
+      # change to categorical
+      variable_type <- "categorical"
+      all_profiles$`_x_` <- ""
+      # send message
+      message("'variable_type' changed to 'categorical' due to lack of numerical variables.")
+      # take all
+      vnames <- all_variables
+    } else if (length(vnames) != length(variables)) {
+      message("Non-numerical variables (from the 'variables' argument) are rejected.")
     }
-
   } else {
     vnames <- names(which(!is_numeric))
-    # there are no numerical features
-    if (length(vnames) == 0) stop("There are no non-numerical variables")
-
     all_profiles$`_x_` <- ""
+
+    # there are variables selected
+    if (!is.null(variables)) {
+      # take all
+      vnames <- all_variables
+    } else if (length(vnames) == 0) {
+      # there were no variables selected and there are no categorical variables
+      stop("There are no non-numerical variables.")
+    }
   }
 
   # how to plot profiles

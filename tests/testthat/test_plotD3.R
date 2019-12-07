@@ -65,7 +65,7 @@ test_that("plotD3 Ceteris Paribus and plotD3 Aggregated Profiles",{
   pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
   pdp$`_label_` <- "RF_partial"
 
-  p9 <- plotD3(pdp, variable_type = "categorical")
+  p9 <- plotD3(pdp)
 
 
   expect_true("r2d3" %in% class(p8))

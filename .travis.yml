@@ -3,6 +3,19 @@ sudo: false
 cache: packages
 dist: trusty
 
+r:
+  - release
+  - devel
+
+os:
+  - linux
+  - osx
+
+matrix:
+  exclude:
+    - os: osx
+      r: devel
+
 env:
   global:
   - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings --run-donttest"
@@ -17,7 +30,7 @@ r_packages:
   - ggplot2
   - covr
 
-r_github_packages: modelOriented/DALEX
+#r_github_packages: modelOriented/DALEX
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
