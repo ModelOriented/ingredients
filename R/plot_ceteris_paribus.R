@@ -119,7 +119,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
       message("'variable_type' changed to 'categorical' due to lack of numerical variables.")
       # take all
       vnames <- all_variables
-    } else if (length(vnames) != length(variables)) {
+    } else if (!is.null(variables) && length(vnames) != length(variables)) {
       message("Non-numerical variables (from the 'variables' argument) are rejected.")
     }
   } else {
