@@ -36,13 +36,14 @@
 
 
 <meta property="og:title" content="Internal Function for Split Points for Selected Variables — calculate_variable_split" />
+
 <meta property="og:description" content="This function calculate candidate splits for each selected variable.
 For numerical variables splits are calculated as percentiles
 (in general uniform quantiles of the length grid_points).
 For all other variables splits are calculated as unique values." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -84,7 +85,7 @@ For all other variables splits are calculated as unique values." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.4.2</span>
         </div>
       </div>
     </div>
@@ -142,19 +143,19 @@ For all other variables splits are calculated as unique values." />
     </div>
 
     <div class="ref-description">
+    
     <p>This function calculate candidate splits for each selected variable.
 For numerical variables splits are calculated as percentiles
 (in general uniform quantiles of the length grid_points).
 For all other variables splits are calculated as unique values.</p>
+    
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
-  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)
+    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>), <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>), <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)</pre>
-
+<span class='fu'>calculate_variable_split</span>(<span class='no'>data</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>), <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -171,24 +172,28 @@ For all other variables splits are calculated as unique values.</p>
       <td><p>number of points used for response path</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A named list with splits for selected variables</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>calculate_variable_split</code> function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
@@ -197,7 +202,7 @@ you should overload it.</p>
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

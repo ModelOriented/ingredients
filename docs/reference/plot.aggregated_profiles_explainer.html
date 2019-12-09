@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Plots Aggregated Profiles — plot.aggregated_profiles_explainer" />
+
 <meta property="og:description" content="Function plot.aggregated_profiles_explainer plots partial dependency plot or accumulated effect plot.
 It works in a similar way to plot.ceteris_paribus, but instead of individual profiles
 show average profiles for each variable listed in the variables vector." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -83,7 +84,7 @@ show average profiles for each variable listed in the variables vector." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.4.2</span>
         </div>
       </div>
     </div>
@@ -141,16 +142,24 @@ show average profiles for each variable listed in the variables vector." />
     </div>
 
     <div class="ref-description">
+    
     <p>Function <code>plot.aggregated_profiles_explainer</code> plots partial dependency plot or accumulated effect plot.
 It works in a similar way to <code>plot.ceteris_paribus</code>, but instead of individual profiles
 show average profiles for each variable listed in the <code>variables</code> vector.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aggregated_profiles_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>,
+  <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -183,13 +192,15 @@ show average profiles for each variable listed in the <code>variables</code> vec
       <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -202,12 +213,9 @@ show average profiles for each variable listed in the <code>variables</code> vec
                                <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
                                <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependency.html'>partial_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
-<span class='no'>pdp_rf_l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='conditional_dependency.html'>conditional_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='no'>pdp_rf_l</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_local"</span>
-<span class='no'>pdp_rf_a</span><span class='kw'>&lt;-</span> <span class='fu'><a href='accumulated_dependency.html'>accumulated_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)
-<span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
+<span class='no'>pdp_rf_p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependency.html'>partial_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Non-numerical variables (from the 'variables' argument) are rejected.</span></div><div class='input'><span class='no'>pdp_rf_p</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_partial"</span>
+<span class='no'>pdp_rf_l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='conditional_dependency.html'>conditional_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Non-numerical variables (from the 'variables' argument) are rejected.</span></div><div class='input'><span class='no'>pdp_rf_l</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_local"</span>
+<span class='no'>pdp_rf_a</span><span class='kw'>&lt;-</span> <span class='fu'><a href='accumulated_dependency.html'>accumulated_dependency</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; <span class='message'>Non-numerical variables (from the 'variables' argument) are rejected.</span></div><div class='input'><span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_    _label_       _x_    _yhat_ _ids_
 #&gt; 1    fare RF_partial 0.0000000 0.3242189     0
@@ -287,8 +295,11 @@ show average profiles for each variable listed in the <code>variables</code> vec
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -299,7 +310,7 @@ show average profiles for each variable listed in the <code>variables</code> vec
       <footer>
       <div class="author">
   <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski, Katarzyna Pekala.
+    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
