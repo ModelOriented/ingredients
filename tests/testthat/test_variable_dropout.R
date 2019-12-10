@@ -63,45 +63,39 @@ test_that("feature_importance records number of permutations", {
   result <- feature_importance(explainer_rf, B = 2)
   expect_false(is.null(attr(result, "B")))
   expect_equal(attr(result, "B"), 2)
-  expect_false(is.null(attr(result, "raw_permutations")))
-  raw <- attr(result, "raw_permutations")
-  expect_is(raw, "data.frame")
-  # the raw permutations data frame will have:
-  # - three columns: feature, permutation, dropout_loss, label
-  # - many rows: one per permutation and per feature (plus baseline, plus full)
-  expect_equal(dim(raw), c(nrow(result)*2, 4))
+  expect_equal(max(result$permutation), 2)
+  expect_equal(dim(result[result$permutation != 0,]), c(2*nrow(result)/3, 4))
   # because there is no sub-sampling, all the full-model results should be equal
-  loss_full <- raw[raw$variable=="_full_model_",]
+  loss_full <- result[result$variable=="_full_model_",]
   expect_equal(length(unique(loss_full$dropout_loss)), 1)
 })
 
-
-test_that("feature_importance avoids reporting permutations when only one performed", {
-  # by default, one permutation leads to no raw_permutations component
-  result_default <- feature_importance(explainer_rf, B = 1)
-  expect_true(is.null(attr(result_default, "raw_permutations")))
-  result_keep <- feature_importance(explainer_rf, B = 1, keep_raw_permutations = TRUE)
-  expect_false(is.null(attr(result_keep, "raw_permutations")))
-})
-
-
-test_that("feature_importance can avoid recording permutation details", {
-  result <- feature_importance(explainer_rf, B = 2, keep_raw_permutations = FALSE)
-  expect_true(is.null(attr(result, "raw_permutations")))
-  # when keep_raw_permutations is off, output should still signal number of permutations
-  expect_false(is.null(attr(result, "B")))
-  expect_equal(attr(result, "B"), 2)
-})
+#
+# test_that("feature_importance avoids reporting permutations when only one performed", {
+#   # by default, one permutation leads to no raw_permutations component
+#   result_default <- feature_importance(explainer_rf, B = 1)
+#   expect_true(is.null(attr(result_default, "raw_permutations")))
+#   result_keep <- feature_importance(explainer_rf, B = 1, keep_raw_permutations = TRUE)
+#   expect_false(is.null(attr(result_keep, "raw_permutations")))
+# })
+#
+#
+# test_that("feature_importance can avoid recording permutation details", {
+#   result <- feature_importance(explainer_rf, B = 2, keep_raw_permutations = FALSE)
+#   expect_true(is.null(attr(result, "raw_permutations")))
+#   # when keep_raw_permutations is off, output should still signal number of permutations
+#   expect_false(is.null(attr(result, "B")))
+#   expect_equal(attr(result, "B"), 2)
+# })
 
 
 test_that("feature_importance with subsampling gives different full-model results ", {
   result <- feature_importance(explainer_rf, B = 2, n_sample=200)
-  raw <- attr(result, "raw_permutations")
   # the full model losses should be different in the first and second round
   # because each round is based on different rows in the data...
   # but in principle there is a tiny probability the two rounds are based on the same rows
-  loss_full <- raw[raw$variable=="_full_model_", ]
-  expect_equal(length(unique(loss_full$dropout_loss)), 2)
+  loss_full <- result[result$variable=="_full_model_", ]
+  expect_equal(length(unique(loss_full$dropout_loss)), 3)
 })
 
 
@@ -121,15 +115,15 @@ test_that("feature_importance averaged over many permutations are stable", {
   tiny_explainer = explain(tiny_rf, data = tiny,
                            y = tiny$survived == "yes", label = "RF")
   # compute single permutations importance values
-  result_1 <- feature_importance(tiny_explainer)
-  result_2 <- feature_importance(tiny_explainer)
+  result_1 <- feature_importance(tiny_explainer, B = 1)
+  result_2 <- feature_importance(tiny_explainer, B = 1)
   # compute feature importance with several permutations
   result_A <- feature_importance(tiny_explainer, B = 40)
   result_B <- feature_importance(tiny_explainer, B = 40)
   # two rounds with many permutation should give results closer together
   # than two rounds with single permutations
-  change_12 <- abs(result_1$dropout_loss - result_2$dropout_loss)
-  change_AB <- abs(result_A$dropout_loss - result_B$dropout_loss)
+  change_12 <- abs(result_1[result_1$permutation == 0, "dropout_loss"] - result_2[result_2$permutation == 0, "dropout_loss"])
+  change_AB <- abs(result_A[result_A$permutation == 0, "dropout_loss"] - result_B[result_B$permutation == 0, "dropout_loss"])
   # this test should succeed most of the time... but in principle could fail by accident
   expect_lt(sum(change_AB), sum(change_12))
 })
@@ -196,13 +190,13 @@ test_that("Variable groupings input validation checks", {
 test_that("feature_importance with type ratio", {
   # type "ratio" gives $dropout_loss normalized by _full_model_
   result <- feature_importance(explainer_rf, type="ratio")
-  expect_equal(result$dropout_loss[result$variable=="_full_model_"], 1)
+  expect_equal(result$dropout_loss[result$variable=="_full_model_" & result$permutation == 0], 1)
 })
 
 
 test_that("feature_importance with type difference", {
   # type "difference" gives $dropout_loss with _full_model_ subtracted
   result <- feature_importance(explainer_rf, type="difference")
-  expect_equal(result$dropout_loss[result$variable=="_full_model_"], 0)
+  expect_equal(result$dropout_loss[result$variable=="_full_model_" & result$permutation == 0], 0)
 })
 

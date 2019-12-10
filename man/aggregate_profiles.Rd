@@ -17,7 +17,7 @@ aggregate_profiles(
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}
 
-\item{...}{other explainers that shall be calculated together}
+\item{...}{other explanations that shall be calculated together}
 
 \item{variable_type}{a character. If \code{numerical} then only numerical variables will be calculated.
 If \code{categorical} then only categorical variables will be calculated.}
