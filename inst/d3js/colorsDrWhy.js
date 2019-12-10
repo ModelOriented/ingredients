@@ -9,7 +9,7 @@ function getColors(n, type){
         case 1:
           return ["#46bac2"];
         case 2:
-          return ["#46bac2", "#4378bf"];
+          return ["#8bdcbe", "#4378bf"];
         case 3:
           return ["#8bdcbe", "#4378bf", "#46bac2"];
         case 4:

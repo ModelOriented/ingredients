@@ -10,6 +10,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model.
 #' By default \code{NULL} which means all variables
+#' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.
 #' @param bar_width width of bars in px. By default \code{12px}
 #' @param split either "model" or "feature" determines the plot layout
 #' @param scale_height a logical. If \code{TRUE}, the height of plot scales with window size. By default it's \code{FALSE}
@@ -59,6 +60,7 @@
 #' @rdname plotD3_feature_importance
 plotD3.feature_importance_explainer <-  function(x, ...,
                                                  max_vars = NULL,
+                                                 show_boxplots = TRUE,
                                                  bar_width = 12,
                                                  split = "model",
                                                  scale_height = FALSE,
@@ -70,11 +72,31 @@ plotD3.feature_importance_explainer <-  function(x, ...,
          function requires split to be model or feature.")
   }
 
-  n <- length(list(...)) + 1
-  m <- dim(x)[1] - 2
-
   dfl <- c(list(x), list(...))
-  df <- do.call(rbind, dfl)
+
+  # add boxplot data
+  if (show_boxplots) {
+    dfl <- lapply(dfl, function(x) {
+      result <- data.frame(
+        min = tapply(x$dropout_loss, x$variable, min, na.rm = TRUE),
+        q1 = tapply(x$dropout_loss, x$variable, quantile, 0.25, na.rm = TRUE),
+        q3 = tapply(x$dropout_loss, x$variable, quantile, 0.75, na.rm = TRUE),
+        max = tapply(x$dropout_loss, x$variable, max, na.rm = TRUE)
+      )
+
+      result$min <- as.numeric(result$min)
+      result$q1 <- as.numeric(result$q1)
+      result$q3 <- as.numeric(result$q3)
+      result$max <- as.numeric(result$max)
+
+      merge(x[x$permutation == 0,], cbind(rownames(result),result), by.x = "variable", by.y = "rownames(result)")
+    })
+  }
+
+  fi_df <- do.call(rbind, dfl)
+
+  # add this so it works as before boxplots
+  df <- subset(fi_df, select = -permutation)
 
   xmax <- max(df[df$variable!="_baseline_",]$dropout_loss)
   xmin <- min(df$dropout_loss)
@@ -82,25 +104,25 @@ plotD3.feature_importance_explainer <-  function(x, ...,
   xmargin <- abs(xmin-xmax)*margin;
 
   best_fits <- df[df$variable == "_full_model_", ]
-  df <- merge(df, best_fits[,c("label", "dropout_loss")], by = "label")
+  df <- merge(df, best_fits[,c("label", "dropout_loss")], by = "label", sort = FALSE)
 
   # remove rows that starts with _
   df <- df[!(substr(df$variable,1,1) == "_"),]
 
   perm <- aggregate(df$dropout_loss.x, by = list(Category=df$variable), FUN = mean)
 
-  options <- list(barWidth = bar_width,
+  options <- list(showBoxplots = show_boxplots,
+                  barWidth = bar_width,
                   xmin = xmin - xmargin,
                   xmax = xmax + xmargin,
                   scaleHeight = scale_height,
                   chartTitle = chart_title)
 
-  if (split == "model"){
+  if (split == "model") {
     # one plot for each model
 
     # for each model leave only max_vars
-    if (!is.null(max_vars) && max_vars < m) {
-      m <- max_vars
+    if (!is.null(max_vars)) {
 
       trimmed_parts <- lapply(unique(df$label), function(label) {
         tmp <- df[df$label == label, ]
@@ -114,16 +136,17 @@ plotD3.feature_importance_explainer <-  function(x, ...,
     df$variable <- factor(as.character(df$variable), levels = perm)
     df <- df[order(df$variable),]
 
-    colnames(df) <- c("label","variable","dropout_loss", "full_model")
-    labelList <- unique(as.character(df$variable))
+    colnames(df)[c(3,8)] <- c("dropout_loss", "full_model")
 
-    df <- split(df[,2:4], f = df$label)
+    label_list <- unique(as.character(df$variable))
 
-    temp <- jsonlite::toJSON(list(df, labelList))
+    dfl <- split(df, f = df$label)
+
+    temp <- jsonlite::toJSON(list(dfl, label_list))
 
     # n - number of models, m - number of features
-    options["n"] <- n
-    options["m"] <- m
+    options["n"] <- length(dfl)
+    options$m <- unname(sapply(dfl, function(x) dim(x)[1]))
 
     r2d3::r2d3(data = temp, script = system.file("d3js/featureImportance.js", package = "ingredients"),
                dependencies = list(
@@ -135,26 +158,27 @@ plotD3.feature_importance_explainer <-  function(x, ...,
          d3_version = 4,
          options = options)
 
-  } else if (split == "feature"){
+  } else if (split == "feature") {
     # one plot for each feature
 
-    colnames(df) <- c("label","variable","dropout_loss", "full_model")
-    labelList <- unique(as.character(df$label))
+    colnames(df)[c(3,8)] <- c("dropout_loss", "full_model")
+    label_list <- unique(as.character(df$label))
 
-    df <- split(df[,c(1,3,4)], f = as.character(df$variable))
+    dfl <- split(df, f = as.character(df$variable))
 
     # sorting plots, leave only max_vars of features
-    df <- df[as.character(perm$Category)[order(-perm$x)]]
-    if (!is.null(max_vars) && max_vars < m) {
+    dfl <- dfl[as.character(perm$Category)[order(-perm$x)]]
+
+    if (!is.null(max_vars)) {
       m <- max_vars
-      df <- df[1:max_vars]
+      dfl <- dfl[1:max_vars]
     }
 
-    temp <- jsonlite::toJSON(list(df, labelList))
+    temp <- jsonlite::toJSON(list(dfl, label_list))
 
-    # n - number of features, m - number of models
-    options["n"] <- m
-    options["m"] <- n
+    # n - number of plots, m - number of bars
+    options["n"] <- length(dfl)
+    options$m <- unname(sapply(dfl, function(x) dim(x)[1]))
 
     r2d3::r2d3(data = temp, script = system.file("d3js/featureImportanceSplit.js", package = "ingredients"),
                dependencies = list(

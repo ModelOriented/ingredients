@@ -4,8 +4,15 @@
 \alias{aggregate_profiles}
 \title{Aggregates Ceteris Paribus Profiles}
 \usage{
-aggregate_profiles(x, ..., variable_type = "numerical", groups = NULL,
-  type = "partial", variables = NULL, span = 0.25)
+aggregate_profiles(
+  x,
+  ...,
+  variable_type = "numerical",
+  groups = NULL,
+  type = "partial",
+  variables = NULL,
+  span = 0.25
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

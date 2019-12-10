@@ -14,6 +14,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param max_vars maximum number of variables that shall be presented for for each model.
 #' By default \code{NULL} what means all variables
+#' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.
 #' @param bar_width width of bars. By default \code{10}
 #'
 #' @importFrom stats model.frame reorder
@@ -88,11 +89,15 @@
 #' }
 #'
 #' @export
-plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width = 10) {
+plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10) {
+
   dfl <- c(list(x), list(...))
 
   # combine all explainers in a single frame
-  expl_df <- do.call(rbind, dfl)
+  fi_df <- do.call(rbind, dfl)
+
+  # add this so it works as before boxplots
+  expl_df <- fi_df[fi_df$permutation == 0,]
 
   # add an additional column that serve as a baseline
   bestFits <- expl_df[expl_df$variable == "_full_model_", ]
@@ -119,13 +124,24 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, bar_width
   nlabels <- length(unique(bestFits$label))
 
   # plot it
-  ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x, color = label)) +
-    geom_hline(data = bestFits, aes(yintercept = dropout_loss, color = label), lty= 3) +
-    geom_linerange(size = bar_width) + coord_flip() +
-    scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
-    facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
-    theme(legend.position = "none") +
-    ylab("Drop-out loss") + xlab("")
+  pl <- ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x, color = label)) +
+          geom_hline(data = bestFits, aes(yintercept = dropout_loss, color = label), lty= 3) +
+          geom_linerange(size = bar_width)
+
+  if (show_boxplots) {
+    pl <- pl +
+      geom_boxplot(data = fi_df[!(substr(fi_df$variable, 1, 1) == "_"),],
+                   aes(x = variable, y = dropout_loss), coef = 100,
+                   fill = "#371ea3", color = "#371ea3", width = 0.25)
+  }
+
+  # facets have fixed space, can be resolved with ggforce https://github.com/tidyverse/ggplot2/issues/2933
+
+  pl + coord_flip() +
+      scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
+      facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
+      theme(legend.position = "none") +
+      ylab("Drop-out loss") + xlab("")
 
 }
 

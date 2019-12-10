@@ -8,18 +8,29 @@
 \alias{describe.feature_importance_explainer}
 \title{Natural language description of feature importance explainer}
 \usage{
-\method{describe}{partial_dependency_explainer}(x,
-  nonsignificance_treshold = 0.15, ..., display_values = FALSE,
-  display_numbers = FALSE, variables = NULL, label = "prediction")
+\method{describe}{partial_dependency_explainer}(
+  x,
+  nonsignificance_treshold = 0.15,
+  ...,
+  display_values = FALSE,
+  display_numbers = FALSE,
+  variables = NULL,
+  label = "prediction"
+)
 
 describe(x, ...)
 
-\method{describe}{ceteris_paribus_explainer}(x,
-  nonsignificance_treshold = 0.15, ..., display_values = FALSE,
-  display_numbers = FALSE, variables = NULL, label = "prediction")
+\method{describe}{ceteris_paribus_explainer}(
+  x,
+  nonsignificance_treshold = 0.15,
+  ...,
+  display_values = FALSE,
+  display_numbers = FALSE,
+  variables = NULL,
+  label = "prediction"
+)
 
-\method{describe}{feature_importance_explainer}(x,
-  nonsignificance_treshold = 0.15, ...)
+\method{describe}{feature_importance_explainer}(x, nonsignificance_treshold = 0.15, ...)
 }
 \arguments{
 \item{x}{a ceteris paribus explanation produced with function \code{ceteris_paribus()}}

@@ -4,9 +4,17 @@
 \alias{plotD3.feature_importance_explainer}
 \title{Plot Feature Importance Objects in D3 with r2d3 Package.}
 \usage{
-\method{plotD3}{feature_importance_explainer}(x, ..., max_vars = NULL,
-  bar_width = 12, split = "model", scale_height = FALSE,
-  margin = 0.15, chart_title = "Feature importance")
+\method{plotD3}{feature_importance_explainer}(
+  x,
+  ...,
+  max_vars = NULL,
+  show_boxplots = TRUE,
+  bar_width = 12,
+  split = "model",
+  scale_height = FALSE,
+  margin = 0.15,
+  chart_title = "Feature importance"
+)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the \code{feature_importance()} function}
@@ -15,6 +23,8 @@
 
 \item{max_vars}{maximum number of variables that shall be presented for for each model.
 By default \code{NULL} which means all variables}
+
+\item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.}
 
 \item{bar_width}{width of bars in px. By default \code{12px}}
 

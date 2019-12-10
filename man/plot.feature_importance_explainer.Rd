@@ -4,8 +4,7 @@
 \alias{plot.feature_importance_explainer}
 \title{Plots Feature Importance}
 \usage{
-\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL,
-  bar_width = 10)
+\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the \code{feature_importance()} function}
@@ -14,6 +13,8 @@
 
 \item{max_vars}{maximum number of variables that shall be presented for for each model.
 By default \code{NULL} what means all variables}
+
+\item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.}
 
 \item{bar_width}{width of bars. By default \code{10}}
 }

@@ -8,13 +8,28 @@
 \usage{
 ceteris_paribus(x, ...)
 
-\method{ceteris_paribus}{explainer}(x, new_observation, y = NULL,
-  variables = NULL, variable_splits = NULL, grid_points = 101, ...)
+\method{ceteris_paribus}{explainer}(
+  x,
+  new_observation,
+  y = NULL,
+  variables = NULL,
+  variable_splits = NULL,
+  grid_points = 101,
+  ...
+)
 
-\method{ceteris_paribus}{default}(x, data, predict_function = predict,
-  new_observation, y = NULL, variables = NULL,
-  variable_splits = NULL, grid_points = 101, label = class(x)[1],
-  ...)
+\method{ceteris_paribus}{default}(
+  x,
+  data,
+  predict_function = predict,
+  new_observation,
+  y = NULL,
+  variables = NULL,
+  variable_splits = NULL,
+  grid_points = 101,
+  label = class(x)[1],
+  ...
+)
 }
 \arguments{
 \item{x}{an explainer created with the \code{DALEX::explain()} function, or a model to be explained.}

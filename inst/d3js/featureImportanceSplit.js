@@ -1,8 +1,11 @@
 var xMax = options.xmax,
     xMin = 0;
 var n = options.n;
-var m = options.m;
-var barWidth = options.barWidth,
+var m = typeof(options.m) === "number" ? [options.m] : options.m;
+var showBoxplots = options.showBoxplots,
+    barWidth = options.barWidth,
+    boxWidth = 2*barWidth/3,
+    scaleHeight = options.scaleHeight,
     chartTitle = options.chartTitle;
 
 var maxLength = calculateTextWidth(data[1]) + 15;
@@ -10,17 +13,23 @@ var maxLength = calculateTextWidth(data[1]) + 15;
 var margin = {top: 78, right: 30, bottom: 50, left: maxLength, inner: 42},
     h = height - margin.top - margin.bottom,
     plotTop = margin.top,
-    plotHeight = m*barWidth + (m+1)*barWidth/2,
+    plotHeightArr = [],
     plotWidth = 420*1.2;
 
-if (options.scaleHeight === true) {
-  if (h > n*plotHeight + (n-1)*margin.inner) {
-    var temp = h - n*plotHeight - (n-1)*margin.inner;
+for (e of m) {
+  plotHeightArr.push(e*barWidth + (e+1)*barWidth/2);
+}
+
+if (scaleHeight === true) {
+  if (h > d3.sum(plotHeightArr) + (n-1)*margin.inner) {
+    var temp = h - d3.sum(plotHeightArr) - (n-1)*margin.inner;
     plotTop += temp/2;
   }
 }
 
-var colors = getColors(m, "bar");
+var colors = d3.scaleOrdinal()
+                .domain(data[1])
+                .range(getColors(d3.max(m), "bar"));
 
 featureImportanceSplit(data);
 
@@ -41,6 +50,8 @@ function featureImportanceSplit(data) {
 }
 
 function singlePlot(labelName, labelData, i) {
+
+  let plotHeight = plotHeightArr[i-1];
 
   var x = d3.scaleLinear()
       .range([margin.left, margin.left + plotWidth])
@@ -67,7 +78,7 @@ function singlePlot(labelName, labelData, i) {
   }
 
   var y = d3.scaleBand()
-      .rangeRound([(plotTop + plotHeight), plotTop])
+      .rangeRound([plotTop, plotTop + plotHeight])
       .padding(0.33)
       .domain(labelData.map(d => d.label));
 
@@ -83,7 +94,7 @@ function singlePlot(labelName, labelData, i) {
 
   // effort to make grid endings clean
   let str = xGrid.select('.tick:last-child').attr('transform');
-  var yGridEnd = str.substring(str.indexOf("(")+1,str.indexOf(","));
+  var yGridEnd = str.substring(str.indexOf("(")+1, str.indexOf(","));
 
   var yGrid = svg.append("g")
        .attr("class", "grid")
@@ -137,13 +148,39 @@ function singlePlot(labelName, labelData, i) {
 
   bars.append("rect")
       .attr("class", labelName.replace(/\s/g,''))
-      .attr("fill", (d, i) => colors[m-i-1])
+      .attr("fill", d => colors(d.label))
       .attr("y", d => y(d.label))
       .attr("height", y.bandwidth())
       .attr("x", x(0))
       .attr("width", d => x(d.dropout_loss)-x(0))
       .on('mouseover', tool_tip.show)
       .on('mouseout', tool_tip.hide);
+
+  if (showBoxplots) {
+    // Show the main horizontal line
+    svg
+      .selectAll()
+      .data(labelData)
+      .enter()
+      .append("line")
+      .attr("class", "interceptLine")
+      .attr("x1", d => x(d.min))
+      .attr("x2", d => x(d.max))
+      .attr("y1", d => y(d.label) + y.bandwidth()/2)
+      .attr("y2", d => y(d.label) + y.bandwidth()/2);
+
+    // rectangle for the main box
+    svg
+      .selectAll()
+      .data(labelData)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.q1))
+      .attr("y", d => y(d.label) + boxWidth/4)
+      .attr("height", boxWidth)
+      .attr("width", d => x(d.q3) - x(d.q1))
+      .style("fill", "#371ea3");
+  }
 
   plotTop += (margin.inner + plotHeight);
 }
