@@ -4,14 +4,8 @@
 \alias{show_residuals}
 \title{Adds a Layer with Residuals to a Profile Plot}
 \usage{
-show_residuals(
-  x,
-  ...,
-  size = 0.75,
-  alpha = 1,
-  color = c(`TRUE` = "#371ea3", `FALSE` = "#f05a71"),
-  variables = NULL
-)
+show_residuals(x, ..., size = 0.75, alpha = 1, color = c(`TRUE` =
+  "#371ea3", `FALSE` = "#f05a71"), variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}.

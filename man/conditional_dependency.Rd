@@ -10,30 +10,17 @@
 \usage{
 conditional_dependency(x, ...)
 
-\method{conditional_dependency}{explainer}(
-  x,
-  variables = NULL,
-  N = 500,
-  variable_splits = NULL,
-  grid_points = 101,
-  ...,
-  variable_type = "numerical"
-)
+\method{conditional_dependency}{explainer}(x, variables = NULL,
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
-\method{conditional_dependency}{default}(
-  x,
-  data,
-  predict_function = predict,
-  label = class(x)[1],
-  variables = NULL,
-  N = 500,
-  variable_splits = NULL,
-  grid_points = 101,
-  ...,
-  variable_type = "numerical"
-)
+\method{conditional_dependency}{default}(x, data,
+  predict_function = predict, label = class(x)[1], variables = NULL,
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
-\method{conditional_dependency}{ceteris_paribus_explainer}(x, ..., variables = NULL)
+\method{conditional_dependency}{ceteris_paribus_explainer}(x, ...,
+  variables = NULL)
 
 local_dependency(x, ...)
 }

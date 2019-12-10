@@ -119,7 +119,7 @@ conditional_dependency.default <- function(x,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  conditional_dependency.ceteris_paribus_explainer(cp, variables = variables, variable_type = variable_type)
+  conditional_dependency.ceteris_paribus_explainer(cp, variables = variables, variable_type = variable_type, ...)
 }
 
 

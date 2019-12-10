@@ -1,10 +1,11 @@
 ingredients 0.4.2
 ---------------------------------------------------------------
+* `aggregate_profiles` use now gaussian kernel smoothing. Use the `span` argument for fine control over this parameter ([#79](https://github.com/ModelOriented/ingredients/issues/79))
 * change `variable_type` and `variables` arguments usage   in the 
 `aggregate_profiles`, `plot.ceteris_paribus` and `plotD3.ceteris_paribus`
 * remove `variable_type` argument from `plotD3.aggregated_profiles`
 (now the same as in `plot.aggregated_profiles`)
-* Kasia Pekala is removed from the contributors as `aspect_importance` is moved to `DALEXtra`
+* Kasia Pekala is moved as contributor to the `DALEXtra` as `aspect_importance` is moved to `DALEXtra` as well
 ([See v0.3.12 changelog](https://modeloriented.github.io/ingredients/news/index.html#ingredients-0-3-12))
 * added Travis-CI for OSX
 

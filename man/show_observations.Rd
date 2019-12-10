@@ -4,15 +4,8 @@
 \alias{show_observations}
 \title{Adds a Layer with Observations to a Profile Plot}
 \usage{
-show_observations(
-  x,
-  ...,
-  size = 2,
-  alpha = 1,
-  color = "#371ea3",
-  variable_type = "numerical",
-  variables = NULL
-)
+show_observations(x, ..., size = 2, alpha = 1, color = "#371ea3",
+  variable_type = "numerical", variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

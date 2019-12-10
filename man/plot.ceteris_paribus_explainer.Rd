@@ -4,16 +4,9 @@
 \alias{plot.ceteris_paribus_explainer}
 \title{Plots Ceteris Paribus Profiles}
 \usage{
-\method{plot}{ceteris_paribus_explainer}(
-  x,
-  ...,
-  size = 1,
-  alpha = 1,
-  color = "#46bac2",
-  variable_type = "numerical",
-  facet_ncol = NULL,
-  variables = NULL
-)
+\method{plot}{ceteris_paribus_explainer}(x, ..., size = 1, alpha = 1,
+  color = "#46bac2", variable_type = "numerical", facet_ncol = NULL,
+  variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

@@ -11,12 +11,13 @@
 #' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
+#' @param span smoothing coeffcient, by default 0.25.It's the sd for gaussian kernel
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
 #' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
 #'
-#' @importFrom stats na.omit quantile weighted.mean
+#' @importFrom stats na.omit quantile weighted.mean dnorm
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'
@@ -85,7 +86,8 @@ aggregate_profiles <- function(x, ...,
                                variable_type = "numerical",
                                groups = NULL,
                                type = "partial",
-                               variables = NULL) {
+                               variables = NULL,
+                               span = 0.25) {
 
   check_variable_type(variable_type)
   check_type(type)
@@ -167,12 +169,12 @@ aggregate_profiles <- function(x, ...,
                                     "partial_dependency_explainer", "data.frame")
   }
   if (type == "conditional") {
-    aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups)
+    aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups, span = span)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "conditional_dependency_explainer", "data.frame")
   }
   if (type == "accumulated") {
-    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups)
+    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "accumulated_dependency_explainer", "data.frame")
   }
@@ -185,7 +187,7 @@ aggregate_profiles <- function(x, ...,
 }
 
 
-aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
+aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25) {
   observations <- attr(all_profiles, "observations")
   # just initialisation
   if (is.numeric(all_profiles$`_x_`)) {
@@ -217,10 +219,15 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL) {
 
       if (is.numeric(split_profile$`_x_`)) {
         # for continuous variables we will calculate weighted average
-        # where weights depends on square distance between points
-        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
-        diffsd <- sqrt(mean(diffs^2))
-        split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+        # where weights come from gaussian kernel and distance between points
+
+        # scaling factor, range if the range i > 0
+        range_x <- diff(range(split_profile$`_x_`))
+        if (range_x == 0) range_x <- 1
+
+        # scalled differences
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
+        split_profile$`_w_` <- dnorm(diffs, sd = span)
       } else {
         # for categorical variables we will calculate weighted average
         # but weights are 0-1, 1 if it's the same level and 0 otherwise
@@ -291,7 +298,7 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
   aggregated_profiles
 }
 
-aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
+aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 0.25) {
 
   observations <- attr(all_profiles, "observations")
   # just initialisation
@@ -324,10 +331,15 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL) {
 
       if (is.numeric(split_profile$`_x_`)) {
         # for continuous variables we will calculate weighted average
-        # where weights depends on square distance between points
-        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`)^2
-        diffsd <- sqrt(mean(diffs^2))
-        split_profile$`_w_` <- diffs/ifelse(diffsd > 0, diffsd, 1)
+        # where weights come from gaussian kernel and distance between points
+
+        # scaling factor, range if the range i > 0
+        range_x <- diff(range(split_profile$`_x_`))
+        if (range_x == 0) range_x <- 1
+
+        # scalled differences
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
+        split_profile$`_w_` <- dnorm(diffs, sd = span)
       } else {
         # for categorical variables we will calculate weighted average
         # but weights are 0-1, 1 if it's the same level and 0 otherwise

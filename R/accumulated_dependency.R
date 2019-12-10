@@ -121,7 +121,7 @@ accumulated_dependency.default <- function(x,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  aggregate_profiles(cp, variables = variables, type = "accumulated", variable_type = variable_type)
+  aggregate_profiles(cp, variables = variables, type = "accumulated", variable_type = variable_type, ...)
 }
 
 

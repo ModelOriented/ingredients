@@ -4,18 +4,10 @@
 \alias{plotD3.aggregated_profiles_explainer}
 \title{Plots Aggregated Ceteris Paribus Profiles in D3 with r2d3 Package.}
 \usage{
-\method{plotD3}{aggregated_profiles_explainer}(
-  x,
-  ...,
-  size = 2,
-  alpha = 1,
-  color = "#46bac2",
-  facet_ncol = 2,
-  scale_plot = FALSE,
-  variables = NULL,
-  chart_title = "Aggregated Profiles",
-  label_margin = 60
-)
+\method{plotD3}{aggregated_profiles_explainer}(x, ..., size = 2,
+  alpha = 1, color = "#46bac2", facet_ncol = 2, scale_plot = FALSE,
+  variables = NULL, chart_title = "Aggregated Profiles",
+  label_margin = 60)
 }
 \arguments{
 \item{x}{a aggregated profiles explainer produced with function \code{aggregate_profiles()}}

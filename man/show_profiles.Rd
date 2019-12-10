@@ -4,14 +4,8 @@
 \alias{show_profiles}
 \title{Adds a Layer with Profiles}
 \usage{
-show_profiles(
-  x,
-  ...,
-  size = 0.5,
-  alpha = 1,
-  color = "#371ea3",
-  variables = NULL
-)
+show_profiles(x, ..., size = 0.5, alpha = 1, color = "#371ea3",
+  variables = NULL)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{ceteris_paribus()}}

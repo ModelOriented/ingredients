@@ -9,30 +9,17 @@
 \usage{
 accumulated_dependency(x, ...)
 
-\method{accumulated_dependency}{explainer}(
-  x,
-  variables = NULL,
-  N = 500,
-  variable_splits = NULL,
-  grid_points = 101,
-  ...,
-  variable_type = "numerical"
-)
+\method{accumulated_dependency}{explainer}(x, variables = NULL,
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
-\method{accumulated_dependency}{default}(
-  x,
-  data,
-  predict_function = predict,
-  label = class(x)[1],
-  variables = NULL,
-  N = 500,
-  variable_splits = NULL,
-  grid_points = 101,
-  ...,
-  variable_type = "numerical"
-)
+\method{accumulated_dependency}{default}(x, data,
+  predict_function = predict, label = class(x)[1], variables = NULL,
+  N = 500, variable_splits = NULL, grid_points = 101, ...,
+  variable_type = "numerical")
 
-\method{accumulated_dependency}{ceteris_paribus_explainer}(x, ..., variables = NULL)
+\method{accumulated_dependency}{ceteris_paribus_explainer}(x, ...,
+  variables = NULL)
 }
 \arguments{
 \item{x}{an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}

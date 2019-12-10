@@ -4,14 +4,8 @@
 \alias{select_neighbours}
 \title{Select Subset of Rows Closest to a Specified Observation}
 \usage{
-select_neighbours(
-  observation,
-  data,
-  variables = NULL,
-  distance = gower::gower_dist,
-  n = 20,
-  frac = NULL
-)
+select_neighbours(observation, data, variables = NULL,
+  distance = gower::gower_dist, n = 20, frac = NULL)
 }
 \arguments{
 \item{observation}{single observation}
