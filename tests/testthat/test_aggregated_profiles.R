@@ -18,6 +18,8 @@ test_that("plot aggregate_profiles",{
 
   cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 
+  pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial", groups = "gender")
+
   pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
   pdp_rf_p$`_label_` <- "RF_partial"
   pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")

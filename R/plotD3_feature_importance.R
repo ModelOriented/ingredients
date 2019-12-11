@@ -72,7 +72,6 @@ plotD3.feature_importance_explainer <-  function(x, ...,
          function requires split to be model or feature.")
   }
 
-  permutation <- NULL
   dfl <- c(list(x), list(...))
 
   # add boxplot data

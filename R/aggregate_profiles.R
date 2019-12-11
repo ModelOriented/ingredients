@@ -6,7 +6,7 @@
 #' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
-#' @param ... other explanations that shall be calculated together
+#' @param ... other explainers that shall be calculated together
 #' @param variables if not \code{NULL} then aggregate only for selected \code{variables} will be calculated
 #' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
@@ -188,7 +188,6 @@ aggregate_profiles <- function(x, ...,
 
 
 aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25) {
-
   observations <- attr(all_profiles, "observations")
   # just initialisation
   if (is.numeric(all_profiles$`_x_`)) {
@@ -212,70 +211,70 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
   }
 
-  split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")], drop = TRUE)
+    split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
 
-  # calculate for each group
-  chunks <- lapply(split_profiles, function(split_profile) {
+    # calculate for each group
+    chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
 
-    if (is.numeric(split_profile$`_x_`)) {
-      # for continuous variables we will calculate weighted average
-      # where weights come from gaussian kernel and distance between points
+      if (is.numeric(split_profile$`_x_`)) {
+        # for continuous variables we will calculate weighted average
+        # where weights come from gaussian kernel and distance between points
 
-      # scaling factor, range if the range i > 0
-      range_x <- diff(range(split_profile$`_x_`))
-      if (range_x == 0) range_x <- 1
+        # scaling factor, range if the range i > 0
+        range_x <- diff(range(split_profile$`_x_`))
+        if (range_x == 0) range_x <- 1
 
-      # scalled differences
-      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
-      split_profile$`_w_` <- dnorm(diffs, sd = span)
-    } else {
-      # for categorical variables we will calculate weighted average
-      # but weights are 0-1, 1 if it's the same level and 0 otherwise
-      split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
-    }
+        # scalled differences
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
+        split_profile$`_w_` <- dnorm(diffs, sd = span)
+      } else {
+        # for categorical variables we will calculate weighted average
+        # but weights are 0-1, 1 if it's the same level and 0 otherwise
+        split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
+      }
 
-    #  diffs
-    per_points <- split(split_profile, split_profile$`_ids_`, drop = TRUE)
-    chunks <- lapply(per_points, function(per_point) {
-      per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
-      per_point
-    })
-    split_profile <- do.call(rbind, chunks)
-
-    # weighed means
-    per_points <- split(split_profile, split_profile[, c("_x_", groups)], drop = TRUE)
-    chunks <- lapply(per_points, function(per_point) {
-      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
-      res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
-      # NaN occurs when all weights are 0 , #43
-      res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
-      res
-    })
-    par_profile <- do.call(rbind, chunks)
-
-    # postprocessing
-    if (is.null(groups)) {
-      par_profile$`_yhat_` <- cumsum(par_profile$`_yhat_`)
-    } else {
-      # cumsum per group
-      per_points <- split(split_profile, split_profile[, groups], drop = TRUE)
+      #  diffs
+      per_points <- split(split_profile, split_profile$`_ids_`)
       chunks <- lapply(per_points, function(per_point) {
-        per_point$`_yhat_` <- cumsum(per_point$`_yhat_`)
+        per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
         per_point
       })
+      split_profile <- do.call(rbind, chunks)
 
-      par_profile <- do.call(rbind, per_points)
+      # weighed means
+      per_points <- split(split_profile, split_profile[, c("_x_", groups)])
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
+        # NaN occurs when all weights are 0 , #43
+        res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
+        res
+      })
+      par_profile <- do.call(rbind, chunks)
+
+      # postprocessing
+      if (is.null(groups)) {
+        par_profile$`_yhat_` <- cumsum(par_profile$`_yhat_`)
+      } else {
+        # cumsum per group
+        per_points <- split(split_profile, split_profile[, groups])
+        chunks <- lapply(per_points, function(per_point) {
+          per_point$`_yhat_` <- cumsum(per_point$`_yhat_`)
+          per_point
+        })
+
+        par_profile <- do.call(rbind, per_points)
+      }
+
+      par_profile
+    })
+    aggregated_profiles <- do.call(rbind, chunks)
+
+    # postprocessing
+    if (!is.null(groups)) {
+      colnames(aggregated_profiles)[5] = "_groups_"
     }
-
-    par_profile
-  })
-
-  aggregated_profiles <- do.call(rbind, chunks)
-
-  # postprocessing
-  if (!is.null(groups)) {
-    colnames(aggregated_profiles)[5] = "_groups_"
-  }
 
   aggregated_profiles$`_ids_` <- 0
   aggregated_profiles
@@ -302,7 +301,6 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
 aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 0.25) {
 
   observations <- attr(all_profiles, "observations")
-
   # just initialisation
   if (is.numeric(all_profiles$`_x_`)) {
     all_profiles$`_orginal_` <- 0
@@ -325,45 +323,45 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
   }
 
-  split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")], drop = TRUE)
+  split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
 
   # calculate for each group
   chunks <- lapply(split_profiles, function(split_profile) {
+      if (nrow(split_profile) == 0) return(NULL)
 
-    if (is.numeric(split_profile$`_x_`)) {
-      # for continuous variables we will calculate weighted average
-      # where weights come from gaussian kernel and distance between points
+      if (is.numeric(split_profile$`_x_`)) {
+        # for continuous variables we will calculate weighted average
+        # where weights come from gaussian kernel and distance between points
 
-      # scaling factor, range if the range i > 0
-      range_x <- diff(range(split_profile$`_x_`))
-      if (range_x == 0) range_x <- 1
+        # scaling factor, range if the range i > 0
+        range_x <- diff(range(split_profile$`_x_`))
+        if (range_x == 0) range_x <- 1
 
-      # scalled differences
-      diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
-      split_profile$`_w_` <- dnorm(diffs, sd = span)
-    } else {
-      # for categorical variables we will calculate weighted average
-      # but weights are 0-1, 1 if it's the same level and 0 otherwise
-      split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
-    }
+        # scalled differences
+        diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
+        split_profile$`_w_` <- dnorm(diffs, sd = span)
+      } else {
+        # for categorical variables we will calculate weighted average
+        # but weights are 0-1, 1 if it's the same level and 0 otherwise
+        split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
+      }
 
-    per_points <- split(split_profile, split_profile[, c("_x_", groups)], drop = TRUE)
+      per_points <- split(split_profile, split_profile[, c("_x_", groups)])
 
-    chunks <- lapply(per_points, function(per_point) {
-      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
-      res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
-      # NaN occurs when all weights are 0 , #43
-      res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
-      res
+      chunks <- lapply(per_points, function(per_point) {
+        avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+        res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
+        # NaN occurs when all weights are 0 , #43
+        res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
+        res
+      })
+      do.call(rbind, chunks)
     })
-    do.call(rbind, chunks)
-  })
+    aggregated_profiles <- do.call(rbind, chunks)
 
-  aggregated_profiles <- do.call(rbind, chunks)
-
-  if (!is.null(groups)) {
-    colnames(aggregated_profiles)[5] = "_groups_"
-  }
+    if (!is.null(groups)) {
+      colnames(aggregated_profiles)[5] = "_groups_"
+    }
 
   aggregated_profiles$`_ids_` <- 0
 
