@@ -55,7 +55,7 @@ text {
 
 .interceptLine{
     stroke: #371ea3;
-	stroke-width: 0.5px;
+	stroke-width: 1px;
 }
 
 .grid .tick line{

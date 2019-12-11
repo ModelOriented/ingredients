@@ -4,8 +4,7 @@
 \alias{ceteris_paribus_2d}
 \title{Ceteris Paribus 2D Plot}
 \usage{
-ceteris_paribus_2d(explainer, observation, grid_points = 101,
-  variables = NULL)
+ceteris_paribus_2d(explainer, observation, grid_points = 101, variables = NULL)
 }
 \arguments{
 \item{explainer}{a model to be explained, preprocessed by the \code{DALEX::explain()} function}

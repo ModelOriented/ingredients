@@ -85,7 +85,7 @@ In different panels variable contributions may not look like sorted if variable 
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4.2</span>
+          <span class="version version-default">0.5.0</span>
         </div>
       </div>
     </div>
@@ -156,6 +156,7 @@ In different panels variable contributions may not look like sorted if variable 
   <span class='no'>x</span>,
   <span class='no'>...</span>,
   <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
   <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"model"</span>,
   <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -178,6 +179,10 @@ In different panels variable contributions may not look like sorted if variable 
       <th>max_vars</th>
       <td><p>maximum number of variables that shall be presented for for each model.
 By default <code>NULL</code> which means all variables</p></td>
+    </tr>
+    <tr>
+      <th>show_boxplots</th>
+      <td><p>logical if <code>TRUE</code> (default) boxplot will be plotted to show permutation data.</p></td>
     </tr>
     <tr>
       <th>bar_width</th>
@@ -218,13 +223,13 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
 
 <span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable dropout_loss label
-#&gt; 1      _full_model_     279.3262    lm
-#&gt; 2 construction.year     279.2987    lm
-#&gt; 3          no.rooms     289.6181    lm
-#&gt; 4             floor     503.1583    lm
-#&gt; 5           surface     620.3488    lm
-#&gt; 6          district     990.7506    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
+#&gt; 1      _full_model_          279.3262    lm
+#&gt; 2 construction.year          279.4089    lm
+#&gt; 3          no.rooms          289.2096    lm
+#&gt; 4             floor          494.4419    lm
+#&gt; 5           surface          612.6048    lm
+#&gt; 6          district          990.6070    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
 
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)

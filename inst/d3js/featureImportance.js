@@ -1,8 +1,11 @@
 var xMin = options.xmin;
 var xMax = options.xmax;
 var n = options.n;
-var m = options.m;
-var barWidth = options.barWidth,
+var m = typeof(options.m) === "number" ? [options.m] : options.m;
+var showBoxplots = options.showBoxplots,
+    barWidth = options.barWidth,
+    boxWidth = 2*barWidth/3,
+    scaleHeight = options.scaleHeight,
     chartTitle = options.chartTitle;
 
 var maxLength = calculateTextWidth(data[1]) + 15;
@@ -10,12 +13,16 @@ var maxLength = calculateTextWidth(data[1]) + 15;
 var margin = {top: 78, right: 30, bottom: 50, left: maxLength, inner: 42},
     h = height - margin.top - margin.bottom,
     plotTop = margin.top,
-    plotHeight = m*barWidth + (m+1)*barWidth/2,
+    plotHeightArr = [],
     plotWidth = 420*1.2;
 
-if (options.scaleHeight === true) {
-  if (h > n*plotHeight + (n-1)*margin.inner) {
-    var temp = h - n*plotHeight - (n-1)*margin.inner;
+for (e of m) {
+  plotHeightArr.push(e*barWidth + (e+1)*barWidth/2);
+}
+
+if (scaleHeight === true) {
+  if (h > d3.sum(plotHeightArr) + (n-1)*margin.inner) {
+    var temp = h - d3.sum(plotHeightArr) - (n-1)*margin.inner;
     plotTop += temp/2;
   }
 }
@@ -41,6 +48,8 @@ function featureImportance(data) {
 }
 
 function singlePlot(modelName, modelData, i) {
+
+  let plotHeight = plotHeightArr[i-1];
 
   var x = d3.scaleLinear()
       .range([margin.left, margin.left + plotWidth])
@@ -145,7 +154,7 @@ function singlePlot(modelName, modelData, i) {
       .attr("fill", colors[i-1])
       .attr("y", d => y(d.variable))
       .attr("height", y.bandwidth())
-      .attr("x", function (d) {
+      .attr("x", d => {
         // start ploting the bar left to full model line
         if (x(d.dropout_loss) < x(fullModel)) {
           return x(d.dropout_loss);
@@ -175,6 +184,32 @@ function singlePlot(modelName, modelData, i) {
       .attr("y1", minimumY)
       .attr("x2", x(fullModel))
       .attr("y2", maximumY + y.bandwidth());
+
+  if (showBoxplots) {
+    // Show the main horizontal line
+    svg
+      .selectAll()
+      .data(modelData)
+      .enter()
+      .append("line")
+      .attr("class", "interceptLine")
+      .attr("x1", d => x(d.min))
+      .attr("x2", d => x(d.max))
+      .attr("y1", d => y(d.variable) + y.bandwidth()/2)
+      .attr("y2", d => y(d.variable) + y.bandwidth()/2);
+
+    // rectangle for the main box
+    svg
+      .selectAll()
+      .data(modelData)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.q1))
+      .attr("y", d => y(d.variable) + boxWidth/4)
+      .attr("height", boxWidth)
+      .attr("width", d => x(d.q3) - x(d.q1))
+      .style("fill", "#371ea3");
+  }
 
   plotTop += (margin.inner + plotHeight);
 }

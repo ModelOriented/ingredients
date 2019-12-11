@@ -24,6 +24,7 @@ reference:
     - describe
     - print.aggregated_profiles_explainer
     - print.ceteris_paribus_explainer
+    - print.feature_importance_explainer
   - title: Plots
     desc: Plotting functions for explanations
     contents:

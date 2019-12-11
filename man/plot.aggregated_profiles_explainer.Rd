@@ -4,9 +4,15 @@
 \alias{plot.aggregated_profiles_explainer}
 \title{Plots Aggregated Profiles}
 \usage{
-\method{plot}{aggregated_profiles_explainer}(x, ..., size = 1,
-  alpha = 1, color = "_label_", facet_ncol = NULL,
-  variables = NULL)
+\method{plot}{aggregated_profiles_explainer}(
+  x,
+  ...,
+  size = 1,
+  alpha = 1,
+  color = "_label_",
+  facet_ncol = NULL,
+  variables = NULL
+)
 }
 \arguments{
 \item{x}{a ceteris paribus explainer produced with function \code{aggregate_profiles()}}

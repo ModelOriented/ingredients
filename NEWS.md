@@ -1,3 +1,8 @@
+ingredients 0.5.0
+---------------------------------------------------------------
+* `feature_importance` now does `15` permutations on each variable by default. Use the `B` argument to change this number
+* added boxplots to `plot.feature_importance` and `plotD3.feature_importance` that showcase the permutation data
+
 ingredients 0.4.2
 ---------------------------------------------------------------
 * `aggregate_profiles` use now gaussian kernel smoothing. Use the `span` argument for fine control over this parameter ([#79](https://github.com/ModelOriented/ingredients/issues/79))

@@ -8,17 +8,32 @@
 \usage{
 feature_importance(x, ...)
 
-\method{feature_importance}{explainer}(x,
-  loss_function = loss_root_mean_square, ..., type = c("raw", "ratio",
-  "difference"), n_sample = NULL, B = 1,
-  keep_raw_permutations = NULL, variables = NULL,
-  variable_groups = NULL, label = NULL)
+\method{feature_importance}{explainer}(
+  x,
+  loss_function = loss_root_mean_square,
+  ...,
+  type = c("raw", "ratio", "difference"),
+  n_sample = NULL,
+  B = 15,
+  variables = NULL,
+  variable_groups = NULL,
+  label = NULL
+)
 
-\method{feature_importance}{default}(x, data, y,
-  predict_function = predict, loss_function = loss_root_mean_square,
-  ..., label = class(x)[1], type = c("raw", "ratio", "difference"),
-  n_sample = NULL, B = 1, keep_raw_permutations = NULL,
-  variables = NULL, variable_groups = NULL)
+\method{feature_importance}{default}(
+  x,
+  data,
+  y,
+  predict_function = predict,
+  loss_function = loss_root_mean_square,
+  ...,
+  label = class(x)[1],
+  type = c("raw", "ratio", "difference"),
+  n_sample = NULL,
+  B = 10,
+  variables = NULL,
+  variable_groups = NULL
+)
 }
 \arguments{
 \item{x}{an explainer created with function \code{DALEX::explain()}, or a model to be explained.}
@@ -34,10 +49,7 @@ while "difference" returns \code{drop_loss - drop_loss_full_model}}
 \item{n_sample}{number of observations that should be sampled for calculation of variable importance.
 If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
 
-\item{B}{integer, number of permutation rounds to perform on each variable}
-
-\item{keep_raw_permutations}{logical or \code{NULL}, determines if output retains information for individual permutations;
-default is to omit for \code{B=1} and keep otherwise}
+\item{B}{integer, number of permutation rounds to perform on each variable. By default it's \code{10}.}
 
 \item{variables}{vector of variables. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}}
 

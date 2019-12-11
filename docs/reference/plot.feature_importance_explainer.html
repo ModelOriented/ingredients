@@ -88,7 +88,7 @@ importance is different in different in different models." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4.2</span>
+          <span class="version version-default">0.5.0</span>
         </div>
       </div>
     </div>
@@ -158,7 +158,7 @@ importance is different in different in different models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +175,10 @@ importance is different in different in different models.</p>
       <th>max_vars</th>
       <td><p>maximum number of variables that shall be presented for for each model.
 By default <code>NULL</code> what means all variables</p></td>
+    </tr>
+    <tr>
+      <th>show_boxplots</th>
+      <td><p>logical if <code>TRUE</code> (default) boxplot will be plotted to show permutation data.</p></td>
     </tr>
     <tr>
       <th>bar_width</th>
@@ -226,9 +230,9 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.008802652 , mean =  0.3225764 , max =  0.9926526  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.009295248 , mean =  0.3226317 , max =  0.9917489  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7901306 , mean =  -0.0004196743 , max =  0.8992016  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7889224 , mean =  -0.0004749563 , max =  0.9007948  
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_rf</span>)
@@ -240,13 +244,13 @@ By default <code>NULL</code> what means all variables</p></td>
 
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;       variable dropout_loss        label
-#&gt; 1 _full_model_     2004.565 randomForest
-#&gt; 2       status     2004.565 randomForest
-#&gt; 3       gender     3847.752 randomForest
-#&gt; 4          age     4994.761 randomForest
-#&gt; 5       salary     5456.624 randomForest
-#&gt; 6   evaluation     8015.715 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss        label
+#&gt; 1 _full_model_          1959.208 randomForest
+#&gt; 2       status          1959.208 randomForest
+#&gt; 3       gender          3796.498 randomForest
+#&gt; 4          age          5037.730 randomForest
+#&gt; 5       salary          5595.930 randomForest
+#&gt; 6   evaluation          7953.868 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( </span><span style='color: #BBBB00;'> default </span><span> )
@@ -260,13 +264,13 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                              <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_glm</span>)</div><div class='output co'>#&gt;       variable dropout_loss label
-#&gt; 1 _full_model_    0.4148305    lm
-#&gt; 2       gender    0.4147996    lm
-#&gt; 3       status    0.4148305    lm
-#&gt; 4       salary    0.4148906    lm
-#&gt; 5          age    0.4149440    lm
-#&gt; 6   evaluation    0.4320528    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_glm</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss label
+#&gt; 1 _full_model_         0.4148305    lm
+#&gt; 2       status         0.4148305    lm
+#&gt; 3          age         0.4148455    lm
+#&gt; 4       salary         0.4148740    lm
+#&gt; 5       gender         0.4148767    lm
+#&gt; 6   evaluation         0.4316308    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"xgboost"</span>)
 
 <span class='no'>model_martix_train</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span> ~ <span class='no'>.</span> -<span class='fl'>1</span>, <span class='no'>HR</span>)
@@ -290,13 +294,13 @@ By default <code>NULL</code> what means all variables</p></td>
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_xgb</span>)</div><div class='output co'>#&gt;       variable dropout_loss   label
-#&gt; 1 _full_model_    0.3142729 xgboost
-#&gt; 2   gendermale    0.3142729 xgboost
-#&gt; 3   evaluation    0.3382124 xgboost
-#&gt; 4 genderfemale    0.3922907 xgboost
-#&gt; 5          age    0.4005795 xgboost
-#&gt; 6       salary    0.4131654 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>, <span class='no'>fi_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_xgb</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss   label
+#&gt; 1 _full_model_         0.3142729 xgboost
+#&gt; 2   gendermale         0.3142729 xgboost
+#&gt; 3   evaluation         0.3382522 xgboost
+#&gt; 4 genderfemale         0.3924834 xgboost
+#&gt; 5          age         0.3993256 xgboost
+#&gt; 6       salary         0.4144565 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>, <span class='no'>fi_xgb</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='img'><img src='plot.feature_importance_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></span></pre>
   </div>
