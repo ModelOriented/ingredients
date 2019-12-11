@@ -208,7 +208,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
   if (is.null(groups)) {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_","_orginal_")]
   } else {
-    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
+    tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_", "_orginal_", groups)]
   }
 
     split_profiles <- split(tmp, tmp[,c("_vname_", "_label_")])
@@ -216,7 +216,6 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     # calculate for each group
     chunks <- lapply(split_profiles, function(split_profile) {
       if (nrow(split_profile) == 0) return(NULL)
-
       if (is.numeric(split_profile$`_x_`)) {
         # for continuous variables we will calculate weighted average
         # where weights come from gaussian kernel and distance between points
@@ -224,7 +223,6 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
         # scaling factor, range if the range i > 0
         range_x <- diff(range(split_profile$`_x_`))
         if (range_x == 0) range_x <- 1
-
         # scalled differences
         diffs <- (split_profile$`_orginal_` - split_profile$`_x_`) /range_x
         split_profile$`_w_` <- dnorm(diffs, sd = span)
@@ -239,6 +237,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
       chunks <- lapply(per_points, function(per_point) {
         per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
         per_point
+        
       })
       split_profile <- do.call(rbind, chunks)
 
@@ -252,19 +251,18 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
         res
       })
       par_profile <- do.call(rbind, chunks)
-
       # postprocessing
       if (is.null(groups)) {
         par_profile$`_yhat_` <- cumsum(par_profile$`_yhat_`)
       } else {
         # cumsum per group
-        per_points <- split(split_profile, split_profile[, groups])
-        chunks <- lapply(per_points, function(per_point) {
-          per_point$`_yhat_` <- cumsum(per_point$`_yhat_`)
-          per_point
+        par_points <- split(par_profile, par_profile[, groups])
+        chunks <- lapply(par_points, function(par_point) {
+          par_point$`_yhat_` <- cumsum(par_point$`_yhat_`)
+          par_point
         })
 
-        par_profile <- do.call(rbind, per_points)
+        par_profile <- do.call(rbind, par_points)
       }
 
       par_profile
@@ -277,6 +275,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     }
 
   aggregated_profiles$`_ids_` <- 0
+  rownames(aggregated_profiles) <- 1:nrow(aggregated_profiles)
   aggregated_profiles
 }
 
