@@ -186,23 +186,36 @@ aggregate_profiles <- function(x, ...,
   aggregated_profiles
 }
 
+# faster version of
+# all_profiles$`_orginal_` <- 0
+# for (i in 1:nrow(all_profiles)) {
+#   all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
+#                                               as.character(all_profiles$`_vname_`[i])]
+# }
+fast_initialisation_for_orginal <- function(all_profiles, observations) {
+  if (is.numeric(all_profiles$`_x_`)) {
+    init_value = 0
+    transform_value = I
+  } else {
+    init_value = ""
+    transform_value = as.character
+  }
+
+  # fill up the _orginal_ column
+  all_profiles$`_orginal_` <- init_value
+  all_profiles_per_vname <- split(all_profiles, all_profiles$`_vname_`, drop = TRUE)
+  profiles_per_vname <- lapply(all_profiles_per_vname, function(profile_per_vname) {
+    profile_per_vname$`_orginal_` <- transform_value(observations[as.character(profile_per_vname$`_ids_`),
+                                                                  profile_per_vname$`_vname_`[1]])
+    profile_per_vname
+  })
+  do.call(rbind, profiles_per_vname)
+}
 
 aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25) {
   observations <- attr(all_profiles, "observations")
   # just initialisation
-  if (is.numeric(all_profiles$`_x_`)) {
-    all_profiles$`_orginal_` <- 0
-    for (i in 1:nrow(all_profiles)) {
-      all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                  as.character(all_profiles$`_vname_`[i])]
-    }
-  } else {
-    all_profiles$`_orginal_` <- ""
-    for (i in 1:nrow(all_profiles)) {
-      all_profiles$`_orginal_`[i] <- as.character(observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                               as.character(all_profiles$`_vname_`[i])])
-    }
-  }
+  all_profiles <- fast_initialisation_for_orginal(all_profiles, observations)
 
   # split all_profiles into groups
   tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_", "_orginal_", groups)]
@@ -299,19 +312,7 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
 
   observations <- attr(all_profiles, "observations")
   # just initialisation
-  if (is.numeric(all_profiles$`_x_`)) {
-    all_profiles$`_orginal_` <- 0
-    for (i in 1:nrow(all_profiles)) {
-      all_profiles$`_orginal_`[i] <- observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                  as.character(all_profiles$`_vname_`[i])]
-    }
-  } else {
-    all_profiles$`_orginal_` <- ""
-    for (i in 1:nrow(all_profiles)) {
-      all_profiles$`_orginal_`[i] <- as.character(observations[as.character(all_profiles$`_ids_`[i]) ,
-                                                               as.character(all_profiles$`_vname_`[i])])
-    }
-  }
+  all_profiles <- fast_initialisation_for_orginal(all_profiles, observations)
 
   # split all_profiles into groups
   tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_", "_ids_", "_orginal_", groups)]
