@@ -232,7 +232,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     chunks <- lapply(per_points, function(per_point) {
       per_point$`_yhat_` <- c(0, diff(per_point$`_yhat_`))
       per_point
-      
+
     })
     split_profile <- do.call(rbind, chunks)
 
@@ -257,12 +257,12 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
         par_point
       })
 
-      par_profile <- do.call(rbind, par_points)
+      par_profile <- do.call(rbind, chunks)
     }
 
     par_profile
   })
-  
+
   aggregated_profiles <- do.call(rbind, chunks)
 
   # postprocessing
@@ -273,7 +273,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
 
   aggregated_profiles$`_ids_` <- 0
   rownames(aggregated_profiles) <- 1:nrow(aggregated_profiles)
-  
+
   aggregated_profiles
 }
 
@@ -349,7 +349,7 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
     })
     do.call(rbind, chunks)
   })
-  
+
   aggregated_profiles <- do.call(rbind, chunks)
 
   if (!is.null(groups)) {
