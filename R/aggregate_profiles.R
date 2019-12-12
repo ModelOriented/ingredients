@@ -91,6 +91,8 @@ aggregate_profiles <- function(x, ...,
 
   check_variable_type(variable_type)
   check_type(type)
+  check_groups(groups)
+  check_span(span)
 
   # if there is more ceteris paribuses, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -389,4 +391,24 @@ check_variable_type <- function(variable_type) {
 check_type <- function(type) {
   if (!(type %in% c("partial", "conditional", "accumulated")))
     stop("type needs to be 'partial', 'conditional' or 'accumulated'")
+}
+
+#'@noRd
+#'@title Check if group parameter is correct
+#'
+#'@param groups
+#'
+check_groups <- function(groups) {
+  if (! is.null(groups) && (! is.character(groups) || length(groups) != 1))
+    stop("groups must be a character vector of length 1")
+}
+
+#'@noRd
+#'@title Check if span is correct
+#'
+#'@param span
+#'
+check_span <- function(span) {
+  if (! is.numeric(span) || length(span) != 1 || span <= 0)
+    stop("span must be positive number")
 }
