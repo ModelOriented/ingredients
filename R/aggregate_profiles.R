@@ -249,6 +249,11 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     })
     split_profile <- do.call(rbind, chunks)
 
+    # for factors, keep proper order
+    # as in https://github.com/ModelOriented/ingredients/issues/82
+    if (!is.numeric(split_profile$`_x_`)) {
+      split_profile$`_x_` <- factor(split_profile$`_x_`, levels = unique(split_profile$`_x_`))
+    }
     # weighed means
     per_points <- split(split_profile, split_profile[, c("_x_", groups)])
     chunks <- lapply(per_points, function(per_point) {
@@ -259,6 +264,8 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
       res
     })
     par_profile <- do.call(rbind, chunks)
+    # for factors, keep it charagetr again
+    split_profile$`_x_` <- as.character( split_profile$`_x_`)
     # postprocessing
     if (is.null(groups)) {
       par_profile$`_yhat_` <- cumsum(par_profile$`_yhat_`)
