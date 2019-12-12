@@ -103,7 +103,7 @@ cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "n
 plot(cdp_rf)
 
 cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
-plotD3(cdp_rf, variable_type = "categorical", label_margin = 80, scale_plot = TRUE)
+plotD3(cdp_rf, label_margin = 80, scale_plot = TRUE)
 }
 
 }

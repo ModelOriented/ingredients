@@ -36,14 +36,13 @@
 
 
 <meta property="og:title" content="Aggregates Ceteris Paribus Profiles — aggregate_profiles" />
-
 <meta property="og:description" content="The function aggregate_profiles() calculates an aggregate of ceteris paribus profiles.
 It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles)." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -111,6 +110,9 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
+      <a href="../articles/vignette_simulated.html">Simulated data, real problem</a>
+    </li>
+    <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -143,12 +145,10 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
     </div>
 
     <div class="ref-description">
-    
     <p>The function <code>aggregate_profiles()</code> calculates an aggregate of ceteris paribus profiles.
 It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
 Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
 Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>aggregate_profiles</span>(
@@ -160,7 +160,7 @@ Accumulated Local Dependency Profile (cummulated average local changes in Ceteri
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.25</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -195,15 +195,13 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
       <td><p>smoothing coeffcient, by default 0.25.It's the sd for gaussian kernel</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profiles_explainer</code></p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -292,8 +290,8 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># or maybe flipped?</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: pakiet 'ggplot2' został zbudowany w wersji R 3.6.1</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Dołączanie pakietu: 'ggplot2'</span></div><div class='output co'>#&gt; <span class='message'>Następujący obiekt został zakryty z 'package:randomForest':</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:randomForest’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    margin</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregate_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>,
@@ -315,11 +313,8 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

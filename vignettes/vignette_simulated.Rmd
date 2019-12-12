@@ -1,0 +1,149 @@
+---
+title: "Simulated data, real problem"
+author: "Przemyslaw Biecek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Simulated data, real problem}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = FALSE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+# Simulated data
+
+Let's consider a following problem, the model is defined as
+
+$$
+y = x_1 * x_2 + x_2
+$$
+
+But $x_1$ and $x_2$ are correlated. How XAI methods work for such model?
+
+
+```{r}
+# predict function for the model
+the_model_predict <- function(m, x) {
+ x$x1 * x$x2 + x$x2
+}
+
+# correlated variables 
+N <- 50
+set.seed(1)
+x1 <- runif(N, -5, 5)
+x2 <- x1 + runif(N)/100
+df <- data.frame(x1, x2)
+```
+
+
+# Explainer for the models
+
+In fact this model is defined by the predict function `the_model_predict`. So it does not matter what is in the first argument of the `explain` function.
+
+```{r}
+library("DALEX")
+explain_the_model <- explain(1,
+                      data = df,
+                      predict_function = the_model_predict)
+```
+
+# Ceteris paribus
+
+Use the `ceteris_paribus()` function to see Ceteris Paribus profiles.
+Clearly it's not an additive model, as the effect of $x_1$ depends on $x_2$.
+
+```{r}
+library("ingredients")
+library("ggplot2")
+
+sample_rows <- data.frame(x1 = -5:5,
+                          x2 = -5:5)
+
+cp_model <- ceteris_paribus(explain_the_model, sample_rows)
+plot(cp_model) +
+  show_observations(cp_model) +
+  ggtitle("Ceteris Paribus profiles")
+```
+
+
+# Dependency profiles
+
+Lets try Partial Dependency profiles, Conditional Dependency profiles and Accumulated Local profiles. For the last two we can try different smoothing factors
+
+```{r}
+pd_model <- partial_dependency(explain_the_model, variables = c("x1", "x2"))
+pd_model$`_label_` = "PDP"
+
+cd_model <- conditional_dependency(explain_the_model, variables = c("x1", "x2"))
+cd_model$`_label_` = "CDP 0.25"
+
+ad_model <- accumulated_dependency(explain_the_model, variables = c("x1", "x2"))
+ad_model$`_label_` = "ALE 0.25"
+
+plot(ad_model, cd_model, pd_model) +
+  ggtitle("Feature effects - PDP, CDP, ALE")
+
+cd_model_1 <- conditional_dependency(explain_the_model, variables = c("x1", "x2"), span = 0.1)
+cd_model_1$`_label_` = "CDP 0.1"
+
+cd_model_5 <- conditional_dependency(explain_the_model, variables = c("x1", "x2"), span = 0.5)
+cd_model_5$`_label_` = "CDP 0.5"
+
+ad_model_1 <- accumulated_dependency(explain_the_model, variables = c("x1", "x2"), span = 0.5)
+ad_model_1$`_label_` = "ALE 0.1"
+
+ad_model_5 <- accumulated_dependency(explain_the_model, variables = c("x1", "x2"), span = 0.5)
+ad_model_5$`_label_` = "ALE 0.5"
+
+plot(ad_model, cd_model, pd_model, cd_model_1, cd_model_5, ad_model_1, ad_model_5) +
+  ggtitle("Feature effects - PDP, CDP, ALE")
+```
+
+
+# Dependency profiles in groups
+
+And now, let's see how the grouping factor works
+
+```{r}
+# add grouping variable
+df$x3 <- factor(sign(df$x2))
+# update the data argument
+explain_the_model$data = df
+
+# PDP in groups
+pd_model_groups <- partial_dependency(explain_the_model, 
+                                      variables = c("x1", "x2"), 
+                                      groups = "x3")
+plot(pd_model_groups) +
+  ggtitle("Partial Dependency")
+
+# ALE in groups
+ad_model_groups <- accumulated_dependency(explain_the_model, 
+                                      variables = c("x1", "x2"), 
+                                      groups = "x3")
+plot(ad_model_groups) +
+  ggtitle("Accumulated Local")
+
+
+# CDP in groups
+cd_model_groups <- conditional_dependency(explain_the_model, 
+                                      variables = c("x1", "x2"), 
+                                      groups = "x3")
+plot(cd_model_groups) +
+  ggtitle("Conditional Dependency")
+```
+
+
+# Session info
+
+```{r}
+sessionInfo()
+```

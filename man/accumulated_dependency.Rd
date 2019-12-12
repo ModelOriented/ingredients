@@ -102,7 +102,7 @@ adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "n
 plot(adp_rf)
 
 adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
-plotD3(adp_rf, variable_type = "categorical", label_margin = 80, scale_plot = TRUE)
+plotD3(adp_rf, label_margin = 80, scale_plot = TRUE)
 }
 
 }

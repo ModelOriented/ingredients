@@ -14,7 +14,7 @@ feature_importance(x, ...)
   ...,
   type = c("raw", "ratio", "difference"),
   n_sample = NULL,
-  B = 15,
+  B = 10,
   variables = NULL,
   variable_groups = NULL,
   label = NULL

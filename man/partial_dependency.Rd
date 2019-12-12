@@ -101,7 +101,7 @@ pdp_rf <- partial_dependency(explain_titanic_rf, variable_type = "numerical")
 plot(pdp_rf)
 
 pdp_rf <- partial_dependency(explain_titanic_rf, variable_type = "categorical")
-plotD3(pdp_rf, variable_type = "categorical", label_margin = 80, scale_plot = TRUE)
+plotD3(pdp_rf, label_margin = 80, scale_plot = TRUE)
 }
 
 }

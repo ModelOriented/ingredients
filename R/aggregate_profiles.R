@@ -206,7 +206,7 @@ fast_initialisation_for_orginal <- function(all_profiles, observations) {
   all_profiles_per_vname <- split(all_profiles, all_profiles$`_vname_`, drop = TRUE)
   profiles_per_vname <- lapply(all_profiles_per_vname, function(profile_per_vname) {
     profile_per_vname$`_orginal_` <- transform_value(observations[as.character(profile_per_vname$`_ids_`),
-                                                                  profile_per_vname$`_vname_`[1]])
+                                                                  as.character(profile_per_vname$`_vname_`[1])])
     profile_per_vname
   })
   do.call(rbind, profiles_per_vname)

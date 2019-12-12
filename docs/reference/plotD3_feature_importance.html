@@ -36,14 +36,13 @@
 
 
 <meta property="og:title" content="Plot Feature Importance Objects in D3 with r2d3 Package. — plotD3.feature_importance_explainer" />
-
 <meta property="og:description" content="Function plotD3.feature_importance_explainer plots dropouts for variables used in the model.
 It uses output from feature_importance function that corresponds to permutation based measure of feature importance.
 Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable importance is different in different models." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -111,6 +110,9 @@ In different panels variable contributions may not look like sorted if variable 
       <a href="../articles/vignette_describe.html">Explanations in natural language</a>
     </li>
     <li>
+      <a href="../articles/vignette_simulated.html">Simulated data, real problem</a>
+    </li>
+    <li>
       <a href="../articles/vignette_titanic.html">General introduction: Survival on the RMS Titanic</a>
     </li>
   </ul>
@@ -143,12 +145,10 @@ In different panels variable contributions may not look like sorted if variable 
     </div>
 
     <div class="ref-description">
-    
     <p>Function <code>plotD3.feature_importance_explainer</code> plots dropouts for variables used in the model.
 It uses output from <code><a href='feature_importance.html'>feature_importance</a></code> function that corresponds to permutation based measure of feature importance.
 Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
@@ -163,7 +163,7 @@ In different panels variable contributions may not look like sorted if variable 
   <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
   <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Feature importance"</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -206,11 +206,10 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
       <td><p>a character. Set custom title</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>r2d3</code> object.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -225,13 +224,13 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
 #&gt; 1      _full_model_          279.3262    lm
-#&gt; 2 construction.year          279.4089    lm
-#&gt; 3          no.rooms          289.2096    lm
-#&gt; 4             floor          494.4419    lm
-#&gt; 5           surface          612.6048    lm
-#&gt; 6          district          990.6070    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
+#&gt; 2 construction.year          279.3492    lm
+#&gt; 3          no.rooms          289.5225    lm
+#&gt; 4             floor          494.0079    lm
+#&gt; 5           surface          612.2044    lm
+#&gt; 6          district          993.5374    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \dontrun{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
@@ -243,23 +242,26 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
 
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)
-<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
+#&gt; 1      _full_model_          193.6853    rf
+#&gt; 2          no.rooms          366.7939    rf
+#&gt; 3 construction.year          370.1337    rf
+#&gt; 4             floor          414.3526    rf
+#&gt; 5           surface          458.2164    rf
+#&gt; 6          district          805.7912    rf</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
 
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
 
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
-}</div></pre>
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
