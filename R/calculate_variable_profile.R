@@ -79,11 +79,13 @@ calculate_variable_split <- function(data, variables = colnames(data), grid_poin
 calculate_variable_split.default <- function(data, variables = colnames(data), grid_points = 101) {
   variable_splits <- lapply(variables, function(var) {
     selected_column <- data[,var]
+    # numeric?
     if (is.numeric(selected_column)) {
       probs <- seq(0, 1, length.out = grid_points)
       unique(quantile(selected_column, probs = probs))
     } else {
-      unique(selected_column)
+      # sort will change order of factors in a good way
+      sort(unique(selected_column))
     }
   })
   names(variable_splits) <- variables
