@@ -314,6 +314,12 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
   }
   aggregated_profiles$`_ids_` <- 0
 
+  # for factors, keep proper order
+  # as in https://github.com/ModelOriented/ingredients/issues/82
+  if (!is.numeric(all_profiles$`_x_`)) {
+    aggregated_profiles$`_x_` <- factor(aggregated_profiles$`_x_`, levels = unique(all_profiles$`_x_`))
+  }
+
   aggregated_profiles
 }
 
@@ -367,6 +373,12 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
     aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
   }
 
+
+  # for factors, keep proper order
+  # as in https://github.com/ModelOriented/ingredients/issues/82
+  if (!is.numeric(all_profiles$`_x_`)) {
+    aggregated_profiles$`_x_` <- factor(aggregated_profiles$`_x_`, levels = unique(all_profiles$`_x_`))
+  }
   aggregated_profiles$`_ids_` <- 0
 
   aggregated_profiles
