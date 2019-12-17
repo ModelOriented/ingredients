@@ -84,7 +84,7 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
   ymax <- max(aggregated_profiles$`_yhat_`)
   ymin <- min(aggregated_profiles$`_yhat_`)
-  ymargin <- abs(ymax - ymin)*0.1;
+  ymargin <- abs(ymax - ymin)*0.1
 
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`)
 
@@ -120,7 +120,8 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
       ret
     })
 
-    ymean <- round(attr(x, "mean_prediction"),3)
+
+    ymean <- ifelse("partial_dependency_explainer" %in% class(x), round(attr(x, "mean_prediction"), 3), 0)
   }
 
   options <- list(variableNames = as.list(all_variables),
