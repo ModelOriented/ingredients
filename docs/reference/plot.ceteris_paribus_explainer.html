@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Plots Ceteris Paribus Profiles — plot.ceteris_paribus_explainer" />
+
 <meta property="og:description" content="Function plot.ceteris_paribus_explainer plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 Find more detailes in Ceteris Paribus Chapter." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -144,9 +145,11 @@ Find more detailes in Ceteris Paribus Chapter." />
     </div>
 
     <div class="ref-description">
+    
     <p>Function <code>plot.ceteris_paribus_explainer</code> plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
 <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_explainer</span>
@@ -160,7 +163,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
   <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -198,13 +201,15 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
       <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -220,8 +225,8 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,])
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       gender        age class    embarked fare sibsp parch    _yhat_ _vname_
-#&gt; 1       male 42.0000000   3rd Southampton 7.11     0     0 0.1827040  gender
-#&gt; 1.1   female 42.0000000   3rd Southampton 7.11     0     0 0.6667679  gender
+#&gt; 1     female 42.0000000   3rd Southampton 7.11     0     0 0.6667679  gender
+#&gt; 1.1     male 42.0000000   3rd Southampton 7.11     0     0 0.1827040  gender
 #&gt; 11      male  0.1666667   3rd Southampton 7.11     0     0 0.2352754     age
 #&gt; 1.110   male  2.0000000   3rd Southampton 7.11     0     0 0.2327665     age
 #&gt; 1.2     male  4.0000000   3rd Southampton 7.11     0     0 0.2300508     age
@@ -253,12 +258,12 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515      male  45              2nd Southampton 10.1000     0     0 0.09095336
-#&gt; 515.1  female  45              2nd Southampton 10.1000     0     0 0.84768669
-#&gt; 604      male  17              3rd Southampton  7.1701     1     0 0.11290834
-#&gt; 604.1  female  17              3rd Southampton  7.1701     1     0 0.45875606
-#&gt; 1430     male  25 engineering crew Southampton  0.0000     0     0 0.23715128
-#&gt; 1430.1 female  25 engineering crew Southampton  0.0000     0     0 0.70492533
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.84768669
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09095336
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.45875606
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.11290834
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.70492533
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.23715128
 #&gt;        _vname_ _ids_          _label_
 #&gt; 515     gender   515 Random Forest v7
 #&gt; 515.1   gender   515 Random Forest v7
@@ -305,8 +310,11 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -36,11 +36,12 @@
 
 
 <meta property="og:title" content="Feature Importance — feature_importance" />
+
 <meta property="og:description" content="This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -143,8 +144,10 @@ For this reason it is also called the Variable Dropout Plot." />
     </div>
 
     <div class="ref-description">
+    
     <p>This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>feature_importance</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -177,7 +180,7 @@ For this reason it is also called the Variable Dropout Plot.</p>
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variable_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -236,16 +239,19 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>predict function, will be extracted from <code>x</code> if it's an explainer</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>feature_importance</code></p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more detailes in the <a href='https://pbiecek.github.io/PM_VEE/featureImportance.html'>Feature Importance Chapter</a>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -262,8 +268,8 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explain_titanic_glm</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='feature_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -337,8 +343,8 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.293796e-13 , max =  0.9820537  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.294707e-13 , max =  0.9820537  
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_glm</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
                              <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_root_mean_square</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_glm</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss label
@@ -363,26 +369,30 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt;   -&gt; predict function  : yhat.default will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  1.687903e-06 , mean =  0.363713 , max =  0.9996712  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203494 , max =  0.9970635  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.9885727 , mean =  0.0001203497 , max =  0.9970635  
 #&gt;   -&gt; model_info        :  package Model of class: xgb.Booster package unrecognized , ver. Unknown , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_xgb</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_importance</span>(<span class='no'>explainer_xgb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_xgb</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss   label
 #&gt; 1 _full_model_         0.3142729 xgboost
 #&gt; 2   gendermale         0.3142729 xgboost
-#&gt; 3   evaluation         0.3389912 xgboost
-#&gt; 4 genderfemale         0.3929509 xgboost
-#&gt; 5          age         0.4003178 xgboost
-#&gt; 6       salary         0.4149874 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_xgb</span>, <span class='no'>fi_glm</span>)</div><div class='img'><img src='feature_importance-9.png' alt='' width='700' height='433' /></div><div class='input'> # }
+#&gt; 3   evaluation         0.3388787 xgboost
+#&gt; 4 genderfemale         0.3933220 xgboost
+#&gt; 5          age         0.4002058 xgboost
+#&gt; 6       salary         0.4150947 xgboost</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_xgb</span>, <span class='no'>fi_glm</span>)</div><div class='img'><img src='feature_importance-9.png' alt='' width='700' height='433' /></div><div class='input'> # }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

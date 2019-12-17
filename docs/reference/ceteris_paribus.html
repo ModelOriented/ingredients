@@ -36,13 +36,14 @@
 
 
 <meta property="og:title" content="Ceteris Paribus Profiles aka Individual Variable Profiles — ceteris_paribus" />
+
 <meta property="og:description" content="This explainer works for individual observations.
 For each observation it calculates Ceteris Paribus Profiles for selected variables.
 Such profiles can be used to hypothesize about model results if selected variable is changed.
 For this reason it is also called 'What-If Profiles'." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -145,10 +146,12 @@ For this reason it is also called 'What-If Profiles'." />
     </div>
 
     <div class="ref-description">
+    
     <p>This explainer works for individual observations.
 For each observation it calculates Ceteris Paribus Profiles for selected variables.
 Such profiles can be used to hypothesize about model results if selected variable is changed.
 For this reason it is also called 'What-If Profiles'.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -177,7 +180,7 @@ For this reason it is also called 'What-If Profiles'.</p>
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
   <span class='no'>...</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -227,16 +230,19 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>name of the model. By default it's extracted from the <code>class</code> attribute of the model</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>ceteris_paribus_explainer</code>.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more details in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -256,8 +262,8 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>,])
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;         gender   age class    embarked fare sibsp parch    _yhat_ _vname_ _ids_
-#&gt; 515       male 45.00   2nd Southampton 10.1     0     0 0.1448038  gender   515
-#&gt; 515.1   female 45.00   2nd Southampton 10.1     0     0 0.5595687  gender   515
+#&gt; 515     female 45.00   2nd Southampton 10.1     0     0 0.5595687  gender   515
+#&gt; 515.1     male 45.00   2nd Southampton 10.1     0     0 0.1448038  gender   515
 #&gt; 5151      male  0.75   2nd Southampton 10.1     0     0 0.3135247     age   515
 #&gt; 515.110   male  2.99   2nd Southampton 10.1     0     0 0.3028164     age   515
 #&gt; 515.2     male  4.98   2nd Southampton 10.1     0     0 0.2934793     age   515
@@ -290,12 +296,12 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515      male  45              2nd Southampton 10.1000     0     0 0.09490975
-#&gt; 515.1  female  45              2nd Southampton 10.1000     0     0 0.85053814
-#&gt; 604      male  17              3rd Southampton  7.1701     1     0 0.11321362
-#&gt; 604.1  female  17              3rd Southampton  7.1701     1     0 0.47411576
-#&gt; 1430     male  25 engineering crew Southampton  0.0000     0     0 0.24005121
-#&gt; 1430.1 female  25 engineering crew Southampton  0.0000     0     0 0.69052740
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.85053814
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09490975
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.47411576
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.11321362
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.69052740
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.24005121
 #&gt;        _vname_ _ids_          _label_
 #&gt; 515     gender   515 Random Forest v7
 #&gt; 515.1   gender   515 Random Forest v7
@@ -331,9 +337,13 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

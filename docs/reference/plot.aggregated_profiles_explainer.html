@@ -36,12 +36,13 @@
 
 
 <meta property="og:title" content="Plots Aggregated Profiles — plot.aggregated_profiles_explainer" />
+
 <meta property="og:description" content="Function plot.aggregated_profiles_explainer plots partial dependency plot or accumulated effect plot.
 It works in a similar way to plot.ceteris_paribus, but instead of individual profiles
 show average profiles for each variable listed in the variables vector." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -144,9 +145,11 @@ show average profiles for each variable listed in the variables vector." />
     </div>
 
     <div class="ref-description">
+    
     <p>Function <code>plot.aggregated_profiles_explainer</code> plots partial dependency plot or accumulated effect plot.
 It works in a similar way to <code>plot.ceteris_paribus</code>, but instead of individual profiles
 show average profiles for each variable listed in the <code>variables</code> vector.</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aggregated_profiles_explainer</span>
@@ -159,7 +162,7 @@ show average profiles for each variable listed in the <code>variables</code> vec
   <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -192,13 +195,15 @@ show average profiles for each variable listed in the <code>variables</code> vec
       <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -239,12 +244,12 @@ show average profiles for each variable listed in the <code>variables</code> vec
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        gender age            class    embarked    fare sibsp parch    _yhat_
-#&gt; 515      male  45              2nd Southampton 10.1000     0     0 0.1020347
-#&gt; 515.1  female  45              2nd Southampton 10.1000     0     0 0.8489407
-#&gt; 604      male  17              3rd Southampton  7.1701     1     0 0.1060099
-#&gt; 604.1  female  17              3rd Southampton  7.1701     1     0 0.4593168
-#&gt; 1430     male  25 engineering crew Southampton  0.0000     0     0 0.2426010
-#&gt; 1430.1 female  25 engineering crew Southampton  0.0000     0     0 0.6777987
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.8489407
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.1020347
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.4593168
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.1060099
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.6777987
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2426010
 #&gt;        _vname_ _ids_          _label_
 #&gt; 515     gender   515 Random Forest v7
 #&gt; 515.1   gender   515 Random Forest v7
@@ -296,8 +301,11 @@ show average profiles for each variable listed in the <code>variables</code> vec
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

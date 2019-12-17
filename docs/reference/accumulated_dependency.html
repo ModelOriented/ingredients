@@ -36,11 +36,12 @@
 
 
 <meta property="og:title" content="Accumulated Local Effects Profiles aka ALEPlots — accumulated_dependency" />
+
 <meta property="og:description" content="Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
 Function accumulated_dependency calls ceteris_paribus and then aggregate_profiles." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -143,8 +144,10 @@ Function accumulated_dependency calls ceteris_paribus and then aggregate_profile
     </div>
 
     <div class="ref-description">
+    
     <p>Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
 Function <code>accumulated_dependency</code> calls <code><a href='ceteris_paribus.html'>ceteris_paribus</a></code> and then <code><a href='aggregate_profiles.html'>aggregate_profiles</a></code>.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>accumulated_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -176,7 +179,7 @@ Function <code>accumulated_dependency</code> calls <code><a href='ceteris_paribu
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>accumulated_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -228,21 +231,26 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>name of the model. By default it's extracted from the <code>class</code> attribute of the model</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profiles_explainer</code></p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Find more detailes in the <a href='https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html'>Accumulated Local Dependency Chapter</a>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots <a href='https://cran.r-project.org/package=ALEPlot'>https://cran.r-project.org/package=ALEPlot</a>,
 Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 0.4.9).</span>
-#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span></div><div class='input'>
+#&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/PM_VEE/</span>
+#&gt; <span class='message'>Additional features will be available after installation of: ALEPlot, pdp, factorMerger.</span>
+#&gt; <span class='message'>Use 'install_dependencies()' to get all suggested dependencies</span></div><div class='input'>
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
                          <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
@@ -279,9 +287,13 @@ Predictive Models: Visual Exploration, Explanation and Debugging <a href='https:
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
