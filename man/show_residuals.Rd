@@ -39,13 +39,6 @@ Note that the \code{y} argument has to be specified in the \code{\link{ceteris_p
 library("DALEX")
 library("randomForest")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed, ntree = 500)
-
-explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic_imputed[,-8],
-                              y = titanic_imputed[,8],
-                              label = "Random Forest v7")
-
 johny_d <- data.frame(
   class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
                                    "restaurant staff", "victualling crew")),
@@ -56,6 +49,14 @@ johny_d <- data.frame(
   fare = 72,
   embarked = factor("Southampton", levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
 )
+
+\donttest{
+model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed, ntree = 500)
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
+                              label = "Random Forest v7")
 
 johny_neighbours <- select_neighbours(data = titanic_imputed,
                                       observation = johny_d,
@@ -80,5 +81,5 @@ plot(cp_johny, variables = "age", size = 1.5, color = "#8bdcbe") +
   show_observations(cp_johny, variables = "age", size = 5, color = "#371ea3") +
   show_residuals(cp_neighbours, variables = "age")
 
-
+}
 }

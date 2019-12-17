@@ -3,8 +3,6 @@
 #' This function calculates ceteris paribus profiles for grid of values spanned by two variables.
 #' It may be useful to identify or present interactions between two variables.
 #'
-#' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
-#'
 #' @param explainer a model to be explained, preprocessed by the \code{DALEX::explain()} function
 #' @param observation a new observation for which predictions need to be explained
 #' @param grid_points number of points used for response path. Will be used for both variables
@@ -18,6 +16,7 @@
 #' model_titanic_glm <- glm(survived ~ age + fare,
 #'                        data = titanic_imputed, family = "binomial")
 #'
+#' \donttest{
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
 #'                                y = titanic_imputed[,8])
@@ -25,7 +24,7 @@
 #' cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic_imputed[1,],
 #'                        variables = c("age", "fare", "sibsp"))
 #' head(cp_rf)
-#' \donttest{
+#'
 #' plot(cp_rf)
 #'
 #' library("randomForest")

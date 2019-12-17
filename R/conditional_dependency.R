@@ -3,7 +3,7 @@
 #' Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 #' Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 #'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Local Dependency Profiles Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
 #' or a model to be explained.

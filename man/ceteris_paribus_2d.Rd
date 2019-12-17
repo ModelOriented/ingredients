@@ -22,15 +22,13 @@ an object of the class \code{ceteris_paribus_2d_explainer}.
 This function calculates ceteris paribus profiles for grid of values spanned by two variables.
 It may be useful to identify or present interactions between two variables.
 }
-\details{
-Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus2d}{Ceteris Paribus 2D}.
-}
 \examples{
 library("DALEX")
 
 model_titanic_glm <- glm(survived ~ age + fare,
                        data = titanic_imputed, family = "binomial")
 
+\donttest{
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
                                y = titanic_imputed[,8])
@@ -38,7 +36,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 cp_rf <- ceteris_paribus_2d(explain_titanic_glm, titanic_imputed[1,],
                        variables = c("age", "fare", "sibsp"))
 head(cp_rf)
-\donttest{
+
 plot(cp_rf)
 
 library("randomForest")

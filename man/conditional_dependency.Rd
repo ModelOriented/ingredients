@@ -71,7 +71,7 @@ Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Pari
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 }
 \details{
-Find more detailes in \href{https://pbiecek.github.io/PM_VEE/conditionalProfiles.html}{Local Dependency Profiles Chapter}.
+Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 }
 \examples{
 library("DALEX")
