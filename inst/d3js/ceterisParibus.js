@@ -277,7 +277,7 @@ function categoricalPlot(variableName, bData, lData, i){
   }
 
   var y = d3.scaleBand()
-        .rangeRound([plotTop + plotHeight, plotTop])
+        .rangeRound([plotTop, plotTop + plotHeight])
         .padding(0.33)
         .domain(bData.map(d => d.xhat));
 

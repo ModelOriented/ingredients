@@ -318,6 +318,7 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
   # as in https://github.com/ModelOriented/ingredients/issues/82
   if (!is.numeric(all_profiles$`_x_`)) {
     aggregated_profiles$`_x_` <- factor(aggregated_profiles$`_x_`, levels = unique(all_profiles$`_x_`))
+    aggregated_profiles <- aggregated_profiles[order(aggregated_profiles$`_x_`),]
   }
 
   aggregated_profiles
@@ -352,6 +353,10 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
       # for categorical variables we will calculate weighted average
       # but weights are 0-1, 1 if it's the same level and 0 otherwise
       split_profile$`_w_` <- split_profile$`_orginal_` == split_profile$`_x_`
+
+      # for factors, keep proper order
+      # as in https://github.com/ModelOriented/ingredients/issues/82
+      split_profile$`_x_` <- factor(split_profile$`_x_`, levels = unique(split_profile$`_x_`))
     }
 
     per_points <- split(split_profile, split_profile[, c("_x_", groups)])
@@ -373,12 +378,6 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
     aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
   }
 
-
-  # for factors, keep proper order
-  # as in https://github.com/ModelOriented/ingredients/issues/82
-  if (!is.numeric(all_profiles$`_x_`)) {
-    aggregated_profiles$`_x_` <- factor(aggregated_profiles$`_x_`, levels = unique(all_profiles$`_x_`))
-  }
   aggregated_profiles$`_ids_` <- 0
 
   aggregated_profiles

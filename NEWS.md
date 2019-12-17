@@ -2,6 +2,7 @@ ingredients 0.5.0
 ---------------------------------------------------------------
 * `feature_importance` now does `15` permutations on each variable by default. Use the `B` argument to change this number
 * added boxplots to `plot.feature_importance` and `plotD3.feature_importance` that showcase the permutation data
+* in `aggregate_profiles`: preserve `_x_` column factor order and sort its values [#82](https://github.com/ModelOriented/ingredients/issues/82)
 
 ingredients 0.4.2
 ---------------------------------------------------------------
