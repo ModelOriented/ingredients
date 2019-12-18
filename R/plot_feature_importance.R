@@ -93,11 +93,33 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
 
   dfl <- c(list(x), list(...))
 
-  # combine all explainers in a single frame
-  fi_df <- do.call(rbind, dfl)
+  # add boxplot data
+  if (show_boxplots) {
+    dfl <- lapply(dfl, function(x) {
+      result <- data.frame(
+        min = tapply(x$dropout_loss, x$variable, min, na.rm = TRUE),
+        q1 = tapply(x$dropout_loss, x$variable, quantile, 0.25, na.rm = TRUE),
+        median = tapply(x$dropout_loss, x$variable, median, na.rm = TRUE),
+        q3 = tapply(x$dropout_loss, x$variable, quantile, 0.75, na.rm = TRUE),
+        max = tapply(x$dropout_loss, x$variable, max, na.rm = TRUE)
+      )
 
-  # add this so it works as before boxplots
-  expl_df <- fi_df[fi_df$permutation == 0,]
+      result$min <- as.numeric(result$min)
+      result$q1 <- as.numeric(result$q1)
+      result$median <- as.numeric(result$median)
+      result$q3 <- as.numeric(result$q3)
+      result$max <- as.numeric(result$max)
+
+      merge(x[x$permutation == 0,], cbind(rownames(result),result), by.x = "variable", by.y = "rownames(result)")
+    })
+  } else {
+    dfl <- lapply(dfl, function(x) {
+      x[x$permutation == 0,]
+    })
+  }
+
+  # combine all explainers in a single frame
+  expl_df <- do.call(rbind, dfl)
 
   # add an additional column that serve as a baseline
   bestFits <- expl_df[expl_df$variable == "_full_model_", ]
@@ -116,9 +138,9 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
     trimmed_parts <- lapply(unique(ext_expl_df$label), function(label) {
       tmp <- ext_expl_df[ext_expl_df$label == label, ]
       tmp[tail(order(tmp$dropout_loss.x), max_vars), ]
-    })
+    });
     ext_expl_df <- do.call(rbind, trimmed_parts)
-  }
+  };
 
   variable <- dropout_loss.x <- dropout_loss.y <- label <- dropout_loss <- NULL
   nlabels <- length(unique(bestFits$label))
@@ -130,9 +152,8 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
 
   if (show_boxplots) {
     pl <- pl +
-      geom_boxplot(data = fi_df[!(substr(fi_df$variable, 1, 1) == "_"),],
-                   aes(x = variable, y = dropout_loss), coef = 100,
-                   fill = "#371ea3", color = "#371ea3", width = 0.25)
+      geom_boxplot(aes(ymin = min, lower = q1, middle = median, upper = q3, ymax = max),
+                   stat = "identity", fill = "#371ea3", color = "#371ea3", width = 0.25)
   }
 
   # facets have fixed space, can be resolved with ggforce https://github.com/tidyverse/ggplot2/issues/2933

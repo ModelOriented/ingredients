@@ -92,6 +92,10 @@ plotD3.feature_importance_explainer <-  function(x, ...,
 
       merge(x[x$permutation == 0,], cbind(rownames(result),result), by.x = "variable", by.y = "rownames(result)")
     })
+  } else {
+    dfl <- lapply(dfl, function(x) {
+      x[x$permutation == 0,]
+    })
   }
 
   fi_df <- do.call(rbind, dfl)
@@ -137,7 +141,8 @@ plotD3.feature_importance_explainer <-  function(x, ...,
     df$variable <- factor(as.character(df$variable), levels = perm)
     df <- df[order(df$variable),]
 
-    colnames(df)[c(3,8)] <- c("dropout_loss", "full_model")
+    colnames(df)[colnames(df) == "dropout_loss.x"] <- "dropout_loss"
+    colnames(df)[colnames(df) == "dropout_loss.y"] <- "full_model"
 
     label_list <- unique(as.character(df$variable))
 
@@ -162,8 +167,10 @@ plotD3.feature_importance_explainer <-  function(x, ...,
   } else if (split == "feature") {
     # one plot for each feature
 
-    colnames(df)[c(3,8)] <- c("dropout_loss", "full_model")
-    label_list <- unique(as.character(df$label))
+    colnames(df)[colnames(df) == "dropout_loss.x"] <- "dropout_loss"
+    colnames(df)[colnames(df) == "dropout_loss.y"] <- "full_model"
+
+        label_list <- unique(as.character(df$label))
 
     dfl <- split(df, f = as.character(df$variable))
 
