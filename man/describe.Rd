@@ -79,6 +79,7 @@ The current design of DALEX explainer does not allow for displaying variables va
 library("DALEX")
 library("randomForest")
 
+\donttest{
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
@@ -90,10 +91,12 @@ selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical")
 describe(pdp, variables = "gender")
+}
 
 library("DALEX")
 library("randomForest")
 
+\donttest{
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,
@@ -106,7 +109,7 @@ cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
 
 plot(cp_rf, variable_type = "categorical")
 describe(cp_rf, variables = "class", label = "the predicted probability")
-
+}
 library("DALEX")
 
 lm_model <- lm(m2.price~., data = apartments)

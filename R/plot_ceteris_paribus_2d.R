@@ -30,6 +30,7 @@
 #' new_apartment <- apartments_test[1,]
 #' new_apartment
 #'
+#' \donttest{
 #' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment)
 #' head(wi_rf_2d)
 #'
@@ -37,7 +38,7 @@
 #' plot(wi_rf_2d, add_contour = FALSE)
 #' plot(wi_rf_2d, add_observation = FALSE)
 #' plot(wi_rf_2d, add_raster = FALSE)
-#' \donttest{
+#'
 #' # HR data
 #' model <- randomForest(status ~ gender + age + hours + evaluation + salary, data = HR)
 #'

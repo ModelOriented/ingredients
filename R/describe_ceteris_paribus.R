@@ -27,6 +27,7 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
+#' \donttest{
 #' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
@@ -39,7 +40,7 @@
 #'
 #' plot(cp_rf, variable_type = "categorical")
 #' describe(cp_rf, variables = "class", label = "the predicted probability")
-#'
+#' }
 #' @export
 #' @rdname describe
 describe <- function(x, ...)
