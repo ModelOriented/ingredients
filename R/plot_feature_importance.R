@@ -142,7 +142,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
     ext_expl_df <- do.call(rbind, trimmed_parts)
   };
 
-  variable <- dropout_loss.x <- dropout_loss.y <- label <- dropout_loss <- NULL
+  variable <- q1 <- q3 <- dropout_loss.x <- dropout_loss.y <- label <- dropout_loss <- NULL
   nlabels <- length(unique(bestFits$label))
 
   # plot it
