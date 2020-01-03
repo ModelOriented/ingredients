@@ -1,3 +1,8 @@
+ingredients 0.5.1
+---------------------------------------------------------------
+* synchronisation with changes in DALEX 0.5
+* new argument `desc_sorting` in `plot.variable_importance_explainer` [#94](https://github.com/ModelOriented/ingredients/issues/94)
+
 ingredients 0.5.0
 ---------------------------------------------------------------
 * `feature_importance` now does `15` permutations on each variable by default. Use the `B` argument to change this number

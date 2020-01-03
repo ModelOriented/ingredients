@@ -4,7 +4,14 @@
 \alias{plot.feature_importance_explainer}
 \title{Plots Feature Importance}
 \usage{
-\method{plot}{feature_importance_explainer}(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10)
+\method{plot}{feature_importance_explainer}(
+  x,
+  ...,
+  max_vars = NULL,
+  show_boxplots = TRUE,
+  bar_width = 10,
+  desc_sorting = TRUE
+)
 }
 \arguments{
 \item{x}{a feature importance explainer produced with the \code{feature_importance()} function}
@@ -17,6 +24,8 @@ By default \code{NULL} what means all variables}
 \item{show_boxplots}{logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.}
 
 \item{bar_width}{width of bars. By default \code{10}}
+
+\item{desc_sorting}{logical. Should the bars be sorted descending? By default TRUE}
 }
 \value{
 a \code{ggplot2} object

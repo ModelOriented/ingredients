@@ -46,3 +46,5 @@ reference:
     contents:
     - select_neighbours
     - select_sample
+    - calculate_variable_profile
+    - calculate_variable_split

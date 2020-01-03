@@ -16,6 +16,7 @@
 #' By default \code{NULL} what means all variables
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.
 #' @param bar_width width of bars. By default \code{10}
+#' @param desc_sorting logical. Should the bars be sorted descending? By default TRUE
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
@@ -89,7 +90,11 @@
 #' }
 #'
 #' @export
-plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10) {
+plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10, desc_sorting = TRUE) {
+
+  if (!is.logical(desc_sorting)){
+    stop("desc_sorting is not logical")
+  }
 
   dfl <- c(list(x), list(...))
 
@@ -127,7 +132,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
 
   # set the order of variables depending on their contribution
   ext_expl_df$variable <- reorder(ext_expl_df$variable,
-                                  ext_expl_df$dropout_loss.x - ext_expl_df$dropout_loss.y,
+                                  (ext_expl_df$dropout_loss.x - ext_expl_df$dropout_loss.y) * ifelse(desc_sorting, 1, -1),
                                   mean)
 
   # remove rows that starts with _
