@@ -200,3 +200,8 @@ test_that("feature_importance with type difference", {
   expect_equal(result$dropout_loss[result$variable=="_full_model_" & result$permutation == 0], 0)
 })
 
+test_that("Inverse sorting of bars",{
+  result <- feature_importance(explainer_rf, type="difference")
+
+  expect_error(plot(result, desc_sorting = "desc"))
+})
