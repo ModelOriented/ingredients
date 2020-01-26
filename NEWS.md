@@ -1,3 +1,8 @@
+ingredients 0.5.2
+---------------------------------------------------------------
+* `ceteris_paribus` profiles are now working for categorical variables
+* `show_profiles`, `show_observations`, `show_residuals` are now working for categorical variables
+
 ingredients 0.5.1
 ---------------------------------------------------------------
 * synchronisation with changes in DALEX 0.5

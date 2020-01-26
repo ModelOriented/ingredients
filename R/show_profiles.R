@@ -76,28 +76,51 @@ show_profiles <- function(x, ...,
   }
   # is color a variable or literal?
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
-  # this function works only for numerical variables
+
+  # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
-  vnames <- names(which(is_numeric))
-  all_profiles$`_x_` <- 0
+  if (all(!is_numeric)) {
+    # only factors
+    vnames <- all_variables
+    all_profiles$`_x_` <- ""
 
-  if (length(vnames) == 0) {
-      stop("There are no numerical variables")
-  }
+    lapply(variables, function(sv) {
+      tmp <- all_profiles[all_profiles$`_vname_` == sv,
+                          c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
+      # instances to be merged
+      key <- selected_observation[,sv, drop = FALSE]
+      # add right values to profiles
+      tmp$`_real_point_`  <- tmp[,sv] == key[as.character(tmp$`_ids_`), sv]
+      tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
+      colnames(tmp)[1]    <- "_x_"
+      tmp$`_x_` <- as.character(tmp$`_x_`)
+      tmp
+    }) -> lsc
+    # transformed data frame
+    selected_cp_flat <- do.call(rbind, lsc)
 
-  # how to plot profiles
-  # select only suitable variables  either in vnames or in variables
-  all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-  tmp <- as.character(all_profiles$`_vname_`)
-  for (i in seq_along(tmp)) {
-    all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
-  }
-
-  # show profiles without aggregation
-  if (is_color_a_variable) {
-    pl <- geom_line(data = all_profiles, aes_string(color = paste0("`",color,"`")), size = size, alpha = alpha)
+    # prepare plot
+    pl <- geom_line(data = selected_cp_flat,
+                      aes_string("`_x_`", "`_yhat_`", group = "`_ids_`"),
+                    size = size, alpha = alpha, color = color)
   } else {
-    pl <- geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
+    vnames <- all_variables[which(is_numeric)]
+    all_profiles$`_x_` <- 0
+
+    # how to plot profiles
+    # select only suitable variables  either in vnames or in variables
+    all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
+    tmp <- as.character(all_profiles$`_vname_`)
+    for (i in seq_along(tmp)) {
+      all_profiles$`_x_`[i] <- all_profiles[i, tmp[i]]
+    }
+
+    # show profiles without aggregation
+    if (is_color_a_variable) {
+      pl <- geom_line(data = all_profiles, aes_string(color = paste0("`",color,"`")), size = size, alpha = alpha)
+    } else {
+      pl <- geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
+    }
   }
 
   pl

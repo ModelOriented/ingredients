@@ -85,8 +85,12 @@ show_residuals <- function(x, ...,
   }
   # only numerical or only factors?
   is_numeric <- sapply(all_observations[, all_variables, drop = FALSE], is.numeric)
-  vnames <- all_variables[which(is_numeric)]
-  if (length(vnames) == 0) stop("There are no numerical variables")
+  if (all(!is_numeric)) {
+    # only factors
+    vnames <- all_variables
+  } else {
+    vnames <- all_variables[which(is_numeric)]
+  }
 
   # prepare data for plotting points
   is_color_points_a_variable    <- head(color,1) %in% c(all_variables, "_label_", "_vname_", "_ids_")

@@ -144,7 +144,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     if (is.null(variables)) {
       variables <- vnames
     }
-    pl <- plot_categorical_ceteris_paribus(all_profiles, head(attr(x, "observation"), 1), variables, facet_ncol = facet_ncol)
+    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol)
   }
   pl
 }
@@ -179,29 +179,26 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, co
 plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol) {
 
   lapply(variables, function(sv) {
-    tmp <- all_profiles[all_profiles$`_vname_` == sv, c(sv, "_vname_", "_yhat_", "_label_")]
-    tmp$`_vname_` <- paste(tmp$`_vname_`, "=", selected_observation[1, sv])
-    colnames(tmp)[1] = "variable"
-    tmp$variable <- as.character(tmp$variable)
+    tmp <- all_profiles[all_profiles$`_vname_` == sv,
+                        c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
+    # instances to be merged
+    key <- selected_observation[,sv, drop = FALSE]
+    # add right values to profiles
+    tmp$`_real_point_`  <- tmp[,sv] == key[as.character(tmp$`_ids_`), sv]
+    tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
+    colnames(tmp)[1]    <- "_x_"
+    tmp$`_x_` <- as.character(tmp$`_x_`)
     tmp
   }) -> lsc
   # transformed data frame
   selected_cp_flat <- do.call(rbind, lsc)
 
-  selected_y <- selected_observation$`_yhat_`
-  t_shift <- trans_new("shift",
-                               transform = function(x) {x - selected_y},
-                               inverse = function(x) {x + selected_y})
-
   # prepare plot
-  `_vname_` <- NULL
-  pl <- ggplot(selected_cp_flat, aes_string("variable", "`_yhat_`")) +
-    geom_col(fill = "#46bac2") + facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
-    scale_y_continuous(trans = t_shift)
-
-  pl +
-    coord_flip() +
-    theme_drwhy_vertical() +
-    geom_hline(yintercept=selected_y, size = 0.5, linetype = 2, color = "#371ea3") +
+  ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
+    geom_line(color = "#46bac2") +
+    geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
+               color = "#371ea3", size = 2) +
+    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    theme_drwhy() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     xlab("") + ylab("prediction")
 }

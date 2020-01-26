@@ -65,7 +65,14 @@ show_observations <- function(x, ...,
   is_numeric <- sapply(all_observations[, all_variables, drop = FALSE], is.numeric)
   if (variable_type == "numerical") {
     vnames <- all_variables[which(is_numeric)]
-    if (length(vnames) == 0) stop("There are no numerical variables")
+    if (length(vnames) == 0) {
+      # change to categorical
+      variable_type <- "categorical"
+      # send message
+      message("'variable_type' changed to 'categorical' due to lack of numerical variables.")
+      # take all
+      vnames <- all_variables
+    }
   } else {
     vnames <- all_variables[which(!is_numeric)]
     if (length(vnames) == 0) stop("There are no non-numerical variables")
