@@ -36,12 +36,11 @@
 
 
 <meta property="og:title" content="Conditional Dependency Profiles — conditional_dependency" />
-
 <meta property="og:description" content="Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -83,7 +82,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -144,10 +143,8 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
     </div>
 
     <div class="ref-description">
-    
     <p>Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -181,7 +178,7 @@ Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_pr
 <span class='fu'>conditional_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>local_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -231,19 +228,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>name of the model. By default it's extracted from the <code>class</code> attribute of the model</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profile_explainer</code></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Find more detailes in <a href='https://pbiecek.github.io/PM_VEE/conditionalProfiles.html'>Local Dependency Profiles Chapter</a>.</p>
-    
+    <p>Find more detailes in the <a href='https://pbiecek.github.io/ema/accumulatedLocalProfiles.html'>Accumulated Local Dependency Chapter</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -285,13 +279,9 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

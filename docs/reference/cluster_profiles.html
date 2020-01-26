@@ -36,12 +36,11 @@
 
 
 <meta property="og:title" content="Cluster Ceteris Paribus Profiles — cluster_profiles" />
-
 <meta property="og:description" content="This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -83,7 +82,7 @@ hierarchical clustering." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -144,10 +143,8 @@ hierarchical clustering." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>cluster_profiles</span>(
@@ -159,7 +156,7 @@ hierarchical clustering.</p>
   <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,19 +190,16 @@ If <code>categorical</code> then only categorical variables will be computed.</p
       <td><p>if not <code>NULL</code> then only <code>variables</code> will be presented</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>aggregated_profiles_explainer</code></p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Find more detailes in the <a href='https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html'>Clustering Profiles Chapter</a>.</p>
-    
+    <p>Find more detailes in the <a href='https://pbiecek.github.io/ema/partialDependenceProfiles.html'>Clustering Profiles Chapter</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -220,11 +214,11 @@ If <code>categorical</code> then only categorical variables will be computed.</p
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; model_info        :  package stats , ver. 3.6.1 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198219e-13 , max =  0.8448637  
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.0 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
@@ -247,11 +241,11 @@ If <code>categorical</code> then only categorical variables will be computed.</p
 #&gt;   -&gt; model label       :  Random Forest v7 
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.009390473 , mean =  0.322494 , max =  0.9900508  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7952687 , mean =  -0.0003372464 , max =  0.907451  
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
@@ -322,13 +316,9 @@ If <code>categorical</code> then only categorical variables will be computed.</p
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

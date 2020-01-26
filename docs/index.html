@@ -53,7 +53,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -107,9 +107,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="model-ingredients-" class="section level1">
+<div id="model-ingredients" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#model-ingredients-" class="anchor"></a>Model Ingredients <img src="reference/figures/logo.png" align="right" width="150">
+<a href="#model-ingredients" class="anchor"></a>Model Ingredients <img src="reference/figures/logo.png" align="right" width="150">
 </h1></div>
 
 <div id="overview" class="section level2">
@@ -121,7 +121,7 @@
 <li>
 <code><a href="reference/feature_importance.html">feature_importance()</a></code> for assessment of global level feature importance,</li>
 <li>
-<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://pbiecek.github.io/PM_VEE/ceterisParibus.html" class="uri">https://pbiecek.github.io/PM_VEE/ceterisParibus.html</a>),</li>
+<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://pbiecek.github.io/ema/ceterisParibus.html" class="uri">https://pbiecek.github.io/ema/ceterisParibus.html</a>),</li>
 <li>
 <code><a href="reference/partial_dependency.html">partial_dependency()</a></code> for Partial Dependency Plots,</li>
 <li>
@@ -131,24 +131,24 @@
 <li>
 <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus Profiles,</li>
 <li>
-<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html" class="uri">https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html</a>),</li>
+<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://pbiecek.github.io/ema/ceterisParibusOscillations.html" class="uri">https://pbiecek.github.io/ema/ceterisParibusOscillations.html</a>),</li>
 <li>
-<code><a href="reference/ceteris_paribus_2d.html">ceteris_paribus_2d()</a></code> for Ceteris Paribus 2D Profiles (read more at <a href="https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html" class="uri">https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html</a>),</li>
+<code><a href="reference/ceteris_paribus_2d.html">ceteris_paribus_2d()</a></code> for Ceteris Paribus 2D Profiles (read more at <a href="https://pbiecek.github.io/ema/ceterisParibus2d.html" class="uri">https://pbiecek.github.io/ema/ceterisParibus2d.html</a>),</li>
 <li>generic <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> for better usability of selected explainers,</li>
 <li>generic <code><a href="reference/plotD3_ceteris_paribus.html">plotD3()</a></code> for interactive, D3 based explanations,</li>
 <li>generic <code><a href="reference/describe.html">describe()</a></code> for explanations in natural language.</li>
 </ul>
-<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/PM_VEE/">Predictive Models: Explore, Explain, and Debug</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
+<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/ema/">Explanatory Model Analysis. Explore, Explain and Examine Predictive Models</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code># the easiest way to get ingredients is to install it from CRAN:
+<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html"># the easiest way to get ingredients is to install it from CRAN:
 install.packages("ingredients")
 
 # Or the the development version from GitHub:
 # install.packages("devtools")
-devtools::install_github("ModelOriented/ingredients")</code></pre>
+devtools::install_github("ModelOriented/ingredients")</a></code></pre>
 </div>
 <div id="interactive-plots-with-d3" class="section level2">
 <h2 class="hasAnchor">

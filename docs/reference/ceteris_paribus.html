@@ -36,14 +36,13 @@
 
 
 <meta property="og:title" content="Ceteris Paribus Profiles aka Individual Variable Profiles — ceteris_paribus" />
-
 <meta property="og:description" content="This explainer works for individual observations.
 For each observation it calculates Ceteris Paribus Profiles for selected variables.
 Such profiles can be used to hypothesize about model results if selected variable is changed.
 For this reason it is also called 'What-If Profiles'." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -85,7 +84,7 @@ For this reason it is also called 'What-If Profiles'." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -146,12 +145,10 @@ For this reason it is also called 'What-If Profiles'." />
     </div>
 
     <div class="ref-description">
-    
     <p>This explainer works for individual observations.
 For each observation it calculates Ceteris Paribus Profiles for selected variables.
 Such profiles can be used to hypothesize about model results if selected variable is changed.
 For this reason it is also called 'What-If Profiles'.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ceteris_paribus</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -180,7 +177,7 @@ For this reason it is also called 'What-If Profiles'.</p>
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
   <span class='no'>...</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -230,19 +227,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
       <td><p>name of the model. By default it's extracted from the <code>class</code> attribute of the model</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>ceteris_paribus_explainer</code>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Find more details in <a href='https://pbiecek.github.io/PM_VEE/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
-    
+    <p>Find more details in <a href='https://pbiecek.github.io/ema/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -337,13 +331,9 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -36,11 +36,10 @@
 
 
 <meta property="og:title" content="Plot Ceteris Paribus 2D Explanations — plot.ceteris_paribus_2d_explainer" />
-
 <meta property="og:description" content="This function plots What-If Plots for a single prediction / observation." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -82,7 +81,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -143,9 +142,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function plots What-If Plots for a single prediction / observation.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_2d_explainer</span>
@@ -160,7 +157,7 @@
   <span class='kw'>pch</span> <span class='kw'>=</span> <span class='st'>"+"</span>,
   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>6</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -201,15 +198,13 @@
       <td><p>numeric, size of individual datapoints</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> object</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Predictive Models: Visual Exploration, Explanation and Debugging <a href='https://pbiecek.github.io/PM_VEE'>https://pbiecek.github.io/PM_VEE</a></p>
-    
+    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -225,6 +220,7 @@
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,]
 <span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
+<span class='co'># \donttest{</span>
 <span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus_2d.html'>ceteris_paribus_2d</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2            vname1  vname2        label
 #&gt; 1001   4985.395   1920   20.0 construction.year surface randomForest
@@ -233,7 +229,7 @@
 #&gt; 1001.3 4989.834   1920   23.9 construction.year surface randomForest
 #&gt; 1001.4 4988.589   1920   25.2 construction.year surface randomForest
 #&gt; 1001.5 4988.296   1920   26.5 construction.year surface randomForest</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_contour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_observation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>, <span class='kw'>add_raster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.ceteris_paribus_2d_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># HR data</span>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>hours</span> + <span class='no'>evaluation</span> + <span class='no'>salary</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>)
 
@@ -247,11 +243,11 @@
 #&gt;   -&gt; model label       :  fired 
 #&gt;   -&gt; data              :  7847  rows  5  cols 
 #&gt;   -&gt; target variable   :  7847  values 
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( <span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  pred1 
 #&gt;   -&gt; predicted values  :  numerical, min =  0 , mean =  0.3762457 , max =  1  
-#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.768 , mean =  -0.01241239 , max =  0.722  
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='no'>new_emp</span> <span class='kw'>&lt;-</span> <span class='no'>HR</span>[<span class='fl'>1</span>,]
 <span class='no'>new_emp</span></div><div class='output co'>#&gt;   gender      age    hours evaluation salary status
 #&gt; 1   male 32.58267 41.88626          3      1  fired</div><div class='input'>
@@ -271,11 +267,8 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

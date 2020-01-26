@@ -36,12 +36,11 @@
 
 
 <meta property="og:title" content="Select Subset of Rows Closest to a Specified Observation — select_neighbours" />
-
 <meta property="og:description" content="Function select_neighbours selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -83,7 +82,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.0</span>
+          <span class="version version-default">0.5.2</span>
         </div>
       </div>
     </div>
@@ -144,10 +143,8 @@ This is useful if data is large and we need just a sample to calculate profiles.
     </div>
 
     <div class="ref-description">
-    
     <p>Function <code>select_neighbours</code> selects subset of rows from data set.
 This is useful if data is large and we need just a sample to calculate profiles.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>select_neighbours</span>(
@@ -158,7 +155,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
   <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>,
   <span class='kw'>frac</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,17 +186,15 @@ By default these are all variables present in <code>data</code> and <code>observ
 Either <code>n</code> or <code>frac</code> need to be specified.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a data frame with selected rows</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>select_neighbours()</code> function is S3 generic.
 If you want to work on non standard data sources (like H2O ddf, external databases)
 you should overload it.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
@@ -225,11 +220,8 @@ you should overload it.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
