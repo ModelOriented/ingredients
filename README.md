@@ -13,18 +13,18 @@ The `ingredients` package is a collection of tools for assessment of feature imp
 Key functions: 
 
 * `feature_importance()` for assessment of global level feature importance, 
-* `ceteris_paribus()` for calculation of the Ceteris Paribus / What-If Profiles (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus.html),
+* `ceteris_paribus()` for calculation of the Ceteris Paribus / What-If Profiles (read more at https://pbiecek.github.io/ema/ceterisParibus.html),
 * `partial_dependency()` for Partial Dependency Plots,
 * `conditional_dependency()` for Conditional Dependency Plots also called M Plots,
 * `accumulated_dependency()` for Accumulated Local Effects Plots,
 * `aggregate_profiles()` and `cluster_profiles()` for aggregation of Ceteris Paribus Profiles,
-* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/PM_VEE/ceterisParibusOscillations.html),
-* `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/PM_VEE/ceterisParibus2d.html),
+* `calculate_oscillations()` for calculation of the Ceteris Paribus Oscillations (read more at https://pbiecek.github.io/ema/ceterisParibusOscillations.html),
+* `ceteris_paribus_2d()` for Ceteris Paribus 2D Profiles  (read more at https://pbiecek.github.io/ema/ceterisParibus2d.html),
 * generic `print()` and `plot()` for better usability of selected explainers,
 * generic `plotD3()` for interactive, D3 based explanations,
 * generic `describe()` for explanations in natural language.
  
-The philosophy behind `ingredients` explanations is described in the [Predictive Models: Explore, Explain, and Debug](https://pbiecek.github.io/PM_VEE/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
+The philosophy behind `ingredients` explanations is described in the [Explanatory Model Analysis. Explore, Explain and Examine Predictive Models](https://pbiecek.github.io/ema/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
 
 
 ## Installation
