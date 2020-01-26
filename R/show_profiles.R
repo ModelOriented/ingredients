@@ -87,11 +87,6 @@ show_profiles <- function(x, ...,
     lapply(variables, function(sv) {
       tmp <- all_profiles[all_profiles$`_vname_` == sv,
                           c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
-      # instances to be merged
-      key <- selected_observation[,sv, drop = FALSE]
-      # add right values to profiles
-      tmp$`_real_point_`  <- tmp[,sv] == key[as.character(tmp$`_ids_`), sv]
-      tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
       colnames(tmp)[1]    <- "_x_"
       tmp$`_x_` <- as.character(tmp$`_x_`)
       tmp
