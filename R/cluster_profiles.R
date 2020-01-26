@@ -3,7 +3,7 @@
 #' This function calculates aggregates of ceteris paribus profiles based on
 #' hierarchical clustering.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
@@ -14,7 +14,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be computed.
 #' If \code{categorical} then only categorical variables will be computed.
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @importFrom stats as.dist cutree hclust
 #'

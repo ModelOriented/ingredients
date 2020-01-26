@@ -5,7 +5,7 @@
 #' Such profiles can be used to hypothesize about model results if selected variable is changed.
 #' For this reason it is also called 'What-If Profiles'.
 #'
-#' Find more details in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more details in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x an explainer created with the \code{DALEX::explain()} function, or a model to be explained.
 #' @param data validation dataset. It will be extracted from \code{x} if it's an explainer
@@ -23,7 +23,7 @@
 #' @param grid_points maximum number of points for profile calculations. Note that the finaln number of points may be lower than \code{grid_points}, eg. if there is not enough unique values for a given variable. Will be passed to \code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return an object of the class \code{ceteris_paribus_explainer}.
 #'

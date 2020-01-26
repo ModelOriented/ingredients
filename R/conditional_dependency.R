@@ -3,7 +3,7 @@
 #' Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
 #' Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
 #' or a model to be explained.
@@ -21,7 +21,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return an object of the class \code{aggregated_profile_explainer}
 #'

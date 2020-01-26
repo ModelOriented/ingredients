@@ -69,7 +69,7 @@ Partial Dependency Profiles are averages from Ceteris Paribus Profiles.
 Function \code{partial_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
+Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
 }
 \examples{
 library("DALEX")
@@ -106,5 +106,5 @@ plotD3(pdp_rf, label_margin = 80, scale_plot = TRUE)
 
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

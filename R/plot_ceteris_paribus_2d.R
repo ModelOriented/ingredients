@@ -12,7 +12,7 @@
 #' @param pch character, symbol used to plot observations
 #' @param size numeric, size of individual datapoints
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return a \code{ggplot2} object
 #'

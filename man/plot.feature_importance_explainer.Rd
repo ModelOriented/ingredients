@@ -40,7 +40,7 @@ In different panels variable contributions may not look like sorted if variable
 importance is different in different in different models.
 }
 \details{
-Find more details in the \href{https://pbiecek.github.io/PM_VEE/featureImportance.html}{Feature Importance Chapter}.
+Find more details in the \href{https://pbiecek.github.io/ema/featureImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 library("DALEX")
@@ -106,5 +106,5 @@ plot(fi_glm, fi_xgb, bar_width = 5)
 
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

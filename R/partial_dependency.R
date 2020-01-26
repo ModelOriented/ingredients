@@ -3,7 +3,7 @@
 #' Partial Dependency Profiles are averages from Ceteris Paribus Profiles.
 #' Function \code{partial_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer} or
 #' or a model to be explained.
@@ -22,7 +22,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'

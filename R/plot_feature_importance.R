@@ -8,7 +8,7 @@
 #' In different panels variable contributions may not look like sorted if variable
 #' importance is different in different in different models.
 #'
-#' Find more details in the \href{https://pbiecek.github.io/PM_VEE/featureImportance.html}{Feature Importance Chapter}.
+#' Find more details in the \href{https://pbiecek.github.io/ema/featureImportance.html}{Feature Importance Chapter}.
 #'
 #' @param x a feature importance explainer produced with the \code{feature_importance()} function
 #' @param ... other explainers that shall be plotted together
@@ -25,7 +25,7 @@
 #'
 #' @return a \code{ggplot2} object
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @examples
 #' library("DALEX")

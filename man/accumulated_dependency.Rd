@@ -70,7 +70,7 @@ Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus P
 Function \code{\link{accumulated_dependency}} calls \code{\link{ceteris_paribus}} and then \code{\link{aggregate_profiles}}.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/PM_VEE/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
+Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
 }
 \examples{
 library("DALEX")
@@ -108,5 +108,5 @@ plotD3(adp_rf, label_margin = 80, scale_plot = TRUE)
 }
 \references{
 ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

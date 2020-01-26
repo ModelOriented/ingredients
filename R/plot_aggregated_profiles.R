@@ -12,7 +12,7 @@
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return a \code{ggplot2} object
 #'

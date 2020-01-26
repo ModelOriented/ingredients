@@ -7,7 +7,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param bar_width width of bars. By default 10
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return a \code{ggplot2} object
 #'

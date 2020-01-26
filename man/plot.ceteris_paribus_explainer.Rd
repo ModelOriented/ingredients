@@ -40,7 +40,7 @@ a \code{ggplot2} object
 Function \code{plot.ceteris_paribus_explainer} plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 
-Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
@@ -97,5 +97,5 @@ plotD3(cp_rf, variables = c("class", "embarked", "gender"),
 }
 }
 \references{
-Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 }

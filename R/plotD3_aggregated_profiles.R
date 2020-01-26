@@ -5,7 +5,7 @@
 #' It works in a similar way to \code{\link{plotD3.ceteris_paribus_explainer}} but, instead of individual profiles,
 #' show average profiles for each variable listed in the \code{variables} vector.
 #'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a aggregated profiles explainer produced with function \code{aggregate_profiles()}
 #' @param ... other explainers that shall be plotted together
@@ -18,7 +18,7 @@
 #' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins in \code{categorical} type
 #'
-#' @references Predictive Models: Visual Exploration, Explanation and Debugging \url{https://pbiecek.github.io/PM_VEE}
+#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return a \code{r2d3} object.
 #'

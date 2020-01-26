@@ -5,7 +5,7 @@
 #' It uses output from \code{\link{ceteris_paribus}} function.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 #'
-#' Find more detailes in \href{https://pbiecek.github.io/PM_VEE/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
