@@ -137,20 +137,20 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   if (variable_type == "numerical") {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-    pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, color, size, alpha, facet_ncol = facet_ncol)
+    pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, facet_ncol = facet_ncol, color, size, alpha)
   } else {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% c(vnames, variables), ]
     if (is.null(variables)) {
       variables <- vnames
     }
-    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol)
+    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color, size, alpha)
   }
   pl
 }
 
 
-plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, color, size, alpha, facet_ncol) {
+plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, facet_ncol, color, size, alpha) {
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
   for (i in seq_along(tmp)) {
@@ -176,7 +176,7 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, co
 }
 
 
-plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol) {
+plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2", size = 2, alpha) {
 
   lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -195,9 +195,9 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
 
   # prepare plot
   ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
-    geom_line(color = "#46bac2") +
+    geom_line(size = size/2, alpha = alpha, color = color) +
     geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
-               color = "#371ea3", size = 2) +
+               color = color, size = size, alpha = alpha) +
     facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme_drwhy() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     xlab("") + ylab("prediction")
