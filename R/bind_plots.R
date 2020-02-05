@@ -58,6 +58,3 @@ bind_plots <- function(..., byrow = FALSE){
 
     gridExtra::grid.arrange(grobs = gg_objects, layout_matrix = layout_matrix)
 }
-
-
-
