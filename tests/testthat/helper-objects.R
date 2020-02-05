@@ -81,4 +81,8 @@ apartments_num_new_observation <- apartments_num[2,-1]
 
 apartments_num_mod <- apartments_num[,-1]
 
+# testthat ----------------------------------------------------------------
+error_message <- function(title, failed_values = NULL) paste0("Error! ", title, paste0(failed_values, collapse = ", "))
+expect_class <- function(object, class) expect(any(base::class(object) %in% class), error_message(paste("object is", base::class(object), "not", class)))
+
 
