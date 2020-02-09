@@ -97,6 +97,10 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   }
 
   dfl <- c(list(x), list(...))
+  
+  # extract labels for plot's subtitle
+  glm_labels <- paste0(lapply(dfl, function(x) {levels(x$label)}), collapse = ", ")
+  plot_subtitle <- paste0("created for the ", glm_labels, " model")
 
   # add boxplot data
   if (show_boxplots) {
@@ -167,7 +171,9 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
       scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
       facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
       theme(legend.position = "none") +
-      ylab("Drop-out loss") + xlab("")
+      ylab("Drop-out loss") + xlab("") +
+      labs(title = "Feature Importance", subtitle = plot_subtitle) +
+      theme(plot.subtitle = element_text(hjust = 0.5, vjust = 0.15))
 
 }
 
