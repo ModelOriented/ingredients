@@ -170,10 +170,10 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   pl + coord_flip() +
       scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
       facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
-      theme(legend.position = "none") +
       ylab("Drop-out loss") + xlab("") +
       labs(title = "Feature Importance", subtitle = plot_subtitle) +
-      theme(plot.subtitle = element_text(hjust = 0.5, vjust = 0.15))
+      theme(legend.position = "none",
+            plot.subtitle = element_text(hjust = 0.5, vjust = 0.15))
 
 }
 
