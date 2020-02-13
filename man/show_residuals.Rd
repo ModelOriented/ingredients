@@ -9,7 +9,7 @@ show_residuals(
   ...,
   size = 0.75,
   alpha = 1,
-  color = c(`TRUE` = "#371ea3", `FALSE` = "#f05a71"),
+  color = c(`TRUE` = "#8bdcbe", `FALSE` = "#f05a71"),
   variables = NULL
 )
 }

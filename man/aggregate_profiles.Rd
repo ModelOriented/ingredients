@@ -11,7 +11,8 @@ aggregate_profiles(
   groups = NULL,
   type = "partial",
   variables = NULL,
-  span = 0.25
+  span = 0.25,
+  center = FALSE
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ By default \code{NULL} which means that no groups shall be calculated}
 \item{variables}{if not \code{NULL} then aggregate only for selected \code{variables} will be calculated}
 
 \item{span}{smoothing coeffcient, by default 0.25.It's the sd for gaussian kernel}
+
+\item{center}{by default accumulated profiles start at 0. if \code{center=TRUE} then they are centered around average response}
 }
 \value{
 an object of the class \code{aggregated_profiles_explainer}
