@@ -122,7 +122,29 @@ plot.aggregated_profiles_explainer <- function(x, ...,
       geom_col(aes(y = `_yhat_`), size = size, alpha = alpha, fill = color, position = "dodge")
   }
 
+  # If created with partial dependance or accumulated dependance add title
+  if (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer"){
+    # Get title form the class
+    ifelse(class(x)[2] == "partial_dependency_explainer",
+           plot_title <- "Partial Dependence profile",
+           plot_title <- "Accumulated Dependence profile" )
+    
+    # get model names and classes
+    model_name <- c()
+    for (i in 1:length(dfl)){
+      model_name[i] <- unique(dfl[[i]]$`_label`)
+    }
+    subtitle_models <- paste(model_name, collapse = ", ", sep = ",")
+    subtitle <- paste("Created for the ", subtitle_models, " model")
+    
+    # adding to plot
+    res <-  res +  ggtitle(plot_title,
+                           subtitle = subtitle)
+  }
+  
   res + theme_drwhy() + ylab("average prediction") + xlab("") +
+        theme(plot.title = element_text(hjust =0),
+              plot.subtitle = element_text(vjust = -2, hjust = 0)) +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }
 
