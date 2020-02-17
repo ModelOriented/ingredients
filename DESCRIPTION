@@ -27,7 +27,9 @@ RoxygenNote: 7.0.2
 Imports:
     DALEX,
     ggplot2,
-    scales
+    scales,
+    magrittr,
+    gridExtra
 Suggests:
     gower,
     randomForest,
