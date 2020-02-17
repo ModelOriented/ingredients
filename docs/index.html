@@ -15,9 +15,9 @@
     Key functions are:
     feature_importance() for assessment of global level feature importance,
     ceteris_paribus() for calculation of the what-if plots,
-    partial_dependency() for partial dependency plots,
-    conditional_dependency() for conditional dependency plots,
-    accumulated_dependency() for accumulated local effects plots,
+    partial_dependence() for partial dependence plots,
+    conditional_dependence() for conditional dependence plots,
+    accumulated_dependence() for accumulated local effects plots,
     aggregate_profiles() and cluster_profiles() for aggregation of ceteris paribus profiles,
     generic print() and plot() for better usability of selected explainers,
     generic plotD3() for interactive, D3 based explanations, and
@@ -53,7 +53,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.5.2</span>
+          <span class="version version-default">1.0</span>
         </div>
       </div>
     </div>
@@ -107,9 +107,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="model-ingredients" class="section level1">
+<div id="model-ingredients-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#model-ingredients" class="anchor"></a>Model Ingredients <img src="reference/figures/logo.png" align="right" width="150">
+<a href="#model-ingredients-" class="anchor"></a>Model Ingredients <img src="reference/figures/logo.png" align="right" width="150">
 </h1></div>
 
 <div id="overview" class="section level2">
@@ -123,11 +123,11 @@
 <li>
 <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://pbiecek.github.io/ema/ceterisParibus.html" class="uri">https://pbiecek.github.io/ema/ceterisParibus.html</a>),</li>
 <li>
-<code><a href="reference/partial_dependency.html">partial_dependency()</a></code> for Partial Dependency Plots,</li>
+<code><a href="reference/partial_dependence.html">partial_dependence()</a></code> for Partial Dependence Plots,</li>
 <li>
-<code><a href="reference/conditional_dependency.html">conditional_dependency()</a></code> for Conditional Dependency Plots also called M Plots,</li>
+<code><a href="reference/conditional_dependence.html">conditional_dependence()</a></code> for Conditional Dependence Plots also called M Plots,</li>
 <li>
-<code><a href="reference/accumulated_dependency.html">accumulated_dependency()</a></code> for Accumulated Local Effects Plots,</li>
+<code><a href="reference/accumulated_dependence.html">accumulated_dependence()</a></code> for Accumulated Local Effects Plots,</li>
 <li>
 <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus Profiles,</li>
 <li>
@@ -143,12 +143,12 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html"># the easiest way to get ingredients is to install it from CRAN:
+<pre class="{r}"><code># the easiest way to get ingredients is to install it from CRAN:
 install.packages("ingredients")
 
 # Or the the development version from GitHub:
 # install.packages("devtools")
-devtools::install_github("ModelOriented/ingredients")</a></code></pre>
+devtools::install_github("ModelOriented/ingredients")</code></pre>
 </div>
 <div id="interactive-plots-with-d3" class="section level2">
 <h2 class="hasAnchor">

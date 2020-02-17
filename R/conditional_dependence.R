@@ -1,9 +1,9 @@
-#' Conditional Dependency Profiles
+#' Conditional Dependence Profiles
 #'
-#' Conditional Dependency Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
-#' Function 'conditional_dependency' calls 'ceteris_paribus' and then 'aggregate_profiles'.
+#' Conditional Dependence Profiles (aka Local Profiles) average localy Ceteris Paribus Profiles.
+#' Function 'conditional_dependence' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
 #' or a model to be explained.
@@ -12,7 +12,7 @@
 #' @param predict_function predict function, will be extracted from \code{x} if it's an explainer
 #' @param variables names of variables for which profiles shall be calculated.
 #' Will be passed to \code{\link{calculate_variable_split}}. If \code{NULL} then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependency profiles. By default 500.
+#' @param N number of observations used for calculation of partial dependence profiles. By default 500.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
@@ -36,7 +36,7 @@
 #'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
-#' cdp_glm <- conditional_dependency(explain_titanic_glm,
+#' cdp_glm <- conditional_dependence(explain_titanic_glm,
 #'                                   N = 150, variables = c("age", "fare"))
 #' head(cdp_glm)
 #' plot(cdp_glm)
@@ -51,21 +51,21 @@
 #'                               y = titanic_imputed[,8],
 #'                               verbose = FALSE)
 #'
-#' cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")
+#' cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "numerical")
 #' plot(cdp_rf)
 #'
-#' cdp_rf <- conditional_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
+#' cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "categorical")
 #' plotD3(cdp_rf, label_margin = 80, scale_plot = TRUE)
 #' }
 #'
 #' @export
-#' @rdname conditional_dependency
-conditional_dependency <- function(x, ...)
-  UseMethod("conditional_dependency")
+#' @rdname conditional_dependence
+conditional_dependence <- function(x, ...)
+  UseMethod("conditional_dependence")
 
 #' @export
-#' @rdname conditional_dependency
-conditional_dependency.explainer <- function(x,
+#' @rdname conditional_dependence
+conditional_dependence.explainer <- function(x,
                                              variables = NULL,
                                              N = 500,
                                              variable_splits = NULL,
@@ -78,7 +78,7 @@ conditional_dependency.explainer <- function(x,
   predict_function <- x$predict_function
   label <- x$label
 
-  conditional_dependency.default(x = model,
+  conditional_dependence.default(x = model,
                                  data = data,
                                  predict_function = predict_function,
                                  label = label,
@@ -91,8 +91,8 @@ conditional_dependency.explainer <- function(x,
 
 
 #' @export
-#' @rdname conditional_dependency
-conditional_dependency.default <- function(x,
+#' @rdname conditional_dependence
+conditional_dependence.default <- function(x,
                                            data,
                                            predict_function = predict,
                                            label = class(x)[1],
@@ -119,18 +119,22 @@ conditional_dependency.default <- function(x,
                                 variable_splits = variable_splits,
                                 label = label, ...)
 
-  conditional_dependency.ceteris_paribus_explainer(cp, variables = variables, variable_type = variable_type, ...)
+  conditional_dependence.ceteris_paribus_explainer(cp, variables = variables, variable_type = variable_type, ...)
 }
 
 
 #' @export
-#' @rdname conditional_dependency
-conditional_dependency.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname conditional_dependence
+conditional_dependence.ceteris_paribus_explainer <- function(x, ...,
                                                          variables = NULL) {
 
   aggregate_profiles(x, ..., type = "conditional", variables = variables)
 }
 
 #' @export
-#' @rdname conditional_dependency
-local_dependency <- conditional_dependency
+#' @rdname conditional_dependence
+local_dependency <- conditional_dependence
+
+#' @export
+#' @rdname conditional_dependence
+conditional_dependency <- conditional_dependence

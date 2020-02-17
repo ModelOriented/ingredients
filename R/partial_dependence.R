@@ -1,7 +1,7 @@
-#' Partial Dependency Profiles
+#' Partial Dependence Profiles
 #'
-#' Partial Dependency Profiles are averages from Ceteris Paribus Profiles.
-#' Function \code{partial_dependency} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
+#' Partial Dependence Profiles are averages from Ceteris Paribus Profiles.
+#' Function \code{partial_dependence} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
 #'
 #' Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
 #'
@@ -13,7 +13,7 @@
 #' @param variables names of variables for which profiles shall be calculated.
 #' Will be passed to \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependency profiles. By default 500.
+#' @param N number of observations used for calculation of partial dependence profiles. By default 500.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
@@ -37,7 +37,7 @@
 #'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
-#' pdp_glm <- partial_dependency(explain_titanic_glm,
+#' pdp_glm <- partial_dependence(explain_titanic_glm,
 #'                               N = 50, variables = c("age", "fare"))
 #' head(pdp_glm)
 #' plot(pdp_glm)
@@ -52,21 +52,21 @@
 #'                               y = titanic_imputed[,8],
 #'                               verbose = FALSE)
 #'
-#' pdp_rf <- partial_dependency(explain_titanic_rf, variable_type = "numerical")
+#' pdp_rf <- partial_dependence(explain_titanic_rf, variable_type = "numerical")
 #' plot(pdp_rf)
 #'
-#' pdp_rf <- partial_dependency(explain_titanic_rf, variable_type = "categorical")
+#' pdp_rf <- partial_dependence(explain_titanic_rf, variable_type = "categorical")
 #' plotD3(pdp_rf, label_margin = 80, scale_plot = TRUE)
 #' }
 #'
 #' @export
-#' @rdname partial_dependency
-partial_dependency <- function(x, ...)
-  UseMethod("partial_dependency")
+#' @rdname partial_dependence
+partial_dependence <- function(x, ...)
+  UseMethod("partial_dependence")
 
 #' @export
-#' @rdname partial_dependency
-partial_dependency.explainer <- function(x,
+#' @rdname partial_dependence
+partial_dependence.explainer <- function(x,
                                          variables = NULL,
                                          N = 500,
                                          variable_splits = NULL,
@@ -79,7 +79,7 @@ partial_dependency.explainer <- function(x,
   predict_function <- x$predict_function
   label <- x$label
 
-  partial_dependency.default(x = model,
+  partial_dependence.default(x = model,
                              data = data,
                              predict_function = predict_function,
                              label = label,
@@ -93,8 +93,8 @@ partial_dependency.explainer <- function(x,
 
 
 #' @export
-#' @rdname partial_dependency
-partial_dependency.default <- function(x,
+#' @rdname partial_dependence
+partial_dependence.default <- function(x,
                                        data,
                                        predict_function = predict,
                                        label = class(x)[1],
@@ -127,9 +127,12 @@ partial_dependency.default <- function(x,
 
 
 #' @export
-#' @rdname partial_dependency
-partial_dependency.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname partial_dependence
+partial_dependence.ceteris_paribus_explainer <- function(x, ...,
                            variables = NULL) {
   aggregate_profiles(x, ..., type = "partial", variables = variables)
 }
 
+#' @export
+#' @rdname partial_dependence
+partial_dependency <- partial_dependence

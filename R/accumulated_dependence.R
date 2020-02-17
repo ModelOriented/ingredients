@@ -1,9 +1,9 @@
 #' Accumulated Local Effects Profiles aka ALEPlots
 #'
 #' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-#' Function \code{\link{accumulated_dependency}} calls \code{\link{ceteris_paribus}} and then \code{\link{aggregate_profiles}}.
+#' Function \code{\link{accumulated_dependence}} calls \code{\link{ceteris_paribus}} and then \code{\link{aggregate_profiles}}.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependency Chapter}.
+#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
 #' or a model to be explained.
@@ -13,7 +13,7 @@
 #' @param variables names of variables for which profiles shall be calculated.
 #' Will be passed to \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependency profiles.
+#' @param N number of observations used for calculation of partial dependence profiles.
 #' By default, 500 observations will be chosen randomly.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
@@ -39,7 +39,7 @@
 #'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
-#' adp_glm <- accumulated_dependency(explain_titanic_glm,
+#' adp_glm <- accumulated_dependence(explain_titanic_glm,
 #'                                   N = 150, variables = c("age", "fare"))
 #' head(adp_glm)
 #' plot(adp_glm)
@@ -54,21 +54,21 @@
 #'                               y = titanic_imputed[,8],
 #'                               verbose = FALSE)
 #'
-#' adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "numerical")
+#' adp_rf <- accumulated_dependence(explain_titanic_rf, N = 200, variable_type = "numerical")
 #' plot(adp_rf)
 #'
-#' adp_rf <- accumulated_dependency(explain_titanic_rf, N = 200, variable_type = "categorical")
+#' adp_rf <- accumulated_dependence(explain_titanic_rf, N = 200, variable_type = "categorical")
 #' plotD3(adp_rf, label_margin = 80, scale_plot = TRUE)
 #' }
 #'
 #' @export
-#' @rdname accumulated_dependency
-accumulated_dependency <- function(x, ...)
-  UseMethod("accumulated_dependency")
+#' @rdname accumulated_dependence
+accumulated_dependence <- function(x, ...)
+  UseMethod("accumulated_dependence")
 
 #' @export
-#' @rdname accumulated_dependency
-accumulated_dependency.explainer <- function(x,
+#' @rdname accumulated_dependence
+accumulated_dependence.explainer <- function(x,
                                              variables = NULL,
                                              N = 500,
                                              variable_splits = NULL,
@@ -81,7 +81,7 @@ accumulated_dependency.explainer <- function(x,
   predict_function <- x$predict_function
   label <- x$label
 
-  accumulated_dependency.default(x = model,
+  accumulated_dependence.default(x = model,
                                  data = data,
                                  predict_function = predict_function,
                                  label = label,
@@ -94,8 +94,8 @@ accumulated_dependency.explainer <- function(x,
 
 
 #' @export
-#' @rdname accumulated_dependency
-accumulated_dependency.default <- function(x,
+#' @rdname accumulated_dependence
+accumulated_dependence.default <- function(x,
                                            data,
                                            predict_function = predict,
                                            label = class(x)[1],
@@ -127,10 +127,13 @@ accumulated_dependency.default <- function(x,
 
 
 #' @export
-#' @rdname accumulated_dependency
-accumulated_dependency.ceteris_paribus_explainer <- function(x, ...,
+#' @rdname accumulated_dependence
+accumulated_dependence.ceteris_paribus_explainer <- function(x, ...,
                                                              variables = NULL) {
 
   aggregate_profiles(x, ..., type = "accumulated", variables = variables)
 }
 
+#' @export
+#' @rdname accumulated_dependence
+accumulated_dependency <- accumulated_dependence

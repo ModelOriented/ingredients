@@ -1,3 +1,7 @@
+ingredients 1.0
+---------------------------------------------------------------
+* change `dependency` to `dependence` [#103](https://github.com/ModelOriented/ingredients/issues/103)
+
 ingredients 0.5.2
 ---------------------------------------------------------------
 * `ceteris_paribus` profiles are now working for categorical variables
