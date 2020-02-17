@@ -3,8 +3,8 @@ template:
   default_assets: false
 
 reference:
-  - title: Model Level Explanations
-    desc: Functions that generate model level explanations
+  - title: Dataset Level Explanations
+    desc: Functions that generate dataset level explanations
     contents:
     - feature_importance
     - partial_dependency

@@ -21,13 +21,23 @@ This is an aesthetically efficient implementation of the
 }
 \examples{
 \dontrun{
-mtcars_ggplot_0_0 <- ggplot2::ggplot(mtcars)
-mtcars_ggplot_1_1 <- mtcars_ggplot_0_0 + ggplot2::geom_point(aes(x = mpg, y = wt))
-mtcars_ggplot_1_2 <- mtcars_ggplot_1_1 + ggplot2::facet_grid(.~vs)
-# Bind plots by rows: the result is a plot with 2 columns and 2 rows
-bind_plots(mtcars_ggplot_1_1, mtcars_ggplot_1_2, byrow = TRUE)
-# Bind plots by columns: the result is a plot with 3 columns and 1 row
-bind_plots(mtcars_ggplot_1_1, mtcars_ggplot_1_2, byrow = FALSE)
+library("DALEX")
+titanic_glm <- glm(survived ~ gender + age + fare,
+                   data = titanic_imputed, family = "binomial")
+
+explain_glm <- explain(titanic_glm,
+                       data = titanic_imputed,
+                       y = titanic_imputed$survived,
+                       verbose = FALSE)
+
+pdp_numerical <- partial_dependence(explain_glm, N = 50, variable_type = "numerical")
+pdp_categorical <- partial_dependence(explain_glm, N = 50, variable_type = "categorical")
+
+# Bind plots by rows
+bind_plots(plot(pdp_numerical), plot(pdp_categorical), byrow = TRUE)
+
+# Bind plots by columns
+bind_plots(plot(pdp_numerical), plot(pdp_categorical), byrow = FALSE)
 }
 
 }
