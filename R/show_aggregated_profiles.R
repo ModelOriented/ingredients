@@ -71,6 +71,7 @@ show_aggregated_profiles <- function(x, ...,
     all_variables <- intersect(all_variables, variables)
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
+  aggregated_profiles <- aggregated_profiles[aggregated_profiles$`_vname_` %in% all_variables, ]
   is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
 
   `_yhat_` <- NULL

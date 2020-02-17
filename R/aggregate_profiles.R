@@ -1,9 +1,9 @@
 #' Aggregates Ceteris Paribus Profiles
 #'
 #' The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
-#' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
-#' Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
-#' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
+#' It can be: Partial Dependence Profile (average across Ceteris Paribus Profiles),
+#' Conditional Dependence Profile (local weighted average across Ceteris Paribus Profiles) or
+#' Accumulated Local Dependence Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
@@ -11,6 +11,7 @@
 #' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
+#' @param center by default accumulated profiles start at 0. if \code{center=TRUE} then they are centered around average response
 #' @param span smoothing coeffcient, by default 0.25.It's the sd for gaussian kernel
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
@@ -87,7 +88,8 @@ aggregate_profiles <- function(x, ...,
                                groups = NULL,
                                type = "partial",
                                variables = NULL,
-                               span = 0.25) {
+                               span = 0.25,
+                               center = FALSE) {
 
   check_variable_type(variable_type)
   check_type(type)
@@ -168,17 +170,17 @@ aggregate_profiles <- function(x, ...,
   if (type == "partial") {
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "partial_dependency_explainer", "data.frame")
+                                    "partial_dependence_explainer", "data.frame")
   }
   if (type == "conditional") {
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups, span = span)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "conditional_dependency_explainer", "data.frame")
+                                    "conditional_dependence_explainer", "data.frame")
   }
   if (type == "accumulated") {
-    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span)
+    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span, center = center)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "accumulated_dependency_explainer", "data.frame")
+                                    "accumulated_dependence_explainer", "data.frame")
   }
 
   # calculate mean(all observation's _yhat_), mean of prediction
@@ -214,7 +216,7 @@ fast_initialisation_for_orginal <- function(all_profiles, observations) {
   do.call(rbind, profiles_per_vname)
 }
 
-aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25) {
+aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25, center = FALSE) {
   observations <- attr(all_profiles, "observations")
   # just initialisation
   all_profiles <- fast_initialisation_for_orginal(all_profiles, observations)
@@ -280,6 +282,13 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
       })
 
       par_profile <- do.call(rbind, chunks)
+    }
+
+    # should accumulated profiles be centered at 0?
+    if (center) {
+      par_profile$`_yhat_` <- par_profile$`_yhat_` -
+                          mean(par_profile$`_yhat_`) +
+                          mean(all_profiles$`_yhat_`)
     }
 
     par_profile

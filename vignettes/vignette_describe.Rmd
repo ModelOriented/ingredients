@@ -114,9 +114,9 @@ plot(cp_rf, variables = perturbed_variable_continuous)
 describe(cp_rf, variables = perturbed_variable_continuous)
 ```
 
-Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependency profiles.
+Ceteris Paribus profiles are described only for a single observation. If we want to access the influence of more than one observation, we need to describe dependence profiles.
 
-## Partial Dependency Profiles
+## Partial Dependence Profiles
 
 ```{r}
 pdp <- aggregate_profiles(cp_rf, type = "partial")
