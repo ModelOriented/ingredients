@@ -1,6 +1,6 @@
 #' Plots Aggregated Profiles
 #'
-#' Function \code{plot.aggregated_profiles_explainer} plots partial dependency plot or accumulated effect plot.
+#' Function \code{plot.aggregated_profiles_explainer} plots partial dependence plot or accumulated effect plot.
 #' It works in a similar way to \code{plot.ceteris_paribus}, but instead of individual profiles
 #' show average profiles for each variable listed in the \code{variables} vector.
 #'
@@ -27,11 +27,11 @@
 #'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
-#' pdp_rf_p <- partial_dependency(explain_titanic_glm, N = 50)
+#' pdp_rf_p <- partial_dependence(explain_titanic_glm, N = 50)
 #' pdp_rf_p$`_label_` <- "RF_partial"
-#' pdp_rf_l <- conditional_dependency(explain_titanic_glm, N = 50)
+#' pdp_rf_l <- conditional_dependence(explain_titanic_glm, N = 50)
 #' pdp_rf_l$`_label_` <- "RF_local"
-#' pdp_rf_a<- accumulated_dependency(explain_titanic_glm, N = 50)
+#' pdp_rf_a<- accumulated_dependence(explain_titanic_glm, N = 50)
 #' pdp_rf_a$`_label_` <- "RF_accumulated"
 #' head(pdp_rf_p)
 #' plot(pdp_rf_p, pdp_rf_l, pdp_rf_a, color = "_label_")
