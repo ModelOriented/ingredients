@@ -4,6 +4,7 @@ context("unit test for bind_plots")
 testthat::setup({
     assign("test_env", testthat::test_env(), envir = parent.frame())
 
+    data <- mtcars
     data[, "vs"] <- factor(data[, "vs"], levels = 0:1, labels = c("V-shaped", "straight"))
     mtcars_ggplot_0_0 <- ggplot2::ggplot(data)
     mtcars_ggplot_1_1 <- mtcars_ggplot_0_0 + ggplot2::geom_point(aes(x = mpg, y = wt))
