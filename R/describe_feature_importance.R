@@ -28,6 +28,8 @@ describe.feature_importance_explainer <- function(x,
   if (!(class(nonsignificance_treshold) == 'numeric')) {
     stop("Arguments are not valid")
   }
+  # fix for https://github.com/ModelOriented/ingredients/issues/95
+  x <- x[x$permutation == 0,]
 
   model_name <- x[1, 'label']
 

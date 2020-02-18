@@ -7,5 +7,6 @@
 ^pkgdown
 _pkgdown.yml
 .travis.yml
+^LICENSE$
 ^doc$
 ^Meta$

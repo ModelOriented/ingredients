@@ -32,7 +32,7 @@
 #'
 #' @export
 #' @rdname describe
-describe.partial_dependency_explainer <- function(x,
+describe.partial_dependence_explainer <- function(x,
                                                   nonsignificance_treshold = 0.15,
                                                   ...,
                                                   display_values = FALSE,
@@ -290,3 +290,6 @@ specify_df_aggregated <- function(x, variables, nonsignificance_treshold) {
 
   list("df" = df, "treshold" = treshold)
 }
+
+#' @export
+describe.partial_dependency_explainer <- describe.partial_dependence_explainer
