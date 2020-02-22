@@ -15,6 +15,9 @@
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be plotted.
 #' If \code{categorical} then only categorical variables will be plotted.
+#' @param title a character. Plot title. By default "Ceteris Paribus profile".
+#' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
+#' where XXX, YYY are labels of given explainers.
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -83,7 +86,10 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    alpha = 1,
    color = "#46bac2",
    variable_type = "numerical",
-   facet_ncol = NULL, variables = NULL) {
+   facet_ncol = NULL,
+   variables = NULL,
+   title = "Ceteris Paribus profile",
+   subtitle = NULL) {
 
   check_variable_type(variable_type)
 
@@ -93,6 +99,12 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   class(all_profiles) <- "data.frame"
 
   all_profiles$`_ids_` <- factor(all_profiles$`_ids_`)
+
+  # extracting labels to use in the default subtitle
+  if (is.null(subtitle)) {
+    labels <- paste0(unique(all_profiles$`_label_`), collapse = ", ")
+    subtitle <- paste0("created for the ", labels, " model")
+  }
 
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
@@ -137,20 +149,22 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   if (variable_type == "numerical") {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-    pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, facet_ncol = facet_ncol, color, size, alpha)
+    pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, facet_ncol = facet_ncol, color, size, alpha,
+                                         title, subtitle)
   } else {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% c(vnames, variables), ]
     if (is.null(variables)) {
       variables <- vnames
     }
-    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color, size, alpha)
+    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color,
+                                           size, alpha, title, subtitle)
   }
   pl
 }
 
 
-plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, facet_ncol, color, size, alpha) {
+plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, facet_ncol, color, size, alpha, title, subtitle) {
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
   for (i in seq_along(tmp)) {
@@ -164,19 +178,21 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
 
   # show profiles without aggregation
   if (is_color_a_variable) {
-    pl <- pl + geom_line(data = all_profiles, aes_string(color = paste0("`",color,"`")), size = size, alpha = alpha)
+    pl <- pl + geom_line(data = all_profiles, aes_string(color = paste0("`", color, "`")), size = size, alpha = alpha)
   } else {
     pl <- pl + geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
   }
 
-  pl <- pl  + xlab("") + ylab("prediction") +
+  pl <- pl + xlab("") + ylab("prediction") +
+    labs(title = title, subtitle = subtitle) +
     theme_drwhy()
 
   pl
 }
 
 
-plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2", size = 2, alpha) {
+plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
+                                             size = 2, alpha, title, subtitle) {
 
   lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -200,5 +216,6 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
                color = color, size = size, alpha = alpha) +
     facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme_drwhy() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    xlab("") + ylab("prediction")
+    xlab("") + ylab("prediction") +
+    labs(title = title, subtitle = subtitle)
 }

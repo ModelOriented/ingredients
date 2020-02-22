@@ -32,6 +32,11 @@ If \code{categorical} then only categorical variables will be plotted.}
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
+
+\item{title}{a character. Plot title. By default "Ceteris Paribus profile".}
+
+\item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
+where XXX, YYY are labels of given explainers.}
 }
 \value{
 a \code{ggplot2} object
