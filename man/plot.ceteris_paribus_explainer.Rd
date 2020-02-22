@@ -12,7 +12,9 @@
   color = "#46bac2",
   variable_type = "numerical",
   facet_ncol = NULL,
-  variables = NULL
+  variables = NULL,
+  title = "Ceteris Paribus profile",
+  subtitle = NULL
 )
 }
 \arguments{
