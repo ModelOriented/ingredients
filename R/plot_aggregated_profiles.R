@@ -11,6 +11,8 @@
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
+#' @param title a character. Partial and accumulated dependency explainers have deafult value.
+#' @param subtitle a character. Partial and accumulated dependency explainers have value dependent on model usage.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
@@ -75,7 +77,9 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                                                alpha = 1,
                                                color = "_label_",
                                                facet_ncol = NULL,
-                                               variables = NULL) {
+                                               variables = NULL,
+                                               title = NULL,
+                                               subtitle = NULL) {
 
   # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -123,12 +127,15 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   }
 
   # If created with partial dependance or accumulated dependance add title
-  if (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer"){
+  if (is.null(title) & (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer")){
     # Get title form the class
     ifelse(class(x)[2] == "partial_dependency_explainer",
-           plot_title <- "Partial Dependence profile",
-           plot_title <- "Accumulated Dependence profile" )
-    
+           title <- "Partial Dependence profile",
+           title <- "Accumulated Dependence profile" )
+  }
+ 
+  # If created with partial dependance or accumulated dependance add subtitle
+  if (is.null(subtitle) & (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer")){ 
     # get model names and classes
     model_name <- c()
     for (i in 1:length(dfl)){
@@ -136,11 +143,12 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     }
     subtitle_models <- paste(model_name, collapse = ", ", sep = ",")
     subtitle <- paste("Created for the ", subtitle_models, " model")
-    
-    # adding to plot
-    res <-  res +  ggtitle(plot_title,
-                           subtitle = subtitle)
   }
+  
+  # adding to plot
+  res <-  res +  ggtitle(title,
+                         subtitle = subtitle)
+  
   
   res + theme_drwhy() + ylab("average prediction") + xlab("") +
         theme(plot.title = element_text(hjust =0),
