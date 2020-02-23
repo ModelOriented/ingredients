@@ -1,9 +1,9 @@
 #' Aggregates Ceteris Paribus Profiles
 #'
 #' The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
-#' It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
-#' Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
-#' Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
+#' It can be: Partial Dependence Profile (average across Ceteris Paribus Profiles),
+#' Conditional Dependence Profile (local weighted average across Ceteris Paribus Profiles) or
+#' Accumulated Local Dependence Profile (cummulated average local changes in Ceteris Paribus Profiles).
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be calculated together
@@ -170,17 +170,17 @@ aggregate_profiles <- function(x, ...,
   if (type == "partial") {
     aggregated_profiles <- aggregated_profiles_partial(all_profiles, groups)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "partial_dependency_explainer", "data.frame")
+                                    "partial_dependence_explainer", "data.frame")
   }
   if (type == "conditional") {
     aggregated_profiles <- aggregated_profiles_conditional(all_profiles, groups, span = span)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "conditional_dependency_explainer", "data.frame")
+                                    "conditional_dependence_explainer", "data.frame")
   }
   if (type == "accumulated") {
     aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span, center = center)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
-                                    "accumulated_dependency_explainer", "data.frame")
+                                    "accumulated_dependence_explainer", "data.frame")
   }
 
   # calculate mean(all observation's _yhat_), mean of prediction

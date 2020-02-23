@@ -28,11 +28,11 @@ test_that("plot aggregate_profiles",{
 
   expect_true("gg" %in% class(pl1))
 
-  pdp_rf_p <- partial_dependency(explainer_rf, variables = "age")
+  pdp_rf_p <- partial_dependence(explainer_rf, variables = "age")
   pdp_rf_p$`_label_` <- "RF_partial"
-  pdp_rf_c <- conditional_dependency(explainer_rf, variables = "age")
+  pdp_rf_c <- conditional_dependence(explainer_rf, variables = "age")
   pdp_rf_c$`_label_` <- "RF_conditional"
-  pdp_rf_a <- accumulated_dependency(explainer_rf, variables = "age")
+  pdp_rf_a <- accumulated_dependence(explainer_rf, variables = "age")
   pdp_rf_a$`_label_` <- "RF_accumulated"
   pl2 <- plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
@@ -42,7 +42,7 @@ test_that("plot aggregate_profiles",{
 })
 
 
-test_that("plot partial_dependency",{
+test_that("plot partial_dependence",{
   library("DALEX")
   library("randomForest")
   titanic <- na.omit(titanic)
@@ -56,7 +56,7 @@ test_that("plot partial_dependency",{
   selected_passangers <- select_sample(titanic, n = 100)
   cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 
-  res <- partial_dependency(explain_titanic_rf, N=50, variables = "gender", variable_type = "categorical")
+  res <- partial_dependence(explain_titanic_rf, N=50, variables = "gender", variable_type = "categorical")
 
   expect_true("aggregated_profiles_explainer" %in% class(res))
 })

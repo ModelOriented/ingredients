@@ -17,6 +17,9 @@
 #' @param show_boxplots logical if \code{TRUE} (default) boxplot will be plotted to show permutation data.
 #' @param bar_width width of bars. By default \code{10}
 #' @param desc_sorting logical. Should the bars be sorted descending? By default TRUE
+#' @param title the plot's title, by default \code{'Feature Importance'}
+#' @param subtitle the plot's subtitle. By default - NA, which means
+#' the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s) 
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
@@ -90,13 +93,20 @@
 #' }
 #'
 #' @export
-plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10, desc_sorting = TRUE) {
+plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10,
+                                              desc_sorting = TRUE, title = "Feature Importance", subtitle = NA) {
 
   if (!is.logical(desc_sorting)){
     stop("desc_sorting is not logical")
   }
 
   dfl <- c(list(x), list(...))
+  
+  # extract labels for plot's subtitle
+  if(is.na(subtitle)){
+  glm_labels <- paste0(lapply(dfl, function(x) {levels(x$label)}), collapse = ", ")
+  subtitle <- paste0("created for the ", glm_labels, " model")
+  }
 
   # add boxplot data
   if (show_boxplots) {
@@ -166,8 +176,10 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   pl + coord_flip() +
       scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
       facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
-      theme(legend.position = "none") +
-      ylab("Drop-out loss") + xlab("")
+      ylab("Drop-out loss") + xlab("") +
+      labs(title = title, subtitle = subtitle) +
+      theme(legend.position = "none",
+            plot.subtitle = element_text(hjust = 0.5, vjust = 0.15))
 
 }
 

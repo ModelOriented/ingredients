@@ -8,6 +8,11 @@ test_that("plot feature_importance_explainer",{
 
   pl2 <- plot(vd_glm, max_vars = 3)
   expect_equal(nrow(pl2$data), 3)
+  expect_equal(pl2[["labels"]][["subtitle"]], "created for the lm model")
+
+  pl3 <- plot(vd_glm, subtitle = "Feature Importance of explainer_glm")
+  expect_equal(pl3[["labels"]][["subtitle"]], "Feature Importance of explainer_glm")
+  expect_equal(pl3[["labels"]][["title"]], "Feature Importance")
 })
 
 test_that("plot ceteris_paribus_oscillations", {
@@ -18,8 +23,8 @@ test_that("plot ceteris_paribus_oscillations", {
 })
 
 test_that("plot aggregated_profiles_explainer", {
-  pdp_glm <- partial_dependency(explainer_glm)
-  adp_glm <- accumulated_dependency(explainer_glm)
+  pdp_glm <- partial_dependence(explainer_glm)
+  adp_glm <- accumulated_dependence(explainer_glm)
 
   pl <- plot(pdp_glm)
   expect_true("gg" %in% class(pl))

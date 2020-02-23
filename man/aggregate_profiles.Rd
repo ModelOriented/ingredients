@@ -39,9 +39,9 @@ an object of the class \code{aggregated_profiles_explainer}
 }
 \description{
 The function \code{aggregate_profiles()} calculates an aggregate of ceteris paribus profiles.
-It can be: Partial Dependency Profile (average across Ceteris Paribus Profiles),
-Conditional Dependency Profile (local weighted average across Ceteris Paribus Profiles) or
-Accumulated Local Dependency Profile (cummulated average local changes in Ceteris Paribus Profiles).
+It can be: Partial Dependence Profile (average across Ceteris Paribus Profiles),
+Conditional Dependence Profile (local weighted average across Ceteris Paribus Profiles) or
+Accumulated Local Dependence Profile (cummulated average local changes in Ceteris Paribus Profiles).
 }
 \examples{
 library("DALEX")
