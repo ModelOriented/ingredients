@@ -38,5 +38,4 @@ test_that("plot aggregated_profiles_explainer", {
   pl4 <- plot(adp_glm, title = "test_title", subtitle = "test_subtitle")
   expect_equal(pl4[["labels"]][["title"]], "test_title")
   expect_equal(pl4[["labels"]][["subtitle"]], "test_subtitle")
-
 })
