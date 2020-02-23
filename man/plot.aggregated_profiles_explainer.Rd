@@ -33,7 +33,7 @@
 
 \item{title}{a character. Partial and accumulated dependency explainers have deafult value.}
 
-\item{subtitle}{a character. Partial and accumulated dependency explainers have value dependent on model usage.}
+\item{subtitle}{a character. If \code{NULL} value will be dependent on model usage.}
 }
 \value{
 a \code{ggplot2} object

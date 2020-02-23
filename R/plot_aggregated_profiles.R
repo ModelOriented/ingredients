@@ -12,7 +12,7 @@
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param title a character. Partial and accumulated dependency explainers have deafult value.
-#' @param subtitle a character. Partial and accumulated dependency explainers have value dependent on model usage.
+#' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
@@ -127,15 +127,15 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   }
 
   # If created with partial dependance or accumulated dependance add title
-  if (is.null(title) & ( "partial_dependency_explainer" %in% class(x) | "accumulated_dependency_explainer" %in% class(x))){
+  if (is.null(title) & ("partial_dependency_explainer" %in% class(x) | "accumulated_dependency_explainer" %in% class(x))){
     # Get title form the class
     ifelse("partial_dependency_explainer" %in% class(x),
            title <- "Partial Dependence profile",
            title <- "Accumulated Dependence profile" )
   }
 
-  # If created with partial dependance or accumulated dependance add subtitle
-  if (is.null(subtitle) & ( "partial_dependency_explainer" %in% class(x) | "accumulated_dependency_explainer" %in% class(x))){
+  # If null add subtitle
+  if (is.null(subtitle)){
     # get model names and classes
     model_name <- c()
     for (i in seq_along(dfl)){
