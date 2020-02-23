@@ -127,18 +127,18 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   }
 
   # If created with partial dependance or accumulated dependance add title
-  if (is.null(title) & (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer")){
+  if (is.null(title) & ( "partial_dependency_explainer" %in% class(x) | "accumulated_dependency_explainer" %in% class(x))){
     # Get title form the class
-    ifelse(class(x)[2] == "partial_dependency_explainer",
+    ifelse("partial_dependency_explainer" %in% class(x),
            title <- "Partial Dependence profile",
            title <- "Accumulated Dependence profile" )
   }
  
   # If created with partial dependance or accumulated dependance add subtitle
-  if (is.null(subtitle) & (class(x)[2] == "partial_dependency_explainer" | class(x)[2] == "accumulated_dependency_explainer")){ 
+  if (is.null(subtitle) &  "partial_dependency_explainer" %in% class(x) | "accumulated_dependency_explainer" %in% class(x)){ 
     # get model names and classes
     model_name <- c()
-    for (i in 1:length(dfl)){
+    for (i in seq_along(dfl)){
       model_name[i] <- unique(dfl[[i]]$`_label`)
     }
     subtitle_models <- paste(model_name, collapse = ", ", sep = ",")
