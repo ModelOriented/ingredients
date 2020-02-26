@@ -15,6 +15,9 @@
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be plotted.
 #' If \code{categorical} then only categorical variables will be plotted.
+#' @param title a character. Plot title. By default "Ceteris Paribus profile".
+#' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
+#' where XXX, YYY are labels of given explainers.
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -83,7 +86,10 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    alpha = 1,
    color = "#46bac2",
    variable_type = "numerical",
-   facet_ncol = NULL, variables = NULL) {
+   facet_ncol = NULL,
+   variables = NULL,
+   title = "Ceteris Paribus profile",
+   subtitle = NULL) {
 
   check_variable_type(variable_type)
 
@@ -93,6 +99,12 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   class(all_profiles) <- "data.frame"
 
   all_profiles$`_ids_` <- factor(all_profiles$`_ids_`)
+
+  # extract labels to use in the default subtitle
+  if (is.null(subtitle)) {
+    labels <- paste0(unique(all_profiles$`_label_`), collapse = ", ")
+    subtitle <- paste0("created for the ", labels, " model")
+  }
 
   # variables to use
   all_variables <- na.omit(as.character(unique(all_profiles$`_vname_`)))
@@ -144,9 +156,13 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     if (is.null(variables)) {
       variables <- vnames
     }
-    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color, size, alpha)
+    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color,
+                                           size, alpha)
   }
-  pl
+  pl +
+    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    labs(title = title, subtitle = subtitle) +
+    xlab("") + ylab("prediction")
 }
 
 
@@ -159,37 +175,35 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
 
   # prepare plot
   `_x_` <- `_yhat_` <- `_ids_` <- `_label_` <- NULL
-  pl <- ggplot(all_profiles, aes(`_x_`, `_yhat_`, group = paste(`_ids_`, `_label_`))) +
-    facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
+  pl <- ggplot(all_profiles, aes(`_x_`, `_yhat_`, group = paste(`_ids_`, `_label_`)))
 
   # show profiles without aggregation
   if (is_color_a_variable) {
-    pl <- pl + geom_line(data = all_profiles, aes_string(color = paste0("`",color,"`")), size = size, alpha = alpha)
+    pl <- pl + geom_line(data = all_profiles, aes_string(color = paste0("`", color, "`")), size = size, alpha = alpha)
   } else {
     pl <- pl + geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
   }
 
-  pl <- pl  + xlab("") + ylab("prediction") +
+  pl +
     theme_drwhy()
-
-  pl
 }
 
 
-plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2", size = 2, alpha) {
+plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
+                                             size = 2, alpha) {
 
-  lapply(variables, function(sv) {
+  lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
                         c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
     # instances to be merged
-    key <- selected_observation[,sv, drop = FALSE]
+    key <- selected_observation[, sv, drop = FALSE]
     # add right values to profiles
-    tmp$`_real_point_`  <- tmp[,sv] == key[as.character(tmp$`_ids_`), sv]
+    tmp$`_real_point_` <- tmp[, sv] == key[as.character(tmp$`_ids_`), sv]
     tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
-    colnames(tmp)[1]    <- "_x_"
+    colnames(tmp)[1] <- "_x_"
     tmp$`_x_` <- as.character(tmp$`_x_`)
     tmp
-  }) -> lsc
+  })
   # transformed data frame
   selected_cp_flat <- do.call(rbind, lsc)
 
@@ -198,7 +212,6 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
     geom_line(size = size/2, alpha = alpha, color = color) +
     geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                color = color, size = size, alpha = alpha) +
-    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
-    theme_drwhy() + theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    xlab("") + ylab("prediction")
+    theme_drwhy() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }

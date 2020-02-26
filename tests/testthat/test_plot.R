@@ -22,6 +22,23 @@ test_that("plot ceteris_paribus_oscillations", {
   expect_true("gg" %in% class(pl))
 })
 
+test_that("plot ceteris_paribus_explainer", {
+  cp_rf <- ceteris_paribus(explainer_rf, titanic_small[1:2,])
+
+  # default title, subtitle
+  pl <- plot(cp_rf)
+  expect_true("gg" %in% class(pl))
+  expect_equal(pl$labels$subtitle, "created for the RF model")
+  expect_equal(pl$labels$title, "Ceteris Paribus profile")
+
+  # custom title, subtitle
+  test_subtitle <- "test subtitle"
+  test_title <- "test title"
+  pl2 <- plot(cp_rf, subtitle = test_subtitle, title = test_title)
+  expect_equal(pl2$labels$subtitle, test_subtitle)
+  expect_equal(pl2$labels$title, test_title)
+})
+
 test_that("plot aggregated_profiles_explainer", {
   pdp_glm <- partial_dependence(explainer_glm)
   adp_glm <- accumulated_dependence(explainer_glm)
