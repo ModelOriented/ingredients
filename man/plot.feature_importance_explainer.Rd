@@ -10,7 +10,9 @@
   max_vars = NULL,
   show_boxplots = TRUE,
   bar_width = 10,
-  desc_sorting = TRUE
+  desc_sorting = TRUE,
+  title = "Feature Importance",
+  subtitle = NA
 )
 }
 \arguments{
@@ -26,6 +28,11 @@ By default \code{NULL} what means all variables}
 \item{bar_width}{width of bars. By default \code{10}}
 
 \item{desc_sorting}{logical. Should the bars be sorted descending? By default TRUE}
+
+\item{title}{the plot's title, by default \code{'Feature Importance'}}
+
+\item{subtitle}{the plot's subtitle. By default - NA, which means
+the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s)}
 }
 \value{
 a \code{ggplot2} object
