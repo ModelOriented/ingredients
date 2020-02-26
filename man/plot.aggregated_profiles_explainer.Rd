@@ -11,7 +11,9 @@
   alpha = 1,
   color = "_label_",
   facet_ncol = NULL,
-  variables = NULL
+  variables = NULL,
+  title = NULL,
+  subtitle = NULL
 )
 }
 \arguments{
@@ -28,6 +30,10 @@
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
+
+\item{title}{a character. Partial and accumulated dependence explainers have deafult value.}
+
+\item{subtitle}{a character. If \code{NULL} value will be dependent on model usage.}
 }
 \value{
 a \code{ggplot2} object

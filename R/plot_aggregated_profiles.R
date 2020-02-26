@@ -11,6 +11,8 @@
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
+#' @param title a character. Partial and accumulated dependence explainers have deafult value.
+#' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
@@ -75,7 +77,9 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                                                alpha = 1,
                                                color = "_label_",
                                                facet_ncol = NULL,
-                                               variables = NULL) {
+                                               variables = NULL,
+                                               title = NULL,
+                                               subtitle = NULL) {
 
   # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -122,7 +126,33 @@ plot.aggregated_profiles_explainer <- function(x, ...,
       geom_col(aes(y = `_yhat_`), size = size, alpha = alpha, fill = color, position = "dodge")
   }
 
+  # If created with partial dependance or accumulated dependance add title
+  if (is.null(title) & ("partial_dependence_explainer" %in% class(x) | "accumulated_dependence_explainer" %in% class(x))){
+    # Get title form the class
+    ifelse("partial_dependence_explainer" %in% class(x),
+           title <- "Partial Dependence profile",
+           title <- "Accumulated Dependence profile" )
+  }
+
+  # If null add subtitle
+  if (is.null(subtitle)){
+    # get model names and classes
+    model_name <- c()
+    for (i in seq_along(dfl)){
+      model_name[i] <- unique(dfl[[i]]$`_label`)
+    }
+    subtitle_models <- paste(model_name, collapse = ", ", sep = ",")
+    subtitle <- paste("Created for the", subtitle_models, "model")
+  }
+
+  # adding to plot
+  res <-  res +  ggtitle(title,
+                         subtitle = subtitle)
+
+
   res + theme_drwhy() + ylab("average prediction") + xlab("") +
+        theme(plot.title = element_text(hjust =0),
+              plot.subtitle = element_text(vjust = -2, hjust = 0)) +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
 }
 
