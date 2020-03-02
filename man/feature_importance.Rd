@@ -161,7 +161,7 @@ explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
 fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(fi_xgb)
 plot(fi_xgb, fi_glm)
- \donttest{}
+
 }
 \references{
 Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}

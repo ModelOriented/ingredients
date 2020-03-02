@@ -113,7 +113,7 @@
 #' fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(fi_xgb)
 #' plot(fi_xgb, fi_glm)
-#'  \donttest{}
+#'
 #' @export
 #' @rdname feature_importance
 feature_importance <- function(x, ...)
