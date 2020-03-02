@@ -126,14 +126,13 @@ plotD3.ceteris_paribus_explainer <- function(x, ..., size = 2, alpha = 1,
 
   # prepare profiles data
   all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-  all_profiles$`_vname_` <- droplevels(all_profiles$`_vname_`)
   rownames(all_profiles) <- NULL
 
   ymax <- max(all_profiles$`_yhat_`)
   ymin <- min(all_profiles$`_yhat_`)
   ymargin <- abs(ymax-ymin)*0.1;
 
-  all_profiles_list <- split(all_profiles, all_profiles$`_vname_`)
+  all_profiles_list <- split(all_profiles, all_profiles$`_vname_`, drop = TRUE)
 
   min_max_list <- list()
 
