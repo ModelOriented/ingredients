@@ -43,7 +43,7 @@
 #' fi_rf <- feature_importance(explain_titanic_glm)
 #' plot(fi_rf)
 #'
-#'
+#' \donttest{
 #' library("randomForest")
 #'
 #' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
@@ -90,7 +90,7 @@
 #'
 #' head(fi_xgb)
 #' plot(fi_glm, fi_xgb, bar_width = 5)
-#'
+#' }
 #'
 #' @export
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10,

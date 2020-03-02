@@ -62,7 +62,7 @@ explain_titanic_glm <- explain(model_titanic_glm,
 fi_rf <- feature_importance(explain_titanic_glm)
 plot(fi_rf)
 
-
+\donttest{
 library("randomForest")
 
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
@@ -109,7 +109,7 @@ fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 
 head(fi_xgb)
 plot(fi_glm, fi_xgb, bar_width = 5)
-
+}
 
 }
 \references{
