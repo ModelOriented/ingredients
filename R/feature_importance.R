@@ -57,9 +57,8 @@
 #'
 #' plot(fi_glm_joint2, fi_glm_joint1)
 #'
-#' explain_titanic_glm
 #'
-#'
+#' \donttest{
 #' library("randomForest")
 #'
 #' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
@@ -113,7 +112,7 @@
 #' fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 #' head(fi_xgb)
 #' plot(fi_xgb, fi_glm)
-#'
+#' }
 #' @export
 #' @rdname feature_importance
 feature_importance <- function(x, ...)

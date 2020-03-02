@@ -105,9 +105,8 @@ fi_glm_joint2 <- feature_importance(explain_titanic_glm,
 
 plot(fi_glm_joint2, fi_glm_joint1)
 
-explain_titanic_glm
 
-
+\donttest{
 library("randomForest")
 
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
@@ -161,7 +160,7 @@ explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
 fi_xgb <- feature_importance(explainer_xgb, type = "raw")
 head(fi_xgb)
 plot(fi_xgb, fi_glm)
-
+}
 }
 \references{
 Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}

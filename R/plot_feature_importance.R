@@ -19,7 +19,7 @@
 #' @param desc_sorting logical. Should the bars be sorted descending? By default TRUE
 #' @param title the plot's title, by default \code{'Feature Importance'}
 #' @param subtitle the plot's subtitle. By default - NA, which means
-#' the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s) 
+#' the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s)
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
@@ -43,7 +43,7 @@
 #' fi_rf <- feature_importance(explain_titanic_glm)
 #' plot(fi_rf)
 #'
-#' \donttest{
+#'
 #' library("randomForest")
 #'
 #' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
@@ -60,7 +60,7 @@
 #' explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
 #'                          verbose = FALSE, precalculate = FALSE)
 #'
-#' fi_rf <- feature_importance(explainer_rf, type = "raw",
+#' fi_rf <- feature_importance(explainer_rf, type = "raw", max_vars = 3,
 #'                             loss_function = loss_cross_entropy)
 #' head(fi_rf)
 #' plot(fi_rf)
@@ -90,7 +90,7 @@
 #'
 #' head(fi_xgb)
 #' plot(fi_glm, fi_xgb, bar_width = 5)
-#' }
+#'
 #'
 #' @export
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10,
@@ -101,7 +101,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   }
 
   dfl <- c(list(x), list(...))
-  
+
   # extract labels for plot's subtitle
   if(is.na(subtitle)){
   glm_labels <- paste0(lapply(dfl, function(x) {levels(x$label)}), collapse = ", ")
