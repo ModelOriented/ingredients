@@ -79,7 +79,8 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   is_x_numeric <- is.numeric(aggregated_profiles$`_x_`)
 
   # prepare profiles data
-  aggregated_profiles$`_vname_` <- droplevels(aggregated_profiles$`_vname_`)
+  ## use as.character instead of droplevels for R v4.0
+  aggregated_profiles$`_vname_` <- as.character(aggregated_profiles$`_vname_`)
   rownames(aggregated_profiles) <- NULL
 
   ymax <- max(aggregated_profiles$`_yhat_`)
