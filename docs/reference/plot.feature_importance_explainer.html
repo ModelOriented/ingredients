@@ -88,7 +88,7 @@ importance is different in different in different models." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1</span>
         </div>
       </div>
     </div>
@@ -167,7 +167,9 @@ importance is different in different in different models.</p>
   <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>desc_sorting</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>desc_sorting</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Feature Importance"</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='fl'>NA</span>
 )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -197,6 +199,15 @@ By default <code>NULL</code> what means all variables</p></td>
     <tr>
       <th>desc_sorting</th>
       <td><p>logical. Should the bars be sorted descending? By default TRUE</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>the plot's title, by default <code>'Feature Importance'</code></p></td>
+    </tr>
+    <tr>
+      <th>subtitle</th>
+      <td><p>the plot's subtitle. By default - NA, which means
+the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s)</p></td>
     </tr>
     </table>
     
@@ -256,7 +267,7 @@ By default <code>NULL</code> what means all variables</p></td>
 <span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>,
                          <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>precalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>,
+<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"raw"</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>,
                             <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='no'>loss_cross_entropy</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;       variable mean_dropout_loss        label
 #&gt; 1 _full_model_          246.6981 randomForest

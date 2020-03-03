@@ -42,7 +42,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0</span>
+          <span class="version version-default">1.1</span>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
       <h1>General introduction: Survival on the RMS Titanic</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2020-02-17</h4>
+            <h4 class="date">2020-03-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_titanic.Rmd"><code>vignettes/vignette_titanic.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_titanic.Rmd</code></div>
@@ -140,8 +140,8 @@
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;           Mean of squared residuals: 0.1428618
-#&gt;                     % Var explained: 34.82</code></pre>
+#&gt;           Mean of squared residuals: 0.1427797
+#&gt;                     % Var explained: 34.86</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -158,9 +158,9 @@
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( [33m default [39m ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.0133887 , mean =  0.3248256 , max =  0.9924437  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.00798003 , mean =  0.3252079 , max =  0.9916428  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7953965 , mean =  -0.0003854325 , max =  0.9009842  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8006194 , mean =  -0.0007677234 , max =  0.9031355  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
@@ -172,12 +172,12 @@
 <a class="sourceLine" id="cb7-3" title="3">fi_rf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/feature_importance.html">feature_importance</a></span>(explain_titanic_rf)</a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fi_rf)</a></code></pre></div>
 <pre><code>#&gt;       variable mean_dropout_loss            label
-#&gt; 1 _full_model_         0.3329421 Random Forest v7
-#&gt; 2      country         0.3329421 Random Forest v7
-#&gt; 3        parch         0.3435576 Random Forest v7
-#&gt; 4        sibsp         0.3447126 Random Forest v7
-#&gt; 5     embarked         0.3498490 Random Forest v7
-#&gt; 6         fare         0.3729980 Random Forest v7</code></pre>
+#&gt; 1 _full_model_         0.3329606 Random Forest v7
+#&gt; 2      country         0.3329606 Random Forest v7
+#&gt; 3        sibsp         0.3442128 Random Forest v7
+#&gt; 4        parch         0.3445433 Random Forest v7
+#&gt; 5     embarked         0.3498887 Random Forest v7
+#&gt; 6         fare         0.3750462 Random Forest v7</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fi_rf)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -197,12 +197,12 @@
 <a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pp_age)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_          _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7 0.0000000 0.3159050     0
-#&gt; 2     age Random Forest v7 0.1666667 0.5384993     0
-#&gt; 3     age Random Forest v7 2.0000000 0.5608622     0
-#&gt; 4     age Random Forest v7 4.0000000 0.5678473     0
-#&gt; 5    fare Random Forest v7 6.1904000 0.3005658     0
-#&gt; 6     age Random Forest v7 7.0000000 0.5320725     0</code></pre>
+#&gt; 1    fare Random Forest v7 0.0000000 0.3240101     0
+#&gt; 2     age Random Forest v7 0.1666667 0.5204945     0
+#&gt; 3     age Random Forest v7 2.0000000 0.5479326     0
+#&gt; 4     age Random Forest v7 4.0000000 0.5499804     0
+#&gt; 5    fare Random Forest v7 6.1904000 0.3018290     0
+#&gt; 6     age Random Forest v7 7.0000000 0.5134607     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pp_age)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
@@ -258,12 +258,12 @@
 <a class="sourceLine" id="cb17-5" title="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(clust_rf)</a></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_            _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.1957328     0
-#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.1707538     0
-#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.1744207     0
-#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4916774     0
-#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1744207     0
-#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.1646322     0</code></pre>
+#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.2002035     0
+#&gt; 2   sibsp Random Forest v7_1 0.0000000         1 0.1722818     0
+#&gt; 3   parch Random Forest v7_1 0.0000000         1 0.1762064     0
+#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4569856     0
+#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1762064     0
+#&gt; 6   sibsp Random Forest v7_1 1.0000000         1 0.1682664     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sp_rf, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span>(clust_rf, <span class="dt">color =</span> <span class="st">"_label_"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
@@ -274,7 +274,7 @@
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</a></code></pre></div>
 <pre><code>#&gt; R version 3.6.0 (2019-04-26)
 #&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)
-#&gt; Running under: Windows 10 x64 (build 17763)
+#&gt; Running under: Windows 10 x64 (build 18363)
 #&gt; 
 #&gt; Matrix products: default
 #&gt; 
@@ -287,19 +287,19 @@
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] ingredients_1.0     randomForest_4.6-14 DALEX_0.9.4        
+#&gt; [1] ingredients_1.1     randomForest_4.6-14 DALEX_1.0          
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_1.0.3       compiler_3.6.0   pillar_1.4.3     tools_3.6.0     
-#&gt;  [5] digest_0.6.24    evaluate_0.14    memoise_1.1.0    lifecycle_0.1.0 
+#&gt;  [5] digest_0.6.25    evaluate_0.14    memoise_1.1.0    lifecycle_0.1.0 
 #&gt;  [9] tibble_2.1.3     gtable_0.3.0     pkgconfig_2.0.3  rlang_0.4.4     
-#&gt; [13] rstudioapi_0.10  yaml_2.2.0       pkgdown_1.4.1    xfun_0.6        
+#&gt; [13] rstudioapi_0.11  yaml_2.2.1       pkgdown_1.4.1    xfun_0.6        
 #&gt; [17] stringr_1.4.0    dplyr_0.8.3      knitr_1.22       desc_1.2.0      
 #&gt; [21] fs_1.3.1         rprojroot_1.3-2  grid_3.6.0       tidyselect_0.2.5
 #&gt; [25] glue_1.3.1       R6_2.4.1         rmarkdown_1.16   farver_2.0.3    
 #&gt; [29] ggplot2_3.2.1    purrr_0.3.3      magrittr_1.5     backports_1.1.5 
 #&gt; [33] scales_1.1.0     htmltools_0.4.0  MASS_7.3-51.4    assertthat_0.2.1
-#&gt; [37] colorspace_1.4-1 labeling_0.3     stringi_1.4.5    lazyeval_0.2.2  
+#&gt; [37] colorspace_1.4-1 labeling_0.3     stringi_1.4.6    lazyeval_0.2.2  
 #&gt; [41] munsell_0.5.0    crayon_1.3.4</code></pre>
 </div>
   </div>
