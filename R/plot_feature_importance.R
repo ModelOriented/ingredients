@@ -96,17 +96,11 @@
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10,
                                               desc_sorting = TRUE, title = "Feature Importance", subtitle = NA) {
 
-  if (!is.logical(desc_sorting)){
+  if (!is.logical(desc_sorting)) {
     stop("desc_sorting is not logical")
   }
 
   dfl <- c(list(x), list(...))
-
-  # extract labels for plot's subtitle
-  if(is.na(subtitle)){
-  glm_labels <- paste0(lapply(dfl, function(x) {levels(x$label)}), collapse = ", ")
-  subtitle <- paste0("created for the ", glm_labels, " model")
-  }
 
   # add boxplot data
   if (show_boxplots) {
@@ -159,6 +153,12 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
 
   variable <- q1 <- q3 <- dropout_loss.x <- dropout_loss.y <- label <- dropout_loss <- NULL
   nlabels <- length(unique(bestFits$label))
+
+  # extract labels for plot's subtitle
+  if (is.na(subtitle)) {
+    glm_labels <- paste0(unique(ext_expl_df$label), collapse = ", ")
+    subtitle <- paste0("created for the ", glm_labels, " model")
+  }
 
   # plot it
   pl <- ggplot(ext_expl_df, aes(variable, ymin = dropout_loss.y, ymax = dropout_loss.x, color = label)) +
