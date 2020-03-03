@@ -153,9 +153,9 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
     trimmed_parts <- lapply(unique(ext_expl_df$label), function(label) {
       tmp <- ext_expl_df[ext_expl_df$label == label, ]
       tmp[tail(order(tmp$dropout_loss.x), max_vars), ]
-    });
+    })
     ext_expl_df <- do.call(rbind, trimmed_parts)
-  };
+  }
 
   variable <- q1 <- q3 <- dropout_loss.x <- dropout_loss.y <- label <- dropout_loss <- NULL
   nlabels <- length(unique(bestFits$label))
