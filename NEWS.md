@@ -1,3 +1,8 @@
+ingredients 1.1
+---------------------------------------------------------------
+* support `R v4.0` and depend on `R v3.5` to comply with `DALEX`
+* new arguments `title` and `subtitle` in several plots
+
 ingredients 1.0
 ---------------------------------------------------------------
 * change `dependency` to `dependence` [#103](https://github.com/ModelOriented/ingredients/issues/103)

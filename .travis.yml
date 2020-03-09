@@ -18,7 +18,9 @@ matrix:
 
 env:
   global:
-  - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings --run-donttest"
+  - r_check_args="--no-build-vignettes --no-manual --timings --run-donttest"
+
+r_check_args: --as-cran --run-donttest
 
 notifications:
   email: false
@@ -30,7 +32,7 @@ before_install:
     export PATH="/usr/local/opt/llvm/bin:$PATH" &&
     export LDFLAGS="-L/usr/local/opt/llvm/lib" &&
     export CFLAGS="-I/usr/local/opt/llvm/include"; fi
-    
+
 r_packages:
   - ggplot2
   - covr

@@ -9,7 +9,8 @@ test_that("describe cluster_profiles",{
   rf_model <- randomForest(survived ~.,  data = titanic_small)
 
   explainer_rf <- explain(rf_model, data = titanic_small,
-                          y = titanic_small$survived == "yes", label = "RF")
+                          y = titanic_small$survived == "yes", label = "RF",
+                          verbose = FALSE)
 
   selected_passangers <- select_sample(titanic_small, n = 1)
   cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)

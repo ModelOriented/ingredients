@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select Subset of Rows — select_sample • ingredients</title>
+<title>Bind Multiple ggplot Objects — bind_plots • ingredients</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,10 +35,10 @@
 
 
 
-<meta property="og:title" content="Select Subset of Rows — select_sample" />
+<meta property="og:title" content="Bind Multiple ggplot Objects — bind_plots" />
 
-<meta property="og:description" content="Function select_sample selects subset of rows from data set.
-This is useful if data is large and we need just a sample to calculate profiles." />
+<meta property="og:description" content="This is an aesthetically efficient implementation of the
+  grid.arrange." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -138,60 +138,59 @@ This is useful if data is large and we need just a sample to calculate profiles.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select Subset of Rows</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/select_sample.R'><code>R/select_sample.R</code></a></small>
-    <div class="hidden name"><code>select_sample.Rd</code></div>
+    <h1>Bind Multiple ggplot Objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/R/bind_plots.R'><code>R/bind_plots.R</code></a></small>
+    <div class="hidden name"><code>bind_plots.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function <code>select_sample</code> selects subset of rows from data set.
-This is useful if data is large and we need just a sample to calculate profiles.</p>
+    <p>This is an aesthetically efficient implementation of the
+  <a href='https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html'>grid.arrange</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_sample</span>(<span class='no'>data</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1313</span>)</pre>
+    <pre class="usage"><span class='fu'>bind_plots</span>(<span class='no'>...</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>set of observations. Profile will be calculated for every observation (every row)</p></td>
+      <th>...</th>
+      <td><p>(`ggplot`) ggplot objects to combine.</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>number of observations to select.</p></td>
-    </tr>
-    <tr>
-      <th>seed</th>
-      <td><p>seed for random number generator.</p></td>
+      <th>byrow</th>
+      <td><p>(`logical`) if FALSE (the default) the plots are bind by
+columns, otherwise the plots are bind by rows.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame with selected rows</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Note that <code>select_subsample()</code> function is S3 generic.
-If you want to work on non standard data sources (like H2O ddf, external databases)
-you should overload it.</p>
+    <p>(`gtable`) A plottable object with <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='no'>titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartments_test</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
-#&gt; 9707     5670              2008      98     3        3 Srodmiescie
-#&gt; 9796     2696              1932     110    10        4       Ursus
-#&gt; 9644     3466              1980      73    10        2     Mokotow
-#&gt; 7567     2818              1940      63     8        3       Praga
-#&gt; 4090     3803              1955     105     3        3      Ochota
-#&gt; 8594     3643              1999      36     9        2       Ursus</div><div class='input'>
-</div></pre>
+<span class='no'>explain_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>titanic_glm</span>,
+                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>,
+                       <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>$<span class='no'>survived</span>,
+                       <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='no'>pdp_numerical</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependence.html'>partial_dependence</a></span>(<span class='no'>explain_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
+<span class='no'>pdp_categorical</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='partial_dependence.html'>partial_dependence</a></span>(<span class='no'>explain_glm</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
+
+<span class='co'># Bind plots by rows</span>
+<span class='fu'>bind_plots</span>(<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_numerical</span>), <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_categorical</span>), <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># Bind plots by columns</span>
+<span class='fu'>bind_plots</span>(<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_numerical</span>), <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_categorical</span>), <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -199,8 +198,6 @@ you should overload it.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

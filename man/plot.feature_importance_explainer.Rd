@@ -79,7 +79,7 @@ HR_rf_model <- randomForest(status~., data = HR, ntree = 100)
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
                          verbose = FALSE, precalculate = FALSE)
 
-fi_rf <- feature_importance(explainer_rf, type = "raw",
+fi_rf <- feature_importance(explainer_rf, type = "raw", max_vars = 3,
                             loss_function = loss_cross_entropy)
 head(fi_rf)
 plot(fi_rf)
