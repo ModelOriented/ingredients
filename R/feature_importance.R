@@ -70,7 +70,7 @@
 #' fi_rf <- feature_importance(explain_titanic_rf)
 #' plot(fi_rf)
 #'
-#' fi_rf <- feature_importance(explain_titanic_rf, B = 5) # 5 replications
+#' fi_rf <- feature_importance(explain_titanic_rf, B = 6) # 6 replications
 #' plot(fi_rf)
 #'
 #' fi_rf_group <- feature_importance(explain_titanic_rf,

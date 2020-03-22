@@ -1,3 +1,7 @@
+ingredients 1.1.1 (development)
+---------------------------------------------------------------
+* add `bind_plots` function
+
 ingredients 1.1
 ---------------------------------------------------------------
 * support `R v4.0` and depend on `R v3.5` to comply with `DALEX`
