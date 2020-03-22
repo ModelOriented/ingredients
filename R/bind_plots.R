@@ -8,7 +8,6 @@
 #'   columns, otherwise the plots are bind by rows.
 #'
 #' @return (\code{gtable}) A plottable object with \code{plot()}.
-#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -31,6 +30,8 @@
 #' bind_plots(plot(pdp_numerical), plot(pdp_categorical), byrow = FALSE)
 #' }
 #'
+#' @export
+#' @rdname bind_plots
 bind_plots <- function(..., byrow = FALSE){
     # Helper Functions --------------------------------------------------------
     extract_facets <- function(p) ggplot2::ggplot_build(p)[['layout']][['layout']]

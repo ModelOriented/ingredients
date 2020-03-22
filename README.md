@@ -1,6 +1,6 @@
 # Model Ingredients <img src="man/figures/logo.png" align="right" width="150"/>
 
-[![R build status](https://github.com/ModelOriented/ingredients/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/ingredients/actions)
+[![R build status](https://github.com/ModelOriented/ingredients/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/ingredients/actions?query=workflow%3AR-CMD-check)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg)](https://codecov.io/github/ModelOriented/ingredients?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ingredients)](https://cran.r-project.org/package=ingredients)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/ingredients?color=orange)](http://cranlogs.r-pkg.org/badges/grand-total/ingredients)
