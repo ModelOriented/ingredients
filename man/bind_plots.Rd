@@ -7,13 +7,13 @@
 bind_plots(..., byrow = FALSE)
 }
 \arguments{
-\item{...}{(`ggplot`) ggplot objects to combine.}
+\item{...}{(\code{ggplot}) ggplot objects to combine.}
 
-\item{byrow}{(`logical`) if FALSE (the default) the plots are bind by
+\item{byrow}{(\code{logical}) if \code{FALSE} (the default) the plots are bind by
 columns, otherwise the plots are bind by rows.}
 }
 \value{
-(`gtable`) A plottable object with \code{plot()}.
+(\code{gtable}) A plottable object with \code{plot()}.
 }
 \description{
 This is an aesthetically efficient implementation of the
