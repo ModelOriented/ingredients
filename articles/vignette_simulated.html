@@ -102,7 +102,7 @@
       <h1 data-toc-skip>Simulated data, real problem</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2020-03-22</h4>
+            <h4 class="date">2020-03-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_simulated.Rmd"><code>vignettes/vignette_simulated.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_simulated.Rmd</code></div>
@@ -119,26 +119,26 @@
 y = x_1 * x_2 + x_2
 \]</span></p>
 <p>But <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are correlated. How XAI methods work for such model?</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># predict function for the model</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>the_model_predict &lt;-<span class="st"> </span><span class="cf">function</span>(m, x) {</span>
-<span id="cb1-3"><a href="#cb1-3"></a> x<span class="op">$</span>x1 <span class="op">*</span><span class="st"> </span>x<span class="op">$</span>x2 <span class="op">+</span><span class="st"> </span>x<span class="op">$</span>x2</span>
-<span id="cb1-4"><a href="#cb1-4"></a>}</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># correlated variables </span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>N &lt;-<span class="st"> </span><span class="dv">50</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>x1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(N, <span class="dv">-5</span>, <span class="dv">5</span>)</span>
-<span id="cb1-10"><a href="#cb1-10"></a>x2 &lt;-<span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(N)<span class="op">/</span><span class="dv">100</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(x1, x2)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># predict function for the model</span>
+<span class="no">the_model_predict</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">m</span>, <span class="no">x</span>) {
+ <span class="no">x</span>$<span class="no">x1</span> * <span class="no">x</span>$<span class="no">x2</span> + <span class="no">x</span>$<span class="no">x2</span>
+}
+
+<span class="co"># correlated variables </span>
+<span class="no">N</span> <span class="kw">&lt;-</span> <span class="fl">50</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1</span>)
+<span class="no">x1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="no">N</span>, -<span class="fl">5</span>, <span class="fl">5</span>)
+<span class="no">x2</span> <span class="kw">&lt;-</span> <span class="no">x1</span> + <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="no">N</span>)/<span class="fl">100</span>
+<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="no">x1</span>, <span class="no">x2</span>)</pre></body></html></div>
 </div>
 <div id="explainer-for-the-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#explainer-for-the-models" class="anchor"></a>Explainer for the models</h1>
 <p>In fact this model is defined by the predict function <code>the_model_predict</code>. So it does not matter what is in the first argument of the <code>explain</code> function.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"DALEX"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>explain_the_model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DALEX/man/explain.html">explain</a></span>(<span class="dv">1</span>,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>                      <span class="dt">data =</span> df,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>                      <span class="dt">predict_function =</span> the_model_predict)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"DALEX"</span>)
+<span class="no">explain_the_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DALEX/man/explain.html">explain</a></span>(<span class="fl">1</span>,
+                      <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>,
+                      <span class="kw">predict_function</span> <span class="kw">=</span> <span class="no">the_model_predict</span>)</pre></body></html></div>
 <pre><code>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  numeric  ( [33m default [39m )
 #&gt;   -&gt; data              :  50  rows  2  cols 
@@ -153,85 +153,85 @@ y = x_1 * x_2 + x_2
 <h1 class="hasAnchor">
 <a href="#ceteris-paribus" class="anchor"></a>Ceteris paribus</h1>
 <p>Use the <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code> function to see Ceteris Paribus profiles. Clearly it’s not an additive model, as the effect of <span class="math inline">\(x_1\)</span> depends on <span class="math inline">\(x_2\)</span>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ingredients"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>sample_rows &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">x1 =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>                          <span class="dt">x2 =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>)</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a>cp_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(explain_the_model, sample_rows)</span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(cp_model) <span class="op">+</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="st">  </span><span class="kw"><a href="../reference/show_observations.html">show_observations</a></span>(cp_model) <span class="op">+</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Ceteris Paribus profiles"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ingredients"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ggplot2"</span>)
+
+<span class="no">sample_rows</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">x1</span> <span class="kw">=</span> -<span class="fl">5</span>:<span class="fl">5</span>,
+                          <span class="kw">x2</span> <span class="kw">=</span> -<span class="fl">5</span>:<span class="fl">5</span>)
+
+<span class="no">cp_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(<span class="no">explain_the_model</span>, <span class="no">sample_rows</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">cp_model</span>) +
+  <span class="fu"><a href="../reference/show_observations.html">show_observations</a></span>(<span class="no">cp_model</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Ceteris Paribus profiles"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="dependence-profiles" class="section level1">
 <h1 class="hasAnchor">
 <a href="#dependence-profiles" class="anchor"></a>Dependence profiles</h1>
 <p>Lets try Partial Dependence profiles, Conditional Dependence profiles and Accumulated Local profiles. For the last two we can try different smoothing factors</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>pd_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/partial_dependence.html">partial_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))</span>
-<span id="cb5-2"><a href="#cb5-2"></a>pd_model<span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "PDP"</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a>cd_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))</span>
-<span id="cb5-5"><a href="#cb5-5"></a>cd_model<span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "CDP 0.25"</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a>ad_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))</span>
-<span id="cb5-8"><a href="#cb5-8"></a>ad_model<span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "ALE 0.25"</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(ad_model, cd_model, pd_model) <span class="op">+</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Feature effects - PDP, CDP, ALE"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">pd_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))
+<span class="no">pd_model</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"PDP"</span>
+
+<span class="no">cd_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))
+<span class="no">cd_model</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"CDP 0.25"</span>
+
+<span class="no">ad_model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>))
+<span class="no">ad_model</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"ALE 0.25"</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">ad_model</span>, <span class="no">cd_model</span>, <span class="no">pd_model</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Feature effects - PDP, CDP, ALE"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>cd_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="dt">span =</span> <span class="fl">0.1</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>cd_model_<span class="dv">1</span><span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "CDP 0.1"</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>cd_model_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="dt">span =</span> <span class="fl">0.5</span>)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>cd_model_<span class="dv">5</span><span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "CDP 0.5"</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a>ad_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="dt">span =</span> <span class="fl">0.5</span>)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>ad_model_<span class="dv">1</span><span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "ALE 0.1"</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10"></a>ad_model_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(explain_the_model, <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="dt">span =</span> <span class="fl">0.5</span>)</span>
-<span id="cb6-11"><a href="#cb6-11"></a>ad_model_<span class="dv">5</span><span class="op">$</span><span class="st">`</span><span class="dt">_label_</span><span class="st">`</span> =<span class="st"> "ALE 0.5"</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(ad_model, cd_model, pd_model, cd_model_<span class="dv">1</span>, cd_model_<span class="dv">5</span>, ad_model_<span class="dv">1</span>, ad_model_<span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Feature effects - PDP, CDP, ALE"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">cd_model_1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.1</span>)
+<span class="no">cd_model_1</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"CDP 0.1"</span>
+
+<span class="no">cd_model_5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.5</span>)
+<span class="no">cd_model_5</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"CDP 0.5"</span>
+
+<span class="no">ad_model_1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.5</span>)
+<span class="no">ad_model_1</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"ALE 0.1"</span>
+
+<span class="no">ad_model_5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(<span class="no">explain_the_model</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), <span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.5</span>)
+<span class="no">ad_model_5</span>$<span class="no">`_label_`</span> <span class="kw">=</span> <span class="st">"ALE 0.5"</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">ad_model</span>, <span class="no">cd_model</span>, <span class="no">pd_model</span>, <span class="no">cd_model_1</span>, <span class="no">cd_model_5</span>, <span class="no">ad_model_1</span>, <span class="no">ad_model_5</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Feature effects - PDP, CDP, ALE"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div id="dependence-profiles-in-groups" class="section level1">
 <h1 class="hasAnchor">
 <a href="#dependence-profiles-in-groups" class="anchor"></a>Dependence profiles in groups</h1>
 <p>And now, let’s see how the grouping factor works</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># add grouping variable</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>df<span class="op">$</span>x3 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sign.html">sign</a></span>(df<span class="op">$</span>x2))</span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># update the data argument</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>explain_the_model<span class="op">$</span>data =<span class="st"> </span>df</span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># PDP in groups</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>pd_model_groups &lt;-<span class="st"> </span><span class="kw"><a href="../reference/partial_dependence.html">partial_dependence</a></span>(explain_the_model, </span>
-<span id="cb7-8"><a href="#cb7-8"></a>                                      <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), </span>
-<span id="cb7-9"><a href="#cb7-9"></a>                                      <span class="dt">groups =</span> <span class="st">"x3"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pd_model_groups) <span class="op">+</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Partial Dependence"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># add grouping variable</span>
+<span class="no">df</span>$<span class="no">x3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sign.html">sign</a></span>(<span class="no">df</span>$<span class="no">x2</span>))
+<span class="co"># update the data argument</span>
+<span class="no">explain_the_model</span>$<span class="no">data</span> <span class="kw">=</span> <span class="no">df</span>
+
+<span class="co"># PDP in groups</span>
+<span class="no">pd_model_groups</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span>(<span class="no">explain_the_model</span>,
+                                      <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>),
+                                      <span class="kw">groups</span> <span class="kw">=</span> <span class="st">"x3"</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">pd_model_groups</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Partial Dependence"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># ALE in groups</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>ad_model_groups &lt;-<span class="st"> </span><span class="kw"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(explain_the_model, </span>
-<span id="cb8-3"><a href="#cb8-3"></a>                                      <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), </span>
-<span id="cb8-4"><a href="#cb8-4"></a>                                      <span class="dt">groups =</span> <span class="st">"x3"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(ad_model_groups) <span class="op">+</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Accumulated Local"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># ALE in groups</span>
+<span class="no">ad_model_groups</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span>(<span class="no">explain_the_model</span>,
+                                      <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>),
+                                      <span class="kw">groups</span> <span class="kw">=</span> <span class="st">"x3"</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">ad_model_groups</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Accumulated Local"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># CDP in groups</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>cd_model_groups &lt;-<span class="st"> </span><span class="kw"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(explain_the_model, </span>
-<span id="cb9-3"><a href="#cb9-3"></a>                                      <span class="dt">variables =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>), </span>
-<span id="cb9-4"><a href="#cb9-4"></a>                                      <span class="dt">groups =</span> <span class="st">"x3"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(cd_model_groups) <span class="op">+</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Conditional Dependence"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># CDP in groups</span>
+<span class="no">cd_model_groups</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span>(<span class="no">explain_the_model</span>,
+                                      <span class="kw">variables</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>),
+                                      <span class="kw">groups</span> <span class="kw">=</span> <span class="st">"x3"</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">cd_model_groups</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Conditional Dependence"</span>)</pre></body></html></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
 </div>
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</pre></body></html></div>
 <pre><code>#&gt; R version 3.6.3 (2020-02-29)
 #&gt; Platform: x86_64-apple-darwin15.6.0 (64-bit)
 #&gt; Running under: macOS Catalina 10.15.3
