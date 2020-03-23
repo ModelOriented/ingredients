@@ -7,6 +7,8 @@ on:
       - '#*'
     paths:
       - '**.R'
+      - '*DESCRIPTION'
+      - '**.Rmd'
   pull_request:
     branches:
       - master
@@ -72,7 +74,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--run-donttest", "--run-dontrun"), error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--run-donttest", "--run-dontrun"),
+                                  build_args = "--compact-vignettes=no", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

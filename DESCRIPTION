@@ -35,7 +35,6 @@ Suggests:
     xgboost,
     testthat,
     r2d3,
-    ggpubr,
     jsonlite,
     knitr,
     rmarkdown,
