@@ -6,17 +6,24 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Explanations in natural language • ingredients</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="../dalexverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
-<!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../dalexverse-2.css" rel="stylesheet">
-<link href="../pkgdown.css" rel="stylesheet">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- dalexverse --><link href="../dalexverse.css" rel="stylesheet">
+<link href="../dalexverse-2.css" rel="stylesheet">
+<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Explanations in natural language">
 <meta property="og:description" content="ingredients">
 <meta property="og:image" content="/logo.png">
-<meta name="twitter:card" content="summary">
-<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<meta name="robots" content="noindex">
+<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- google analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-5650686-14"></script><script>
@@ -102,7 +109,7 @@
       <h1 data-toc-skip>Explanations in natural language</h1>
                         <h4 class="author">Adam Izdebski</h4>
             
-            <h4 class="date">2020-03-23</h4>
+            <h4 class="date">2020-03-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_describe.Rmd"><code>vignettes/vignette_describe.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_describe.Rmd</code></div>
@@ -140,14 +147,14 @@
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( [33m default [39m ) 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.004743146 , mean =  0.3236116 , max =  0.9933881  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.007104786 , mean =  0.3241502 , max =  0.9919721  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8016983 , mean =  0.0008286147 , max =  0.9094587  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7918125 , mean =  0.0002900203 , max =  0.8984598  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">passanger</span> <span class="kw">&lt;-</span> <span class="no">titanic</span>[<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">titanic</span>), <span class="fl">1</span>) ,-<span class="fl">9</span>]
 <span class="no">passanger</span></pre></body></html></div>
-<pre><code>#&gt;     gender age class    embarked  country   fare sibsp parch
-#&gt; 820   male  21   3rd Southampton Bulgaria 7.1711     0     0</code></pre>
+<pre><code>#&gt;   gender age class    embarked       country fare sibsp parch
+#&gt; 6   male  25   3rd Southampton United States 7.13     0     0</code></pre>
 <p>Now we are ready for generating various explantions and then describing it with <code><a href="../reference/describe.html">describe()</a></code> function.</p>
 <div id="feature-importance" class="section level2">
 <h2 class="hasAnchor">
@@ -173,35 +180,34 @@
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>For a user with no experience, interpreting the above plot may be not straightforward. Thus we generate a natural language description in order to make it easier.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">cp_rf</span>)</pre></body></html></div>
-<pre><code>#&gt; For the selected instance, prediction estimated by Random Forest is equal to 0.021.
+<pre><code>#&gt; For the selected instance, prediction estimated by Random Forest is equal to 0.379.
 #&gt; 
-#&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st", "engineering crew", "victualling crew", "2nd".
-#&gt; The largest change would be marked if class variable would change to "deck crew".
+#&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew". On the other hand, Random Forest's prediction would decrease substantially if the value of class variable would change to "2nd", "restaurant staff", "victualling crew", "engineering crew". The largest change would be marked if class variable would change to "2nd".
 #&gt; 
-#&gt; Other variables are with less importance and they do not change prediction by more than 0.04%.</code></pre>
+#&gt; Other variables are with less importance and they do not change prediction by more than 0.02%.</code></pre>
 <p>Natural lannguage descriptions should be flexible in order to provide the desired level of complexity and specificity. Thus various parameters can modify the description being generated.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">cp_rf</span>,
          <span class="kw">display_numbers</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
          <span class="kw">label</span> <span class="kw">=</span> <span class="st">"the probability that the passanger will survive"</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.021
+<pre><code>#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.379
 #&gt; 
-#&gt; The most important change in Random Forest's prediction would occur for class = "deck crew". It increases the prediction by 0.278. 
-#&gt; The second most important change in the prediction would occur for class = "1st". It increases the prediction by 0.185. 
-#&gt; The third most important change in the prediction would occur for class = "engineering crew". It increases the prediction by 0.084.
+#&gt; The most important change in Random Forest's prediction would occur for class = "2nd". It decreases the prediction by 0.137. 
+#&gt; The second most important change in the prediction would occur for class = "restaurant staff". It decreases the prediction by 0.126. 
+#&gt; The third most important change in the prediction would occur for class = "deck crew". It increases the prediction by 0.112.
 #&gt; 
-#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.082.</code></pre>
+#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.057.</code></pre>
 <p>Please note, that <code><a href="../reference/describe.html">describe()</a></code> can handle only one variable at a time, so it is recommended to specify, which variables should be described.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">cp_rf</span>,
          <span class="kw">display_numbers</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
          <span class="kw">label</span> <span class="kw">=</span> <span class="st">"the probability that the passanger will survive"</span>,
          <span class="kw">variables</span> <span class="kw">=</span> <span class="no">perturbed_variable</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.021
+<pre><code>#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.379
 #&gt; 
-#&gt; The most important change in Random Forest's prediction would occur for class = "deck crew". It increases the prediction by 0.278. 
-#&gt; The second most important change in the prediction would occur for class = "1st". It increases the prediction by 0.185. 
-#&gt; The third most important change in the prediction would occur for class = "engineering crew". It increases the prediction by 0.084.
+#&gt; The most important change in Random Forest's prediction would occur for class = "2nd". It decreases the prediction by 0.137. 
+#&gt; The second most important change in the prediction would occur for class = "restaurant staff". It decreases the prediction by 0.126. 
+#&gt; The third most important change in the prediction would occur for class = "deck crew". It increases the prediction by 0.112.
 #&gt; 
-#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.082.</code></pre>
+#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.057.</code></pre>
 <p>Continuous variables are described as well.</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">perturbed_variable_continuous</span> <span class="kw">&lt;-</span> <span class="st">"age"</span>
 <span class="no">cp_rf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span>(<span class="no">explain_titanic_rf</span>,
@@ -209,9 +215,9 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">cp_rf</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="no">perturbed_variable_continuous</span>)</pre></body></html></div>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">cp_rf</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="no">perturbed_variable_continuous</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest predicts that for the selected instance, prediction is equal to 0.021
+<pre><code>#&gt; Random Forest predicts that for the selected instance, prediction is equal to 0.379
 #&gt; 
-#&gt; The highest prediction occurs for (age = 2), while the lowest for (age = 27).
+#&gt; The highest prediction occurs for (age = 4), while the lowest for (age = 43).
 #&gt; Breakpoint is identified at (age = 13).
 #&gt; 
 #&gt; Average model responses are *higher* for variable values *lower* than breakpoint (= 13).</code></pre>
@@ -224,22 +230,21 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">pdp</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="st">"fare"</span>)</pre></body></html></div>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">pdp</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="st">"fare"</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest's mean prediction is equal to 0.021.
+<pre><code>#&gt; Random Forest's mean prediction is equal to 0.379.
 #&gt; 
-#&gt; The highest prediction occurs for (fare = 110.343588), while the lowest for (fare = 7.1711).
-#&gt; Breakpoints are identified at (fare = 6.19 and fare = 26.11).
+#&gt; The highest prediction occurs for (fare = 7.11), while the lowest for (fare = 14.1).
+#&gt; Breakpoint is identified at (fare = 9.041).
 #&gt; 
-#&gt; Average model responses are *higher* for variable values *higher* than breakpoint (= 26.11).</code></pre>
+#&gt; Average model responses are *lower* for variable values *higher* than breakpoint (= 9.041).</code></pre>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">pdp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/aggregate_profiles.html">aggregate_profiles</a></span>(<span class="no">cp_rf</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"partial"</span>, <span class="kw">variable_type</span> <span class="kw">=</span> <span class="st">"categorical"</span>)
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">pdp</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="no">perturbed_variable</span>)</pre></body></html></div>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../reference/describe.html">describe</a></span>(<span class="no">pdp</span>, <span class="kw">variables</span> <span class="kw">=</span> <span class="no">perturbed_variable</span>)</pre></body></html></div>
-<pre><code>#&gt; Random Forest's mean prediction is equal to 0.021.
+<pre><code>#&gt; Random Forest's mean prediction is equal to 0.379.
 #&gt; 
-#&gt; Model's prediction would increase substantially if the value of class variable would change to "deck crew", "1st".
-#&gt; The largest change would be marked if class variable would change to "restaurant staff".
+#&gt; Model's prediction would increase substantially if the value of class variable would change to "restaurant staff". On the other hand, Random Forest's prediction would decrease substantially if the value of class variable would change to "2nd". The largest change would be marked if class variable would change to "1st".
 #&gt; 
-#&gt; Other variables are with less importance and they do not change prediction by more than 0.04%.</code></pre>
+#&gt; Other variables are with less importance and they do not change prediction by more than 0.02%.</code></pre>
 </div>
 </div>
   </div>
@@ -254,11 +259,12 @@
 
 
 
-      <footer><div class="author">
-  <p>
-    Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
-  </p>
+      <footer><div class="copyright">
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+</div>
+
+<div class="pkgdown">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
