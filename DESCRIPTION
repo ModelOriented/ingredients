@@ -1,6 +1,6 @@
 Package: ingredients
 Title: Effects and Importances of Model Ingredients
-Version: 1.1.1
+Version: 1.1.2
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0001-8423-1823")),
@@ -23,7 +23,7 @@ Depends: R (>= 3.5)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Imports:
     DALEX,
     ggplot2,

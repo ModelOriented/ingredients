@@ -1,3 +1,7 @@
+ingredients 1.1.2 (development)
+---------------------------------------------------------------
+* `plot_categorical_ceteris_paribus` can plot bars (again)
+
 ingredients 1.1.1 (development)
 ---------------------------------------------------------------
 * add `bind_plots` function

@@ -18,6 +18,7 @@
 #' @param title a character. Plot title. By default "Ceteris Paribus profile".
 #' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 #' where XXX, YYY are labels of given explainers.
+#' @param categorical_type a character. How categorical variables shall be plotted? Either \code{"lines"} (default) or \code{"bars"}.
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -75,6 +76,7 @@
 #'
 #' plot(cp_rf, variables = "class")
 #' plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1)
+#' plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1, categorical_type = "bars")
 #' plotD3(cp_rf, variables = c("class", "embarked", "gender"),
 #'               variable_type = "categorical", scale_plot = TRUE,
 #'               label_margin = 70)
@@ -89,7 +91,8 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    facet_ncol = NULL,
    variables = NULL,
    title = "Ceteris Paribus profile",
-   subtitle = NULL) {
+   subtitle = NULL,
+   categorical_type = "lines") {
 
   check_variable_type(variable_type)
 
@@ -156,11 +159,17 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     if (is.null(variables)) {
       variables <- vnames
     }
-    pl <- plot_categorical_ceteris_paribus(all_profiles, attr(x, "observation"), variables, facet_ncol = facet_ncol, color,
-                                           size, alpha)
+    pl <- switch(categorical_type,
+            lines = plot_categorical_ceteris_paribus(
+                      all_profiles, attr(x, "observation"), variables,
+                      facet_ncol = facet_ncol, color, size, alpha),
+            bars = plot_categorical_ceteris_paribus_bars(
+                      all_profiles, attr(x, "observation"), variables,
+                      facet_ncol = facet_ncol, color,size, alpha),
+            stop("`categorical_type` shall be either `lines` or `bars`")
+    )
   }
   pl +
-    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     labs(title = title, subtitle = subtitle) +
     xlab("") + ylab("prediction")
 }
@@ -185,6 +194,7 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
   }
 
   pl +
+    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme_drwhy()
 }
 
@@ -212,6 +222,43 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
     geom_line(size = size/2, alpha = alpha, color = color) +
     geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                color = color, size = size, alpha = alpha) +
-    theme_drwhy() +
+    theme_drwhy()  +
+    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
+}
+
+
+
+plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
+                                             size = 2, alpha) {
+
+  lsc <- lapply(variables, function(sv) {
+    tmp <- all_profiles[all_profiles$`_vname_` == sv,
+                        c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
+    # instances to be merged
+    key <- selected_observation[, sv, drop = FALSE]
+    # add right values to profiles
+    tmp$`_real_point_` <- tmp[, sv] == key[as.character(tmp$`_ids_`), sv]
+    tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
+    colnames(tmp)[1] <- "_x_"
+    tmp$`_x_` <- as.character(tmp$`_x_`)
+    tmp
+  })
+  # transformed data frame
+  selected_cp_flat <- do.call(rbind, lsc)
+
+  selected_y <- selected_observation$`_yhat_`
+  t_shift <- trans_new("shift",
+                       transform = function(x) {x - selected_y},
+                       inverse = function(x) {x + selected_y})
+
+  # prepare plot
+  `_vname_` <- NULL
+  ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`")) +
+    geom_col(fill = "#46bac2") + facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
+    scale_y_continuous(trans = t_shift) +
+    coord_flip() +
+    theme_drwhy_vertical() +
+    geom_hline(yintercept=selected_y, size = 0.5, linetype = 2, color = "#371ea3") +
+    xlab("") + ylab("prediction")
 }

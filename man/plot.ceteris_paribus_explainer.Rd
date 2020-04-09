@@ -14,7 +14,8 @@
   facet_ncol = NULL,
   variables = NULL,
   title = "Ceteris Paribus profile",
-  subtitle = NULL
+  subtitle = NULL,
+  categorical_type = "lines"
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ If \code{categorical} then only categorical variables will be plotted.}
 
 \item{subtitle}{a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 where XXX, YYY are labels of given explainers.}
+
+\item{categorical_type}{a character. How categorical variables shall be plotted? Either \code{"lines"} (default) or \code{"bars"}.}
 }
 \value{
 a \code{ggplot2} object
@@ -97,6 +100,7 @@ plot(cp_rf, variables = "age") +
 
 plot(cp_rf, variables = "class")
 plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1)
+plot(cp_rf, variables = c("class", "embarked"), facet_ncol = 1, categorical_type = "bars")
 plotD3(cp_rf, variables = c("class", "embarked", "gender"),
               variable_type = "categorical", scale_plot = TRUE,
               label_margin = 70)
