@@ -41,3 +41,6 @@ bind_plots(plot(pdp_numerical), plot(pdp_categorical), byrow = FALSE)
 }
 
 }
+\author{
+\url{https://github.com/harell}
+}

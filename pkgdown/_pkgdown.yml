@@ -31,6 +31,7 @@ reference:
   - title: Plots
     desc: Plotting functions for explanations
     contents:
+    - bind_plots
     - plot.aggregated_profiles_explainer
     - plot.ceteris_paribus_2d_explainer
     - plot.ceteris_paribus_explainer

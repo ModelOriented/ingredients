@@ -9,6 +9,8 @@
 #'
 #' @return (\code{gtable}) A plottable object with \code{plot()}.
 #'
+#' @author \url{https://github.com/harell}
+#'
 #' @examples
 #' \dontrun{
 #' library("DALEX")
