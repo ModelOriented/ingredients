@@ -178,8 +178,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
       facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
       ylab("Drop-out loss") + xlab("") +
       labs(title = title, subtitle = subtitle) +
-      theme(legend.position = "none",
-            plot.subtitle = element_text(hjust = 0.5, vjust = 0.15))
+      theme(legend.position = "none")
 
 }
 
