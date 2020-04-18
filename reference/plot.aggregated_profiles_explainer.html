@@ -100,7 +100,7 @@ show average profiles for each variable listed in the variables vector." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.1.2</span>
+          <span class="version version-default">1.2.0</span>
         </div>
       </div>
     </div>
@@ -246,12 +246,12 @@ show average profiles for each variable listed in the <code>variables</code> vec
 <span class='no'>pdp_rf_a</span>$<span class='no'>`_label_`</span> <span class='kw'>&lt;-</span> <span class='st'>"RF_accumulated"</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_    _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare RF_partial 0.0000000 0.3045310     0
-#&gt; 2   sibsp RF_partial 0.0000000 0.3329123     0
-#&gt; 3   parch RF_partial 0.0000000 0.3329123     0
-#&gt; 4     age RF_partial 0.1666667 0.3739590     0
-#&gt; 5   sibsp RF_partial 1.0000000 0.3329123     0
-#&gt; 6   parch RF_partial 1.0000000 0.3329123     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1    fare RF_partial 0.0000000 0.2851360     0
+#&gt; 2   sibsp RF_partial 0.0000000 0.3080055     0
+#&gt; 3   parch RF_partial 0.0000000 0.3080055     0
+#&gt; 4     age RF_partial 0.1666667 0.3501775     0
+#&gt; 5   sibsp RF_partial 1.0000000 0.3080055     0
+#&gt; 6   parch RF_partial 1.0000000 0.3080055     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -265,13 +265,13 @@ show average profiles for each variable listed in the <code>variables</code> vec
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked    fare sibsp parch    _yhat_
-#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.8423003
-#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.1016843
-#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.4600361
-#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.1101215
-#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.6784834
-#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2420210
+#&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.86070725
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09548733
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.47283504
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.11107482
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.69304259
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.24179678
 #&gt;        _vname_ _ids_          _label_
 #&gt; 515     gender   515 Random Forest v7
 #&gt; 515.1   gender   515 Random Forest v7
@@ -282,13 +282,13 @@ show average profiles for each variable listed in the <code>variables</code> vec
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked    fare sibsp parch    _yhat_
-#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.1016843
-#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.1101215
-#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2420210
-#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1168159
-#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.6364005
-#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1562040
+#&gt;      gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.09548733
+#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.11107482
+#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.24179678
+#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.12000632
+#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.64030853
+#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.15434343
 #&gt;               _label_ _ids_
 #&gt; 515  Random Forest v7     1
 #&gt; 604  Random Forest v7     2
@@ -305,12 +305,12 @@ show average profiles for each variable listed in the <code>variables</code> vec
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_    _label_        _x_    _yhat_ _ids_
-#&gt; 1     age RF_partial  0.1666667 0.5212072     0
-#&gt; 2     age RF_partial  2.0000000 0.5730761     0
-#&gt; 3     age RF_partial  4.0000000 0.5854236     0
-#&gt; 4     age RF_partial  7.0000000 0.5366937     0
-#&gt; 5     age RF_partial  9.0000000 0.5212531     0
-#&gt; 6     age RF_partial 13.0000000 0.4522789     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 1     age RF_partial  0.1666667 0.5204499     0
+#&gt; 2     age RF_partial  2.0000000 0.5649927     0
+#&gt; 3     age RF_partial  4.0000000 0.5738621     0
+#&gt; 4     age RF_partial  7.0000000 0.5364890     0
+#&gt; 5     age RF_partial  9.0000000 0.5178976     0
+#&gt; 6     age RF_partial 13.0000000 0.4534922     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
