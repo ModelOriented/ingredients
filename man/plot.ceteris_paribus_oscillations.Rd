@@ -21,8 +21,8 @@ This function plots local variable importance plots
 calculated as oscillations in the Ceteris Paribus Profiles.
 }
 \examples{
-library("DALEX")
 \donttest{
+library("DALEX")
 library("randomForest")
 
 apartments_rf_model <- randomForest(m2.price ~., data = apartments)

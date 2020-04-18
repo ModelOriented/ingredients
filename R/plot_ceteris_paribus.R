@@ -195,7 +195,7 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
 
   pl +
     facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
-    theme_drwhy()
+    DALEX::theme_drwhy()
 }
 
 
@@ -222,7 +222,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
     geom_line(size = size/2, alpha = alpha, color = color) +
     geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                color = color, size = size, alpha = alpha) +
-    theme_drwhy()  +
+    DALEX::theme_drwhy()  +
     facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
@@ -258,7 +258,7 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observa
     geom_col(fill = "#46bac2") + facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
     scale_y_continuous(trans = t_shift) +
     coord_flip() +
-    theme_drwhy_vertical() +
+    DALEX::theme_drwhy_vertical() +
     geom_hline(yintercept=selected_y, size = 0.5, linetype = 2, color = "#371ea3") +
     xlab("") + ylab("prediction")
 }

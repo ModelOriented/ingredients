@@ -1,5 +1,4 @@
 library("randomForest")
-library("xgboost")
 library("DALEX")
 
 HR_glm_model <- glm(status == "fired" ~ ., data = HR, family = "binomial")
@@ -29,13 +28,6 @@ explainer_rf <- explain(rf_model, data = titanic_small,
 titanic_small_mat <- as.matrix(titanic_small[,c(2,6,7,8)])
 titanic_small_survived <- ifelse(titanic_small$survived == "yes", 1, 0)
 
-xgb_model <- xgboost(data = titanic_small_mat, label = titanic_small_survived,
-                     nrounds = 2, verbose = FALSE)
-
-explainer_xgb <- explain(xgb_model,
-                         data=titanic_small_mat,
-                         y = titanic_small_survived, label="xgboost", verbose = FALSE)
-
 # helper objects for aspect_importance tests
 # titanic
 titanic_data <- titanic_imputed
@@ -60,6 +52,13 @@ titanic_aspects <- list(wealth = c("class", "fare"),
                         family = c("gender", "sibsp", "parch"),
                         age = "age",
                         embarked = "embarked")
+
+xgb_model <- titanic_glm_model
+
+explainer_xgb <- explain(xgb_model,
+                         data=titanic_small_mat,
+                         y = titanic_small_survived, label="xgboost", verbose = FALSE)
+
 
 
 # apartments

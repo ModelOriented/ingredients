@@ -23,8 +23,6 @@
 #'
 #' @importFrom stats model.frame reorder
 #' @importFrom utils head tail
-#' @importFrom DALEX loss_root_mean_square
-#' @importFrom DALEX theme_drwhy theme_drwhy_vertical colors_discrete_drwhy
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -73,23 +71,6 @@
 #' head(fi_glm)
 #' plot(fi_glm)
 #'
-#' library("xgboost")
-#'
-#' model_martix_train <- model.matrix(status == "fired" ~ . -1, HR)
-#' data_train <- xgb.DMatrix(model_martix_train, label = HR$status == "fired")
-#'
-#' param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-#'               objective = "binary:logistic", eval_metric = "auc")
-#'
-#' HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
-#'
-#' explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
-#'                          y = HR$status == "fired", label = "xgboost")
-#'
-#' fi_xgb <- feature_importance(explainer_xgb, type = "raw")
-#'
-#' head(fi_xgb)
-#' plot(fi_glm, fi_xgb, bar_width = 5)
 #' }
 #'
 #' @export
@@ -174,8 +155,8 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   # facets have fixed space, can be resolved with ggforce https://github.com/tidyverse/ggplot2/issues/2933
 
   pl + coord_flip() +
-      scale_color_manual(values = colors_discrete_drwhy(nlabels)) +
-      facet_wrap(~label, ncol = 1, scales = "free_y") + theme_drwhy_vertical() +
+      scale_color_manual(values = DALEX::colors_discrete_drwhy(nlabels)) +
+      facet_wrap(~label, ncol = 1, scales = "free_y") + DALEX::theme_drwhy_vertical() +
       ylab("Drop-out loss") + xlab("") +
       labs(title = title, subtitle = subtitle) +
       theme(legend.position = "none")

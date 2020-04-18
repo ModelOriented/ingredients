@@ -1,3 +1,7 @@
+ingredients 1.1.2
+---------------------------------------------------------------
+* `DALEX` is moved to Suggests as in  [#112](https://github.com/ModelOriented/ingredients/issues/112)
+
 ingredients 1.1.2 (development)
 ---------------------------------------------------------------
 * `plot_categorical_ceteris_paribus` can plot bars (again)

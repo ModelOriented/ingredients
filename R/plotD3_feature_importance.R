@@ -29,7 +29,7 @@
 #'                         y = apartments[,1],
 #'                         verbose = FALSE)
 #'
-#' fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
+#' fi_lm <- feature_importance(explainer_lm, loss_function = DALEX::loss_root_mean_square)
 #'
 #' head(fi_lm)
 #' plotD3(fi_lm)
@@ -44,7 +44,7 @@
 #'                         y = apartments[,1],
 #'                         label = "rf", verbose = FALSE)
 #'
-#' fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
+#' fi_rf <- feature_importance(explainer_rf, loss_function = DALEX::loss_root_mean_square)
 #'
 #' head(fi_rf)
 #' plotD3(fi_lm, fi_rf)

@@ -92,23 +92,6 @@ fi_glm <- feature_importance(explainer_glm, type = "raw",
 head(fi_glm)
 plot(fi_glm)
 
-library("xgboost")
-
-model_martix_train <- model.matrix(status == "fired" ~ . -1, HR)
-data_train <- xgb.DMatrix(model_martix_train, label = HR$status == "fired")
-
-param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-              objective = "binary:logistic", eval_metric = "auc")
-
-HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
-
-explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
-                         y = HR$status == "fired", label = "xgboost")
-
-fi_xgb <- feature_importance(explainer_xgb, type = "raw")
-
-head(fi_xgb)
-plot(fi_glm, fi_xgb, bar_width = 5)
 }
 
 }

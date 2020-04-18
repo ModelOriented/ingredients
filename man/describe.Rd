@@ -115,7 +115,7 @@ library("DALEX")
 lm_model <- lm(m2.price~., data = apartments)
 explainer_lm <- explain(lm_model, data = apartments[,-1], y = apartments[,1])
 
-fi_lm <- feature_importance(explainer_lm, loss_function = loss_root_mean_square)
+fi_lm <- feature_importance(explainer_lm, loss_function = DALEX::loss_root_mean_square)
 
 plot(fi_lm)
 describe(fi_lm)

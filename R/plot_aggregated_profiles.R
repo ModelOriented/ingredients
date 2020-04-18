@@ -107,7 +107,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
-      scale_color_manual(name = "", values = colors_discrete_drwhy(nlabels))
+      scale_color_manual(name = "", values = DALEX::colors_discrete_drwhy(nlabels))
   }
   if (!is_color_a_variable & is_x_numeric) {
     res <- res +
@@ -119,7 +119,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     nlabels <- length(unique(aggregated_profiles$`_label_`))
     res <- res +
       geom_col(aes_string(y = "`_yhat_`", fill = paste0("`",color,"`")), size = size, alpha = alpha, position = "dodge") +
-      scale_fill_manual(name = "", values = colors_discrete_drwhy(nlabels))
+      scale_fill_manual(name = "", values = DALEX::colors_discrete_drwhy(nlabels))
   }
   if (!is_color_a_variable & !is_x_numeric) {
     res <- res +
@@ -150,7 +150,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                          subtitle = subtitle)
 
 
-  res + theme_drwhy() + ylab("average prediction") + xlab("") +
+  res + DALEX::theme_drwhy() + ylab("average prediction") + xlab("") +
         theme(plot.title = element_text(hjust =0),
               plot.subtitle = element_text(vjust = -2, hjust = 0)) +
     facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)

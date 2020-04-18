@@ -14,8 +14,8 @@
 #' @importFrom stats reorder
 #'
 #' @examples
-#' library("DALEX")
 #' \donttest{
+#' library("DALEX")
 #' library("randomForest")
 #'
 #' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
@@ -48,8 +48,8 @@ plot.ceteris_paribus_oscillations <- function(x, ..., bar_width = 10) {
   ggplot(x, aes(`_vname_`, ymin = 0, ymax = oscillations, color = `_ids_`)) +
     geom_linerange(size = bar_width) + coord_flip() +
     facet_wrap(~`_ids_`, scales = "free_y") +
-    ylab("Oscillations") + xlab("") + theme_drwhy_vertical() +
+    ylab("Oscillations") + xlab("") + DALEX::theme_drwhy_vertical() +
     theme(legend.position = "none") +
-    scale_color_manual(values = colors_discrete_drwhy(nlabels))
+    scale_color_manual(values = DALEX::colors_discrete_drwhy(nlabels))
 
 }

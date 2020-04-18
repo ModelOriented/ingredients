@@ -10,7 +10,7 @@ feature_importance(x, ...)
 
 \method{feature_importance}{explainer}(
   x,
-  loss_function = loss_root_mean_square,
+  loss_function = DALEX::loss_root_mean_square,
   ...,
   type = c("raw", "ratio", "difference"),
   n_sample = NULL,
@@ -25,7 +25,7 @@ feature_importance(x, ...)
   data,
   y,
   predict_function = predict,
-  loss_function = loss_root_mean_square,
+  loss_function = DALEX::loss_root_mean_square,
   ...,
   label = class(x)[1],
   type = c("raw", "ratio", "difference"),
@@ -143,23 +143,10 @@ plot(fi_rf)
 HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
 explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
 fi_glm <- feature_importance(explainer_glm, type = "raw",
-                             loss_function = loss_root_mean_square)
+                             loss_function = DALEX::loss_root_mean_square)
 head(fi_glm)
 plot(fi_glm)
 
-library("xgboost")
-model_martix_train <- model.matrix(status == "fired" ~ . -1, HR)
-data_train <- xgb.DMatrix(model_martix_train, label = HR$status == "fired")
-param <- list(max_depth = 2, eta = 1, silent = 1, nthread = 2,
-              objective = "binary:logistic", eval_metric = "auc")
-HR_xgb_model <- xgb.train(param, data_train, nrounds = 50)
-
-explainer_xgb <- explain(HR_xgb_model, data = model_martix_train,
-                         y = HR$status == "fired", label = "xgboost")
-
-fi_xgb <- feature_importance(explainer_xgb, type = "raw")
-head(fi_xgb)
-plot(fi_xgb, fi_glm)
 }
 }
 \references{
