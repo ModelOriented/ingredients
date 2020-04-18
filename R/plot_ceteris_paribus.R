@@ -217,11 +217,23 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
   # transformed data frame
   selected_cp_flat <- do.call(rbind, lsc)
 
+  # is color a variable or literal?
+  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
+  if (is_color_a_variable) {
+    selected_cp_flat$`_ids_color_` <- paste(selected_cp_flat[,"_ids_"], selected_cp_flat[,color], sep = "_")
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_color_`", color = paste0("`",color,"`"))) +
+      geom_line(size = size/2, alpha = alpha) +
+      geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
+                 size = size, alpha = alpha)
+  } else {
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
+      geom_line(size = size/2, alpha = alpha, color = color) +
+      geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
+                 color = color, size = size, alpha = alpha)
+  }
+
   # prepare plot
-  ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
-    geom_line(size = size/2, alpha = alpha, color = color) +
-    geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
-               color = color, size = size, alpha = alpha) +
+  pl +
     DALEX::theme_drwhy()  +
     facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -254,8 +266,18 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observa
 
   # prepare plot
   `_vname_` <- NULL
-  ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`")) +
-    geom_col(fill = "#46bac2") + facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
+  # is color a variable or literal?
+  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
+  if (is_color_a_variable) {
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", fill = paste0("`",color,"`"))) +
+      geom_col(position = "dodge")
+  } else {
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`")) +
+      geom_col(fill = color)
+  }
+
+  pl +
+    facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
     scale_y_continuous(trans = t_shift) +
     coord_flip() +
     DALEX::theme_drwhy_vertical() +
