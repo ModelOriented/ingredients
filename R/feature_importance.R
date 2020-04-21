@@ -16,7 +16,7 @@
 #' @param type character, type of transformation that should be applied for dropout loss.
 #' "raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
 #' while "difference" returns \code{drop_loss - drop_loss_full_model}
-#' @param n_sample number of observations that should be sampled for calculation of variable importance.
+#' @param N number of observations that should be sampled for calculation of variable importance.
 #' If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).
 #' @param B integer, number of permutation rounds to perform on each variable. By default it's \code{10}.
 #' @param variables vector of variables. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}
@@ -111,7 +111,7 @@ feature_importance.explainer <- function(x,
                                          loss_function = DALEX::loss_root_mean_square,
                                          ...,
                                          type = c("raw", "ratio", "difference"),
-                                         n_sample = NULL,
+                                         N = NULL,
                                          B = 10,
                                          variables = NULL,
                                          variable_groups = NULL,
@@ -135,7 +135,7 @@ feature_importance.explainer <- function(x,
                              loss_function = loss_function,
                              label = label,
                              type = type,
-                             n_sample = n_sample,
+                             N = N,
                              B = B,
                              variables = variables,
                              variable_groups = variable_groups,
@@ -153,10 +153,16 @@ feature_importance.default <- function(x,
                                        ...,
                                        label = class(x)[1],
                                        type = c("raw", "ratio", "difference"),
-                                       n_sample = NULL,
+                                       N = NULL,
                                        B = 10,
                                        variables = NULL,
                                        variable_groups = NULL) {
+
+  if ("n_sample" %in% names(list(...))) {
+    warning("n_sample is deprecated, please use N instead")
+    N <- list(...)[["n_sample"]]
+  }
+
   if (!is.null(variable_groups)) {
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
 
@@ -192,8 +198,8 @@ feature_importance.default <- function(x,
   # one permutation round: subsample data, permute variables and compute losses
   sampled_rows <- 1:nrow(data)
   loss_after_permutation <- function() {
-    if (!is.null(n_sample)) {
-      sampled_rows <- sample.int(nrow(data), n_sample, replace = TRUE)
+    if (!is.null(N)) {
+      sampled_rows <- sample.int(nrow(data), N, replace = TRUE)
     }
     sampled_data <- data[sampled_rows, ]
     observed <- y[sampled_rows]
