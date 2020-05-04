@@ -55,7 +55,8 @@ explainer_lm <- explain(lm_model,
                         y = apartments[,1],
                         verbose = FALSE)
 
-fi_lm <- feature_importance(explainer_lm, loss_function = DALEX::loss_root_mean_square)
+fi_lm <- feature_importance(explainer_lm,
+      loss_function = DALEX::loss_root_mean_square, B = 1)
 
 head(fi_lm)
 plotD3(fi_lm)

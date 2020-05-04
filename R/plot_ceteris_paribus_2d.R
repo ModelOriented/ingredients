@@ -20,6 +20,7 @@
 #' library("DALEX")
 #' library("randomForest")
 #'
+#' \donttest{
 #' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
@@ -30,7 +31,6 @@
 #' new_apartment <- apartments_test[1,]
 #' new_apartment
 #'
-#' \donttest{
 #' wi_rf_2d <- ceteris_paribus_2d(explainer_rf, observation = new_apartment)
 #' head(wi_rf_2d)
 #'

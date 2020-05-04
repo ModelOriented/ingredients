@@ -59,12 +59,11 @@ explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
                                y = titanic_imputed[,8])
 
-fi_rf <- feature_importance(explain_titanic_glm)
+fi_rf <- feature_importance(explain_titanic_glm, B = 1)
 plot(fi_rf)
 
 \donttest{
 library("randomForest")
-
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,

@@ -38,7 +38,7 @@
 #'                                verbose = FALSE)
 #'
 #' pdp_glm <- partial_dependence(explain_titanic_glm,
-#'                               N = 50, variables = c("age", "fare"))
+#'                               N = 25, variables = c("age", "fare"))
 #' head(pdp_glm)
 #' plot(pdp_glm)
 #'

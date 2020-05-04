@@ -86,8 +86,10 @@ explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
                                y = titanic_imputed[,8])
 
-fi_glm <- feature_importance(explain_titanic_glm)
+fi_glm <- feature_importance(explain_titanic_glm, B = 1)
 plot(fi_glm)
+
+\donttest{
 
 fi_glm_joint1 <- feature_importance(explain_titanic_glm,
                    variable_groups = list("demographics" = c("gender", "age"),
@@ -105,10 +107,7 @@ fi_glm_joint2 <- feature_importance(explain_titanic_glm,
 
 plot(fi_glm_joint2, fi_glm_joint1)
 
-
-\donttest{
 library("randomForest")
-
 model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
 
 explain_titanic_rf <- explain(model_titanic_rf,

@@ -40,7 +40,7 @@
 #'                                verbose = FALSE)
 #'
 #' adp_glm <- accumulated_dependence(explain_titanic_glm,
-#'                                   N = 150, variables = c("age", "fare"))
+#'                                   N = 25, variables = c("age", "fare"))
 #' head(adp_glm)
 #' plot(adp_glm)
 #'
