@@ -165,7 +165,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_oscillations</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +213,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 <span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,]
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>vips</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_oscillations.html'>calculate_oscillations</a></span>(<span class='no'>cp_rf</span>)
 <span class='no'>vips</span></div><div class='output co'>#&gt;              _vname_ _ids_ oscillations
 #&gt; 9           district  1001   1175.60868
@@ -226,7 +226,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 #&gt; 7           no.rooms  1001    164.63709
 #&gt; 2  construction.year  1002    152.83025
 #&gt; 1  construction.year  1001     53.33294</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div><div class='input'># }
 
 </div></span></pre>
   </div>

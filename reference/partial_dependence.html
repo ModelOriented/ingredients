@@ -277,7 +277,7 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt; 3     age      lm 2.0000000 0.3482437     0
 #&gt; 4     age      lm 4.0000000 0.3455262     0
 #&gt; 5    fare      lm 6.1793080 0.2904498     0
-#&gt; 6     age      lm 7.0000000 0.3414749     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_glm</span>)</div><div class='img'><img src='partial_dependence-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6     age      lm 7.0000000 0.3414749     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_glm</span>)</div><div class='img'><img src='partial_dependence-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -288,7 +288,7 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependence</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependence-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>)</div><div class='img'><img src='partial_dependence-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>partial_dependence</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
 <span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># }</span></div></pre>

@@ -167,7 +167,7 @@ show average profiles for each variable listed in the <code>variables</code> vec
     </div>
 
     <pre class="usage"><span class='co'># S3 method for aggregated_profiles_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
   <span class='no'>x</span>,
   <span class='no'>...</span>,
   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
@@ -247,11 +247,11 @@ show average profiles for each variable listed in the <code>variables</code> vec
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_    _label_       _x_    _yhat_ _ids_
 #&gt; 1    fare RF_partial 0.0000000 0.2851360     0
-#&gt; 2   sibsp RF_partial 0.0000000 0.3080055     0
-#&gt; 3   parch RF_partial 0.0000000 0.3080055     0
+#&gt; 2   parch RF_partial 0.0000000 0.3080055     0
+#&gt; 3   sibsp RF_partial 0.0000000 0.3080055     0
 #&gt; 4     age RF_partial 0.1666667 0.3501775     0
-#&gt; 5   sibsp RF_partial 1.0000000 0.3080055     0
-#&gt; 6   parch RF_partial 1.0000000 0.3080055     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 5   parch RF_partial 1.0000000 0.3080055     0
+#&gt; 6   sibsp RF_partial 1.0000000 0.3080055     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_l</span>, <span class='no'>pdp_rf_a</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -310,8 +310,8 @@ show average profiles for each variable listed in the <code>variables</code> vec
 #&gt; 3     age RF_partial  4.0000000 0.5738621     0
 #&gt; 4     age RF_partial  7.0000000 0.5364890     0
 #&gt; 5     age RF_partial  9.0000000 0.5178976     0
-#&gt; 6     age RF_partial 13.0000000 0.4534922     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+#&gt; 6     age RF_partial 13.0000000 0.4534922     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf_p</span>, <span class='no'>pdp_rf_c</span>, <span class='no'>pdp_rf_a</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf_p</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='plot.aggregated_profiles_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>

@@ -175,7 +175,7 @@ importance is different in different in different models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
   <span class='no'>x</span>,
   <span class='no'>...</span>,
   <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -247,14 +247,14 @@ the subtitle will be 'created for the XXX model', where XXX is the label of expl
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.3 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.0 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
@@ -272,7 +272,7 @@ the subtitle will be 'created for the XXX model', where XXX is the label of expl
 #&gt;   -&gt; residuals         :  numerical, min =  -0.790294 , mean =  -0.0003743686 , max =  0.8992851  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_rf</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>status</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 
 <span class='no'>explainer_rf</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_rf_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span>,
@@ -286,13 +286,13 @@ the subtitle will be 'created for the XXX model', where XXX is the label of expl
 #&gt; 3       gender          489.5142 randomForest
 #&gt; 4          age          640.4705 randomForest
 #&gt; 5       salary          706.1146 randomForest
-#&gt; 6   evaluation          984.7808 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6   evaluation          984.7808 randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fi_rf</span>)</div><div class='img'><img src='plot.feature_importance_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>HR_glm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 <span class='no'>explainer_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>HR_glm_model</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>HR</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>HR</span>$<span class='no'>status</span> <span class='kw'>==</span> <span class='st'>"fired"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  7847  rows  6  cols 
 #&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; model_info        :  package stats , ver. 3.6.3 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.0 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
@@ -306,7 +306,7 @@ the subtitle will be 'created for the XXX model', where XXX is the label of expl
 #&gt; 3       status         0.4141092    lm
 #&gt; 4       gender         0.4141740    lm
 #&gt; 5       salary         0.4142036    lm
-#&gt; 6   evaluation         0.4332210    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6   evaluation         0.4332210    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fi_glm</span>)</div><div class='img'><img src='plot.feature_importance_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
 # }
 
 </div></span></pre>
