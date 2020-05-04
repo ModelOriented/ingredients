@@ -117,7 +117,7 @@ ceteris_paribus.default <- function(x,
   # here one can add model and data and new observation
   # just in case only some variables are specified
   # this will work only for data.frames
-  if ("data.frame" %in% class(data)) {
+  if (is.data.frame(data)) {
     common_variables <- intersect(colnames(new_observation), colnames(data))
     new_observation <- new_observation[, common_variables, drop = FALSE]
     data <- data[,common_variables, drop = FALSE]
@@ -149,7 +149,7 @@ ceteris_paribus.default <- function(x,
     # add points of interests
     predictions <- predict_function(x, new_observation)
     # if new_observation is a matrix then turn into data.frame. see #26
-    if (class(new_observation) != "data.frame") {
+    if (!is.data.frame(new_observation)) {
       new_observation <- as.data.frame(new_observation)
     }
 
@@ -169,7 +169,7 @@ ceteris_paribus.default <- function(x,
     new_observation_ext <- new_observation[rep(1:nrow(new_observation), times = length(col_yhat)),]
     predict_obs <- predict_function(x, new_observation)
     # if new_observation is a matrix then turn into data.frame. see #26
-    if (class(new_observation_ext) != "data.frame") {
+    if (!is.data.frame(new_observation_ext)) {
       new_observation_ext <- as.data.frame(new_observation_ext)
     }
 

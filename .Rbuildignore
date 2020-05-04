@@ -12,3 +12,4 @@ _pkgdown.yml
 ^Meta$
 ^codecov\.yml$
 ^\.github$
+^\.httr-oauth$
