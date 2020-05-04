@@ -237,15 +237,16 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>1</span>],
                         <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>)
+<span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>,
+      <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
-#&gt; 1      _full_model_          278.0408    lm
-#&gt; 2 construction.year          278.1408    lm
-#&gt; 3          no.rooms          287.5257    lm
-#&gt; 4             floor          492.5788    lm
-#&gt; 5           surface          614.5519    lm
-#&gt; 6          district          989.8451    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
+#&gt; 1      _full_model_          282.6895    lm
+#&gt; 2 construction.year          282.3304    lm
+#&gt; 3          no.rooms          287.0994    lm
+#&gt; 4             floor          493.4059    lm
+#&gt; 5           surface          598.1415    lm
+#&gt; 6          district          977.1336    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
 
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
