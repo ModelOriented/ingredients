@@ -33,19 +33,22 @@ test_that("Output rf",{
   expect_true("feature_importance_explainer" %in% class(vd_rf))
 })
 
-
+test_that('deprecated n_sample', {
+  expect_warning(ingredients::feature_importance(explainer_glm, n_sample = 100))
+  expect_silent(ingredients::feature_importance(explainer_glm, N = 100))
+})
 
 
 # Permutations and subsampling
 
 test_that("feature_importance can use sub-sampling", {
-  # When using n_sample =1, the effective dataset is reduced to only one row.
+  # When using N =1, the effective dataset is reduced to only one row.
   # A "permutation" of a one-row dataset is always equal to the original dataset.
   # Thus a model acting on the original data and on the permuted data gives
   # the same output for both. Thus, none of the features will appear "important".
   # Thus, all dropout_loss values should be equal.
   # Practically, this can be tested: sum to be equal to a multiple of the first item
-  result <- feature_importance(explainer_rf, n_sample = 1)
+  result <- feature_importance(explainer_rf, N = 1)
   expect_equal(sum(result$dropout_loss), nrow(result)*result$dropout_loss[1],
                tolerance = 1e-12)
 })
@@ -90,7 +93,7 @@ test_that("feature_importance records number of permutations", {
 
 
 test_that("feature_importance with subsampling gives different full-model results ", {
-  result <- feature_importance(explainer_rf, B = 2, n_sample=200)
+  result <- feature_importance(explainer_rf, B = 2, N=200)
   # the full model losses should be different in the first and second round
   # because each round is based on different rows in the data...
   # but in principle there is a tiny probability the two rounds are based on the same rows

@@ -13,7 +13,7 @@ feature_importance(x, ...)
   loss_function = DALEX::loss_root_mean_square,
   ...,
   type = c("raw", "ratio", "difference"),
-  n_sample = NULL,
+  N = NULL,
   B = 10,
   variables = NULL,
   variable_groups = NULL,
@@ -29,7 +29,7 @@ feature_importance(x, ...)
   ...,
   label = class(x)[1],
   type = c("raw", "ratio", "difference"),
-  n_sample = NULL,
+  N = NULL,
   B = 10,
   variables = NULL,
   variable_groups = NULL
@@ -46,7 +46,7 @@ feature_importance(x, ...)
 "raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
 while "difference" returns \code{drop_loss - drop_loss_full_model}}
 
-\item{n_sample}{number of observations that should be sampled for calculation of variable importance.
+\item{N}{number of observations that should be sampled for calculation of variable importance.
 If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{B}{integer, number of permutation rounds to perform on each variable. By default it's \code{10}.}

@@ -1,6 +1,6 @@
 Package: ingredients
 Title: Effects and Importances of Model Ingredients
-Version: 1.2.0
+Version: 1.2.0.9000
 Authors@R: c(person("Przemyslaw", "Biecek", email = "przemyslaw.biecek@gmail.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0001-8423-1823")),
@@ -27,7 +27,8 @@ RoxygenNote: 7.1.0
 Imports:
     ggplot2,
     scales,
-    gridExtra
+    gridExtra,
+    methods
 Suggests:
     DALEX,
     gower,
