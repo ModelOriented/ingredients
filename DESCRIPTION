@@ -27,7 +27,8 @@ RoxygenNote: 7.1.0
 Imports:
     ggplot2,
     scales,
-    gridExtra
+    gridExtra,
+    methods
 Suggests:
     DALEX,
     gower,

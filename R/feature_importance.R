@@ -27,6 +27,7 @@
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
 #' @return an object of the class \code{feature_importance}
+#' @importFrom methods hasArg
 #'
 #' @examples
 #' library("DALEX")
@@ -158,8 +159,8 @@ feature_importance.default <- function(x,
                                        variables = NULL,
                                        variable_groups = NULL) {
 
-  if ("n_sample" %in% names(list(...))) {
-    warning("n_sample is deprecated, please use N instead")
+  if (methods::hasArg("n_sample")) {
+    warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
     N <- list(...)[["n_sample"]]
   }
 
