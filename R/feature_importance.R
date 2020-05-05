@@ -199,7 +199,10 @@ feature_importance.default <- function(x,
   sampled_rows <- 1:nrow(data)
   loss_after_permutation <- function() {
     if (!is.null(N)) {
-      sampled_rows <- sample.int(nrow(data), N, replace = TRUE)
+      if (N < nrow(data)) {
+        # sample N points
+        sampled_rows <- sample(1:nrow(data), N)
+      }
     }
     sampled_data <- data[sampled_rows, ]
     observed <- y[sampled_rows]
