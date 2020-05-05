@@ -180,59 +180,19 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
 <span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
 <span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,-<span class='fl'>1</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>1</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  9000  rows  5  cols 
-#&gt;   -&gt; target variable   :  9000  values 
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  1998.639 , mean =  3507.454 , max =  5761.24  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -732.6758 , mean =  4.069987 , max =  1269.124  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>1</span>])
+
 <span class='no'>apartments_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>apartments_test</span>, <span class='fl'>10</span>)
 
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartments_small</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        construction.year surface floor no.rooms    district   _yhat_
-#&gt; 9707                1920      98     3        3 Srodmiescie 4862.504
-#&gt; 9707.1              1921      98     3        3 Srodmiescie 4900.231
-#&gt; 9707.2              1922      98     3        3 Srodmiescie 4926.193
-#&gt; 9707.3              1923      98     3        3 Srodmiescie 4922.142
-#&gt; 9707.4              1924      98     3        3 Srodmiescie 4907.339
-#&gt; 9707.5              1925      98     3        3 Srodmiescie 4913.002
-#&gt;                  _vname_ _ids_      _label_
-#&gt; 9707   construction.year  9707 randomForest
-#&gt; 9707.1 construction.year  9707 randomForest
-#&gt; 9707.2 construction.year  9707 randomForest
-#&gt; 9707.3 construction.year  9707 randomForest
-#&gt; 9707.4 construction.year  9707 randomForest
-#&gt; 9707.5 construction.year  9707 randomForest
-#&gt; 
-#&gt; 
-#&gt; Top observations:
-#&gt;      construction.year surface floor no.rooms    district   _yhat_      _label_
-#&gt; 9707              2008      98     3        3 Srodmiescie 4704.774 randomForest
-#&gt; 9796              1932     110    10        4       Ursus 2896.708 randomForest
-#&gt; 9644              1980      73    10        2     Mokotow 3790.811 randomForest
-#&gt; 7567              1940      63     8        3       Praga 3097.150 randomForest
-#&gt; 4090              1955     105     3        3      Ochota 3852.302 randomForest
-#&gt; 8594              1999      36     9        2       Ursus 3594.421 randomForest
-#&gt;      _ids_
-#&gt; 9707     1
-#&gt; 9796     2
-#&gt; 9644     3
-#&gt; 7567     4
-#&gt; 4090     5
-#&gt; 8594     6</div><div class='input'>
-</div></span></pre>
+<span class='no'>cp_rf</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
