@@ -1,6 +1,7 @@
 ingredients (development)
 ---------------------------------------------------------------
 * deprecate `n_sample` argument in `feature_importance` (now it's `N`) [#113](https://github.com/ModelOriented/ingredients/issues/113)
+* `plot_profile` now handles multilabel models
 
 ingredients 1.2.0
 ---------------------------------------------------------------

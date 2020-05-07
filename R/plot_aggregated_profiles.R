@@ -139,7 +139,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
     # get model names and classes
     model_name <- c()
     for (i in seq_along(dfl)){
-      model_name[i] <- unique(dfl[[i]]$`_label`)
+      model_name[i] <- paste(unique(dfl[[i]]$`_label`), collapse = ", ", sep = ",")
     }
     subtitle_models <- paste(model_name, collapse = ", ", sep = ",")
     subtitle <- paste("Created for the", subtitle_models, "model")
