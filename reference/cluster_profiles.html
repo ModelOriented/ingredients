@@ -219,7 +219,7 @@ If <code>categorical</code> then only categorical variables will be computed.</p
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
@@ -227,39 +227,107 @@ If <code>categorical</code> then only categorical variables will be computed.</p
 
 <span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
                                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>])
-
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; data              :  2207  rows  7  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.0 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>selected_passangers</span>)
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>clust_rf</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>clust_rf</span>)</div><div class='img'><img src='cluster_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)
-<span class='no'>model_titanic_rf</span>
-
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'><span class='no'>model_titanic_rf</span></div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt;  randomForest(formula = survived ~ ., data = titanic_imputed) 
+#&gt;                Type of random forest: regression
+#&gt;                      Number of trees: 500
+#&gt; No. of variables tried at each split: 2
+#&gt; 
+#&gt;           Mean of squared residuals: 0.1401361
+#&gt;                     % Var explained: 35.83</div><div class='input'>
 <span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)
-
+                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  Random Forest v7 
+#&gt;   -&gt; data              :  2207  rows  7  cols 
+#&gt;   -&gt; target variable   :  2207  values 
+#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  numerical, min =  0.009390473 , mean =  0.322494 , max =  0.9900508  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7952687 , mean =  -0.0003372464 , max =  0.907451  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span>
-
+<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.85375605
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09953008
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.47817331
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.11396062
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.69120718
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.23912540
+#&gt;        _vname_ _ids_          _label_
+#&gt; 515     gender   515 Random Forest v7
+#&gt; 515.1   gender   515 Random Forest v7
+#&gt; 604     gender   604 Random Forest v7
+#&gt; 604.1   gender   604 Random Forest v7
+#&gt; 1430    gender  1430 Random Forest v7
+#&gt; 1430.1  gender  1430 Random Forest v7
+#&gt; 
+#&gt; 
+#&gt; Top observations:
+#&gt;      gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.09953008
+#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.11396062
+#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.23912540
+#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.11449714
+#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.63337759
+#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.15308120
+#&gt;               _label_ _ids_
+#&gt; 515  Random Forest v7     1
+#&gt; 604  Random Forest v7     2
+#&gt; 1430 Random Forest v7     3
+#&gt; 865  Random Forest v7     4
+#&gt; 452  Random Forest v7     5
+#&gt; 1534 Random Forest v7     6</div><div class='input'>
 <span class='no'>pdp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='aggregate_profiles.html'>aggregate_profiles</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)
-<span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>clust_rf</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_          _label_        _x_    _yhat_ _ids_
+#&gt; 1     age Random Forest v7  0.1666667 0.5207070     0
+#&gt; 2     age Random Forest v7  2.0000000 0.5767911     0
+#&gt; 3     age Random Forest v7  4.0000000 0.5918950     0
+#&gt; 4     age Random Forest v7  7.0000000 0.5450187     0
+#&gt; 5     age Random Forest v7  9.0000000 0.5285279     0
+#&gt; 6     age Random Forest v7 13.0000000 0.4631297     0</div><div class='input'><span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
+#&gt; 1     age Random Forest v7_1  0.1666667         1 0.4657028     0
+#&gt; 2     age Random Forest v7_1  2.0000000         1 0.5395368     0
+#&gt; 3     age Random Forest v7_1  4.0000000         1 0.5533772     0
+#&gt; 4     age Random Forest v7_1  7.0000000         1 0.4992441     0
+#&gt; 5     age Random Forest v7_1  9.0000000         1 0.4782111     0
+#&gt; 6     age Random Forest v7_1 13.0000000         1 0.3948779     0</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>) +
-  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-
+  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='cluster_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-
+  <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>clust_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='cluster_profiles-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>clust_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>cluster_profiles</span>(<span class='no'>cp_rf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>clust_rf</span>)
-<span class='co'># }</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>clust_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;   _vname_            _label_        _x_ _cluster_    _yhat_ _ids_
+#&gt; 1     age Random Forest v7_1  0.1666667         1 0.5477504     0
+#&gt; 2     age Random Forest v7_1  2.0000000         1 0.6254372     0
+#&gt; 3     age Random Forest v7_1  4.0000000         1 0.6373459     0
+#&gt; 4     age Random Forest v7_1  7.0000000         1 0.5882245     0
+#&gt; 5     age Random Forest v7_1  9.0000000         1 0.5630644     0
+#&gt; 6     age Random Forest v7_1 13.0000000         1 0.4751353     0</div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

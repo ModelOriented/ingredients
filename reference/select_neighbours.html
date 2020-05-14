@@ -214,13 +214,24 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
 <span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments</span>[<span class='fl'>1</span>,]
 <span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_neighbours</span>(<span class='no'>new_apartment</span>, <span class='no'>apartments_test</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
-<span class='no'>new_apartment</span>
-<span class='no'>small_apartments</span></pre>
+<span class='no'>new_apartment</span></div><div class='output co'>#&gt;   m2.price construction.year surface floor no.rooms    district
+#&gt; 1     5897              1953      25     3        1 Srodmiescie</div><div class='input'><span class='no'>small_apartments</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+#&gt; 2285     5875              1970      27     3        1 Srodmiescie
+#&gt; 1073     5886              1960      36     2        1 Srodmiescie
+#&gt; 3261     5859              1945      39     2        1 Srodmiescie
+#&gt; 6647     5952              1938      30     2        1 Srodmiescie
+#&gt; 1198     5821              1947      43     2        1 Srodmiescie
+#&gt; 4309     5794              1947      31     3        2 Srodmiescie
+#&gt; 9527     6080              1947      27     1        1 Srodmiescie
+#&gt; 8110     5614              1957      44     4        1 Srodmiescie
+#&gt; 9510     5860              1937      39     2        1 Srodmiescie
+#&gt; 2408     5912              1989      24     3        1 Srodmiescie</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
