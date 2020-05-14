@@ -12,7 +12,7 @@
 #' @author \url{https://github.com/harell}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library("DALEX")
 #' titanic_glm <- glm(survived ~ gender + age + fare,
 #'                    data = titanic_imputed, family = "binomial")

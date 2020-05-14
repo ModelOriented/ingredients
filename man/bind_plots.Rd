@@ -20,7 +20,7 @@ This is an aesthetically efficient implementation of the
   \link[gridExtra]{grid.arrange}.
 }
 \examples{
-\dontrun{
+\donttest{
 library("DALEX")
 titanic_glm <- glm(survived ~ gender + age + fare,
                    data = titanic_imputed, family = "binomial")
