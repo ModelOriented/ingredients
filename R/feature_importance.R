@@ -157,8 +157,8 @@ feature_importance.default <- function(x,
                                        B = 10,
                                        variables = NULL,
                                        variable_groups = NULL) {
-
-  if (!is.null(N) & methods::hasArg("n_sample")) {
+  # start: checks for arguments
+  if (is.null(N) & methods::hasArg("n_sample")) {
     warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
     N <- list(...)[["n_sample"]]
   }
@@ -177,7 +177,7 @@ feature_importance.default <- function(x,
   type <- match.arg(type)
   B <- max(1, round(B))
 
-  # Adding variable set name when not specified
+  # Adding names for variable_groups if not specified
   if (!is.null(variable_groups) && is.null(names(variable_groups))) {
     names(variable_groups) <- sapply(variable_groups, function(variable_set) {
       paste0(variable_set, collapse = "; ")
@@ -195,6 +195,7 @@ feature_importance.default <- function(x,
     variables <- variable_groups
   }
 
+  # start: actual calculations
   # one permutation round: subsample data, permute variables and compute losses
   sampled_rows <- 1:nrow(data)
   loss_after_permutation <- function() {
