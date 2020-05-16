@@ -158,7 +158,7 @@ feature_importance.default <- function(x,
                                        variables = NULL,
                                        variable_groups = NULL) {
 
-  if (methods::hasArg("n_sample")) {
+  if (!methods::hasArg("N") & methods::hasArg("n_sample")) {
     warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
     N <- list(...)[["n_sample"]]
   }
