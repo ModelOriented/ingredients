@@ -12,7 +12,7 @@
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
 #' @param center by default accumulated profiles start at 0. if \code{center=TRUE} then they are centered around average response
-#' @param span smoothing coeffcient, by default 0.25.It's the sd for gaussian kernel
+#' @param span smoothing coeffcient, by default \code{0.25}.It's the sd for gaussian kernel
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'

@@ -35,7 +35,7 @@
 #' head(fi_lm)
 #' plotD3(fi_lm)
 #'
-#' \dontrun{
+#' \donttest{
 #' library("randomForest")
 #'
 #' rf_model <- randomForest(m2.price~., data = apartments)
