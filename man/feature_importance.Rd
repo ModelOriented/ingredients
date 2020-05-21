@@ -13,10 +13,11 @@ feature_importance(x, ...)
   loss_function = DALEX::loss_root_mean_square,
   ...,
   type = c("raw", "ratio", "difference"),
-  N = NULL,
+  n_sample = NULL,
   B = 10,
   variables = NULL,
   variable_groups = NULL,
+  N = n_sample,
   label = NULL
 )
 
@@ -29,9 +30,10 @@ feature_importance(x, ...)
   ...,
   label = class(x)[1],
   type = c("raw", "ratio", "difference"),
-  N = NULL,
+  n_sample = NULL,
   B = 10,
   variables = NULL,
+  N = n_sample,
   variable_groups = NULL
 )
 }
@@ -46,8 +48,7 @@ feature_importance(x, ...)
 "raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
 while "difference" returns \code{drop_loss - drop_loss_full_model}}
 
-\item{N}{number of observations that should be sampled for calculation of variable importance.
-If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
+\item{n_sample}{alias for \code{N} held for backwards compatibility. number of observations that should be sampled for calculation of variable importance.}
 
 \item{B}{integer, number of permutation rounds to perform on each variable. By default it's \code{10}.}
 
@@ -56,6 +57,9 @@ If \code{NULL} then variable importance will be calculated on whole dataset (no 
 \item{variable_groups}{list of variables names vectors. This is for testing joint variable importance.
 If \code{NULL} then variable importance will be tested separately for \code{variables}.
 By default \code{NULL}. If specified then it will override \code{variables}}
+
+\item{N}{number of observations that should be sampled for calculation of variable importance.
+If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 

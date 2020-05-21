@@ -34,7 +34,7 @@ test_that("Output rf",{
 })
 
 test_that('deprecated n_sample', {
-  expect_warning(ingredients::feature_importance(explainer_glm, n_sample = 100))
+  expect_silent(ingredients::feature_importance(explainer_glm, n_sample = 100))
   expect_silent(ingredients::feature_importance(explainer_glm, N = 100))
 })
 
