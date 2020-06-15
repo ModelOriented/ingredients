@@ -237,21 +237,21 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01309591 , mean =  0.3218617 , max =  0.9905597  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.009697442 , mean =  0.3221974 , max =  0.9944043  
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7721227 , mean =  0.0002950252 , max =  0.9013245  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7696485 , mean =  -4.058777e-05 , max =  0.9044487  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
 <span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked    fare sibsp parch    _yhat_
-#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.8502254
-#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.1010224
-#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.4409059
-#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.1154397
-#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.6807248
-#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2426040
+#&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.84646007
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09790544
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.47670422
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.10076571
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.69525409
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.24527255
 #&gt;        _vname_ _ids_      _label_
 #&gt; 515     gender   515 randomForest
 #&gt; 515.1   gender   515 randomForest
@@ -262,13 +262,13 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked    fare sibsp parch    _yhat_
-#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.1010224
-#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.1154397
-#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2426040
-#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1168150
-#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.6270921
-#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1550319
+#&gt;      gender age            class    embarked    fare sibsp parch     _yhat_
+#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.09790544
+#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.10076571
+#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.24527255
+#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.12179222
+#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.62726859
+#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.15779635
 #&gt;           _label_ _ids_
 #&gt; 515  randomForest     1
 #&gt; 604  randomForest     2
@@ -291,12 +291,12 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_             _label_        _x_ _groups_    _yhat_ _ids_
-#&gt; 1     age randomForest_female  0.1666667   female 0.7293980     0
-#&gt; 2     age randomForest_female  2.0000000   female 0.7184480     0
-#&gt; 3     age randomForest_female  4.0000000   female 0.7409075     0
-#&gt; 4     age randomForest_female  7.0000000   female 0.7212749     0
-#&gt; 5     age randomForest_female  9.0000000   female 0.7276165     0
-#&gt; 6     age randomForest_female 13.0000000   female 0.7450006     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
+#&gt; 1     age randomForest_female  0.1666667   female 0.7328125     0
+#&gt; 2     age randomForest_female  2.0000000   female 0.7194161     0
+#&gt; 3     age randomForest_female  4.0000000   female 0.7419617     0
+#&gt; 4     age randomForest_female  7.0000000   female 0.7303608     0
+#&gt; 5     age randomForest_female  9.0000000   female 0.7360587     0
+#&gt; 6     age randomForest_female 13.0000000   female 0.7445649     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
   <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
   <span class='fu'><a href='show_aggregated_profiles.html'>show_aggregated_profiles</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_label_"</span>)</div><div class='img'><img src='aggregate_profiles-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -320,12 +320,12 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
                              <span class='kw'>groups</span> <span class='kw'>=</span> <span class='st'>"gender"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pdp_rf</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;    _vname_             _label_ _x_ _groups_    _yhat_ _ids_
-#&gt; 1    class randomForest_female 1st   female 0.8525039     0
-#&gt; 8    class   randomForest_male 1st     male 0.3560507     0
-#&gt; 2    class randomForest_female 2nd   female 0.8376143     0
-#&gt; 9    class   randomForest_male 2nd     male 0.1683554     0
-#&gt; 3    class randomForest_female 3rd   female 0.5439966     0
-#&gt; 10   class   randomForest_male 3rd     male 0.1655832     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='img'><img src='aggregate_profiles-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
+#&gt; 1    class randomForest_female 1st   female 0.8489321     0
+#&gt; 8    class   randomForest_male 1st     male 0.3454480     0
+#&gt; 2    class randomForest_female 2nd   female 0.8376530     0
+#&gt; 9    class   randomForest_male 2nd     male 0.1661174     0
+#&gt; 3    class randomForest_female 3rd   female 0.5480012     0
+#&gt; 10   class   randomForest_male 3rd     male 0.1597463     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='img'><img src='aggregate_profiles-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># or maybe flipped?</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pdp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span>()</div><div class='img'><img src='aggregate_profiles-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># }</span></div></span></pre>
   </div>
