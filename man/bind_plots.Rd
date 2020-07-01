@@ -17,7 +17,7 @@ columns, otherwise the plots are bind by rows.}
 }
 \description{
 This is an aesthetically efficient implementation of the
-  \link[gridExtra]{grid.arrange}.
+  \code{\link[gridExtra:arrangeGrob]{grid.arrange}}
 }
 \examples{
 \donttest{
