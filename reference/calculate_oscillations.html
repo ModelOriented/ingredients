@@ -164,14 +164,14 @@ Find more detailes in Ceteris Paribus Oscillations Chapter." />
 Find more detailes in <a href='https://pbiecek.github.io/ema/ceterisParibusOscillations.html'>Ceteris Paribus Oscillations Chapter</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_oscillations</span>(<span class='no'>x</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>calculate_oscillations</span>(<span class='kw'>x</span>, sort = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris_paribus explainer produced with the <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code> function</p></td>
+      <td><p>a ceteris_paribus explainer produced with the <code>ceteris_paribus()</code> function</p></td>
     </tr>
     <tr>
       <th>sort</th>
@@ -191,29 +191,29 @@ Find more detailes in <a href='https://pbiecek.github.io/ema/ceterisParibusOscil
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://ModelOriented.github.io/DALEX'>"DALEX"</a></span>)
 <span class='co'># smaller data, quicker example</span>
-<span class='no'>titanic_small</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1313</span>)
+<span class='kw'>titanic_small</span> <span class='op'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='kw'>titanic_imputed</span>, n = <span class='fl'>500</span>, seed = <span class='fl'>1313</span>)
 
 <span class='co'># build a model</span>
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='kw'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='kw'>survived</span> <span class='op'>~</span> <span class='kw'>gender</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>fare</span>,
+                         data = <span class='kw'>titanic_small</span>, family = <span class='st'>"binomial"</span>)
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_small</span>[,<span class='fl'>8</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='kw'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>model_titanic_glm</span>,
+                               data = <span class='kw'>titanic_small</span>[,<span class='op'>-</span><span class='fl'>8</span>],
+                               y = <span class='kw'>titanic_small</span>[,<span class='fl'>8</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  500  rows  7  cols 
 #&gt;   -&gt; target variable   :  500  values 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.0795294 , mean =  0.302 , max =  0.9859411  
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.1 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.2 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8204691 , mean =  8.796651e-12 , max =  0.8567173  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_small</span>[<span class='fl'>1</span>,])
+<span class='kw'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='kw'>explain_titanic_glm</span>, <span class='kw'>titanic_small</span>[<span class='fl'>1</span>,])
 
-<span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;    _vname_ _ids_ oscillations
+<span class='fu'>calculate_oscillations</span>(<span class='kw'>cp_rf</span>)</div><div class='output co'>#&gt;    _vname_ _ids_ oscillations
 #&gt; 1   gender   515   0.20738245
 #&gt; 2      age   515   0.05371374
 #&gt; 5     fare   515   0.04197095
@@ -222,14 +222,14 @@ Find more detailes in <a href='https://pbiecek.github.io/ema/ceterisParibusOscil
 #&gt; 6    sibsp   515   0.00000000
 #&gt; 7    parch   515   0.00000000</div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests'>"randomForest"</a></span>)
 
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~ <span class='no'>construction.year</span> + <span class='no'>surface</span> + <span class='no'>floor</span> +
-                                    <span class='no'>no.rooms</span> + <span class='no'>district</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='kw'>apartments_rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='kw'>m2.price</span> <span class='op'>~</span> <span class='kw'>construction.year</span> <span class='op'>+</span> <span class='kw'>surface</span> <span class='op'>+</span> <span class='kw'>floor</span> <span class='op'>+</span>
+                                    <span class='kw'>no.rooms</span> <span class='op'>+</span> <span class='kw'>district</span>, data = <span class='kw'>apartments</span>)
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,-<span class='fl'>1</span>],
-                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>$<span class='no'>m2.price</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='kw'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>apartments_rf_model</span>,
+                        data = <span class='kw'>apartments_test</span>[,<span class='op'>-</span><span class='fl'>1</span>],
+                         y = <span class='kw'>apartments_test</span><span class='op'>$</span><span class='kw'>m2.price</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  9000  rows  5  cols 
 #&gt;   -&gt; target variable   :  9000  values 
@@ -239,16 +239,17 @@ Find more detailes in <a href='https://pbiecek.github.io/ema/ceterisParibusOscil
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -736.7624 , mean =  3.695662 , max =  1247.71  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,]
+<span class='kw'>apartment</span> <span class='op'>&lt;-</span> <span class='kw'>apartments_test</span>[<span class='fl'>1</span>,]
 
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
+<span class='kw'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='kw'>explainer_rf</span>, <span class='kw'>apartment</span>)
 
-<span class='fu'>calculate_oscillations</span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;             _vname_ _ids_ oscillations
+<span class='fu'>calculate_oscillations</span>(<span class='kw'>cp_rf</span>)</div><div class='output co'>#&gt;             _vname_ _ids_ oscillations
 #&gt; 5          district  1001   1146.23567
 #&gt; 2           surface  1001    274.15654
 #&gt; 3             floor  1001    228.76663
 #&gt; 4          no.rooms  1001    172.02984
-#&gt; 1 construction.year  1001     57.86286</div><div class='input'><span class='co'># }</span></div></span></pre>
+#&gt; 1 construction.year  1001     57.86286</div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
