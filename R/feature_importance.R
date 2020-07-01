@@ -270,6 +270,9 @@ feature_importance.default <- function(x,
 
   class(res) <- c("feature_importance_explainer", "data.frame")
 
+  if(!is.null(attr(loss_function, "loss_name"))) {
+    attr(res, "loss_name") <- attr(loss_function, "loss_name")
+  }
   res
 }
 
