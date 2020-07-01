@@ -152,9 +152,9 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   }
 
   if (!is.null(attr(x, "loss_name"))) {
-    y_lab <- paste(attr(x, "loss_name"), "loss after permutations")
+    y_lab <- paste(attr(x, "loss_name")[1], "loss after permutations")
   } else {
-    y_lab <- "Drop-out loss after permutations"
+    y_lab <- "Loss function after variable's permutations"
   }
   # facets have fixed space, can be resolved with ggforce https://github.com/tidyverse/ggplot2/issues/2933
   pl + coord_flip() +
