@@ -153,8 +153,8 @@
 #&gt;                      Number of trees: 500
 #&gt; No. of variables tried at each split: 2
 #&gt; 
-#&gt;           Mean of squared residuals: 0.1433675
-#&gt;                     % Var explained: 34.59</code></pre>
+#&gt;           Mean of squared residuals: 0.1426113
+#&gt;                     % Var explained: 34.93</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -172,10 +172,10 @@
 #&gt;   -&gt; data              :  2099  rows  8  cols 
 #&gt;   -&gt; target variable   :  2099  values 
 #&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01000807 , mean =  0.3245916 , max =  0.9929741  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.006191386 , mean =  0.3237229 , max =  0.9908128  
 #&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( [33m default [39m ) 
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7779606 , mean =  -0.0001514334 , max =  0.8972208  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7945693 , mean =  0.0007172913 , max =  0.9007508  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
@@ -189,12 +189,12 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">fi_rf</span>)
 </pre></div>
 <pre><code>#&gt;       variable mean_dropout_loss            label
-#&gt; 1 _full_model_         0.3334665 Random Forest v7
-#&gt; 2      country         0.3334665 Random Forest v7
-#&gt; 3        sibsp         0.3450831 Random Forest v7
-#&gt; 4        parch         0.3451164 Random Forest v7
-#&gt; 5     embarked         0.3499409 Random Forest v7
-#&gt; 6         fare         0.3749351 Random Forest v7</code></pre>
+#&gt; 1 _full_model_         0.3327041 Random Forest v7
+#&gt; 2      country         0.3327041 Random Forest v7
+#&gt; 3        parch         0.3442409 Random Forest v7
+#&gt; 4        sibsp         0.3446276 Random Forest v7
+#&gt; 5     embarked         0.3491208 Random Forest v7
+#&gt; 6         fare         0.3740277 Random Forest v7</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fi_rf</span>)
 </pre></div>
@@ -218,12 +218,12 @@
 </pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_          _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7 0.0000000 0.3264878     0
-#&gt; 2     age Random Forest v7 0.1666667 0.5428647     0
-#&gt; 3     age Random Forest v7 2.0000000 0.5634834     0
-#&gt; 4     age Random Forest v7 4.0000000 0.5675659     0
-#&gt; 5    fare Random Forest v7 6.1904000 0.3108965     0
-#&gt; 6     age Random Forest v7 7.0000000 0.5267893     0</code></pre>
+#&gt; 1    fare Random Forest v7 0.0000000 0.3231341     0
+#&gt; 2     age Random Forest v7 0.1666667 0.5154497     0
+#&gt; 3     age Random Forest v7 2.0000000 0.5476164     0
+#&gt; 4     age Random Forest v7 4.0000000 0.5550433     0
+#&gt; 5    fare Random Forest v7 6.1904000 0.3071905     0
+#&gt; 6     age Random Forest v7 7.0000000 0.5171613     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">pp_age</span>)
 </pre></div>
@@ -291,12 +291,12 @@
 </pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_            _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.1923417     0
-#&gt; 2   parch Random Forest v7_1 0.0000000         1 0.1663841     0
-#&gt; 3   sibsp Random Forest v7_1 0.0000000         1 0.1691641     0
-#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4703442     0
-#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1663846     0
-#&gt; 6   parch Random Forest v7_1 1.0000000         1 0.2356189     0</code></pre>
+#&gt; 1    fare Random Forest v7_1 0.0000000         1 0.2033178     0
+#&gt; 2   parch Random Forest v7_1 0.0000000         1 0.1790754     0
+#&gt; 3   sibsp Random Forest v7_1 0.0000000         1 0.1744314     0
+#&gt; 4     age Random Forest v7_1 0.1666667         1 0.4533286     0
+#&gt; 5   parch Random Forest v7_1 0.2800000         1 0.1791097     0
+#&gt; 6   parch Random Forest v7_1 1.0000000         1 0.2334143     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">sp_rf</span>, alpha = <span class="fl">0.1</span>) <span class="op">+</span>
   <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span>(<span class="kw">clust_rf</span>, color = <span class="st">"_label_"</span>, size = <span class="fl">2</span>)
