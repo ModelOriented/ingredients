@@ -18,7 +18,7 @@
 #' @param bar_width width of bars. By default \code{10}
 #' @param desc_sorting logical. Should the bars be sorted descending? By default TRUE
 #' @param title the plot's title, by default \code{'Feature Importance'}
-#' @param subtitle the plot's subtitle. By default - NA, which means
+#' @param subtitle the plot's subtitle. By default - \code{NULL}, which means
 #' the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s)
 #'
 #' @importFrom stats model.frame reorder
@@ -74,7 +74,7 @@
 #'
 #' @export
 plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxplots = TRUE, bar_width = 10,
-                                              desc_sorting = TRUE, title = "Feature Importance", subtitle = NA) {
+                                              desc_sorting = TRUE, title = "Feature Importance", subtitle = NULL) {
 
   if (!is.logical(desc_sorting)) {
     stop("desc_sorting is not logical")
@@ -135,7 +135,7 @@ plot.feature_importance_explainer <- function(x, ..., max_vars = NULL, show_boxp
   nlabels <- length(unique(bestFits$label))
 
   # extract labels for plot's subtitle
-  if (is.na(subtitle)) {
+  if (is.null(subtitle)) {
     glm_labels <- paste0(unique(ext_expl_df$label), collapse = ", ")
     subtitle <- paste0("created for the ", glm_labels, " model")
   }

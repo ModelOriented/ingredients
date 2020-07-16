@@ -11,7 +11,7 @@
 
 \item{...}{other explainers that shall be plotted together}
 
-\item{bar_width}{width of bars. By default 10}
+\item{bar_width}{width of bars. By default \code{10}.}
 }
 \value{
 a \code{ggplot2} object

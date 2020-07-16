@@ -12,7 +12,7 @@
   bar_width = 10,
   desc_sorting = TRUE,
   title = "Feature Importance",
-  subtitle = NA
+  subtitle = NULL
 )
 }
 \arguments{
@@ -31,7 +31,7 @@ By default \code{NULL} what means all variables}
 
 \item{title}{the plot's title, by default \code{'Feature Importance'}}
 
-\item{subtitle}{the plot's subtitle. By default - NA, which means
+\item{subtitle}{the plot's subtitle. By default - \code{NULL}, which means
 the subtitle will be 'created for the XXX model', where XXX is the label of explainer(s)}
 }
 \value{
