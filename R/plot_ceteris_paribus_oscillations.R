@@ -5,7 +5,7 @@
 #'
 #' @param x a ceteris paribus oscillation explainer produced with function \code{calculate_oscillations()}
 #' @param ... other explainers that shall be plotted together
-#' @param bar_width width of bars. By default 10
+#' @param bar_width width of bars. By default \code{10}.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
 #'
