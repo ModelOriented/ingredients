@@ -222,12 +222,14 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
   if (is_color_a_variable) {
     selected_cp_flat$`_ids_color_` <- paste(selected_cp_flat[,"_ids_"], selected_cp_flat[,color], sep = "_")
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_color_`", color = paste0("`",color,"`"))) +
-      geom_line(size = size/2, alpha = alpha) +
+      geom_errorbar(aes(ymin = `_yhat_`, ymax = `_yhat_`), size = size/2, alpha = alpha) +
+#      geom_line(size = size/2, alpha = alpha) +
       geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                  size = size, alpha = alpha)
   } else {
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
-      geom_line(size = size/2, alpha = alpha, color = color) +
+      geom_errorbar(aes(ymin = `_yhat_`, ymax = `_yhat_`), size = size/2, alpha = alpha, color = color) +
+      #      geom_line(size = size/2, alpha = alpha) +
       geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                  color = color, size = size, alpha = alpha)
   }

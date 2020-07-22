@@ -15,6 +15,7 @@ ceteris_paribus(x, ...)
   variables = NULL,
   variable_splits = NULL,
   grid_points = 101,
+  variable_splits_type = "quantiles",
   ...
 )
 
@@ -27,6 +28,7 @@ ceteris_paribus(x, ...)
   variables = NULL,
   variable_splits = NULL,
   grid_points = 101,
+  variable_splits_type = "quantiles",
   label = class(x)[1],
   ...
 )
@@ -49,6 +51,8 @@ If NULL then all variables from the validation data will be used.}
 If NULL then it will be calculated based on validation data available in the \code{explainer}.}
 
 \item{grid_points}{maximum number of points for profile calculations. Note that the finaln number of points may be lower than \code{grid_points}, eg. if there is not enough unique values for a given variable. Will be passed to \code{\link{calculate_variable_split}}.}
+
+\item{variable_splits_type}{how variable grids shall be calculated? Use "quantiles" (default) for percentiles or "uniform" to get uniform grid of points}
 
 \item{data}{validation dataset. It will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}

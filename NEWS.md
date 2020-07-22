@@ -1,6 +1,7 @@
 ingredients 1.3.1
 --------------------------------------------------------------
 * default `subtitle` value in `plot.fi` changed to `NULL` from `NA` (unification)
+* now in the `ceteris_paribus` function one can specify how grid points shall be calculated, see `variable_splits_type`
 
 ingredients 1.3.0
 ---------------------------------------------------------------
