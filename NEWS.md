@@ -1,3 +1,7 @@
+ingredients 1.3.1
+---------------------------------------------------------------
+*  Now in the `ceteris_paribus` function one can specify how grid points shall be calculated, see `variable_splits_type`
+
 ingredients 1.3.0
 ---------------------------------------------------------------
 * deprecate `n_sample` argument in `feature_importance` (now it's `N`) [#113](https://github.com/ModelOriented/ingredients/issues/113)
