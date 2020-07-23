@@ -99,7 +99,7 @@ Function accumulated_dependence calls ceteris_paribus and then aggregate_profile
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.3.0</span>
+          <span class="version version-default">1.3.1</span>
         </div>
       </div>
     </div>
@@ -161,40 +161,40 @@ Function accumulated_dependence calls ceteris_paribus and then aggregate_profile
 
     <div class="ref-description">
     <p>Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
-Function <code>accumulated_dependence</code> calls <code>ceteris_paribus</code> and then <code>aggregate_profiles</code>.</p>
+Function <code>accumulated_dependence</code> calls <code><a href='ceteris_paribus.html'>ceteris_paribus</a></code> and then <code><a href='aggregate_profiles.html'>aggregate_profiles</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>accumulated_dependence</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>accumulated_dependence</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for explainer</span>
 <span class='fu'>accumulated_dependence</span>(
-  <span class='kw'>x</span>,
-  variables = <span class='kw'>NULL</span>,
-  N = <span class='fl'>500</span>,
-  variable_splits = <span class='kw'>NULL</span>,
-  grid_points = <span class='fl'>101</span>,
-  <span class='kw'>...</span>,
-  variable_type = <span class='st'>"numerical"</span>
+  <span class='no'>x</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>
 )
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>accumulated_dependence</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>data</span>,
-  predict_function = <span class='kw'>predict</span>,
-  label = <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>x</span>)[<span class='fl'>1</span>],
-  variables = <span class='kw'>NULL</span>,
-  N = <span class='fl'>500</span>,
-  variable_splits = <span class='kw'>NULL</span>,
-  grid_points = <span class='fl'>101</span>,
-  <span class='kw'>...</span>,
-  variable_type = <span class='st'>"numerical"</span>
+  <span class='no'>x</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>predict_function</span> <span class='kw'>=</span> <span class='no'>predict</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>
 )
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'>accumulated_dependence</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, variables = <span class='kw'>NULL</span>)
+<span class='fu'>accumulated_dependence</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>accumulated_dependency</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>accumulated_dependency</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,7 +211,7 @@ or a model to be explained.</p></td>
     <tr>
       <th>variables</th>
       <td><p>names of variables for which profiles shall be calculated.
-Will be passed to <code>calculate_variable_split</code>.
+Will be passed to <code><a href='calculate_variable_split.html'>calculate_variable_split</a></code>.
 If <code>NULL</code> then all variables from the validation data will be used.</p></td>
     </tr>
     <tr>
@@ -221,12 +221,12 @@ By default, 500 observations will be chosen randomly.</p></td>
     </tr>
     <tr>
       <th>variable_splits</th>
-      <td><p>named list of splits for variables, in most cases created with <code>calculate_variable_split</code>.
+      <td><p>named list of splits for variables, in most cases created with <code><a href='calculate_variable_split.html'>calculate_variable_split</a></code>.
 If <code>NULL</code> then it will be calculated based on validation data avaliable in the <code>explainer</code>.</p></td>
     </tr>
     <tr>
       <th>grid_points</th>
-      <td><p>number of points for profile. Will be passed to<code>calculate_variable_split</code>.</p></td>
+      <td><p>number of points for profile. Will be passed to<code><a href='calculate_variable_split.html'>calculate_variable_split</a></code>.</p></td>
     </tr>
     <tr>
       <th>variable_type</th>
@@ -260,45 +260,44 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://ModelOriented.github.io/DALEX'>"DALEX"</a></span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 1.3.0).</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to DALEX (version: 1.3.0).</span>
 #&gt; <span class='message'>Find examples and detailed introduction at: https://pbiecek.github.io/ema/</span>
 #&gt; <span class='message'>Additional features will be available after installation of: ggpubr.</span>
 #&gt; <span class='message'>Use 'install_dependencies()' to get all suggested dependencies</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘DALEX’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:ingredients’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    feature_importance</span></div><div class='input'>
-<span class='kw'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='kw'>survived</span> <span class='op'>~</span> <span class='kw'>gender</span> <span class='op'>+</span> <span class='kw'>age</span> <span class='op'>+</span> <span class='kw'>fare</span>,
-                         data = <span class='kw'>titanic_imputed</span>, family = <span class='st'>"binomial"</span>)
+<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
+                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
 
-<span class='kw'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>model_titanic_glm</span>,
-                               data = <span class='kw'>titanic_imputed</span>[,<span class='op'>-</span><span class='fl'>8</span>],
-                               y = <span class='kw'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                               verbose = <span class='fl'>FALSE</span>)
+<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
+                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
+                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
+                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='kw'>adp_glm</span> <span class='op'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='kw'>explain_titanic_glm</span>,
-                                  N = <span class='fl'>25</span>, variables = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>adp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
+<span class='no'>adp_glm</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='no'>explain_titanic_glm</span>,
+                                  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>25</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>adp_glm</span>)</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;   _vname_ _label_        _x_       _yhat_ _ids_
 #&gt; 1     age      lm  0.1666667  0.000000000     0
 #&gt; 2     age      lm  2.0000000 -0.002551359     0
 #&gt; 3     age      lm  4.0000000 -0.005323191     0
 #&gt; 4     age      lm  7.0000000 -0.009455409     0
 #&gt; 5     age      lm  9.0000000 -0.012193262     0
-#&gt; 6     age      lm 13.0000000 -0.017620564     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>adp_glm</span>)</div><div class='img'><img src='accumulated_dependence-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; 6     age      lm 13.0000000 -0.017620564     0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>adp_glm</span>)</div><div class='img'><img src='accumulated_dependence-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests'>"randomForest"</a></span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'>
-<span class='kw'>model_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='kw'>survived</span> <span class='op'>~</span><span class='kw'>.</span>,  data = <span class='kw'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='kw'>explain_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>model_titanic_rf</span>,
-                              data = <span class='kw'>titanic_imputed</span>[,<span class='op'>-</span><span class='fl'>8</span>],
-                              y = <span class='kw'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                              verbose = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='input'>
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
+                              <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='kw'>adp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='kw'>explain_titanic_rf</span>, N = <span class='fl'>200</span>, variable_type = <span class='st'>"numerical"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>adp_rf</span>)</div><div class='img'><img src='accumulated_dependence-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>adp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='kw'>explain_titanic_rf</span>, N = <span class='fl'>200</span>, variable_type = <span class='st'>"categorical"</span>)
-<span class='fu'>plotD3</span>(<span class='kw'>adp_rf</span>, label_margin = <span class='fl'>80</span>, scale_plot = <span class='fl'>TRUE</span>)
-<span class='co'># }</span>
-</div></pre>
+<span class='no'>adp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>adp_rf</span>)</div><div class='img'><img src='accumulated_dependence-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>adp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>accumulated_dependence</span>(<span class='no'>explain_titanic_rf</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>adp_rf</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

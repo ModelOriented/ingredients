@@ -99,7 +99,7 @@ calculated as oscillations in the Ceteris Paribus Profiles." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.3.0</span>
+          <span class="version version-default">1.3.1</span>
         </div>
       </div>
     </div>
@@ -165,14 +165,14 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_oscillations</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>, bar_width = <span class='fl'>10</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus oscillation explainer produced with function <code>calculate_oscillations()</code></p></td>
+      <td><p>a ceteris paribus oscillation explainer produced with function <code><a href='calculate_oscillations.html'>calculate_oscillations()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -180,7 +180,7 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
     </tr>
     <tr>
       <th>bar_width</th>
-      <td><p>width of bars. By default 10</p></td>
+      <td><p>width of bars. By default <code>10</code>.</p></td>
     </tr>
     </table>
 
@@ -193,14 +193,14 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://ModelOriented.github.io/DALEX'>"DALEX"</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests'>"randomForest"</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='kw'>apartments_rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='kw'>m2.price</span> <span class='op'>~</span><span class='kw'>.</span>, data = <span class='kw'>apartments</span>)
+<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
-<span class='kw'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>apartments_rf_model</span>,
-                        data = <span class='kw'>apartments_test</span>[,<span class='op'>-</span><span class='fl'>1</span>],
-                        y = <span class='kw'>apartments_test</span>[,<span class='fl'>1</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,-<span class='fl'>1</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>1</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  randomForest  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  9000  rows  5  cols 
 #&gt;   -&gt; target variable   :  9000  values 
@@ -210,12 +210,12 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -769.8233 , mean =  3.468059 , max =  1325.549  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='kw'>apartment</span> <span class='op'>&lt;-</span> <span class='kw'>apartments_test</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,]
+<span class='no'>apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,]
 
-<span class='kw'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='kw'>explainer_rf</span>, <span class='kw'>apartment</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>cp_rf</span>, color = <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>vips</span> <span class='op'>&lt;-</span> <span class='fu'>calculate_oscillations</span>(<span class='kw'>cp_rf</span>)
-<span class='kw'>vips</span></div><div class='output co'>#&gt;              _vname_ _ids_ oscillations
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>apartment</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"_ids_"</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>vips</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calculate_oscillations.html'>calculate_oscillations</a></span>(<span class='no'>cp_rf</span>)
+<span class='no'>vips</span></div><div class='output co'>#&gt;              _vname_ _ids_ oscillations
 #&gt; 9           district  1001   1175.60868
 #&gt; 10          district  1002    525.56531
 #&gt; 3            surface  1001    292.92661
@@ -226,7 +226,8 @@ calculated as oscillations in the Ceteris Paribus Profiles.</p>
 #&gt; 7           no.rooms  1001    164.63709
 #&gt; 2  construction.year  1002    152.83025
 #&gt; 1  construction.year  1001     53.33294</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>vips</span>)</div><div class='img'><img src='plot.ceteris_paribus_oscillations-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

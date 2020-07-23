@@ -101,7 +101,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.3.0</span>
+          <span class="version version-default">1.3.1</span>
         </div>
       </div>
     </div>
@@ -163,28 +163,28 @@ Find more detailes in Ceteris Paribus Chapter." />
 
     <div class="ref-description">
     <p>Function <code>plotD3.ceteris_paribus_explainer</code> plots Individual Variable Profiles for selected observations.
-It uses output from <code>ceteris_paribus</code> function.
+It uses output from <code><a href='ceteris_paribus.html'>ceteris_paribus</a></code> function.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
 <p>Find more detailes in <a href='https://pbiecek.github.io/ema/ceterisParibus.html'>Ceteris Paribus Chapter</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotD3</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>plotD3</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ceteris_paribus_explainer</span>
 <span class='fu'>plotD3</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  size = <span class='fl'>2</span>,
-  alpha = <span class='fl'>1</span>,
-  color = <span class='st'>"#46bac2"</span>,
-  variable_type = <span class='st'>"numerical"</span>,
-  facet_ncol = <span class='fl'>2</span>,
-  scale_plot = <span class='fl'>FALSE</span>,
-  variables = <span class='kw'>NULL</span>,
-  chart_title = <span class='st'>"Ceteris Paribus Profiles"</span>,
-  label_margin = <span class='fl'>60</span>,
-  show_observations = <span class='fl'>TRUE</span>,
-  show_rugs = <span class='fl'>TRUE</span>
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>,
+  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>,
+  <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Ceteris Paribus Profiles"</span>,
+  <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>60</span>,
+  <span class='kw'>show_observations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>show_rugs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -192,7 +192,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a ceteris paribus explainer produced with function <code>ceteris_paribus()</code></p></td>
+      <td><p>a ceteris paribus explainer produced with function <code><a href='ceteris_paribus.html'>ceteris_paribus()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -250,14 +250,14 @@ If "categorical" then only categorical variables will be plotted.</p></td>
     <p>a <code>r2d3</code> object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://ModelOriented.github.io/DALEX'>"DALEX"</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests'>"randomForest"</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='kw'>model_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='kw'>survived</span> <span class='op'>~</span><span class='kw'>.</span>,  data = <span class='kw'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='kw'>explain_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>model_titanic_rf</span>,
-                              data = <span class='kw'>titanic_imputed</span>[,<span class='op'>-</span><span class='fl'>8</span>],
-                              y = <span class='kw'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                              label = <span class='st'>"rf"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
+<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
+                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
+                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
+                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"rf"</span>)</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  rf 
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
@@ -267,19 +267,17 @@ If "categorical" then only categorical variables will be plotted.</p></td>
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8058614 , mean =  -0.0006218405 , max =  0.8996748  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='kw'>selected_passangers</span> <span class='op'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='kw'>titanic_imputed</span>, n = <span class='fl'>10</span>)
-<span class='kw'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='kw'>explain_titanic_rf</span>, <span class='kw'>selected_passangers</span>)
+<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
 
-<span class='fu'>plotD3</span>(<span class='kw'>cp_rf</span>, variables = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>,<span class='st'>"parch"</span>,<span class='st'>"fare"</span>,<span class='st'>"sibsp"</span>),
-     facet_ncol = <span class='fl'>2</span>, scale_plot = <span class='fl'>TRUE</span>)
+<span class='fu'>plotD3</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>,<span class='st'>"parch"</span>,<span class='st'>"fare"</span>,<span class='st'>"sibsp"</span>),
+     <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='kw'>selected_passanger</span> <span class='op'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='kw'>titanic_imputed</span>, n = <span class='fl'>1</span>)
-<span class='kw'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus</span>(<span class='kw'>explain_titanic_rf</span>, <span class='kw'>selected_passanger</span>)
+<span class='no'>selected_passanger</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passanger</span>)
 
-<span class='fu'>plotD3</span>(<span class='kw'>cp_rf</span>, variables = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>),
-     facet_ncol = <span class='fl'>2</span>, variable_type = <span class='st'>"categorical"</span>, label_margin = <span class='fl'>100</span>, scale_plot = <span class='fl'>TRUE</span>)
-
-</div></span></pre>
+<span class='fu'>plotD3</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>, <span class='st'>"sibsp"</span>),
+     <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -101,7 +101,7 @@ In different panels variable contributions may not look like sorted if variable 
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.3.0</span>
+          <span class="version version-default">1.3.1</span>
         </div>
       </div>
     </div>
@@ -163,22 +163,22 @@ In different panels variable contributions may not look like sorted if variable 
 
     <div class="ref-description">
     <p>Function <code>plotD3.feature_importance_explainer</code> plots dropouts for variables used in the model.
-It uses output from <code><a href='https://rdrr.io/pkg/DALEX/man/model_parts.html'>feature_importance</a></code> function that corresponds to permutation based measure of feature importance.
+It uses output from <code><a href='feature_importance.html'>feature_importance</a></code> function that corresponds to permutation based measure of feature importance.
 Variables are sorted in the same order in all panels. The order depends on the average drop out loss.
 In different panels variable contributions may not look like sorted if variable importance is different in different models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'>plotD3</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  max_vars = <span class='kw'>NULL</span>,
-  show_boxplots = <span class='fl'>TRUE</span>,
-  bar_width = <span class='fl'>12</span>,
-  split = <span class='st'>"model"</span>,
-  scale_height = <span class='fl'>FALSE</span>,
-  margin = <span class='fl'>0.15</span>,
-  chart_title = <span class='st'>"Feature importance"</span>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>show_boxplots</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>12</span>,
+  <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"model"</span>,
+  <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
+  <span class='kw'>chart_title</span> <span class='kw'>=</span> <span class='st'>"Feature importance"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -186,7 +186,7 @@ In different panels variable contributions may not look like sorted if variable 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a feature importance explainer produced with the <code><a href='https://rdrr.io/pkg/DALEX/man/model_parts.html'>feature_importance()</a></code> function</p></td>
+      <td><p>a feature importance explainer produced with the <code><a href='feature_importance.html'>feature_importance()</a></code> function</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -229,52 +229,51 @@ Usually value between <code>0.1</code> and <code>0.3</code>, by default it's <co
     <p>a <code>r2d3</code> object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://ModelOriented.github.io/DALEX'>"DALEX"</a></span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
 
-<span class='kw'>lm_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>m2.price</span> <span class='op'>~</span><span class='kw'>.</span>, data = <span class='kw'>apartments</span>)
-<span class='kw'>explainer_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>lm_model</span>,
-                        data = <span class='kw'>apartments</span>[,<span class='op'>-</span><span class='fl'>1</span>],
-                        y = <span class='kw'>apartments</span>[,<span class='fl'>1</span>],
-                        verbose = <span class='fl'>FALSE</span>)
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>m2.price</span> ~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='no'>explainer_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>lm_model</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,-<span class='fl'>1</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>1</span>],
+                        <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='kw'>fi_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/model_parts.html'>feature_importance</a></span>(<span class='kw'>explainer_lm</span>,
-      loss_function = <span class='kw'>DALEX</span>::<span class='kw'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>, B = <span class='fl'>1</span>)
+<span class='no'>fi_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_lm</span>,
+      <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>fi_lm</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_lm</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
 #&gt; 1      _full_model_          279.3262    lm
 #&gt; 2 construction.year          279.2987    lm
 #&gt; 3          no.rooms          289.6181    lm
 #&gt; 4             floor          503.1583    lm
 #&gt; 5           surface          620.3488    lm
-#&gt; 6          district          990.7506    lm</div><div class='input'><span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>)
+#&gt; 6          district          990.7506    lm</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>)
 
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests'>"randomForest"</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
 
-<span class='kw'>rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='kw'>m2.price</span><span class='op'>~</span><span class='kw'>.</span>, data = <span class='kw'>apartments</span>)
+<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span>~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
 
-<span class='kw'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='kw'>rf_model</span>,
-                        data = <span class='kw'>apartments</span>[,<span class='op'>-</span><span class='fl'>1</span>],
-                        y = <span class='kw'>apartments</span>[,<span class='fl'>1</span>],
-                        label = <span class='st'>"rf"</span>, verbose = <span class='fl'>FALSE</span>)
+<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>rf_model</span>,
+                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,-<span class='fl'>1</span>],
+                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments</span>[,<span class='fl'>1</span>],
+                        <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"rf"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='kw'>fi_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/model_parts.html'>feature_importance</a></span>(<span class='kw'>explainer_rf</span>, loss_function = <span class='kw'>DALEX</span>::<span class='kw'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>)
+<span class='no'>fi_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explainer_rf</span>, <span class='kw'>loss_function</span> <span class='kw'>=</span> <span class='kw pkg'>DALEX</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/DALEX/man/loss_functions.html'>loss_root_mean_square</a></span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>fi_rf</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fi_rf</span>)</div><div class='output co'>#&gt;            variable mean_dropout_loss label
 #&gt; 1      _full_model_          193.7468    rf
 #&gt; 2          no.rooms          363.9346    rf
 #&gt; 3 construction.year          372.0192    rf
 #&gt; 4             floor          415.6515    rf
 #&gt; 5           surface          451.7974    rf
-#&gt; 6          district          801.5791    rf</div><div class='input'><span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>, <span class='kw'>fi_rf</span>)
+#&gt; 6          district          801.5791    rf</div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>)
 
-<span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>, <span class='kw'>fi_rf</span>, split = <span class='st'>"feature"</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>)
 
-<span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>, <span class='kw'>fi_rf</span>, max_vars = <span class='fl'>3</span>, bar_width = <span class='fl'>16</span>, scale_height = <span class='fl'>TRUE</span>)
-<span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>, <span class='kw'>fi_rf</span>, max_vars = <span class='fl'>3</span>, bar_width = <span class='fl'>16</span>, split = <span class='st'>"feature"</span>, scale_height = <span class='fl'>TRUE</span>)
-<span class='fu'>plotD3</span>(<span class='kw'>fi_lm</span>, margin = <span class='fl'>0.2</span>)
-<span class='co'># }</span>
-</div></pre>
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='no'>fi_rf</span>, <span class='kw'>max_vars</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bar_width</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"feature"</span>, <span class='kw'>scale_height</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>fi_lm</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

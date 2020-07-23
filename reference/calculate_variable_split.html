@@ -101,7 +101,7 @@ For all other variables splits are calculated as unique values." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.3.0</span>
+          <span class="version version-default">1.3.1</span>
         </div>
       </div>
     </div>
@@ -168,10 +168,20 @@ For numerical variables splits are calculated as percentiles
 For all other variables splits are calculated as unique values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_variable_split</span>(<span class='kw'>data</span>, variables = <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>data</span>), grid_points = <span class='fl'>101</span>)
+    <pre class="usage"><span class='fu'>calculate_variable_split</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
+  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>
+)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>calculate_variable_split</span>(<span class='kw'>data</span>, variables = <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>data</span>), grid_points = <span class='fl'>101</span>)</pre>
+<span class='fu'>calculate_variable_split</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
+  <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
+  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,6 +197,10 @@ For all other variables splits are calculated as unique values.</p>
     <tr>
       <th>grid_points</th>
       <td><p>number of points used for response path</p></td>
+    </tr>
+    <tr>
+      <th>variable_splits_type</th>
+      <td><p>how variable grids shall be calculated? Use "quantiles" (default) for percentiles or "uniform" to get uniform grid of points</p></td>
     </tr>
     </table>
 
