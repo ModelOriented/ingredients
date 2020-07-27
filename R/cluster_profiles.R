@@ -73,7 +73,15 @@ cluster_profiles <- function(x, ...,
   check_variable_type(variable_type)
 
   # if there is more explainers, they should be merged into a single data frame
-  dfl <- c(list(x), list(...))
+  elist <- list(...)
+  if (length(elist) > 1) {
+    # only ceteris_paribus_explainer objects
+    elist <-  elist[sapply(elist, function(x) "ceteris_paribus_explainer" %in% class(x))]
+  } else {
+    elist <- NULL
+  }
+  dfl <- c(list(x), elist)
+
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"
 

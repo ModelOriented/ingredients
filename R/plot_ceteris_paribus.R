@@ -216,6 +216,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
   })
   # transformed data frame
   selected_cp_flat <- do.call(rbind, lsc)
+  `_yhat_` <- NULL
 
   # is color a variable or literal?
   is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
