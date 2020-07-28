@@ -79,7 +79,7 @@ calculate_variable_split <- function(data, variables = colnames(data), grid_poin
 #' @rdname calculate_variable_split
 calculate_variable_split.default <- function(data, variables = colnames(data), grid_points = 101, variable_splits_type = "quantiles") {
   variable_splits <- lapply(variables, function(var) {
-    selected_column <- data[,var]
+    selected_column <- na.omit(data[,var])
     # numeric?
     if (is.numeric(selected_column)) {
       probs <- seq(0, 1, length.out = grid_points)

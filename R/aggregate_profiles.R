@@ -193,7 +193,7 @@ aggregate_profiles <- function(x, ...,
 
   # calculate mean(all observation's _yhat_), mean of prediction
   attr(aggregated_profiles, "mean_prediction") <-
-    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`)
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`, na.rm = TRUE)
 
   aggregated_profiles
 }
@@ -269,7 +269,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     # weighed means
     per_points <- split(split_profile, split_profile[, c("_x_", groups)])
     chunks <- lapply(per_points, function(per_point) {
-      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`, na.rm = TRUE)
       res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
       # NaN occurs when all weights are 0 , #43
       res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
@@ -295,8 +295,8 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     # should accumulated profiles be centered at 0?
     if (center) {
       par_profile$`_yhat_` <- par_profile$`_yhat_` -
-                          mean(par_profile$`_yhat_`) +
-                          mean(all_profiles$`_yhat_`)
+                          mean(par_profile$`_yhat_`, na.rm = TRUE) +
+                          mean(all_profiles$`_yhat_`, na.rm = TRUE)
     }
 
     par_profile
@@ -321,11 +321,11 @@ aggregated_profiles_partial <- function(all_profiles, groups = NULL) {
 
   if (is.null(groups)) {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_")]
-    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = mean)
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`), FUN = mean, na.rm = TRUE)
     colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_yhat_")
   } else {
     tmp <- all_profiles[,c("_vname_", "_label_", "_x_", "_yhat_",groups)]
-    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp[,groups]), FUN = mean)
+    aggregated_profiles <- aggregate(tmp$`_yhat_`, by = list(tmp$`_vname_`, tmp$`_label_`, tmp$`_x_`, tmp[,groups]), FUN = mean, na.rm = TRUE)
     colnames(aggregated_profiles) <- c("_vname_", "_label_", "_x_", "_groups_", "_yhat_")
     aggregated_profiles$`_label_` <- paste(aggregated_profiles$`_label_`, aggregated_profiles$`_groups_`, sep = "_")
   }
@@ -379,7 +379,7 @@ aggregated_profiles_conditional <- function(all_profiles, groups = NULL, span = 
     per_points <- split(split_profile, split_profile[, c("_x_", groups)])
 
     chunks <- lapply(per_points, function(per_point) {
-      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`)
+      avg <- weighted.mean(per_point$`_yhat_`, w = per_point$`_w_`, na.rm = TRUE)
       res <- per_point[1, c("_vname_", "_label_", "_x_", "_yhat_", groups)]
       # NaN occurs when all weights are 0 , #43
       res$`_yhat_` <- ifelse(is.nan(avg), 0, avg)
