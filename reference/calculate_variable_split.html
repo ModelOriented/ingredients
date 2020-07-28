@@ -172,7 +172,8 @@ For all other variables splits are calculated as unique values.</p>
   <span class='no'>data</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
   <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
-  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>
+  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>,
+  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='fl'>NA</span>
 )
 
 <span class='co'># S3 method for default</span>
@@ -180,7 +181,8 @@ For all other variables splits are calculated as unique values.</p>
   <span class='no'>data</span>,
   <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>data</span>),
   <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
-  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>
+  <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>,
+  <span class='kw'>new_observation</span> <span class='kw'>=</span> <span class='fl'>NA</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -201,6 +203,10 @@ For all other variables splits are calculated as unique values.</p>
     <tr>
       <th>variable_splits_type</th>
       <td><p>how variable grids shall be calculated? Use "quantiles" (default) for percentiles or "uniform" to get uniform grid of points</p></td>
+    </tr>
+    <tr>
+      <th>new_observation</th>
+      <td><p>if specified (not <code>NA</code>) then all values in <code>new_observation</code> will be included in <code>variable_splits</code></p></td>
     </tr>
     </table>
 

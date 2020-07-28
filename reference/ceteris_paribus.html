@@ -193,6 +193,7 @@ For this reason it is also called 'What-If Profiles'.</p>
   <span class='kw'>variable_splits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>,
   <span class='kw'>variable_splits_type</span> <span class='kw'>=</span> <span class='st'>"quantiles"</span>,
+  <span class='kw'>variable_splits_with_obs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)[<span class='fl'>1</span>],
   <span class='no'>...</span>
 )</pre>
@@ -244,6 +245,10 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
     <tr>
       <th>predict_function</th>
       <td><p>predict function. It will be extracted from <code>x</code> if it's an explainer</p></td>
+    </tr>
+    <tr>
+      <th>variable_splits_with_obs</th>
+      <td><p>if <code>TRUE</code> then all values in <code>new_observation</code> will be included in <code>variable_splits</code></p></td>
     </tr>
     <tr>
       <th>label</th>
