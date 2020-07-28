@@ -103,6 +103,13 @@ plot.ceteris_paribus_explainer <- function(x, ...,
 
   all_profiles$`_ids_` <- factor(all_profiles$`_ids_`)
 
+  # fix for https://github.com/ModelOriented/ingredients/issues/123 set colors to _label_ with multiple models
+  if (color == "#46bac2" && length(unique(all_profiles$`_label_`)) > 1)
+    color <- "_label_"
+  if (color == "#46bac2" && length(unique(all_profiles$`_ids_`)) > 1)
+    color <- "_ids_"
+
+
   # extract labels to use in the default subtitle
   if (is.null(subtitle)) {
     labels <- paste0(unique(all_profiles$`_label_`), collapse = ", ")
