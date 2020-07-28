@@ -4,6 +4,7 @@ ingredients 1.3.1
 * now in the `ceteris_paribus` function one can specify how grid points shall be calculated, see `variable_splits_type`
 * `ceteris_paribus` and aggregates are now working with missing data, this solves [#120](https://github.com/ModelOriented/ingredients/issues/120)
 * `plot(ceteris_paribus)` change default `color` to _label_ or _ids_ if more than one profile is detected, this solves [#123](https://github.com/ModelOriented/ingredients/issues/123)
+* `ceteris_paribus` has now argument `variable_splits_with_obs` which included values from `new_observations` in the `variable_splits`, this solves [#124](https://github.com/ModelOriented/ingredients/issues/124)
 
 ingredients 1.3.0
 ---------------------------------------------------------------

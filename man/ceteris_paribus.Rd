@@ -29,6 +29,7 @@ ceteris_paribus(x, ...)
   variable_splits = NULL,
   grid_points = 101,
   variable_splits_type = "quantiles",
+  variable_splits_with_obs = FALSE,
   label = class(x)[1],
   ...
 )
@@ -58,6 +59,8 @@ If NULL then it will be calculated based on validation data available in the \co
 NOTE: It is best when target variable is not present in the \code{data}}
 
 \item{predict_function}{predict function. It will be extracted from \code{x} if it's an explainer}
+
+\item{variable_splits_with_obs}{if \code{TRUE} then all values in \code{new_observation} will be included in \code{variable_splits}}
 
 \item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 }

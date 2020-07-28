@@ -9,14 +9,16 @@ calculate_variable_split(
   data,
   variables = colnames(data),
   grid_points = 101,
-  variable_splits_type = "quantiles"
+  variable_splits_type = "quantiles",
+  new_observation = NA
 )
 
 \method{calculate_variable_split}{default}(
   data,
   variables = colnames(data),
   grid_points = 101,
-  variable_splits_type = "quantiles"
+  variable_splits_type = "quantiles",
+  new_observation = NA
 )
 }
 \arguments{
@@ -27,6 +29,8 @@ calculate_variable_split(
 \item{grid_points}{number of points used for response path}
 
 \item{variable_splits_type}{how variable grids shall be calculated? Use "quantiles" (default) for percentiles or "uniform" to get uniform grid of points}
+
+\item{new_observation}{if specified (not \code{NA}) then all values in \code{new_observation} will be included in \code{variable_splits}}
 }
 \value{
 A named list with splits for selected variables
