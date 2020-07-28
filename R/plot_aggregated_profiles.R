@@ -6,7 +6,7 @@
 #'
 #' @param x a ceteris paribus explainer produced with function \code{aggregate_profiles()}
 #' @param ... other explainers that shall be plotted together
-#' @param color a character. Either name of a color or name of a variable that should be used for coloring
+#' @param color a character. Either name of a color, or hex code for a color, or \code{_label_} if models shall be colored, or \code{_ids_} if instances shall be colored
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
