@@ -104,7 +104,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   # what kind of plot shall be plotted?
   # numerical
   if (is_color_a_variable & is_x_numeric) {
-    nlabels <- length(unique(aggregated_profiles$`_label_`))
+    nlabels <- length(unique(aggregated_profiles[,color]))
     res <- res +
       geom_line(aes_string(y = "`_yhat_`", color = paste0("`",color,"`")), size = size, alpha = alpha) +
       scale_color_manual(name = "", values = DALEX::colors_discrete_drwhy(nlabels))
@@ -116,7 +116,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   # what kind of plot shall be plotted?
   # categorical
   if (is_color_a_variable & !is_x_numeric) {
-    nlabels <- length(unique(aggregated_profiles$`_label_`))
+    nlabels <- length(unique(aggregated_profiles[,color]))
     res <- res +
       geom_col(aes_string(y = "`_yhat_`", fill = paste0("`",color,"`")), size = size, alpha = alpha, position = "dodge") +
       scale_fill_manual(name = "", values = DALEX::colors_discrete_drwhy(nlabels))
