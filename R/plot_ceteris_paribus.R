@@ -18,7 +18,7 @@
 #' @param title a character. Plot title. By default "Ceteris Paribus profile".
 #' @param subtitle a character. Plot subtitle. By default \code{NULL} - then subtitle is set to "created for the XXX, YYY model",
 #' where XXX, YYY are labels of given explainers.
-#' @param categorical_type a character. How categorical variables shall be plotted? Either \code{"lines"} (default) or \code{"bars"}.
+#' @param categorical_type a character. How categorical variables shall be plotted? Either \code{"profiles"} (default) or \code{"bars"} or \code{"lines"}.
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -92,7 +92,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    variables = NULL,
    title = "Ceteris Paribus profile",
    subtitle = NULL,
-   categorical_type = "lines") {
+   categorical_type = "profiles") {
 
   check_variable_type(variable_type)
 
@@ -164,13 +164,16 @@ plot.ceteris_paribus_explainer <- function(x, ...,
       variables <- vnames
     }
     pl <- switch(categorical_type,
-            lines = plot_categorical_ceteris_paribus(
+           profiles = plot_categorical_ceteris_paribus_profiles(
+                   all_profiles, attr(x, "observation"), variables,
+                   facet_ncol = facet_ncol, color, size, alpha),
+           lines = plot_categorical_ceteris_paribus(
                       all_profiles, attr(x, "observation"), variables,
                       facet_ncol = facet_ncol, color, size, alpha),
             bars = plot_categorical_ceteris_paribus_bars(
                       all_profiles, attr(x, "observation"), variables,
                       facet_ncol = facet_ncol, color,size, alpha),
-            stop("`categorical_type` shall be either `lines` or `bars`")
+            stop("`categorical_type` shall be either `lines`, `profiles` or `bars`")
     )
   }
   pl +
@@ -246,6 +249,47 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
 
+
+plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
+                                             size = 2, alpha) {
+
+  lsc <- lapply(variables, function(sv) {
+    tmp <- all_profiles[all_profiles$`_vname_` == sv,
+                        c(sv, "_vname_", "_yhat_", "_label_", "_ids_")]
+    # instances to be merged
+    key <- selected_observation[, sv, drop = FALSE]
+    # add right values to profiles
+    tmp$`_real_point_` <- tmp[, sv] == key[as.character(tmp$`_ids_`), sv]
+    tmp$`_vname_value_` <- paste(tmp$`_vname_`, "=", key[as.character(tmp$`_ids_`), sv])
+    colnames(tmp)[1] <- "_x_"
+    tmp$`_x_` <- as.character(tmp$`_x_`)
+    tmp
+  })
+  # transformed data frame
+  selected_cp_flat <- do.call(rbind, lsc)
+  `_yhat_` <- NULL
+
+  # is color a variable or literal?
+  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
+  if (is_color_a_variable) {
+    selected_cp_flat$`_ids_color_` <- paste(selected_cp_flat[,"_ids_"], selected_cp_flat[,color], sep = "_")
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_color_`", color = paste0("`",color,"`"))) +
+      geom_line(size = size/2, alpha = alpha) +
+      geom_line(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
+                 size = size, alpha = alpha)
+  } else {
+    pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_`")) +
+      geom_line(size = size/2, alpha = alpha, color = color) +
+      geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
+                 color = color, size = size, alpha = alpha)
+  }
+
+  # prepare plot
+  pl +
+    DALEX::theme_drwhy()  +
+    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+}
 
 
 plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",

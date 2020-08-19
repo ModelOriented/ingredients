@@ -1,6 +1,6 @@
 ingredients (development)
 --------------------------------------------------------------
-* ...
+* `plot.ceteris_paribus_explainer` now by default for categorical variables plots profiles (not lines -prev default- nor bars)
 
 ingredients 1.3.1
 --------------------------------------------------------------
