@@ -39,8 +39,8 @@
 #'                                y = titanic_imputed[,8],
 #'                                verbose = FALSE)
 #'
-#' cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_imputed[1,])
-#' cp_rf
+#' cp_glm <- ceteris_paribus(explain_titanic_glm, titanic_imputed[1,])
+#' cp_glm
 #'
 #' plot(cp_rf, variables = "age")
 #'
@@ -119,8 +119,13 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     all_variables <- intersect(all_variables, variables)
     if (length(all_variables) == 0) stop(paste0("variables do not overlap with ", paste(all_variables, collapse = ", ")))
   }
+
   # is color a variable or literal?
-  is_color_a_variable <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
+  if (color %in% c(all_variables, "_label_", "_vname_", "_ids_")) {
+    color_values <- DALEX::colors_discrete_drwhy(length(unique(all_profiles[,color])))
+  } else {
+    color_values <- NULL # if NULL then don't color by variable
+  }
 
   # only numerical or only factors?
   is_numeric <- sapply(all_profiles[, all_variables, drop = FALSE], is.numeric)
@@ -156,7 +161,8 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   if (variable_type == "numerical") {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-    pl <- plot_numerical_ceteris_paribus(all_profiles, is_color_a_variable, facet_ncol = facet_ncol, color, size, alpha)
+    pl <- plot_numerical_ceteris_paribus(all_profiles, color_values, facet_ncol,
+                                         color, size, alpha)
   } else {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% c(vnames, variables), ]
@@ -166,13 +172,13 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     pl <- switch(categorical_type,
            profiles = plot_categorical_ceteris_paribus_profiles(
                    all_profiles, attr(x, "observation"), variables,
-                   facet_ncol = facet_ncol, color, size, alpha),
+                   color_values, facet_ncol, color, size, alpha),
            lines = plot_categorical_ceteris_paribus(
                       all_profiles, attr(x, "observation"), variables,
-                      facet_ncol = facet_ncol, color, size, alpha),
+                      color_values, facet_ncol, color, size, alpha),
             bars = plot_categorical_ceteris_paribus_bars(
                       all_profiles, attr(x, "observation"), variables,
-                      facet_ncol = facet_ncol, color,size, alpha),
+                      color_values, facet_ncol, color, size, alpha),
             stop("`categorical_type` shall be either `lines`, `profiles` or `bars`")
     )
   }
@@ -182,7 +188,8 @@ plot.ceteris_paribus_explainer <- function(x, ...,
 }
 
 
-plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, facet_ncol, color, size, alpha) {
+plot_numerical_ceteris_paribus <- function(all_profiles, color_values, facet_ncol,
+                                           color, size, alpha) {
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
   for (i in seq_along(tmp)) {
@@ -194,8 +201,10 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
   pl <- ggplot(all_profiles, aes(`_x_`, `_yhat_`, group = paste(`_ids_`, `_label_`)))
 
   # show profiles without aggregation
-  if (is_color_a_variable) {
-    pl <- pl + geom_line(data = all_profiles, aes_string(color = paste0("`", color, "`")), size = size, alpha = alpha)
+  if (!is.null(color_values)) {
+    pl <- pl +
+      geom_line(data = all_profiles, aes_string(color = paste0("`", color, "`")), size = size, alpha = alpha) +
+      scale_color_manual(name = "", values = color_values)
   } else {
     pl <- pl + geom_line(data = all_profiles, size = size, alpha = alpha, color = color)
   }
@@ -206,8 +215,9 @@ plot_numerical_ceteris_paribus <- function(all_profiles, is_color_a_variable, fa
 }
 
 
-plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
-                                             size = 2, alpha) {
+plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables,
+                                             color_values, facet_ncol,
+                                             color, size, alpha) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -225,11 +235,10 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
   selected_cp_flat <- do.call(rbind, lsc)
   `_yhat_` <- NULL
 
-  # is color a variable or literal?
-  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
-  if (is_color_a_variable) {
+  if (!is.null(color_values)) {
     selected_cp_flat$`_ids_color_` <- paste(selected_cp_flat[,"_ids_"], selected_cp_flat[,color], sep = "_")
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_color_`", color = paste0("`",color,"`"))) +
+      scale_color_manual(name = "", values = color_values) +
       geom_errorbar(aes(ymin = `_yhat_`, ymax = `_yhat_`), size = size/2, alpha = alpha) +
 #      geom_line(size = size/2, alpha = alpha) +
       geom_point(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
@@ -250,8 +259,9 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
 }
 
 
-plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
-                                             size = 2, alpha) {
+plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_observation, variables,
+                                                      color_values, facet_ncol,
+                                                      color, size, alpha) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -269,11 +279,10 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_obs
   selected_cp_flat <- do.call(rbind, lsc)
   `_yhat_` <- NULL
 
-  # is color a variable or literal?
-  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
-  if (is_color_a_variable) {
+  if (!is.null(color_values)) {
     selected_cp_flat$`_ids_color_` <- paste(selected_cp_flat[,"_ids_"], selected_cp_flat[,color], sep = "_")
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", group = "`_ids_color_`", color = paste0("`",color,"`"))) +
+      scale_color_manual(name = "", values = color_values) +
       geom_line(size = size/2, alpha = alpha) +
       geom_line(data = selected_cp_flat[selected_cp_flat$`_real_point_`, ],
                  size = size, alpha = alpha)
@@ -292,8 +301,9 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_obs
 }
 
 
-plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observation, variables, facet_ncol, color = "#46bac2",
-                                             size = 2, alpha) {
+plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observation, variables,
+                                                  color_values, facet_ncol,
+                                                  color, size, alpha) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -317,11 +327,11 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observa
 
   # prepare plot
   `_vname_` <- NULL
-  # is color a variable or literal?
-  is_color_a_variable <- color %in% c(variables, "_label_", "_vname_", "_ids_")
-  if (is_color_a_variable) {
+
+  if (!is.null(color_values)) {
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`", fill = paste0("`",color,"`"))) +
-      geom_col(position = "dodge")
+      geom_col(position = "dodge") +
+      scale_fill_manual(name = "", values = color_values)
   } else {
     pl <- ggplot(selected_cp_flat, aes_string("`_x_`", "`_yhat_`")) +
       geom_col(fill = color)

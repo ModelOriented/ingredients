@@ -7,7 +7,7 @@
 
 ## Overview
 
-The `ingredients` package is a collection of tools for assessment of feature importance and feature effects.
+The `ingredients` package is a collection of tools for assessment of feature importance and feature effects. It is imported and used to compute model explanations in multiple packages e.g. [`DALEX`](https://github.com/ModelOriented/DALEX), [`modelStudio`](https://github.com/ModelOriented/modelStudio), [`arenar`](https://github.com/ModelOriented/ArenaR).
 
 Key functions: 
 
@@ -23,12 +23,12 @@ Key functions:
 * generic `plotD3()` for interactive, D3 based explanations,
 * generic `describe()` for explanations in natural language.
  
-The philosophy behind `ingredients` explanations is described in the [Explanatory Model Analysis. Explore, Explain and Examine Predictive Models](https://pbiecek.github.io/ema/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
+The philosophy behind `ingredients` explanations is described in the [Explanatory Model Analysis: Explore, Explain and Examine Predictive Models](https://pbiecek.github.io/ema/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
 
 
 ## Installation
 
-```{r}
+```r
 # the easiest way to get ingredients is to install it from CRAN:
 install.packages("ingredients")
 
