@@ -161,8 +161,12 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   if (variable_type == "numerical") {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% vnames, ]
-    pl <- plot_numerical_ceteris_paribus(all_profiles, color_values, facet_ncol,
-                                         color, size, alpha)
+    pl <- plot_numerical_ceteris_paribus(all_profiles = all_profiles,
+                                         color_values = color_values,
+                                         facet_ncol = facet_ncol,
+                                         color = color,
+                                         size = size,
+                                         alpha = alpha)
   } else {
     # select only suitable variables  either in vnames or in variables
     all_profiles <- all_profiles[all_profiles$`_vname_` %in% c(vnames, variables), ]
@@ -171,14 +175,32 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     }
     pl <- switch(categorical_type,
            profiles = plot_categorical_ceteris_paribus_profiles(
-                   all_profiles, attr(x, "observation"), variables,
-                   color_values, facet_ncol, color, size, alpha),
+                   all_profiles = all_profiles,
+                   selected_observation = attr(x, "observation"),
+                   variables = variables,
+                   color_values = color_values,
+                   facet_ncol = facet_ncol,
+                   color = color,
+                   size = size,
+                   alpha = alpha),
            lines = plot_categorical_ceteris_paribus(
-                      all_profiles, attr(x, "observation"), variables,
-                      color_values, facet_ncol, color, size, alpha),
+                      all_profiles = all_profiles,
+                      selected_observation = attr(x, "observation"),
+                      variables = variables,
+                      color_values = color_values,
+                      facet_ncol = facet_ncol,
+                      color = color,
+                      size = size,
+                      alpha = alpha),
             bars = plot_categorical_ceteris_paribus_bars(
-                      all_profiles, attr(x, "observation"), variables,
-                      color_values, facet_ncol, color, size, alpha),
+                      all_profiles = all_profiles,
+                      selected_observation = attr(x, "observation"),
+                      variables = variables,
+                      color_values = color_values,
+                      facet_ncol = facet_ncol,
+                      color = color,
+                      size = size,
+                      alpha = alpha),
             stop("`categorical_type` shall be either `lines`, `profiles` or `bars`")
     )
   }
@@ -188,8 +210,12 @@ plot.ceteris_paribus_explainer <- function(x, ...,
 }
 
 
-plot_numerical_ceteris_paribus <- function(all_profiles, color_values, facet_ncol,
-                                           color, size, alpha) {
+plot_numerical_ceteris_paribus <- function(all_profiles,
+                                           color_values,
+                                           facet_ncol = NULL,
+                                           color = "#46bac2",
+                                           size = 1,
+                                           alpha = 1) {
   # create _x_
   tmp <- as.character(all_profiles$`_vname_`)
   for (i in seq_along(tmp)) {
@@ -215,9 +241,14 @@ plot_numerical_ceteris_paribus <- function(all_profiles, color_values, facet_nco
 }
 
 
-plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation, variables,
-                                             color_values, facet_ncol,
-                                             color, size, alpha) {
+plot_categorical_ceteris_paribus <- function(all_profiles,
+                                             selected_observation,
+                                             variables,
+                                             color_values,
+                                             facet_ncol = NULL,
+                                             color = "#46bac2",
+                                             size = 1,
+                                             alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -259,9 +290,14 @@ plot_categorical_ceteris_paribus <- function(all_profiles, selected_observation,
 }
 
 
-plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_observation, variables,
-                                                      color_values, facet_ncol,
-                                                      color, size, alpha) {
+plot_categorical_ceteris_paribus_profiles <- function(all_profiles,
+                                                      selected_observation,
+                                                      variables,
+                                                      color_values,
+                                                      facet_ncol = NULL,
+                                                      color = "#46bac2",
+                                                      size = 1,
+                                                      alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
@@ -301,9 +337,14 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles, selected_obs
 }
 
 
-plot_categorical_ceteris_paribus_bars <- function(all_profiles, selected_observation, variables,
-                                                  color_values, facet_ncol,
-                                                  color, size, alpha) {
+plot_categorical_ceteris_paribus_bars <- function(all_profiles,
+                                                  selected_observation,
+                                                  variables,
+                                                  color_values,
+                                                  facet_ncol = NULL,
+                                                  color = "#46bac2",
+                                                  size = 1,
+                                                  alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
     tmp <- all_profiles[all_profiles$`_vname_` == sv,
