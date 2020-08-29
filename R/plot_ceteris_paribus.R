@@ -42,7 +42,7 @@
 #' cp_glm <- ceteris_paribus(explain_titanic_glm, titanic_imputed[1,])
 #' cp_glm
 #'
-#' plot(cp_rf, variables = "age")
+#' plot(cp_glm, variables = "age")
 #'
 #' \donttest{
 #' library("randomForest")
