@@ -247,7 +247,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles,
                                              color_values,
                                              facet_ncol = NULL,
                                              color = "#46bac2",
-                                             size = 1,
+                                             size = 2,
                                              alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
@@ -296,7 +296,7 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles,
                                                       color_values,
                                                       facet_ncol = NULL,
                                                       color = "#46bac2",
-                                                      size = 1,
+                                                      size = 2,
                                                       alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
@@ -343,7 +343,7 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles,
                                                   color_values,
                                                   facet_ncol = NULL,
                                                   color = "#46bac2",
-                                                  size = 1,
+                                                  size = 2,
                                                   alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
