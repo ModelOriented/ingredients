@@ -1,6 +1,8 @@
-ingredients (development)
+ingredients 2.0
 --------------------------------------------------------------
 * `plot.ceteris_paribus_explainer` now by default for categorical variables plots profiles (not lines -prev default- nor bars)
+* ALE plots are now centered around average y_hat [#126](https://github.com/ModelOriented/ingredients/issues/126)
+* colors from DrWhy color palette is used for CP [#125](https://github.com/ModelOriented/ingredients/issues/125)
 
 ingredients 1.3.1
 --------------------------------------------------------------
