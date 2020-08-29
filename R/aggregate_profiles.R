@@ -107,7 +107,7 @@ aggregate_profiles <- function(x, ...,
   }
   dfl <- c(list(x), elist)
   mean_prediction <-
-    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observations")}))$`_yhat_`, na.rm = TRUE)
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`, na.rm = TRUE)
 
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"
