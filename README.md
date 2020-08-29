@@ -46,5 +46,5 @@ devtools::install_github("ModelOriented/ingredients")
 
 ## Acknowledgments
 
-Work on this package was financially supported by the 'NCN Opus grant 2016/21/B/ST6/02176'.
+Work on this package was financially supported by the `NCN Opus grant 2016/21/B/ST6/02176`.
     
