@@ -32,7 +32,8 @@ By default \code{NULL} which means that no groups shall be calculated}
 
 \item{span}{smoothing coeffcient, by default \code{0.25}.It's the sd for gaussian kernel}
 
-\item{center}{by default accumulated profiles start at 0. if \code{center=TRUE} then they are centered around average response}
+\item{center}{by default accumulated profiles start at 0. If \code{center=TRUE}, then they are centered around mean prediction,
+which is calculated on the observations used in \code{ceteris_paribus}.}
 }
 \value{
 an object of the class \code{aggregated_profiles_explainer}

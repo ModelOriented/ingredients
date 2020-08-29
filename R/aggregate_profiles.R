@@ -11,7 +11,8 @@
 #' @param type either \code{partial/conditional/accumulated} for partial dependence, conditional profiles of accumulated local effects
 #' @param groups a variable name that will be used for grouping.
 #' By default \code{NULL} which means that no groups shall be calculated
-#' @param center by default accumulated profiles start at 0. if \code{center=TRUE} then they are centered around average response
+#' @param center by default accumulated profiles start at 0. If \code{center=TRUE}, then they are centered around mean prediction,
+#' which is calculated on the observations used in \code{ceteris_paribus}.
 #' @param span smoothing coeffcient, by default \code{0.25}.It's the sd for gaussian kernel
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
@@ -105,6 +106,8 @@ aggregate_profiles <- function(x, ...,
     elist <- NULL
   }
   dfl <- c(list(x), elist)
+  mean_prediction <-
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`, na.rm = TRUE)
 
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"
@@ -186,14 +189,14 @@ aggregate_profiles <- function(x, ...,
                                     "conditional_dependence_explainer", "data.frame")
   }
   if (type == "accumulated") {
-    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span, center = center)
+    aggregated_profiles <- aggregated_profiles_accumulated(all_profiles, groups, span = span,
+                                                           center = center, mean_prediction = mean_prediction)
     class(aggregated_profiles) <- c("aggregated_profiles_explainer",
                                     "accumulated_dependence_explainer", "data.frame")
   }
 
   # calculate mean(all observation's _yhat_), mean of prediction
-  attr(aggregated_profiles, "mean_prediction") <-
-    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`, na.rm = TRUE)
+  attr(aggregated_profiles, "mean_prediction") <- mean_prediction
 
   aggregated_profiles
 }
@@ -224,7 +227,8 @@ fast_initialisation_for_orginal <- function(all_profiles, observations) {
   do.call(rbind, profiles_per_vname)
 }
 
-aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25, center = FALSE) {
+aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 0.25, center = FALSE,
+                                            mean_prediction = 0) {
   observations <- attr(all_profiles, "observations")
   # just initialisation
   all_profiles <- fast_initialisation_for_orginal(all_profiles, observations)
@@ -296,7 +300,7 @@ aggregated_profiles_accumulated <- function(all_profiles, groups = NULL, span = 
     if (center) {
       par_profile$`_yhat_` <- par_profile$`_yhat_` -
                           mean(par_profile$`_yhat_`, na.rm = TRUE) +
-                          mean(all_profiles$`_yhat_`, na.rm = TRUE)
+                          mean_prediction
     }
 
     par_profile
