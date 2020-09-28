@@ -10,8 +10,11 @@
 #'
 #' @return an object of the class \code{ceteris_paribus_2d_explainer}.
 #'
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ age + fare,
 #'                        data = titanic_imputed, family = "binomial")
@@ -27,10 +30,10 @@
 #'
 #' plot(cp_rf)
 #'
-#' library("randomForest")
+#' library("ranger")
 #' set.seed(59)
 #'
-#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
+#' apartments_rf_model <- ranger(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
 #'                         data = apartments_test[,-1],

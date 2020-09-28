@@ -14,7 +14,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be computed.
 #' If \code{categorical} then only categorical variables will be computed.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @importFrom stats as.dist cutree hclust
 #'
@@ -22,6 +22,7 @@
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
@@ -36,14 +37,13 @@
 #' plot(clust_rf)
 #'
 #' \donttest{
-#' library("randomForest")
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
-#' model_titanic_rf
+#' library("ranger")
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
-#'                               label = "Random Forest v7")
+#'                               verbose = FALSE)
 #'
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' cp_rf
@@ -63,12 +63,13 @@
 #' head(clust_rf)
 #' }
 #' @export
-cluster_profiles <- function(x, ...,
-                       aggregate_function = mean,
-                       variable_type = "numerical",
-                       center = FALSE,
-                       k = 3,
-                       variables = NULL) {
+cluster_profiles <- function(x,
+                             ...,
+                             aggregate_function = mean,
+                             variable_type = "numerical",
+                             center = FALSE,
+                             k = 3,
+                             variables = NULL) {
 
   check_variable_type(variable_type)
 

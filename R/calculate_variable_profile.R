@@ -12,7 +12,7 @@
 #' @param model a model that will be passed to the \code{predict_function}
 #' @param ... other parameters that will be passed to the \code{predict_function}
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return a data frame with profiles for selected variables and selected observations
 #'

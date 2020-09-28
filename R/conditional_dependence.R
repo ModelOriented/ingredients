@@ -21,20 +21,20 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{aggregated_profile_explainer}
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
-#'                                y = titanic_imputed[,8],
-#'                                verbose = FALSE)
+#'                                y = titanic_imputed[,8])
 #'
 #' cdp_glm <- conditional_dependence(explain_titanic_glm,
 #'                                   N = 150, variables = c("age", "fare"))
@@ -42,9 +42,9 @@
 #' plot(cdp_glm)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
@@ -55,7 +55,7 @@
 #' plot(cdp_rf)
 #'
 #' cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "categorical")
-#' plotD3(cdp_rf, label_margin = 80, scale_plot = TRUE)
+#' plotD3(cdp_rf, label_margin = 100, scale_plot = TRUE)
 #' }
 #'
 #' @export

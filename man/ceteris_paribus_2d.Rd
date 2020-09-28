@@ -24,6 +24,7 @@ It may be useful to identify or present interactions between two variables.
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 model_titanic_glm <- glm(survived ~ age + fare,
                        data = titanic_imputed, family = "binomial")
@@ -39,10 +40,10 @@ head(cp_rf)
 
 plot(cp_rf)
 
-library("randomForest")
+library("ranger")
 set.seed(59)
 
-apartments_rf_model <- randomForest(m2.price ~., data = apartments)
+apartments_rf_model <- ranger(m2.price ~., data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
                         data = apartments_test[,-1],
@@ -57,4 +58,7 @@ head(wi_rf_2d)
 plot(wi_rf_2d)
 }
 
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

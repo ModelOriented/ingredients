@@ -2,14 +2,14 @@ context("Check describe() functions")
 
 test_that("describe cluster_profiles",{
   library("DALEX")
-  library("randomForest")
+  library("ranger")
 
-  titanic_small <- na.omit(titanic[1:500,])
+  titanic_small <- titanic_imputed[1:500,]
 
-  rf_model <- randomForest(survived ~.,  data = titanic_small)
+  rf_model <- ranger(survived ~.,  data = titanic_small, probability = TRUE)
 
   explainer_rf <- explain(rf_model, data = titanic_small,
-                          y = titanic_small$survived == "yes", label = "RF",
+                          y = titanic_small$survived, label = "RF",
                           verbose = FALSE)
 
   selected_passangers <- select_sample(titanic_small, n = 1)

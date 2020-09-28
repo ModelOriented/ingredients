@@ -16,13 +16,17 @@
 #'
 #' @return a \code{ggplot2} layer
 #'
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
-#' rf_model <- randomForest(survived ~., data = titanic_imputed)
+#' rf_model <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
-#' explainer_rf <- explain(rf_model, data = titanic_imputed[,-8],
+#' explainer_rf <- explain(rf_model,
+#'                         data = titanic_imputed[,-8],
 #'                         y = titanic_imputed[,8],
 #'                         label = "RF", verbose = FALSE)
 #'

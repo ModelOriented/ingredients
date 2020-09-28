@@ -5,6 +5,7 @@
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
@@ -22,9 +23,10 @@
 #' head(pdp_rf)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed,
+#'                            probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],

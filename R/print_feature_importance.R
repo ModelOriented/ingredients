@@ -10,6 +10,7 @@
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")

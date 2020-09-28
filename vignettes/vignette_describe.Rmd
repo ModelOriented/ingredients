@@ -36,18 +36,16 @@ To show generating automatic descriptions we first load the data set and build a
 ```{r message=FALSE, warning=FALSE}
 library("DALEX")
 library("ingredients")
-library("randomForest")
-titanic <- na.omit(titanic)
+library("ranger")
 
-model_titanic_rf <- randomForest(survived == "yes" ~ .,
-                                 data = titanic)
+model_titanic_rf <- ranger(survived ~ ., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
-                            data = titanic[,-9],
-                            y = titanic$survived == "yes",
+                            data = titanic_imputed[,-8],
+                            y = titanic_imputed[,8],
                             label = "Random Forest")
 
-passanger <- titanic[sample(nrow(titanic), 1) ,-9]
+passanger <- titanic_imputed[sample(nrow(titanic_imputed), 1) ,-8]
 passanger
 ```
 

@@ -14,9 +14,12 @@
 #'
 #' @return a \code{ggplot2} layer
 #'
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' johny_d <- data.frame(
 #'   class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
@@ -30,12 +33,11 @@
 #' )
 #'
 #' \donttest{
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed, ntree = 500)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
-#'                               y = titanic_imputed[,8],
-#'                               label = "Random Forest v7")
+#'                               y = titanic_imputed[,8])
 #'
 #' johny_neighbours <- select_neighbours(data = titanic_imputed,
 #'                                       observation = johny_d,

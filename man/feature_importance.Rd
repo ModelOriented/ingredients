@@ -82,6 +82,7 @@ Find more detailes in the \href{https://pbiecek.github.io/ema/featureImportance.
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 model_titanic_glm <- glm(survived ~ gender + age + fare,
                          data = titanic_imputed, family = "binomial")
@@ -111,8 +112,8 @@ fi_glm_joint2 <- feature_importance(explain_titanic_glm,
 
 plot(fi_glm_joint2, fi_glm_joint1)
 
-library("randomForest")
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+library("ranger")
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
@@ -133,18 +134,18 @@ fi_rf_group <- feature_importance(explain_titanic_rf,
 
 plot(fi_rf_group, fi_rf)
 
-HR_rf_model <- randomForest(status ~., data = HR, ntree = 100)
+HR_rf_model <- ranger(status ~., data = HR, probability = TRUE)
 
 explainer_rf  <- explain(HR_rf_model, data = HR, y = HR$status,
-                         verbose = FALSE, precalculate = FALSE)
+                         model_info = list(type = 'multiclass'))
 
 fi_rf <- feature_importance(explainer_rf, type = "raw",
-                            loss_function = loss_cross_entropy)
+                            loss_function = DALEX::loss_cross_entropy)
 head(fi_rf)
 plot(fi_rf)
 
 HR_glm_model <- glm(status == "fired"~., data = HR, family = "binomial")
-explainer_glm <- explain(HR_glm_model, data = HR, y = HR$status == "fired")
+explainer_glm <- explain(HR_glm_model, data = HR, y = as.numeric(HR$status == "fired"))
 fi_glm <- feature_importance(explainer_glm, type = "raw",
                              loss_function = DALEX::loss_root_mean_square)
 head(fi_glm)
@@ -153,5 +154,5 @@ plot(fi_glm)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

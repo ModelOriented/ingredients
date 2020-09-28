@@ -2,13 +2,14 @@ context("Check calculate_oscillations() functions")
 
 test_that("plot calculate_oscillations",{
   library("DALEX")
-  library("randomForest")
+  library("ranger")
   set.seed(59)
-  apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                        no.rooms + district, data = apartments)
+  apartments_rf_model <- ranger(m2.price ~ construction.year + surface + floor +
+                                no.rooms + district, data = apartments)
 
   explainer_rf <- explain(apartments_rf_model,
-                          data = apartments_test, y = apartments_test$m2.price, verbose = FALSE)
+                          data = apartments_test, y = apartments_test$m2.price,
+                          verbose = FALSE)
 
   apartment <- apartmentsTest[1,]
 

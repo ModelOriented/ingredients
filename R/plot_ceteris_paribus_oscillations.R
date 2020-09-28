@@ -7,7 +7,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param bar_width width of bars. By default \code{10}.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return a \code{ggplot2} object
 #'
@@ -16,9 +16,9 @@
 #' @examples
 #' \donttest{
 #' library("DALEX")
-#' library("randomForest")
+#' library("ranger")
 #'
-#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
+#' apartments_rf_model <- ranger(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
 #'                         data = apartments_test[,-1],

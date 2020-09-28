@@ -1,17 +1,19 @@
 context("Check aggregate_profiles() functions")
 
+library("DALEX")
+library("ranger")
+
+titanic_small <- titanic_imputed[1:500,]
+
+rf_model <- ranger(survived ~ gender + age + class + embarked +
+                     fare + sibsp + parch,  data = titanic_small,
+                   probability = TRUE)
+
+explainer_rf <- explain(rf_model, data = titanic_small,
+                        y = titanic_small$survived,
+                        label = "RF", verbose = FALSE)
+
 test_that("plot aggregate_profiles",{
-  library("DALEX")
-  library("randomForest")
-
-  titanic_small <- na.omit(titanic[1:500,])
-
-  rf_model <- randomForest(survived ~ gender + age + class + embarked +
-                             fare + sibsp + parch,  data = titanic_small)
-
-  explainer_rf <- explain(rf_model, data = titanic_small,
-                          y = titanic_small$survived == "yes", label = "RF", verbose = FALSE)
-
   selected_passangers_10 <- select_neighbours(titanic_small, titanic_small[1,], n = 10)
 
   selected_passangers <- select_sample(titanic_small, n = 100)
@@ -43,20 +45,11 @@ test_that("plot aggregate_profiles",{
 
 
 test_that("plot partial_dependence",{
-  library("DALEX")
-  library("randomForest")
-  titanic <- na.omit(titanic)
-  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                     fare + sibsp + parch,  data = titanic)
-
-  explain_titanic_rf <- explain(model_titanic_rf,
-                                data = titanic[,-9],
-                                y = titanic$survived, verbose = FALSE)
 
   selected_passangers <- select_sample(titanic, n = 100)
-  cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
+  cp_rf <- ceteris_paribus(explainer_rf, selected_passangers)
 
-  res <- partial_dependence(explain_titanic_rf, N=50, variables = "gender", variable_type = "categorical")
+  res <- partial_dependence(explainer_rf, N=50, variables = "gender", variable_type = "categorical")
 
   expect_true("aggregated_profiles_explainer" %in% class(res))
 })

@@ -22,7 +22,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'
@@ -43,9 +43,9 @@
 #' plot(pdp_glm)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],

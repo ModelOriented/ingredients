@@ -24,12 +24,13 @@
 #' If "categorical" then only categorical variables will be calculated.
 #'
 #' @references ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
-#' Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
@@ -45,9 +46,9 @@
 #' plot(adp_glm)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],

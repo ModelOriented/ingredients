@@ -25,10 +25,11 @@
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' \donttest{
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],

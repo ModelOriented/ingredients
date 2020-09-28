@@ -14,6 +14,8 @@
 #' @examples
 #' \donttest{
 #' library("DALEX")
+#' library("ingredients")
+#'
 #' titanic_glm <- glm(survived ~ gender + age + fare,
 #'                    data = titanic_imputed, family = "binomial")
 #'

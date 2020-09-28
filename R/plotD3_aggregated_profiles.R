@@ -18,24 +18,24 @@
 #' @param chart_title a character. Set custom title
 #' @param label_margin a numeric. Set width of label margins in \code{categorical} type
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return a \code{r2d3} object.
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' # smaller data, quicker example
 #' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 #'
 #' # build a model
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_small)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_small, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_small[,-8],
-#'                               y = titanic_small[,8],
-#'                               label = "Random Forest v7")
+#'                               y = titanic_small[,8])
 #'
 #' selected_passangers <- select_sample(titanic_small, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -81,10 +81,6 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
   # prepare profiles data
   rownames(aggregated_profiles) <- NULL
 
-  ymax <- max(aggregated_profiles$`_yhat_`)
-  ymin <- min(aggregated_profiles$`_yhat_`)
-  ymargin <- abs(ymax - ymin)*0.1
-
   aggregated_profiles_list <- split(aggregated_profiles, aggregated_profiles$`_vname_`, drop = TRUE)
 
   min_max_list <- ymean <- label_names <- NULL
@@ -122,6 +118,10 @@ plotD3.aggregated_profiles_explainer <- function(x, ..., size = 2, alpha = 1,
 
     ymean <- ifelse("partial_dependence_explainer" %in% class(x), round(attr(x, "mean_prediction"), 3), 0)
   }
+
+  ymax <- max(aggregated_profiles$`_yhat_`, ymean)
+  ymin <- min(aggregated_profiles$`_yhat_`, ymean)
+  ymargin <- abs(ymax - ymin)*0.1
 
   options <- list(variableNames = as.list(all_variables),
                   n = length(all_variables), c = length(list(...)) + 1,

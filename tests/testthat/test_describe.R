@@ -1,17 +1,15 @@
 context("Check describe() function")
 
 library("DALEX")
-library("randomForest")
+library("ranger")
 
-titanic <- na.omit(titanic)
-
-model_titanic_rf <- randomForest(survived == "yes" ~.,  data = titanic)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 explain_titanic_rf <- explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived == "yes",
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed$survived,
                               label = "rf", verbose = FALSE)
 
-selected_passanger <- select_sample(titanic, n = 1)
+selected_passanger <- select_sample(titanic_imputed, n = 1)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger, variable_type = "categorical")
 description <- describe(cp_rf, variables = "gender", display_numbers = TRUE,
          label = "the predicted probability")

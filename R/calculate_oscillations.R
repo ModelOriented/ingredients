@@ -7,13 +7,14 @@
 #' @param sort a logical value. If \code{TRUE} then rows are sorted along the oscillations
 #' @param ... other arguments
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{ceteris_paribus_oscillations}
 #'
 #' @examples
 #' library("DALEX")
-#' # smaller data, quicker example
+#' library("ingredients")
+#'
 #' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 #'
 #' # build a model
@@ -29,9 +30,9 @@
 #' calculate_oscillations(cp_rf)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
+#' apartments_rf_model <- ranger(m2.price ~ construction.year + surface + floor +
 #'                                     no.rooms + district, data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,

@@ -78,14 +78,14 @@ Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalPr
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 model_titanic_glm <- glm(survived ~ gender + age + fare,
                          data = titanic_imputed, family = "binomial")
 
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
-                               y = titanic_imputed[,8],
-                               verbose = FALSE)
+                               y = titanic_imputed[,8])
 
 cdp_glm <- conditional_dependence(explain_titanic_glm,
                                   N = 150, variables = c("age", "fare"))
@@ -93,9 +93,9 @@ head(cdp_glm)
 plot(cdp_glm)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
@@ -106,10 +106,10 @@ cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "n
 plot(cdp_rf)
 
 cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "categorical")
-plotD3(cdp_rf, label_margin = 80, scale_plot = TRUE)
+plotD3(cdp_rf, label_margin = 100, scale_plot = TRUE)
 }
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

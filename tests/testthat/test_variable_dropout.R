@@ -114,7 +114,7 @@ test_that("feature_importance averaged over many permutations are stable", {
   tiny <- titanic_small[titanic_small$age > 50,]
   tiny$country <- tiny$class <- tiny$sibsp <- tiny$embarked <- tiny$gender <- NULL
 
-  tiny_rf <- randomForest(survived ~ parch + fare + age, data = tiny)
+  tiny_rf <- ranger(survived ~ parch + fare + age, data = tiny, probability = TRUE)
   tiny_explainer = explain(tiny_rf, data = tiny,
                            y = tiny$survived == "yes", label = "RF")
   # compute single permutations importance values

@@ -78,7 +78,7 @@ Find more details in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ce
 }
 \examples{
 library("DALEX")
-# smaller data, quicker example
+library("ingredients")
 titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
 # build a model
@@ -88,8 +88,7 @@ model_titanic_glm <- glm(survived ~ gender + age + fare,
 
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_small[,-8],
-                               y = titanic_small[,8],
-                               verbose = FALSE)
+                               y = titanic_small[,8])
 
 cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 cp_rf
@@ -97,14 +96,13 @@ cp_rf
 plot(cp_rf, variables = "age")
 
 \donttest{
-library("randomForest")
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+library("ranger")
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "Random Forest v7",
                               verbose = FALSE)
 
 # select few passangers
@@ -120,5 +118,5 @@ plot(cp_rf, variables = "age") +
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

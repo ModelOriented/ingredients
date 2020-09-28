@@ -17,7 +17,7 @@
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @importFrom stats na.omit quantile weighted.mean dnorm
 #'
@@ -25,9 +25,10 @@
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~ .,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
@@ -107,7 +108,7 @@ aggregate_profiles <- function(x, ...,
   }
   dfl <- c(list(x), elist)
   mean_prediction <-
-    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observation")}))$`_yhat_`, na.rm = TRUE)
+    mean(do.call(rbind, lapply(dfl, function(x){ attr(x, "observations")}))$`_yhat_`, na.rm = TRUE)
 
   all_profiles <- do.call(rbind, dfl)
   class(all_profiles) <- "data.frame"

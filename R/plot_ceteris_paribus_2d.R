@@ -12,16 +12,17 @@
 #' @param pch character, symbol used to plot observations
 #' @param size numeric, size of individual datapoints
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return a \code{ggplot2} object
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' \donttest{
-#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
+#' apartments_rf_model <- ranger(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
 #'                         data = apartments_test[,-1],
@@ -40,13 +41,14 @@
 #' plot(wi_rf_2d, add_raster = FALSE)
 #'
 #' # HR data
-#' model <- randomForest(status ~ gender + age + hours + evaluation + salary, data = HR)
+#' model <- ranger(status ~ gender + age + hours + evaluation + salary, data = HR,
+#'                 probability = TRUE)
 #'
-#' pred1 <- function(m, x)   predict(m, x, type = "prob")[,1]
+#' pred1 <- function(m, x)   predict(m, x)$predictions[,1]
 #'
 #' explainer_rf_fired <- explain(model,
 #'                               data = HR[,1:5],
-#'                               y = HR$status == "fired",
+#'                               y = as.numeric(HR$status == "fired"),
 #'                               predict_function = pred1,
 #'                               label = "fired")
 #' new_emp <- HR[1,]

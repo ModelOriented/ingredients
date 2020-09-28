@@ -1,10 +1,10 @@
-library("randomForest")
+library("ranger")
 library("DALEX")
 
 HR_glm_model <- glm(status == "fired" ~ ., data = HR, family = "binomial")
 explainer_glm <- explain(HR_glm_model, data = HR,  y = HR$status == "fired", verbose = FALSE)
 
-HR_rf_model <- randomForest(status ~ ., data = HR, ntree = 100)
+HR_rf_model <- ranger(status ~ ., data = HR, probability = TRUE)
 explainer_HR_rf  <- explain(HR_rf_model, data = HR, y = HR$status, verbose = FALSE)
 
 loss_cross_entropy <- function (observed, predicted, p_min = 0.0001) {
@@ -15,12 +15,14 @@ loss_cross_entropy <- function (observed, predicted, p_min = 0.0001) {
 
 # Random Forest
 # Example of a model built using a data frame
-titanic_small <- na.omit(titanic[1:1000,])
-rf_model <- randomForest(survived ~ gender + age + class + embarked +
-                           fare + sibsp + parch,  data = titanic_small)
+titanic_small <- titanic_imputed[1:1000,]
+rf_model <- ranger(survived ~ gender + age + class + embarked +
+                           fare + sibsp + parch,  data = titanic_small,
+                   probability = TRUE)
 
 explainer_rf <- explain(rf_model, data = titanic_small,
-                        y = titanic_small$survived == "yes", label = "RF", verbose = FALSE)
+                        y = titanic_small$survived,
+                        label = "RF", verbose = FALSE)
 
 # xgboost (using matrix object)
 # Example of a model that relies on a numeric matrix
