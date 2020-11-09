@@ -14,14 +14,14 @@
 #' Will be passed to \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then all variables from the validation data will be used.
 #' @param N number of observations used for calculation of partial dependence profiles.
-#' By default, 500 observations will be chosen randomly.
+#' By default, \code{500} observations will be chosen randomly.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
 #' @param grid_points number of points for profile. Will be passed to\code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
-#' @param variable_type a character. If "numerical" then only numerical variables will be calculated.
-#' If "categorical" then only categorical variables will be calculated.
+#' @param variable_type a character. If \code{"numerical"} then only numerical variables will be calculated.
+#' If \code{"categorical"} then only categorical variables will be calculated.
 #'
 #' @references ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
 #' Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
@@ -106,7 +106,7 @@ accumulated_dependence.default <- function(x,
                                            grid_points = 101,
                                            ...,
                                            variable_type = "numerical") {
-  if (N < nrow(data)) {
+  if (!is.null(N) && N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
   } else {
