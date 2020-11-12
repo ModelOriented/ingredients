@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 # Data for Titanic survival
 
 Let's see an example for `DALEX` package for classification models for the survival problem for Titanic dataset.
-Here we are using a dataset `titanic_imputed` avaliable in the `DALEX` package.
+Here we are using a dataset `titanic_imputed` avaliable in the `DALEX` package. Note that this data was copied from the `stablelearner` package and changed for practicality.
 
 ```{r}
 library("DALEX")

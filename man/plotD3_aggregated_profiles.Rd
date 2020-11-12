@@ -61,7 +61,9 @@ model_titanic_rf <- ranger(survived ~., data = titanic_small, probability = TRUE
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_small[,-8],
-                              y = titanic_small[,8])
+                              y = titanic_small[,8],
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_small, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)

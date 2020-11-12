@@ -37,7 +37,9 @@
 #'
 #' explainer_rf <- explain(apartments_rf_model,
 #'                         data = apartments_test[,-1],
-#'                          y = apartments_test[,1])
+#'                         y = apartments_test[,1],
+#'                         label = "ranger forest",
+#'                         verbose = FALSE)
 #'
 #' new_apartment <- apartments_test[1,]
 #' new_apartment

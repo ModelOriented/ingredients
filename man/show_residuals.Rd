@@ -56,7 +56,9 @@ model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TR
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
-                              y = titanic_imputed[,8])
+                              y = titanic_imputed[,8],
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 johny_neighbours <- select_neighbours(data = titanic_imputed,
                                       observation = johny_d,

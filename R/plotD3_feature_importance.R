@@ -46,7 +46,8 @@
 #' explainer_rf <- explain(rf_model,
 #'                         data = apartments[,-1],
 #'                         y = apartments[,1],
-#'                         label = "rf", verbose = FALSE)
+#'                         label = "ranger forest",
+#'                         verbose = FALSE)
 #'
 #' fi_rf <- feature_importance(explainer_rf, loss_function = DALEX::loss_root_mean_square)
 #'

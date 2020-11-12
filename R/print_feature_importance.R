@@ -17,7 +17,8 @@
 #'
 #' explain_titanic_glm <- explain(model_titanic_glm,
 #'                                data = titanic_imputed[,-8],
-#'                                y = titanic_imputed[,8])
+#'                                y = titanic_imputed[,8],
+#'                                verbose = FALSE)
 #'
 #' fi_glm <- feature_importance(explain_titanic_glm)
 #'

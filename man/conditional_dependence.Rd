@@ -85,7 +85,8 @@ model_titanic_glm <- glm(survived ~ gender + age + fare,
 
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
-                               y = titanic_imputed[,8])
+                               y = titanic_imputed[,8],
+                               verbose = FALSE)
 
 cdp_glm <- conditional_dependence(explain_titanic_glm,
                                   N = 150, variables = c("age", "fare"))
@@ -100,6 +101,7 @@ model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TR
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
+                              label = "ranger forest",
                               verbose = FALSE)
 
 cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "numerical")

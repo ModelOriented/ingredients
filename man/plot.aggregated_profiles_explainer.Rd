@@ -72,6 +72,7 @@ model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TR
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
+                              label = "ranger forest",
                               verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)

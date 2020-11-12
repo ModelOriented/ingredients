@@ -86,7 +86,8 @@ model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TR
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "rf")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -104,7 +105,8 @@ model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = T
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "rf")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passanger <- select_sample(titanic_imputed, n = 1, seed = 123)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)

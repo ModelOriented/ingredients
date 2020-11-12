@@ -46,7 +46,9 @@ apartments_rf_model <- ranger(m2.price ~ construction.year + surface + floor +
 
 explainer_rf <- explain(apartments_rf_model,
                         data = apartments_test[,-1],
-                         y = apartments_test$m2.price)
+                        y = apartments_test$m2.price,
+                        label = "ranger forest",
+                        verbose = FALSE)
 
 apartment <- apartments_test[1,]
 

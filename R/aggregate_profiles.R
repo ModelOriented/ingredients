@@ -32,7 +32,9 @@
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
-#'                               y = titanic_imputed[,8])
+#'                               y = titanic_imputed[,8],
+#'                               label = "ranger forest",
+#'                               verbose = FALSE)
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
