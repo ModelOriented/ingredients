@@ -1,13 +1,26 @@
 context("Check plotD3() functions")
 
+library("DALEX")
+library("ranger")
+
+apartments_rf_model <- ranger(m2.price ~ construction.year + surface + floor +
+                                      no.rooms + district, data = apartments)
+
+explainer_rf <- explain(apartments_rf_model,
+                        data = apartmentsTest,
+                        y = apartmentsTest$m2.price,
+                        verbose = FALSE)
+
+model_titanic_rf <- ranger(survived ~ gender + age + class + embarked +
+                           fare + sibsp + parch,
+                           data = titanic_imputed,
+                           probability = TRUE)
+explainer_titanic_rf <- explain(model_titanic_rf,
+                                data = titanic_imputed[,-8],
+                                y = titanic_imputed$survived,
+                                label = "rf", verbose = FALSE)
+
 test_that("plotD3 Feature Importance",{
-  library("DALEX")
-
-  apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                        no.rooms + district, data = apartments)
-
-  explainer_rf <- explain(apartments_rf_model,
-                          data = apartmentsTest, y = apartmentsTest$m2.price, verbose = FALSE)
 
   fi_rf <- feature_importance(explainer_rf, loss_function = loss_root_mean_square)
 
@@ -25,21 +38,11 @@ test_that("plotD3 Feature Importance",{
 })
 
 test_that("plotD3 Ceteris Paribus and plotD3 Aggregated Profiles",{
-  library("DALEX")
 
-  titanic <- na.omit(titanic)
-  titanic$survived <- as.integer(as.factor(titanic$survived))
-  model_titanic_rf <- randomForest(survived ~ gender + age + class + embarked +
-                                     fare + sibsp + parch,  data = titanic)
-  explainer_titanic_rf <- explain(model_titanic_rf,
-                                  data = titanic[,-9],
-                                  y = titanic$survived,
-                                  label = "rf", verbose = FALSE)
-
-  selected_passanger <- select_sample(titanic, n = 10)
+  selected_passanger <- select_sample(titanic_imputed, n = 10)
   cp_rf <- ceteris_paribus(explainer_titanic_rf, selected_passanger)
 
-  selected_passangers2 <- select_sample(titanic, n = 1)
+  selected_passangers2 <- select_sample(titanic_imputed, n = 1)
   cp_rf2 <- ceteris_paribus(explainer_titanic_rf, selected_passangers2)
 
   p6 <- plotD3(cp_rf, variables = c("age","parch","fare","sibsp"),

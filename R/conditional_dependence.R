@@ -12,21 +12,22 @@
 #' @param predict_function predict function, will be extracted from \code{x} if it's an explainer
 #' @param variables names of variables for which profiles shall be calculated.
 #' Will be passed to \code{\link{calculate_variable_split}}. If \code{NULL} then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependence profiles. By default 500.
+#' @param N number of observations used for calculation of partial dependence profiles. By default \code{500}.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
 #' @param grid_points number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
-#' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
-#' If \code{categorical} then only categorical variables will be calculated.
+#' @param variable_type a character. If \code{"numerical"} then only numerical variables will be calculated.
+#' If \code{"categorical"} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{aggregated_profile_explainer}
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
@@ -42,20 +43,21 @@
 #' plot(cdp_glm)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
+#'                               label = "ranger forest",
 #'                               verbose = FALSE)
 #'
 #' cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "numerical")
 #' plot(cdp_rf)
 #'
 #' cdp_rf <- conditional_dependence(explain_titanic_rf, N = 200, variable_type = "categorical")
-#' plotD3(cdp_rf, label_margin = 80, scale_plot = TRUE)
+#' plotD3(cdp_rf, label_margin = 100, scale_plot = TRUE)
 #' }
 #'
 #' @export
@@ -103,7 +105,7 @@ conditional_dependence.default <- function(x,
                                            ...,
                                            variable_type = "numerical") {
 
-  if (N < nrow(data)) {
+  if (!is.null(N) && N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
   } else {

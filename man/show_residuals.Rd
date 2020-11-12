@@ -37,7 +37,8 @@ Note that the \code{y} argument has to be specified in the \code{\link{ceteris_p
 }
 \examples{
 library("DALEX")
-library("randomForest")
+library("ingredients")
+library("ranger")
 
 johny_d <- data.frame(
   class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
@@ -51,12 +52,13 @@ johny_d <- data.frame(
 )
 
 \donttest{
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed, ntree = 500)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "Random Forest v7")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 johny_neighbours <- select_neighbours(data = titanic_imputed,
                                       observation = johny_d,
@@ -82,4 +84,7 @@ plot(cp_johny, variables = "age", size = 1.5, color = "#8bdcbe") +
   show_residuals(cp_neighbours, variables = "age")
 
 }
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

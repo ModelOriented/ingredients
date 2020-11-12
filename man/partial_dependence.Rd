@@ -47,15 +47,15 @@ or a model to be explained.}
 Will be passed to \code{\link{calculate_variable_split}}.
 If \code{NULL} then all variables from the validation data will be used.}
 
-\item{N}{number of observations used for calculation of partial dependence profiles. By default 500.}
+\item{N}{number of observations used for calculation of partial dependence profiles. By default \code{500}.}
 
 \item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.}
 
 \item{grid_points}{number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.}
 
-\item{variable_type}{a character. If \code{numerical} then only numerical variables will be calculated.
-If \code{categorical} then only categorical variables will be calculated.}
+\item{variable_type}{a character. If \code{"numerical"} then only numerical variables will be calculated.
+If \code{"categorical"} then only categorical variables will be calculated.}
 
 \item{data}{validation dataset, will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}
@@ -91,13 +91,14 @@ head(pdp_glm)
 plot(pdp_glm)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
+                              label = "ranger forest",
                               verbose = FALSE)
 
 pdp_rf <- partial_dependence(explain_titanic_rf, variable_type = "numerical")
@@ -109,5 +110,5 @@ plotD3(pdp_rf, label_margin = 80, scale_plot = TRUE)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

@@ -42,6 +42,7 @@ Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceP
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)
 model_titanic_glm <- glm(survived ~ gender + age + fare,
@@ -56,14 +57,14 @@ clust_rf <- cluster_profiles(cp_rf, k = 3, variables = "age")
 plot(clust_rf)
 
 \donttest{
-library("randomForest")
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
-model_titanic_rf
+library("ranger")
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "Random Forest v7")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf
@@ -84,5 +85,5 @@ head(clust_rf)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

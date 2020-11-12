@@ -8,21 +8,22 @@
 #' three most important variable values are displayed, while \code{display_numbers = FALSE} displays
 #' all the important variables, however without further details.
 #'
-#'
 #' @importFrom graphics plot
 #' @importFrom stats quantile
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' \donttest{
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
-#'                               label = "rf")
+#'                               label = "ranger forest",
+#'                               verbose = FALSE)
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 10)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)

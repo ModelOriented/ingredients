@@ -46,13 +46,16 @@ Accumulated Local Dependence Profile (cummulated average local changes in Ceteri
 }
 \examples{
 library("DALEX")
-library("randomForest")
+library("ingredients")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~ .,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
-                              y = titanic_imputed[,8])
+                              y = titanic_imputed[,8],
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -105,5 +108,5 @@ plot(pdp_rf, variables = "class") + coord_flip()
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

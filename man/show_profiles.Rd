@@ -35,6 +35,7 @@ Function \code{\link{show_profiles}} adds a layer to a plot created with
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 selected_passangers <- select_sample(titanic_imputed, n = 100)
 selected_john <- titanic_imputed[1,]
@@ -45,7 +46,7 @@ model_titanic_glm <- glm(survived ~ gender + age + fare,
 explain_titanic_glm <- explain(model_titanic_glm,
                                data = titanic_imputed[,-8],
                                y = titanic_imputed[,8],
-                               label = "cool_model", verbose = FALSE)
+                               label = "glm", verbose = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_glm, selected_passangers)
 cp_rf_john <- ceteris_paribus(explain_titanic_glm, selected_john)
@@ -53,14 +54,15 @@ plot(cp_rf, variables = "age") +
   show_profiles(cp_rf_john, variables = "age", size = 2)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              verbose = FALSE, precalculate = FALSE)
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 cp_rf_john <- ceteris_paribus(explain_titanic_rf, selected_john)
@@ -76,4 +78,7 @@ plot(cp_rf, variables = "age") +
   show_profiles(cp_rf_john, variables = "age", color = "red", size = 2)
 }
 
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

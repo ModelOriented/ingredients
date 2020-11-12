@@ -13,16 +13,16 @@
 #' @param variables names of variables for which profiles shall be calculated.
 #' Will be passed to \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then all variables from the validation data will be used.
-#' @param N number of observations used for calculation of partial dependence profiles. By default 500.
+#' @param N number of observations used for calculation of partial dependence profiles. By default \code{500}.
 #' @param ... other parameters
 #' @param variable_splits named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 #' If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.
 #' @param grid_points number of points for profile. Will be passed to \code{\link{calculate_variable_split}}.
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
-#' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
-#' If \code{categorical} then only categorical variables will be calculated.
+#' @param variable_type a character. If \code{"numerical"} then only numerical variables will be calculated.
+#' If \code{"categorical"} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'
@@ -43,13 +43,14 @@
 #' plot(pdp_glm)
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
+#'                               label = "ranger forest",
 #'                               verbose = FALSE)
 #'
 #' pdp_rf <- partial_dependence(explain_titanic_rf, variable_type = "numerical")
@@ -104,7 +105,7 @@ partial_dependence.default <- function(x,
                                        N = 500,
                                        ...,
                                        variable_type = "numerical") {
-  if (N < nrow(data)) {
+  if (!is.null(N) && N < nrow(data)) {
     # sample N points
     ndata <- data[sample(1:nrow(data), N),]
   } else {

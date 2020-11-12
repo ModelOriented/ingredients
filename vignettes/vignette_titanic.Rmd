@@ -21,11 +21,11 @@ knitr::opts_chunk$set(
 # Data for Titanic survival
 
 Let's see an example for `DALEX` package for classification models for the survival problem for Titanic dataset.
-Here we are using a dataset `titanic` avaliable in the `DALEX` package. Note that this data was copied from the `stablelearner` package.
+Here we are using a dataset `titanic_imputed` avaliable in the `DALEX` package. Note that this data was copied from the `stablelearner` package and changed for practicality.
 
 ```{r}
 library("DALEX")
-head(titanic)
+head(titanic_imputed)
 ```
 
 # Model for Titanic survival
@@ -34,10 +34,10 @@ Ok, now it's time to create a model. Let's use the Random Forest model.
 
 ```{r}
 # prepare model
-library("randomForest")
-titanic <- na.omit(titanic)
-model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                   fare + sibsp + parch,  data = titanic)
+library("ranger")
+model_titanic_rf <- ranger(survived ~ gender + age + class + embarked +
+                           fare + sibsp + parch,
+                           data = titanic_imputed, probability = TRUE)
 model_titanic_rf
 ```
 
@@ -48,9 +48,9 @@ The third step (it's optional but useful) is to create a `DALEX` explainer for r
 ```{r}
 library("DALEX")
 explain_titanic_rf <- explain(model_titanic_rf,
-                      data = titanic[,-9],
-                      y = titanic$survived == "yes",
-                      label = "Random Forest v7")
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed[,8],
+                              label = "Random Forest")
 ```
 
 # Model Level Feature Importance

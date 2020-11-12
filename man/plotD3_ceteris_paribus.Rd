@@ -63,14 +63,16 @@ Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{C
 }
 \examples{
 library("DALEX")
-library("randomForest")
+library("ingredients")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "rf")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -85,4 +87,7 @@ plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
      facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
 
 
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

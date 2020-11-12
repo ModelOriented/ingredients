@@ -48,15 +48,15 @@ Will be passed to \code{\link{calculate_variable_split}}.
 If \code{NULL} then all variables from the validation data will be used.}
 
 \item{N}{number of observations used for calculation of partial dependence profiles.
-By default, 500 observations will be chosen randomly.}
+By default, \code{500} observations will be chosen randomly.}
 
 \item{variable_splits}{named list of splits for variables, in most cases created with \code{\link{calculate_variable_split}}.
 If \code{NULL} then it will be calculated based on validation data avaliable in the \code{explainer}.}
 
 \item{grid_points}{number of points for profile. Will be passed to\code{\link{calculate_variable_split}}.}
 
-\item{variable_type}{a character. If "numerical" then only numerical variables will be calculated.
-If "categorical" then only categorical variables will be calculated.}
+\item{variable_type}{a character. If \code{"numerical"} then only numerical variables will be calculated.
+If \code{"categorical"} then only categorical variables will be calculated.}
 
 \item{data}{validation dataset Will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}
@@ -77,6 +77,7 @@ Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalPr
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 model_titanic_glm <- glm(survived ~ gender + age + fare,
                          data = titanic_imputed, family = "binomial")
@@ -92,13 +93,14 @@ head(adp_glm)
 plot(adp_glm)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
+                              label = "ranger forest",
                               verbose = FALSE)
 
 adp_rf <- accumulated_dependence(explain_titanic_rf, N = 200, variable_type = "numerical")
@@ -111,5 +113,5 @@ plotD3(adp_rf, label_margin = 80, scale_plot = TRUE)
 }
 \references{
 ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

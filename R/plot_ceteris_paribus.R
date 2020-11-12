@@ -26,7 +26,7 @@
 #' @importFrom stats aggregate
 #' @importFrom scales trans_new
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @examples
 #' library("DALEX")
@@ -45,13 +45,13 @@
 #' plot(cp_glm, variables = "age")
 #'
 #' \donttest{
-#' library("randomForest")
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' library("ranger")
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
-#'                               label = "Random Forest v7",
+#'                               label = "ranger forest",
 #'                               verbose = FALSE)
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)
@@ -176,7 +176,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     pl <- switch(categorical_type,
            profiles = plot_categorical_ceteris_paribus_profiles(
                    all_profiles = all_profiles,
-                   selected_observation = attr(x, "observation"),
+                   selected_observation = attr(x, "observations"),
                    variables = variables,
                    color_values = color_values,
                    facet_ncol = facet_ncol,
@@ -185,7 +185,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
                    alpha = alpha),
            lines = plot_categorical_ceteris_paribus(
                       all_profiles = all_profiles,
-                      selected_observation = attr(x, "observation"),
+                      selected_observation = attr(x, "observations"),
                       variables = variables,
                       color_values = color_values,
                       facet_ncol = facet_ncol,
@@ -194,7 +194,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
                       alpha = alpha),
             bars = plot_categorical_ceteris_paribus_bars(
                       all_profiles = all_profiles,
-                      selected_observation = attr(x, "observation"),
+                      selected_observation = attr(x, "observations"),
                       variables = variables,
                       color_values = color_values,
                       facet_ncol = facet_ncol,
@@ -247,7 +247,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles,
                                              color_values,
                                              facet_ncol = NULL,
                                              color = "#46bac2",
-                                             size = 2,
+                                             size = 1,
                                              alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
@@ -296,7 +296,7 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles,
                                                       color_values,
                                                       facet_ncol = NULL,
                                                       color = "#46bac2",
-                                                      size = 2,
+                                                      size = 1,
                                                       alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {
@@ -343,7 +343,7 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles,
                                                   color_values,
                                                   facet_ncol = NULL,
                                                   color = "#46bac2",
-                                                  size = 2,
+                                                  size = 1,
                                                   alpha = 1) {
 
   lsc <- lapply(variables, function(sv) {

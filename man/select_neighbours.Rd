@@ -41,10 +41,10 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.
 }
 \examples{
-library("DALEX")
+library("ingredients")
 
-new_apartment <- apartments[1,]
-small_apartments <- select_neighbours(new_apartment, apartments_test, n = 10)
+new_apartment <- DALEX::apartments[1,]
+small_apartments <- select_neighbours(new_apartment, DALEX::apartments_test, n = 10)
 
 new_apartment
 small_apartments

@@ -14,12 +14,13 @@
 #' @param title a character. Partial and accumulated dependence explainers have deafult value.
 #' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 #'
 #' @return a \code{ggplot2} object
 #'
 #' @examples
 #' library("DALEX")
+#' library("ingredients")
 #'
 #' model_titanic_glm <- glm(survived ~ gender + age + fare,
 #'                          data = titanic_imputed, family = "binomial")
@@ -39,14 +40,14 @@
 #' plot(pdp_rf_p, pdp_rf_l, pdp_rf_a, color = "_label_")
 #'
 #' \donttest{
-#' library("randomForest")
+#' library("ranger")
 #'
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
-#'                               label = "Random Forest v7",
+#'                               label = "ranger forest",
 #'                               verbose = FALSE)
 #'
 #' selected_passangers <- select_sample(titanic_imputed, n = 100)

@@ -1,17 +1,18 @@
 context("Check show_residuals() functions")
 
+library("DALEX")
+library("ranger")
+
+model_titanic_rf <- ranger(survived ~ gender + age + class + embarked +
+                             fare + sibsp + parch, data = titanic_imputed,
+                           probability = TRUE)
+
+explain_titanic_rf <- explain(model_titanic_rf,
+                              data = titanic_imputed[,-8],
+                              y = titanic_imputed$survived,
+                              verbose = FALSE)
+
 test_that("plot show_residuals",{
- library("DALEX")
- library("randomForest")
-
- titanic <- na.omit(titanic)
- model_titanic_rf <- randomForest(survived == "yes" ~ gender + age + class + embarked +
-                                    fare + sibsp + parch,  data = titanic, ntree = 500)
-
- explain_titanic_rf <- explain(model_titanic_rf,
-                               data = titanic[,-9],
-                               y = titanic$survived == "yes",
-                               label = "Random Forest v7", verbose = FALSE)
 
  johny_d <- data.frame(
    class = factor("1st", levels = c("1st", "2nd", "3rd", "deck crew", "engineering crew",
@@ -25,14 +26,14 @@ test_that("plot show_residuals",{
               levels = c("Belfast", "Cherbourg", "Queenstown", "Southampton"))
  )
 
- johny_neighbours <- select_neighbours(data = titanic,
+ johny_neighbours <- select_neighbours(data = titanic_imputed,
                                        observation = johny_d,
                                        variables = c("age", "gender", "class",
                                                    "fare", "sibsp", "parch"),
                                        n = 10)
 
  cp_neighbours <- ceteris_paribus(explain_titanic_rf, johny_neighbours,
-                          y = johny_neighbours$survived == "yes",
+                          y = johny_neighbours$survived,
                           variable_splits = list(age = seq(0,70, length.out = 1000)))
  pl2 <- plot(cp_neighbours, variables = "age") +
    show_observations(cp_neighbours, variables = "age")
@@ -53,22 +54,18 @@ test_that("plot show_residuals",{
 
 
 
-test_that("Multiple observatins",{
-  library("randomForest")
-  library("DALEX")
+test_that("wrong prediction bug",{
+   # we predict embarked instead of survived for generating the bug
+   model_titanic_rf <- ranger(embarked ~ gender + age + class + survived +
+                                       fare + sibsp + parch,
+                                    data = titanic_imputed, probability = TRUE)
 
-  titanic <- na.omit(titanic)
-  # we predict embarked instead of survived for generating the bug
-  model_titanic_rf <- randomForest(embarked ~ gender + age + class + survived +
-                                     fare + sibsp + parch,  data = titanic)
+   explain_titanic_rf <- explain(model_titanic_rf,
+                                 data = titanic[,-8],
+                                 y = titanic$survived, verbose = FALSE)
 
-  explain_titanic_rf <- explain(model_titanic_rf,
-                                data = titanic[,-9],
-                                y = titanic$survived == "yes",
-                                label = "Random Forest v7", verbose = FALSE)
-
-  # select few passangers
-  selected_passangers <- select_sample(titanic, n = 20)
+   # select few passangers
+   selected_passangers <- select_sample(titanic_imputed, n = 20)
 
   expect_error(ceteris_paribus(explain_titanic_rf, selected_passangers))
 })

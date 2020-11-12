@@ -48,6 +48,7 @@ In different panels variable contributions may not look like sorted if variable 
 }
 \examples{
 library("DALEX")
+library("ingredients")
 
 lm_model <- lm(m2.price ~., data = apartments)
 explainer_lm <- explain(lm_model,
@@ -62,14 +63,15 @@ head(fi_lm)
 plotD3(fi_lm)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-rf_model <- randomForest(m2.price~., data = apartments)
+rf_model <- ranger(m2.price~., data = apartments)
 
 explainer_rf <- explain(rf_model,
                         data = apartments[,-1],
                         y = apartments[,1],
-                        label = "rf", verbose = FALSE)
+                        label = "ranger forest",
+                        verbose = FALSE)
 
 fi_rf <- feature_importance(explainer_rf, loss_function = DALEX::loss_root_mean_square)
 
@@ -83,4 +85,7 @@ plotD3(fi_lm, fi_rf, max_vars = 3, bar_width = 16, split = "feature", scale_heig
 plotD3(fi_lm, margin = 0.2)
 }
 
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

@@ -25,15 +25,17 @@
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
 #' \donttest{
-#' model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+#' model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
 #'                               data = titanic_imputed[,-8],
 #'                               y = titanic_imputed[,8],
-#'                               label = "rf")
+#'                               label = "ranger forest",
+#'                               verbose = FALSE)
 #'
 #' selected_passanger <- select_sample(titanic_imputed, n = 1, seed = 123)
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)

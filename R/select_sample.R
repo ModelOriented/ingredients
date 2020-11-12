@@ -14,9 +14,9 @@
 #' @return a data frame with selected rows
 #'
 #' @examples
-#' library("DALEX")
+#' library("ingredients")
 #'
-#' small_apartments <- select_sample(apartments_test)
+#' small_apartments <- select_sample(DALEX::apartments_test)
 #' head(small_apartments)
 #'
 #' @export

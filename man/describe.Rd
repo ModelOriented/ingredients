@@ -77,15 +77,17 @@ The current design of DALEX explainer does not allow for displaying variables va
 }
 \examples{
 library("DALEX")
-library("randomForest")
+library("ingredients")
+library("ranger")
 
 \donttest{
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "rf")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passangers <- select_sample(titanic_imputed, n = 10)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
@@ -94,15 +96,17 @@ describe(pdp, variables = "gender")
 }
 
 library("DALEX")
-library("randomForest")
+library("ingredients")
+library("ranger")
 
 \donttest{
-model_titanic_rf <- randomForest(survived ~.,  data = titanic_imputed)
+model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
                               data = titanic_imputed[,-8],
                               y = titanic_imputed[,8],
-                              label = "rf")
+                              label = "ranger forest",
+                              verbose = FALSE)
 
 selected_passanger <- select_sample(titanic_imputed, n = 1, seed = 123)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passanger)
@@ -111,6 +115,7 @@ plot(cp_rf, variable_type = "categorical")
 describe(cp_rf, variables = "class", label = "the predicted probability")
 }
 library("DALEX")
+library("ingredients")
 
 lm_model <- lm(m2.price~., data = apartments)
 explainer_lm <- explain(lm_model, data = apartments[,-1], y = apartments[,1])
@@ -120,4 +125,7 @@ fi_lm <- feature_importance(explainer_lm, loss_function = DALEX::loss_root_mean_
 plot(fi_lm)
 describe(fi_lm)
 
+}
+\references{
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

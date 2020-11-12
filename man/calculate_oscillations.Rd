@@ -22,7 +22,8 @@ Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibusOscillat
 }
 \examples{
 library("DALEX")
-# smaller data, quicker example
+library("ingredients")
+
 titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
 # build a model
@@ -38,14 +39,16 @@ cp_rf <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
 calculate_oscillations(cp_rf)
 
 \donttest{
-library("randomForest")
+library("ranger")
 
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
+apartments_rf_model <- ranger(m2.price ~ construction.year + surface + floor +
                                     no.rooms + district, data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
                         data = apartments_test[,-1],
-                         y = apartments_test$m2.price)
+                        y = apartments_test$m2.price,
+                        label = "ranger forest",
+                        verbose = FALSE)
 
 apartment <- apartments_test[1,]
 
@@ -56,5 +59,5 @@ calculate_oscillations(cp_rf)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. \url{https://pbiecek.github.io/ema}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
 }

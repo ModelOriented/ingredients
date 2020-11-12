@@ -19,10 +19,10 @@
 #' @return a data frame with selected rows
 #'
 #' @examples
-#' library("DALEX")
+#' library("ingredients")
 #'
-#' new_apartment <- apartments[1,]
-#' small_apartments <- select_neighbours(new_apartment, apartments_test, n = 10)
+#' new_apartment <- DALEX::apartments[1,]
+#' small_apartments <- select_neighbours(new_apartment, DALEX::apartments_test, n = 10)
 #'
 #' new_apartment
 #' small_apartments

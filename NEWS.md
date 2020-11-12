@@ -1,3 +1,8 @@
+ingredients 2.0.1
+--------------------------------------------------------------
+* code and documentation maintenance [#130](https://github.com/ModelOriented/ingredients/issues/130)
+* fixed an error when `N = NULL` in `partial_dependence()` etc. [#134](https://github.com/ModelOriented/ingredients/issues/134)
+
 ingredients 2.0
 --------------------------------------------------------------
 * `plot.ceteris_paribus_explainer` now by default for categorical variables plots profiles (not lines -prev default- nor bars)

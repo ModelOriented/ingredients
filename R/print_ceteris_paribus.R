@@ -5,13 +5,16 @@
 #'
 #' @examples
 #' library("DALEX")
-#' library("randomForest")
+#' library("ingredients")
+#' library("ranger")
 #'
-#' apartments_rf_model <- randomForest(m2.price ~., data = apartments)
+#' apartments_rf_model <- ranger(m2.price ~., data = apartments)
 #'
 #' explainer_rf <- explain(apartments_rf_model,
 #'                         data = apartments_test[,-1],
-#'                         y = apartments_test[,1])
+#'                         y = apartments_test[,1],
+#'                         label = "ranger forest",
+#'                         verbose = FALSE)
 #'
 #' apartments_small <- select_sample(apartments_test, 10)
 #'
