@@ -23,7 +23,7 @@ Key functions:
 * generic `plotD3()` for interactive, D3 based explanations,
 * generic `describe()` for explanations in natural language.
  
-The philosophy behind `ingredients` explanations is described in the [Explanatory Model Analysis: Explore, Explain and Examine Predictive Models](https://pbiecek.github.io/ema/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
+The philosophy behind `ingredients` explanations is described in the [Explanatory Model Analysis: Explore, Explain, and Examine Predictive Models](https://pbiecek.github.io/ema/) e-book. The `ingredients` package is a part of [DrWhy.AI](http://DrWhy.AI) universe. 
 
 
 ## Installation
