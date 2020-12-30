@@ -99,7 +99,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -137,7 +137,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -164,7 +164,7 @@ This is useful if data is large and we need just a sample to calculate profiles.
 This is useful if data is large and we need just a sample to calculate profiles.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>select_sample</span>(<span class='no'>data</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>1313</span>)</pre>
+    <pre class="usage"><span class='fu'>select_sample</span><span class='op'>(</span><span class='va'>data</span>, n <span class='op'>=</span> <span class='fl'>100</span>, seed <span class='op'>=</span> <span class='fl'>1313</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,10 +193,11 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
 
-<span class='no'>small_apartments</span> <span class='kw'>&lt;-</span> <span class='fu'>select_sample</span>(<span class='no'>apartments_test</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>small_apartments</span>)</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+<span class='va'>small_apartments</span> <span class='op'>&lt;-</span> <span class='fu'>select_sample</span><span class='op'>(</span><span class='fu'>DALEX</span><span class='fu'>::</span><span class='va'><a href='https://ModelOriented.github.io/DALEX/reference/apartments.html'>apartments_test</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>small_apartments</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 9707     5670              2008      98     3        3 Srodmiescie
 #&gt; 9796     2696              1932     110    10        4       Ursus
 #&gt; 9644     3466              1980      73    10        2     Mokotow
@@ -215,7 +216,7 @@ you should overload it.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

@@ -99,7 +99,7 @@ It may be useful to identify or present interactions between two variables." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@ It may be useful to identify or present interactions between two variables." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -137,7 +137,7 @@ It may be useful to identify or present interactions between two variables." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -164,14 +164,14 @@ It may be useful to identify or present interactions between two variables." />
 It may be useful to identify or present interactions between two variables.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer</span>, <span class='no'>observation</span>, <span class='kw'>grid_points</span> <span class='kw'>=</span> <span class='fl'>101</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ceteris_paribus_2d</span><span class='op'>(</span><span class='va'>explainer</span>, <span class='va'>observation</span>, grid_points <span class='op'>=</span> <span class='fl'>101</span>, variables <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>explainer</th>
-      <td><p>a model to be explained, preprocessed by the <code><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>DALEX::explain()</a></code> function</p></td>
+      <td><p>a model to be explained, preprocessed by the <code><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>DALEX::explain()</a></code> function</p></td>
     </tr>
     <tr>
       <th>observation</th>
@@ -190,65 +190,69 @@ It may be useful to identify or present interactions between two variables.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of the class <code>ceteris_paribus_2d_explainer</code>.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. <a href='https://pbiecek.github.io/ema/'>https://pbiecek.github.io/ema/</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/DALEX/'>"DALEX"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>age</span> + <span class='no'>fare</span>,
-                       <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='va'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>fare</span>,
+                       data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
 
 <span class='co'># \donttest{</span>
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+<span class='va'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_glm</span>,
+                               data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                               y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
 #&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
 #&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1707237 , mean =  0.3221568 , max =  0.9983551  
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.2 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.3 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
 #&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.9519492 , mean =  4.78827e-11 , max =  0.8167072  
 #&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,],
-                       <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"fare"</span>, <span class='st'>"sibsp"</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt;         y_hat    new_x1    new_x2 vname1 vname2 label
+<span class='va'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>titanic_imputed</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>,
+                       variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"age"</span>, <span class='st'>"fare"</span>, <span class='st'>"sibsp"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>cp_rf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         y_hat    new_x1    new_x2 vname1 vname2 label
 #&gt; 1   0.3545941 0.1666667  0.000000    age   fare    lm
 #&gt; 1.1 0.3719860 0.1666667  5.120607    age   fare    lm
 #&gt; 1.2 0.3897159 0.1666667 10.241214    age   fare    lm
 #&gt; 1.3 0.4077422 0.1666667 15.361821    age   fare    lm
 #&gt; 1.4 0.4260202 0.1666667 20.482428    age   fare    lm
 #&gt; 1.5 0.4445026 0.1666667 25.603035    age   fare    lm</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: stat_contour(): Zero contours were generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>59</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: stat_contour(): Zero contours were generated</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/imbs-hl/ranger'>"ranger"</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>59</span><span class='op'>)</span>
 
-<span class='no'>apartments_rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>m2.price</span> ~<span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments</span>)
+<span class='va'>apartments_rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>m2.price</span> <span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>apartments</span><span class='op'>)</span>
 
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>apartments_rf_model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,-<span class='fl'>1</span>],
-                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>apartments_test</span>[,<span class='fl'>1</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  randomForest  ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  9000  rows  5  cols 
-#&gt;   -&gt; target variable   :  9000  values 
-#&gt;   -&gt; predict function  :  yhat.randomForest  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  2010.982 , mean =  3505.971 , max =  5840.604  
-#&gt;   -&gt; model_info        :  package randomForest , ver. 4.6.14 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -727.4451 , mean =  5.552194 , max =  1262.554  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>new_apartment</span> <span class='kw'>&lt;-</span> <span class='no'>apartments_test</span>[<span class='fl'>1</span>,]
-<span class='no'>new_apartment</span></div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
+<span class='va'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>apartments_rf_model</span>,
+                        data <span class='op'>=</span> <span class='va'>apartments_test</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>,
+                        y <span class='op'>=</span> <span class='va'>apartments_test</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,
+                        label <span class='op'>=</span> <span class='st'>"ranger forest"</span>,
+                        verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='va'>new_apartment</span> <span class='op'>&lt;-</span> <span class='va'>apartments_test</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>
+<span class='va'>new_apartment</span>
+</div><div class='output co'>#&gt;      m2.price construction.year surface floor no.rooms    district
 #&gt; 1001     4644              1976     131     3        5 Srodmiescie</div><div class='input'>
-<span class='no'>wi_rf_2d</span> <span class='kw'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span>(<span class='no'>explainer_rf</span>, <span class='kw'>observation</span> <span class='kw'>=</span> <span class='no'>new_apartment</span>,
-                               <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt;           y_hat new_x1 new_x2  vname1 vname2        label
-#&gt; 1001   4851.829     20   1.00 surface  floor randomForest
-#&gt; 1001.1 4851.829     20   1.09 surface  floor randomForest
-#&gt; 1001.2 4851.829     20   1.18 surface  floor randomForest
-#&gt; 1001.3 4851.829     20   1.27 surface  floor randomForest
-#&gt; 1001.4 4851.829     20   1.36 surface  floor randomForest
-#&gt; 1001.5 4851.829     20   1.45 surface  floor randomForest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>wi_rf_2d</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='va'>wi_rf_2d</span> <span class='op'>&lt;-</span> <span class='fu'>ceteris_paribus_2d</span><span class='op'>(</span><span class='va'>explainer_rf</span>, observation <span class='op'>=</span> <span class='va'>new_apartment</span>,
+                               variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"surface"</span>, <span class='st'>"floor"</span>, <span class='st'>"no.rooms"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>wi_rf_2d</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      y_hat new_x1 new_x2  vname1 vname2         label
+#&gt; 1 5130.866     20   1.00 surface  floor ranger forest
+#&gt; 2 5130.866     20   1.09 surface  floor ranger forest
+#&gt; 3 5130.866     20   1.18 surface  floor ranger forest
+#&gt; 4 5130.866     20   1.27 surface  floor ranger forest
+#&gt; 5 5130.866     20   1.36 surface  floor ranger forest
+#&gt; 6 5130.866     20   1.45 surface  floor ranger forest</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wi_rf_2d</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven horizontal intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Raster pixels are placed at uneven vertical intervals and will be shifted. Consider using geom_tile() instead.</span></div><div class='img'><img src='ceteris_paribus_2d-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></span></pre>
   </div>
@@ -262,7 +266,7 @@ It may be useful to identify or present interactions between two variables.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

@@ -100,7 +100,7 @@ Find more detailes in Ceteris Paribus Chapter." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -108,7 +108,7 @@ Find more detailes in Ceteris Paribus Chapter." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +138,7 @@ Find more detailes in Ceteris Paribus Chapter." />
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -167,19 +167,19 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ceteris_paribus_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#46bac2"</span>,
-  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>,
-  <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Ceteris Paribus profile"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>categorical_type</span> <span class='kw'>=</span> <span class='st'>"profiles"</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  size <span class='op'>=</span> <span class='fl'>1</span>,
+  alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  color <span class='op'>=</span> <span class='st'>"#46bac2"</span>,
+  variable_type <span class='op'>=</span> <span class='st'>"numerical"</span>,
+  facet_ncol <span class='op'>=</span> <span class='cn'>NULL</span>,
+  variables <span class='op'>=</span> <span class='cn'>NULL</span>,
+  title <span class='op'>=</span> <span class='st'>"Ceteris Paribus profile"</span>,
+  subtitle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  categorical_type <span class='op'>=</span> <span class='st'>"profiles"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,21 +237,22 @@ where XXX, YYY are labels of given explainers.</p></td>
     <p>a <code>ggplot2</code> object</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
+    <p>Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. <a href='https://pbiecek.github.io/ema/'>https://pbiecek.github.io/ema/</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/DALEX/'>"DALEX"</a></span><span class='op'>)</span>
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='va'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>fare</span>,
+                         data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                               <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_glm</span>,
+                               data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                               y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span>,
+                               verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='no'>cp_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_glm</span>, <span class='no'>titanic_imputed</span>[<span class='fl'>1</span>,])
-<span class='no'>cp_glm</span></div><div class='output co'>#&gt; Top profiles    : 
+<span class='va'>cp_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>titanic_imputed</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span><span class='op'>)</span>
+<span class='va'>cp_glm</span>
+</div><div class='output co'>#&gt; Top profiles    : 
 #&gt;       gender        age class    embarked fare sibsp parch    _yhat_ _vname_
 #&gt; 1     female 42.0000000   3rd Southampton 7.11     0     0 0.6667679  gender
 #&gt; 1.1     male 42.0000000   3rd Southampton 7.11     0     0 0.1827040  gender
@@ -271,68 +272,79 @@ where XXX, YYY are labels of given explainers.</p></td>
 #&gt; Top observations:
 #&gt;   gender age class    embarked fare sibsp parch   _yhat_ _label_ _ids_
 #&gt; 1   male  42   3rd Southampton 7.11     0     0 0.182704      lm     1</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_glm</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='plot.ceteris_paribus_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_glm</span>, variables <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ceteris_paribus_explainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
-<span class='no'>model_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='no'>explain_titanic_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_rf</span>,
-                              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                              <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Random Forest v7"</span>,
-                              <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/imbs-hl/ranger'>"ranger"</a></span><span class='op'>)</span>
+<span class='va'>model_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, probability <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>explain_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_rf</span>,
+                              data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                              y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span>,
+                              label <span class='op'>=</span> <span class='st'>"ranger forest"</span>,
+                              verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.84768669
-#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09095336
-#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.45875606
-#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.11290834
-#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.70492533
-#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.23715128
-#&gt;        _vname_ _ids_          _label_
-#&gt; 515     gender   515 Random Forest v7
-#&gt; 515.1   gender   515 Random Forest v7
-#&gt; 604     gender   604 Random Forest v7
-#&gt; 604.1   gender   604 Random Forest v7
-#&gt; 1430    gender  1430 Random Forest v7
-#&gt; 1430.1  gender  1430 Random Forest v7
+<span class='va'>selected_passangers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span>, n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+
+<span class='va'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explain_titanic_rf</span>, <span class='va'>selected_passangers</span><span class='op'>)</span>
+<span class='va'>cp_rf</span>
+</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked    fare sibsp parch    _yhat_
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.7957940
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.1150837
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.4422906
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.1153614
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.7682655
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2385723
+#&gt;        _vname_ _ids_       _label_
+#&gt; 515     gender   515 ranger forest
+#&gt; 515.1   gender   515 ranger forest
+#&gt; 604     gender   604 ranger forest
+#&gt; 604.1   gender   604 ranger forest
+#&gt; 1430    gender  1430 ranger forest
+#&gt; 1430.1  gender  1430 ranger forest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.09095336
-#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.11290834
-#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.23715128
-#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.11564218
-#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.65160118
-#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.15395782
-#&gt;               _label_ _ids_
-#&gt; 515  Random Forest v7     1
-#&gt; 604  Random Forest v7     2
-#&gt; 1430 Random Forest v7     3
-#&gt; 865  Random Forest v7     4
-#&gt; 452  Random Forest v7     5
-#&gt; 1534 Random Forest v7     6</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='plot.ceteris_paribus_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>selected_passangers</span></div><div class='output co'>#&gt;     gender age class    embarked fare sibsp parch survived
+#&gt;      gender age            class    embarked    fare sibsp parch    _yhat_
+#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.1150837
+#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.1153614
+#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2385723
+#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1160834
+#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.6609725
+#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1725586
+#&gt;            _label_ _ids_
+#&gt; 515  ranger forest     1
+#&gt; 604  ranger forest     2
+#&gt; 1430 ranger forest     3
+#&gt; 865  ranger forest     4
+#&gt; 452  ranger forest     5
+#&gt; 1534 ranger forest     6</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ceteris_paribus_explainer-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>selected_passangers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>selected_passangers</span>
+</div><div class='output co'>#&gt;     gender age class    embarked fare sibsp parch survived
 #&gt; 515   male  45   2nd Southampton 10.1     0     0        0</div><div class='input'>
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explain_titanic_rf</span>, <span class='no'>selected_passangers</span>)
+<span class='va'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explain_titanic_rf</span>, <span class='va'>selected_passangers</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>)</div><div class='img'><img src='plot.ceteris_paribus_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>) +
-  <span class='fu'><a href='show_observations.html'>show_observations</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>)</div><div class='img'><img src='plot.ceteris_paribus_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"class"</span>)</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>), <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>), <span class='kw'>facet_ncol</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>categorical_type</span> <span class='kw'>=</span> <span class='st'>"bars"</span>)</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plotD3_ceteris_paribus.html'>plotD3</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span>),
-              <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>, <span class='kw'>scale_plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-              <span class='kw'>label_margin</span> <span class='kw'>=</span> <span class='fl'>70</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span><span class='op'>(</span><span class='va'>cp_rf</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ceteris_paribus_explainer-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='show_observations.html'>show_observations</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.ceteris_paribus_explainer-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"class"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"class"</span>, <span class='st'>"embarked"</span><span class='op'>)</span>, facet_ncol <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"class"</span>, <span class='st'>"embarked"</span><span class='op'>)</span>, facet_ncol <span class='op'>=</span> <span class='fl'>1</span>, categorical_type <span class='op'>=</span> <span class='st'>"bars"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>'variable_type' changed to 'categorical' due to lack of numerical variables.</span></div><div class='img'><img src='plot.ceteris_paribus_explainer-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plotD3.html'>plotD3</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"class"</span>, <span class='st'>"embarked"</span>, <span class='st'>"gender"</span><span class='op'>)</span>,
+              variable_type <span class='op'>=</span> <span class='st'>"categorical"</span>, scale_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+              label_margin <span class='op'>=</span> <span class='fl'>70</span><span class='op'>)</span>
 
-<span class='co'># }</span></div></pre>
+<span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -344,7 +356,7 @@ where XXX, YYY are labels of given explainers.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

@@ -100,7 +100,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -108,7 +108,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +138,7 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -166,15 +166,15 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>show_observations</span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"#371ea3"</span>,
-  <span class='kw'>variable_type</span> <span class='kw'>=</span> <span class='st'>"numerical"</span>,
-  <span class='kw'>variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>show_observations</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  size <span class='op'>=</span> <span class='fl'>2</span>,
+  alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  color <span class='op'>=</span> <span class='st'>"#371ea3"</span>,
+  variable_type <span class='op'>=</span> <span class='st'>"numerical"</span>,
+  variables <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,55 +213,62 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>ggplot2</code> layer</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. <a href='https://pbiecek.github.io/ema/'>https://pbiecek.github.io/ema/</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"randomForest"</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/DALEX/'>"DALEX"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/imbs-hl/ranger'>"ranger"</a></span><span class='op'>)</span>
 
-<span class='no'>rf_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>survived</span> ~<span class='no'>.</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The response has five or fewer unique values.  Are you sure you want to do regression?</span></div><div class='input'>
-<span class='no'>explainer_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>rf_model</span>,
-                        <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                        <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>],
-                        <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"RF"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, probability <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='no'>selected_passangers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span>(<span class='no'>titanic_imputed</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='no'>cp_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span>(<span class='no'>explainer_rf</span>, <span class='no'>selected_passangers</span>)
-<span class='no'>cp_rf</span></div><div class='output co'>#&gt; Top profiles    : 
-#&gt;        gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.84998400
-#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.09259209
-#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.46537182
-#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.12149926
-#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.67195853
-#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.24199483
-#&gt;        _vname_ _ids_ _label_
-#&gt; 515     gender   515      RF
-#&gt; 515.1   gender   515      RF
-#&gt; 604     gender   604      RF
-#&gt; 604.1   gender   604      RF
-#&gt; 1430    gender  1430      RF
-#&gt; 1430.1  gender  1430      RF
+<span class='va'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>rf_model</span>,
+                        data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                        y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span>,
+                        label <span class='op'>=</span> <span class='st'>"ranger forest"</span>,
+                        verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='va'>selected_passangers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span>, n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explainer_rf</span>, <span class='va'>selected_passangers</span><span class='op'>)</span>
+<span class='va'>cp_rf</span>
+</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;        gender age            class    embarked    fare sibsp parch    _yhat_
+#&gt; 515    female  45              2nd Southampton 10.1000     0     0 0.8168505
+#&gt; 515.1    male  45              2nd Southampton 10.1000     0     0 0.1059383
+#&gt; 604    female  17              3rd Southampton  7.1701     1     0 0.4675747
+#&gt; 604.1    male  17              3rd Southampton  7.1701     1     0 0.1167633
+#&gt; 1430   female  25 engineering crew Southampton  0.0000     0     0 0.7796172
+#&gt; 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2402162
+#&gt;        _vname_ _ids_       _label_
+#&gt; 515     gender   515 ranger forest
+#&gt; 515.1   gender   515 ranger forest
+#&gt; 604     gender   604 ranger forest
+#&gt; 604.1   gender   604 ranger forest
+#&gt; 1430    gender  1430 ranger forest
+#&gt; 1430.1  gender  1430 ranger forest
 #&gt; 
 #&gt; 
 #&gt; Top observations:
-#&gt;      gender age            class    embarked    fare sibsp parch     _yhat_
-#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.09259209
-#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.12149926
-#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.24199483
-#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.11864669
-#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.64739249
-#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.15454621
-#&gt;      _label_ _ids_
-#&gt; 515       RF     1
-#&gt; 604       RF     2
-#&gt; 1430      RF     3
-#&gt; 865       RF     4
-#&gt; 452       RF     5
-#&gt; 1534      RF     6</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"grey"</span>) +
-<span class='fu'>show_observations</span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>) +
-  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span>(<span class='no'>cp_rf</span>, <span class='kw'>variables</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)</div><div class='img'><img src='show_observations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;      gender age            class    embarked    fare sibsp parch    _yhat_
+#&gt; 515    male  45              2nd Southampton 10.1000     0     0 0.1059383
+#&gt; 604    male  17              3rd Southampton  7.1701     1     0 0.1167633
+#&gt; 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2402162
+#&gt; 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1177738
+#&gt; 452  female  17              3rd  Queenstown  7.1408     0     0 0.6502409
+#&gt; 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1697892
+#&gt;            _label_ _ids_
+#&gt; 515  ranger forest     1
+#&gt; 604  ranger forest     2
+#&gt; 1430 ranger forest     3
+#&gt; 865  ranger forest     4
+#&gt; 452  ranger forest     5
+#&gt; 1534 ranger forest     6</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, color <span class='op'>=</span> <span class='st'>"grey"</span><span class='op'>)</span> <span class='op'>+</span>
+<span class='fu'>show_observations</span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='show_rugs.html'>show_rugs</a></span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</div><div class='img'><img src='show_observations-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>
@@ -275,7 +282,7 @@ If <code>categorical</code> then only categorical variables will be plotted.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

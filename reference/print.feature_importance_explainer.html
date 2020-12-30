@@ -98,7 +98,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -136,7 +136,7 @@
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -163,7 +163,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for feature_importance_explainer</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,37 +186,32 @@
     <p>Explanatory Model Analysis. Explore, Explain and Examine Predictive Models. <a href='https://pbiecek.github.io/ema'>https://pbiecek.github.io/ema</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"DALEX"</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/DALEX/'>"DALEX"</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
 
-<span class='no'>model_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>survived</span> ~ <span class='no'>gender</span> + <span class='no'>age</span> + <span class='no'>fare</span>,
-                         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
+<span class='va'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>fare</span>,
+                         data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
 
-<span class='no'>explain_titanic_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/DALEX/man/explain.html'>explain</a></span>(<span class='no'>model_titanic_glm</span>,
-                               <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,-<span class='fl'>8</span>],
-                               <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>titanic_imputed</span>[,<span class='fl'>8</span>])</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; data              :  2207  rows  7  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.2 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
-<span class='no'>fi_glm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span>(<span class='no'>explain_titanic_glm</span>)
+<span class='va'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEX/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_glm</span>,
+                               data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                               y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span>,
+                               verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='no'>fi_glm</span></div><div class='output co'>#&gt;       variable mean_dropout_loss label
-#&gt; 1 _full_model_         0.2650010    lm
-#&gt; 2        class         0.2650010    lm
-#&gt; 3     embarked         0.2650010    lm
-#&gt; 4        sibsp         0.2650010    lm
-#&gt; 5        parch         0.2650010    lm
-#&gt; 6          age         0.2778710    lm
-#&gt; 7         fare         0.2835270    lm
-#&gt; 8       gender         0.3926589    lm
-#&gt; 9   _baseline_         0.5034053    lm</div><div class='input'>
+<span class='va'>fi_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span><span class='op'>(</span><span class='va'>explain_titanic_glm</span><span class='op'>)</span>
 
-</div></span></pre>
+<span class='va'>fi_glm</span>
+</div><div class='output co'>#&gt;       variable mean_dropout_loss label
+#&gt; 1 _full_model_         0.2641163    lm
+#&gt; 2        class         0.2641163    lm
+#&gt; 3     embarked         0.2641163    lm
+#&gt; 4        sibsp         0.2641163    lm
+#&gt; 5        parch         0.2641163    lm
+#&gt; 6          age         0.2775133    lm
+#&gt; 7         fare         0.2843417    lm
+#&gt; 8       gender         0.3944094    lm
+#&gt; 9   _baseline_         0.5056319    lm</div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -228,7 +223,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">

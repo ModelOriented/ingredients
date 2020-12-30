@@ -97,7 +97,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.0</span>
+          <span class="version version-default">2.0.1</span>
         </div>
       </div>
     </div>
@@ -105,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@
 </li>
         <li>
   <a href="https://github.com/ModelOriented/ingredients/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -156,6 +156,16 @@
       <small>Source: <a href='https://github.com/ModelOriented/ingredients/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="ingredients-201" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ingredients-201" class="anchor"></a>ingredients 2.0.1</h2>
+<ul>
+<li>code and documentation maintenance <a href="https://github.com/ModelOriented/ingredients/issues/130"><a href='https://github.com/ModelOriented/ingredients/issues/130'>#130</a></a>
+</li>
+<li>fixed an error when <code>N = NULL</code> in <code><a href="../reference/partial_dependence.html">partial_dependence()</a></code> etc. <a href="https://github.com/ModelOriented/ingredients/issues/134"><a href='https://github.com/ModelOriented/ingredients/issues/134'>#134</a></a>
+</li>
+</ul>
+</div>
     <div id="ingredients-20" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ingredients-20" class="anchor"></a>ingredients 2.0</h2>
@@ -179,7 +189,7 @@
 <code>ceteris_paribus</code> and aggregates are now working with missing data, this solves <a href="https://github.com/ModelOriented/ingredients/issues/120"><a href='https://github.com/ModelOriented/ingredients/issues/120'>#120</a></a>
 </li>
 <li>
-<code><a href="https://rdrr.io/r/base/plot.html">plot(ceteris_paribus)</a></code> change default <code>color</code> to <em>label</em> or <em>ids</em> if more than one profile is detected, this solves <a href="https://github.com/ModelOriented/ingredients/issues/123"><a href='https://github.com/ModelOriented/ingredients/issues/123'>#123</a></a>
+<code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(ceteris_paribus)</a></code> change default <code>color</code> to <em>label</em> or <em>ids</em> if more than one profile is detected, this solves <a href="https://github.com/ModelOriented/ingredients/issues/123"><a href='https://github.com/ModelOriented/ingredients/issues/123'>#123</a></a>
 </li>
 <li>
 <code>ceteris_paribus</code> has now argument <code>variable_splits_with_obs</code> which included values from <code>new_observations</code> in the <code>variable_splits</code>, this solves <a href="https://github.com/ModelOriented/ingredients/issues/124"><a href='https://github.com/ModelOriented/ingredients/issues/124'>#124</a></a>
@@ -321,7 +331,7 @@
 <h2 class="hasAnchor">
 <a href="#ingredients-038" class="anchor"></a>ingredients 0.3.8</h2>
 <ul>
-<li>Natural language description generated with <code><a href="../reference/describe.html">describe()</a></code> function for <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code>, <code><a href="../reference/feature_importance.html">feature_importance()</a></code> and <code><a href="../reference/aggregate_profiles.html">aggregate_profiles()</a></code> explanations.</li>
+<li>Natural language description generated with <code><a href="../reference/describe.partial_dependence_explainer.html">describe()</a></code> function for <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code>, <code><a href="../reference/feature_importance.html">feature_importance()</a></code> and <code><a href="../reference/aggregate_profiles.html">aggregate_profiles()</a></code> explanations.</li>
 </ul>
 </div>
     <div id="ingredients-037" class="section level2">
@@ -375,7 +385,7 @@
 <h2 class="hasAnchor">
 <a href="#ingredients-032" class="anchor"></a>ingredients 0.3.2</h2>
 <ul>
-<li>added new functions <code><a href="../reference/describe.html">describe()</a></code> and <code>print.ceteris_paribus_descriptions()</code> for text based descriptions of Ceteris Paribus explainers</li>
+<li>added new functions <code><a href="../reference/describe.partial_dependence_explainer.html">describe()</a></code> and <code>print.ceteris_paribus_descriptions()</code> for text based descriptions of Ceteris Paribus explainers</li>
 <li>
 <code>plot.ceteris_paribus_explainer</code> works now also for categorical variables. Use the <code>only_numerical = FALSE</code> to force bars</li>
 </ul>
@@ -435,7 +445,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki, Adam Izdebski.</p>
+  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
 </div>
 
 <div class="pkgdown">
