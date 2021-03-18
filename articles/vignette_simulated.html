@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Simulated data, real problem</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2020-12-30</h4>
+            <h4 class="date">2021-03-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_simulated.Rmd"><code>vignettes/vignette_simulated.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_simulated.Rmd</code></div>
@@ -144,8 +144,8 @@ y = x_1 * x_2 + x_2
 <a href="#explainer-for-the-models" class="anchor"></a>Explainer for the models</h1>
 <p>In fact this model is defined by the predict function <code>the_model_predict</code>. So it does not matter what is in the first argument of the <code>explain</code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/DALEX/">"DALEX"</a></span><span class="op">)</span>
-<span class="va">explain_the_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ModelOriented.github.io/DALEX/reference/explain.html">explain</a></span><span class="op">(</span><span class="fl">1</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://dalex.drwhy.ai">"DALEX"</a></span><span class="op">)</span>
+<span class="va">explain_the_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dalex.drwhy.ai/reference/explain.html">explain</a></span><span class="op">(</span><span class="fl">1</span>,
                       data <span class="op">=</span> <span class="va">df</span>,
                       predict_function <span class="op">=</span> <span class="va">the_model_predict</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Preparation of a new explainer is initiated
@@ -153,12 +153,13 @@ y = x_1 * x_2 + x_2
 #&gt;   -&gt; data              :  50  rows  2  cols 
 #&gt;   -&gt; target variable   :  not specified! ( [31m WARNING [39m )
 #&gt;   -&gt; predict function  :  the_model_predict 
-#&gt;   -&gt; predicted values  :  numerical, min =  -0.1726853 , mean =  7.70239 , max =  29.16158  
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
 #&gt;   -&gt; model_info        :  package Model of class: numeric package unrecognized , ver. Unknown , task regression ( [33m default [39m ) 
 #&gt;   -&gt; model_info        :  Model info detected regression task but 'y' is a NULL .  ( [31m WARNING [39m )
 #&gt;   -&gt; model_info        :  By deafult regressions tasks supports only numercical 'y' parameter. 
 #&gt;   -&gt; model_info        :  Consider changing to numerical vector.
 #&gt;   -&gt; model_info        :  Otherwise I will not be able to calculate residuals or loss function.
+#&gt;   -&gt; predicted values  :  numerical, min =  -0.1726853 , mean =  7.70239 , max =  29.16158  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
@@ -252,7 +253,7 @@ y = x_1 * x_2 + x_2
 <a href="#session-info" class="anchor"></a>Session info</h1>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; R version 4.0.3 (2020-10-10)
+<pre><code>#&gt; R version 4.0.4 (2021-02-15)
 #&gt; Platform: x86_64-apple-darwin17.0 (64-bit)
 #&gt; Running under: macOS Catalina 10.15.7
 #&gt; 
@@ -267,19 +268,20 @@ y = x_1 * x_2 + x_2
 #&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] ggplot2_3.3.3     ingredients_2.0.1 DALEX_2.0.1      
+#&gt; [1] ggplot2_3.3.3     ingredients_2.0.1 DALEX_2.1.1      
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] knitr_1.30        magrittr_2.0.1    munsell_0.5.0     colorspace_2.0-0 
-#&gt;  [5] R6_2.5.0          ragg_0.4.0        rlang_0.4.10      stringr_1.4.0    
-#&gt;  [9] tools_4.0.3       grid_4.0.3        gtable_0.3.0      xfun_0.19        
-#&gt; [13] withr_2.3.0       ellipsis_0.3.1    htmltools_0.5.0   systemfonts_0.3.2
-#&gt; [17] yaml_2.2.1        assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.27    
-#&gt; [21] tibble_3.0.4      lifecycle_0.2.0   pkgdown_1.6.1     crayon_1.3.4     
-#&gt; [25] textshaping_0.2.1 farver_2.0.3      vctrs_0.3.6       fs_1.5.0         
-#&gt; [29] glue_1.4.2        memoise_1.1.0     evaluate_0.14     rmarkdown_2.6    
-#&gt; [33] labeling_0.4.2    stringi_1.5.3     pillar_1.4.7      compiler_4.0.3   
-#&gt; [37] desc_1.2.0        scales_1.1.1      pkgconfig_2.0.3</code></pre>
+#&gt;  [1] highr_0.8         compiler_4.0.4    pillar_1.5.1      tools_4.0.4      
+#&gt;  [5] digest_0.6.27     evaluate_0.14     memoise_2.0.0     lifecycle_1.0.0  
+#&gt;  [9] tibble_3.1.0      gtable_0.3.0      pkgconfig_2.0.3   rlang_0.4.10     
+#&gt; [13] yaml_2.2.1        pkgdown_1.6.1     xfun_0.22         fastmap_1.1.0    
+#&gt; [17] withr_2.4.1       stringr_1.4.0     knitr_1.31        desc_1.3.0       
+#&gt; [21] fs_1.5.0          vctrs_0.3.6       systemfonts_1.0.1 rprojroot_2.0.2  
+#&gt; [25] grid_4.0.4        glue_1.4.2        R6_2.5.0          textshaping_0.3.3
+#&gt; [29] fansi_0.4.2       rmarkdown_2.7     farver_2.1.0      magrittr_2.0.1   
+#&gt; [33] scales_1.1.1      htmltools_0.5.1.1 ellipsis_0.3.1    colorspace_2.0-0 
+#&gt; [37] labeling_0.4.2    ragg_1.1.2        utf8_1.2.1        stringi_1.5.3    
+#&gt; [41] munsell_0.5.0     cachem_1.0.4      crayon_1.4.1</code></pre>
 </div>
   </div>
 
