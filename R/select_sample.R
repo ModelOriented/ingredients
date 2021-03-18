@@ -28,5 +28,5 @@ select_sample <- function(data, n = 100, seed = 1313) {
 select_sample.default <- function(data, n = 100, seed = 1313) {
   set.seed(seed)
   ids <- sample.int(nrow(data), n, replace = TRUE)
-  data[ids,]
+  data[ids,,drop = FALSE]
 }
