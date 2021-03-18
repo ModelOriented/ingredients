@@ -45,6 +45,6 @@ select_neighbours.default <- function(observation, data, variables = NULL, dista
   distances <- distance(observation[,variables, drop = FALSE],
                           data[,variables, drop = FALSE])
   selected_points <- head(order(distances), n)
-  data[selected_points, ]
+  data[selected_points, , drop = FALSE]
 }
 
