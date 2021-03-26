@@ -59,7 +59,7 @@ Function \code{\link{plotD3.ceteris_paribus_explainer}} plots Individual Variabl
 It uses output from \code{\link{ceteris_paribus}} function.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 
-Find more detailes in \href{https://pbiecek.github.io/ema/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
@@ -89,5 +89,5 @@ plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

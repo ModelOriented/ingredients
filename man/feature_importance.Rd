@@ -45,7 +45,7 @@ feature_importance(x, ...)
 \item{loss_function}{a function thet will be used to assess variable importance}
 
 \item{type}{character, type of transformation that should be applied for dropout loss.
-"raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
+"raw" results raw drop losses, "ratio" returns \code{drop_loss/drop_loss_full_model}
 while "difference" returns \code{drop_loss - drop_loss_full_model}}
 
 \item{n_sample}{alias for \code{N} held for backwards compatibility. number of observations that should be sampled for calculation of variable importance.}
@@ -78,7 +78,7 @@ This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/ema/featureImportance.html}{Feature Importance Chapter}.
+Find more details in the \href{http://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 library("DALEX")
@@ -156,5 +156,5 @@ plot(fi_glm)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

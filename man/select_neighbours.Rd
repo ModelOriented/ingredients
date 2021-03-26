@@ -23,7 +23,7 @@ By default these are all variables present in \code{data} and \code{observation}
 
 \item{distance}{the distance function, by default the \code{gower_dist()} function.}
 
-\item{n}{number of neighbours to select}
+\item{n}{number of neighbors to select}
 
 \item{frac}{if \code{n} is not specified (NULL), then will be calculated as \code{frac} * number of rows in \code{data}.
 Either \code{n} or \code{frac} need to be specified.}

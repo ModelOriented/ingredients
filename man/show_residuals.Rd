@@ -86,5 +86,5 @@ plot(cp_johny, variables = "age", size = 1.5, color = "#8bdcbe") +
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

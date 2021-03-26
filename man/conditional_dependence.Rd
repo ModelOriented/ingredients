@@ -74,7 +74,7 @@ Conditional Dependence Profiles (aka Local Profiles) average localy Ceteris Pari
 Function 'conditional_dependence' calls 'ceteris_paribus' and then 'aggregate_profiles'.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
+Find more details in the \href{http://ema.drwhy.ai/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
 }
 \examples{
 library("DALEX")
@@ -113,5 +113,5 @@ plotD3(cdp_rf, label_margin = 100, scale_plot = TRUE)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

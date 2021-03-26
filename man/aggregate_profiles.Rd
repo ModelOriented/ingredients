@@ -30,7 +30,7 @@ By default \code{NULL} which means that no groups shall be calculated}
 
 \item{variables}{if not \code{NULL} then aggregate only for selected \code{variables} will be calculated}
 
-\item{span}{smoothing coeffcient, by default \code{0.25}.It's the sd for gaussian kernel}
+\item{span}{smoothing coefficient, by default \code{0.25}. It's the sd for gaussian kernel}
 
 \item{center}{by default accumulated profiles start at 0. If \code{center=TRUE}, then they are centered around mean prediction,
 which is calculated on the observations used in \code{ceteris_paribus}.}
@@ -48,7 +48,8 @@ Accumulated Local Dependence Profile (cummulated average local changes in Ceteri
 library("DALEX")
 library("ingredients")
 library("ranger")
-
+head(titanic_imputed)
+\donttest{
 model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 
 explain_titanic_rf <- explain(model_titanic_rf,
@@ -61,7 +62,7 @@ selected_passangers <- select_sample(titanic_imputed, n = 100)
 cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 head(cp_rf)
 
-# continouse variable
+# continuous variable
 pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 pdp_rf_p$`_label_` <- "RF_partial"
 pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
@@ -71,7 +72,6 @@ pdp_rf_a$`_label_` <- "RF_accumulated"
 
 plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 
-\donttest{
 pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
                              groups = "gender")
 
@@ -108,5 +108,5 @@ plot(pdp_rf, variables = "class") + coord_flip()
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

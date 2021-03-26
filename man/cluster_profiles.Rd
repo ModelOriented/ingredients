@@ -38,7 +38,7 @@ This function calculates aggregates of ceteris paribus profiles based on
 hierarchical clustering.
 }
 \details{
-Find more detailes in the \href{https://pbiecek.github.io/ema/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
+Find more detailes in the \href{http://ema.drwhy.ai/partialDependenceProfiles.html}{Clustering Profiles Chapter}.
 }
 \examples{
 library("DALEX")
@@ -85,5 +85,5 @@ head(clust_rf)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }

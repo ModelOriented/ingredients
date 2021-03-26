@@ -44,6 +44,21 @@ Various parameters help to decide what should be plotted, profiles, aggregated p
 \examples{
 library("DALEX")
 library("ingredients")
+titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
+
+# build a model
+model_titanic_glm <- glm(survived ~ gender + age + fare,
+                         data = titanic_small,
+                         family = "binomial")
+
+explain_titanic_glm <- explain(model_titanic_glm,
+                               data = titanic_small[,-8],
+                               y = titanic_small[,8])
+
+cp_glm <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
+cp_glm
+
+\donttest{
 library("ranger")
 
 rf_model <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
@@ -61,8 +76,8 @@ cp_rf
 plot(cp_rf, variables = "age", color = "grey") +
 show_observations(cp_rf, variables = "age", color = "black") +
   show_rugs(cp_rf, variables = "age", color = "red")
-
+}
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 }
