@@ -3,7 +3,7 @@
 #' This function calculates permutation based feature importance.
 #' For this reason it is also called the Variable Dropout Plot.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/ema/featureImportance.html}{Feature Importance Chapter}.
+#' Find more details in the \href{http://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, or a model to be explained.
 #' @param data validation dataset, will be extracted from \code{x} if it's an explainer
@@ -14,7 +14,7 @@
 #' @param loss_function a function thet will be used to assess variable importance
 #' @param ... other parameters
 #' @param type character, type of transformation that should be applied for dropout loss.
-#' "raw" results raw drop lossess, "ratio" returns \code{drop_loss/drop_loss_full_model}
+#' "raw" results raw drop losses, "ratio" returns \code{drop_loss/drop_loss_full_model}
 #' while "difference" returns \code{drop_loss - drop_loss_full_model}
 #' @param N number of observations that should be sampled for calculation of variable importance.
 #' If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).
@@ -25,7 +25,7 @@
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
 #' By default \code{NULL}. If specified then it will override \code{variables}
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @return an object of the class \code{feature_importance}
 #' @importFrom methods hasArg

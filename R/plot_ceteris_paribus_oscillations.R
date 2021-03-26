@@ -7,7 +7,7 @@
 #' @param ... other explainers that shall be plotted together
 #' @param bar_width width of bars. By default \code{10}.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @return a \code{ggplot2} object
 #'

@@ -15,11 +15,12 @@
 #'
 #' @return a \code{ggplot2} layer
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @examples
 #' library("DALEX")
 #' library("ingredients")
+#' \donttest{
 #' library("ranger")
 #'
 #' rf_model <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
@@ -37,7 +38,7 @@
 #' plot(cp_rf, variables = "age", color = "grey") +
 #' show_observations(cp_rf, variables = "age", color = "black") +
 #'   show_rugs(cp_rf, variables = "age", color = "red")
-#'
+#' }
 #'
 #' @export
 show_observations <- function(x, ...,

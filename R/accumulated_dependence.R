@@ -3,7 +3,7 @@
 #' Accumulated Local Effects Profiles accumulate local changes in Ceteris Paribus Profiles.
 #' Function \code{\link{accumulated_dependence}} calls \code{\link{ceteris_paribus}} and then \code{\link{aggregate_profiles}}.
 #'
-#' Find more detailes in the \href{https://pbiecek.github.io/ema/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
+#' Find more detailes in the \href{http://ema.drwhy.ai/accumulatedLocalProfiles.html}{Accumulated Local Dependence Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, an object of the class \code{ceteris_paribus_explainer}
 #' or a model to be explained.
@@ -24,7 +24,7 @@
 #' If \code{"categorical"} then only categorical variables will be calculated.
 #'
 #' @references ALEPlot: Accumulated Local Effects (ALE) Plots and Partial Dependence (PD) Plots \url{https://cran.r-project.org/package=ALEPlot},
-#' Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @return an object of the class \code{aggregated_profiles_explainer}
 #'

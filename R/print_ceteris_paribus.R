@@ -6,6 +6,21 @@
 #' @examples
 #' library("DALEX")
 #' library("ingredients")
+#' titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
+#'
+#' # build a model
+#' model_titanic_glm <- glm(survived ~ gender + age + fare,
+#'                          data = titanic_small,
+#'                          family = "binomial")
+#'
+#' explain_titanic_glm <- explain(model_titanic_glm,
+#'                                data = titanic_small[,-8],
+#'                                y = titanic_small[,8])
+#'
+#' cp_glm <- ceteris_paribus(explain_titanic_glm, titanic_small[1,])
+#' cp_glm
+#'
+#' \donttest{
 #' library("ranger")
 #'
 #' apartments_rf_model <- ranger(m2.price ~., data = apartments)
@@ -20,7 +35,7 @@
 #'
 #' cp_rf <- ceteris_paribus(explainer_rf, apartments_small)
 #' cp_rf
-#'
+#' }
 #' @export
 print.ceteris_paribus_explainer <- function(x, ...) {
   cat("Top profiles    : \n")

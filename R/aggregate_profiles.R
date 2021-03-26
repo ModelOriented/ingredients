@@ -13,11 +13,11 @@
 #' By default \code{NULL} which means that no groups shall be calculated
 #' @param center by default accumulated profiles start at 0. If \code{center=TRUE}, then they are centered around mean prediction,
 #' which is calculated on the observations used in \code{ceteris_paribus}.
-#' @param span smoothing coeffcient, by default \code{0.25}.It's the sd for gaussian kernel
+#' @param span smoothing coefficient, by default \code{0.25}. It's the sd for gaussian kernel
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be calculated.
 #' If \code{categorical} then only categorical variables will be calculated.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @importFrom stats na.omit quantile weighted.mean dnorm
 #'
@@ -27,7 +27,8 @@
 #' library("DALEX")
 #' library("ingredients")
 #' library("ranger")
-#'
+#' head(titanic_imputed)
+#' \donttest{
 #' model_titanic_rf <- ranger(survived ~.,  data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
@@ -40,7 +41,7 @@
 #' cp_rf <- ceteris_paribus(explain_titanic_rf, selected_passangers)
 #' head(cp_rf)
 #'
-#' # continouse variable
+#' # continuous variable
 #' pdp_rf_p <- aggregate_profiles(cp_rf, variables = "age", type = "partial")
 #' pdp_rf_p$`_label_` <- "RF_partial"
 #' pdp_rf_c <- aggregate_profiles(cp_rf, variables = "age", type = "conditional")
@@ -50,7 +51,6 @@
 #'
 #' plot(pdp_rf_p, pdp_rf_c, pdp_rf_a, color = "_label_")
 #'
-#' \donttest{
 #' pdp_rf <- aggregate_profiles(cp_rf, variables = "age",
 #'                              groups = "gender")
 #'

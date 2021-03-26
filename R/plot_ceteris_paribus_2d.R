@@ -12,7 +12,7 @@
 #' @param pch character, symbol used to plot observations
 #' @param size numeric, size of individual datapoints
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://pbiecek.github.io/ema/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
 #'
 #' @return a \code{ggplot2} object
 #'
