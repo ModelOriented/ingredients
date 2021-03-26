@@ -210,7 +210,7 @@ By default <code>NULL</code> which means that no groups shall be calculated</p><
     </tr>
     <tr>
       <th>span</th>
-      <td><p>smoothing coeffcient, by default <code>0.25</code>.It's the sd for gaussian kernel</p></td>
+      <td><p>smoothing coefficient, by default <code>0.25</code>. It's the sd for gaussian kernel</p></td>
     </tr>
     <tr>
       <th>center</th>
@@ -224,13 +224,20 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
     <p>an object of the class <code>aggregated_profiles_explainer</code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. <a href='https://pbiecek.github.io/ema/'>https://pbiecek.github.io/ema/</a></p>
+    <p>Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. <a href='http://ema.drwhy.ai/'>http://ema.drwhy.ai/</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://dalex.drwhy.ai'>"DALEX"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/imbs-hl/ranger'>"ranger"</a></span><span class='op'>)</span>
-
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   gender age class    embarked  fare sibsp parch survived
+#&gt; 1   male  42   3rd Southampton  7.11     0     0        0
+#&gt; 2   male  13   3rd Southampton 20.05     0     2        0
+#&gt; 3   male  16   3rd Southampton 20.05     1     1        0
+#&gt; 4 female  39   3rd Southampton 20.05     1     1        1
+#&gt; 5 female  16   3rd Southampton  7.13     0     0        1
+#&gt; 6   male  25   3rd Southampton  7.13     0     0        1</div><div class='input'><span class='co'># \donttest{</span>
 <span class='va'>model_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span><span class='va'>.</span>,  data <span class='op'>=</span> <span class='va'>titanic_imputed</span>, probability <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='va'>explain_titanic_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_rf</span>,
@@ -274,7 +281,7 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 #&gt; 865  ranger forest     4
 #&gt; 452  ranger forest     5
 #&gt; 1534 ranger forest     6</div><div class='input'>
-<span class='co'># continouse variable</span>
+<span class='co'># continuous variable</span>
 <span class='va'>pdp_rf_p</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate_profiles</span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, type <span class='op'>=</span> <span class='st'>"partial"</span><span class='op'>)</span>
 <span class='va'>pdp_rf_p</span><span class='op'>$</span><span class='va'>`_label_`</span> <span class='op'>&lt;-</span> <span class='st'>"RF_partial"</span>
 <span class='va'>pdp_rf_c</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate_profiles</span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>, type <span class='op'>=</span> <span class='st'>"conditional"</span><span class='op'>)</span>
@@ -284,7 +291,6 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pdp_rf_p</span>, <span class='va'>pdp_rf_c</span>, <span class='va'>pdp_rf_a</span>, color <span class='op'>=</span> <span class='st'>"_label_"</span><span class='op'>)</span>
 </div><div class='img'><img src='aggregate_profiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># \donttest{</span>
 <span class='va'>pdp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>aggregate_profiles</span><span class='op'>(</span><span class='va'>cp_rf</span>, variables <span class='op'>=</span> <span class='st'>"age"</span>,
                              groups <span class='op'>=</span> <span class='st'>"gender"</span><span class='op'>)</span>
 

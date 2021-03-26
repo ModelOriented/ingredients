@@ -182,6 +182,50 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://dalex.drwhy.ai'>"DALEX"</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://ModelOriented.github.io/ingredients/'>"ingredients"</a></span><span class='op'>)</span>
+<span class='va'>titanic_small</span> <span class='op'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span>, n <span class='op'>=</span> <span class='fl'>500</span>, seed <span class='op'>=</span> <span class='fl'>1313</span><span class='op'>)</span>
+
+<span class='co'># build a model</span>
+<span class='va'>model_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>fare</span>,
+                         data <span class='op'>=</span> <span class='va'>titanic_small</span>,
+                         family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
+
+<span class='va'>explain_titanic_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>model_titanic_glm</span>,
+                               data <span class='op'>=</span> <span class='va'>titanic_small</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
+                               y <span class='op'>=</span> <span class='va'>titanic_small</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Preparation of a new explainer is initiated
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; data              :  500  rows  7  cols 
+#&gt;   -&gt; target variable   :  500  values 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.0.4 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predicted values  :  numerical, min =  0.0795294 , mean =  0.302 , max =  0.9859411  
+#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residuals         :  numerical, min =  -0.8204691 , mean =  8.796651e-12 , max =  0.8567173  
+#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+<span class='va'>cp_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>titanic_small</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span><span class='op'>)</span>
+<span class='va'>cp_glm</span>
+</div><div class='output co'>#&gt; Top profiles    : 
+#&gt;         gender   age class    embarked fare sibsp parch    _yhat_ _vname_ _ids_
+#&gt; 515     female 45.00   2nd Southampton 10.1     0     0 0.5595687  gender   515
+#&gt; 515.1     male 45.00   2nd Southampton 10.1     0     0 0.1448038  gender   515
+#&gt; 5151      male  0.75   2nd Southampton 10.1     0     0 0.3135247     age   515
+#&gt; 515.110   male  2.99   2nd Southampton 10.1     0     0 0.3028164     age   515
+#&gt; 515.2     male  4.98   2nd Southampton 10.1     0     0 0.2934793     age   515
+#&gt; 515.3     male  7.00   2nd Southampton 10.1     0     0 0.2841757     age   515
+#&gt;         _label_
+#&gt; 515          lm
+#&gt; 515.1        lm
+#&gt; 5151         lm
+#&gt; 515.110      lm
+#&gt; 515.2        lm
+#&gt; 515.3        lm
+#&gt; 
+#&gt; 
+#&gt; Top observations:
+#&gt;     gender age class    embarked fare sibsp parch    _yhat_ _label_ _ids_
+#&gt; 515   male  45   2nd Southampton 10.1     0     0 0.1448038      lm     1</div><div class='input'>
+<span class='co'># \donttest{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/imbs-hl/ranger'>"ranger"</a></span><span class='op'>)</span>
 
 <span class='va'>apartments_rf_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>m2.price</span> <span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>apartments</span><span class='op'>)</span>
@@ -198,12 +242,12 @@
 <span class='va'>cp_rf</span>
 </div><div class='output co'>#&gt; Top profiles    : 
 #&gt;        construction.year surface floor no.rooms    district   _yhat_
-#&gt; 9707                1920      98     3        3 Srodmiescie 4942.964
-#&gt; 9707.1              1921      98     3        3 Srodmiescie 4956.548
-#&gt; 9707.2              1922      98     3        3 Srodmiescie 4958.595
-#&gt; 9707.3              1923      98     3        3 Srodmiescie 4958.928
-#&gt; 9707.4              1924      98     3        3 Srodmiescie 4913.852
-#&gt; 9707.5              1925      98     3        3 Srodmiescie 4900.086
+#&gt; 9707                1920      98     3        3 Srodmiescie 4880.584
+#&gt; 9707.1              1921      98     3        3 Srodmiescie 4890.136
+#&gt; 9707.2              1922      98     3        3 Srodmiescie 4897.864
+#&gt; 9707.3              1923      98     3        3 Srodmiescie 4866.403
+#&gt; 9707.4              1924      98     3        3 Srodmiescie 4836.051
+#&gt; 9707.5              1925      98     3        3 Srodmiescie 4833.932
 #&gt;                  _vname_ _ids_       _label_
 #&gt; 9707   construction.year  9707 ranger forest
 #&gt; 9707.1 construction.year  9707 ranger forest
@@ -215,20 +259,20 @@
 #&gt; 
 #&gt; Top observations:
 #&gt;      construction.year surface floor no.rooms    district   _yhat_
-#&gt; 9707              2008      98     3        3 Srodmiescie 4775.504
-#&gt; 9796              1932     110    10        4       Ursus 2888.579
-#&gt; 9644              1980      73    10        2     Mokotow 3613.400
-#&gt; 7567              1940      63     8        3       Praga 3290.513
-#&gt; 4090              1955     105     3        3      Ochota 3598.795
-#&gt; 8594              1999      36     9        2       Ursus 3720.781
+#&gt; 9707              2008      98     3        3 Srodmiescie 4739.858
+#&gt; 9796              1932     110    10        4       Ursus 2922.596
+#&gt; 9644              1980      73    10        2     Mokotow 3703.307
+#&gt; 7567              1940      63     8        3       Praga 3271.446
+#&gt; 4090              1955     105     3        3      Ochota 3594.067
+#&gt; 8594              1999      36     9        2       Ursus 3695.560
 #&gt;            _label_ _ids_
 #&gt; 9707 ranger forest     1
 #&gt; 9796 ranger forest     2
 #&gt; 9644 ranger forest     3
 #&gt; 7567 ranger forest     4
 #&gt; 4090 ranger forest     5
-#&gt; 8594 ranger forest     6</div><div class='input'>
-</div></pre>
+#&gt; 8594 ranger forest     6</div><div class='input'><span class='co'># }</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
