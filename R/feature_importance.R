@@ -212,7 +212,7 @@ feature_importance.default <- function(x,
         sampled_rows <- sample(1:nrow(data), N)
       }
     }
-    sampled_data <- data[sampled_rows, ]
+    sampled_data <- data[sampled_rows, , drop = FALSE]
     observed <- y[sampled_rows]
     # loss on the full model or when outcomes are permuted
     loss_full <- loss_function(observed, predict_function(x, sampled_data))
