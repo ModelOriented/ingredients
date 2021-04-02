@@ -109,7 +109,7 @@
       <h1 data-toc-skip>General introduction: Survival on the RMS Titanic</h1>
                         <h4 class="author">Przemyslaw Biecek</h4>
             
-            <h4 class="date">2021-03-26</h4>
+            <h4 class="date">2021-04-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_titanic.Rmd"><code>vignettes/vignette_titanic.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_titanic.Rmd</code></div>
@@ -157,7 +157,7 @@
 #&gt; Target node size:                 10 
 #&gt; Variable importance mode:         none 
 #&gt; Splitrule:                        gini 
-#&gt; OOB prediction error (Brier s.):  0.1421701</code></pre>
+#&gt; OOB prediction error (Brier s.):  0.1421519</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -176,9 +176,9 @@
 #&gt;   -&gt; predict function  :  yhat.ranger  will be used ( [33m default [39m )
 #&gt;   -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
 #&gt;   -&gt; model_info        :  package ranger , ver. 0.12.1 , task classification ( [33m default [39m ) 
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01397252 , mean =  0.3221489 , max =  0.9940236  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.015594 , mean =  0.3226285 , max =  0.9896738  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7864429 , mean =  7.913112e-06 , max =  0.8816116  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7850328 , mean =  -0.0004717407 , max =  0.8840795  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
@@ -191,12 +191,12 @@
 <span class="va">fi_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/feature_importance.html">feature_importance</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;       variable mean_dropout_loss         label
-#&gt; 1 _full_model_         0.3403139 Random Forest
-#&gt; 2        parch         0.3506242 Random Forest
-#&gt; 3        sibsp         0.3518708 Random Forest
-#&gt; 4     embarked         0.3522614 Random Forest
-#&gt; 5          age         0.3770686 Random Forest
-#&gt; 6         fare         0.3843158 Random Forest</code></pre>
+#&gt; 1 _full_model_         0.3409188 Random Forest
+#&gt; 2        parch         0.3507858 Random Forest
+#&gt; 3        sibsp         0.3518849 Random Forest
+#&gt; 4     embarked         0.3527256 Random Forest
+#&gt; 5          age         0.3766224 Random Forest
+#&gt; 6         fare         0.3828333 Random Forest</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
@@ -218,12 +218,12 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_       _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest 0.0000000 0.3573048     0
-#&gt; 2     age Random Forest 0.1666667 0.5204267     0
-#&gt; 3     age Random Forest 2.0000000 0.5618832     0
-#&gt; 4     age Random Forest 4.0000000 0.5704290     0
-#&gt; 5    fare Random Forest 6.1793080 0.3074488     0
-#&gt; 6     age Random Forest 7.0000000 0.5089886     0</code></pre>
+#&gt; 1    fare Random Forest 0.0000000 0.3689251     0
+#&gt; 2     age Random Forest 0.1666667 0.5247671     0
+#&gt; 3     age Random Forest 2.0000000 0.5508101     0
+#&gt; 4     age Random Forest 4.0000000 0.5628003     0
+#&gt; 5    fare Random Forest 6.1793080 0.3222164     0
+#&gt; 6     age Random Forest 7.0000000 0.5216355     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -285,12 +285,12 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">clust_rf</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_         _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest_1 0.0000000         1 0.2371787     0
-#&gt; 2   parch Random Forest_1 0.0000000         1 0.1662137     0
-#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1693822     0
-#&gt; 4     age Random Forest_1 0.1666667         1 0.4574040     0
-#&gt; 5   parch Random Forest_1 1.0000000         1 0.2367799     0
-#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1458913     0</code></pre>
+#&gt; 1    fare Random Forest_1 0.0000000         1 0.2324359     0
+#&gt; 2   parch Random Forest_1 0.0000000         1 0.1672094     0
+#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1704731     0
+#&gt; 4     age Random Forest_1 0.1666667         1 0.4456694     0
+#&gt; 5   parch Random Forest_1 1.0000000         1 0.2354952     0
+#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1473339     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span><span class="op">(</span><span class="va">clust_rf</span>, color <span class="op">=</span> <span class="st">"_label_"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
@@ -301,7 +301,7 @@
 <a href="#session-info" class="anchor"></a>Session info</h1>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; R version 4.0.4 (2021-02-15)
+<pre><code>#&gt; R version 4.0.5 (2021-03-31)
 #&gt; Platform: x86_64-apple-darwin17.0 (64-bit)
 #&gt; Running under: macOS Catalina 10.15.7
 #&gt; 
@@ -319,13 +319,13 @@
 #&gt; [1] ingredients_2.2.0 ranger_0.12.1     DALEX_2.2.0      
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_1.0.6        highr_0.8         compiler_4.0.4    pillar_1.5.1     
-#&gt;  [5] tools_4.0.4       digest_0.6.27     lattice_0.20-41   evaluate_0.14    
+#&gt;  [1] Rcpp_1.0.6        highr_0.8         compiler_4.0.5    pillar_1.5.1     
+#&gt;  [5] tools_4.0.5       digest_0.6.27     lattice_0.20-41   evaluate_0.14    
 #&gt;  [9] memoise_2.0.0     lifecycle_1.0.0   tibble_3.1.0      gtable_0.3.0     
 #&gt; [13] pkgconfig_2.0.3   rlang_0.4.10      Matrix_1.3-2      yaml_2.2.1       
 #&gt; [17] pkgdown_1.6.1     xfun_0.22         fastmap_1.1.0     stringr_1.4.0    
-#&gt; [21] knitr_1.31        desc_1.3.0        fs_1.5.0          vctrs_0.3.6      
-#&gt; [25] systemfonts_1.0.1 rprojroot_2.0.2   grid_4.0.4        glue_1.4.2       
+#&gt; [21] knitr_1.31        desc_1.3.0        fs_1.5.0          vctrs_0.3.7      
+#&gt; [25] systemfonts_1.0.1 rprojroot_2.0.2   grid_4.0.5        glue_1.4.2       
 #&gt; [29] R6_2.5.0          textshaping_0.3.3 fansi_0.4.2       rmarkdown_2.7    
 #&gt; [33] farver_2.1.0      ggplot2_3.3.3     magrittr_2.0.1    scales_1.1.1     
 #&gt; [37] htmltools_0.5.1.1 ellipsis_0.3.1    colorspace_2.0-0  labeling_0.4.2   
