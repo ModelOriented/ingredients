@@ -31,6 +31,7 @@
 #' library("ingredients")
 #' library("ranger")
 #'
+#' \donttest{
 #' model_titanic_rf <- ranger(survived ~., data = titanic_imputed, probability = TRUE)
 #'
 #' explain_titanic_rf <- explain(model_titanic_rf,
@@ -50,7 +51,7 @@
 #'
 #' plotD3(cp_rf, variables = c("class", "embarked", "gender", "sibsp"),
 #'      facet_ncol = 2, variable_type = "categorical", label_margin = 100, scale_plot = TRUE)
-#'
+#' }
 #'
 #' @export
 #' @rdname plotD3_ceteris_paribus

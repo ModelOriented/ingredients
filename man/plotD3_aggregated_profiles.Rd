@@ -56,6 +56,7 @@ library("ranger")
 # smaller data, quicker example
 titanic_small <- select_sample(titanic_imputed, n = 500, seed = 1313)
 
+\donttest{
 # build a model
 model_titanic_rf <- ranger(survived ~., data = titanic_small, probability = TRUE)
 
@@ -81,6 +82,7 @@ pdp <- aggregate_profiles(cp_rf, type = "partial", variable_type = "categorical"
 pdp$`_label_` <- "RF_partial"
 
 plotD3(pdp, variables = c("gender","class"), label_margin = 70)
+}
 
 }
 \references{
