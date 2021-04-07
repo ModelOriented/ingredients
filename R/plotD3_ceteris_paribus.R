@@ -5,7 +5,7 @@
 #' It uses output from \code{\link{ceteris_paribus}} function.
 #' Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 #'
-#' Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more details in \href{https://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with function \code{ceteris_paribus()}
 #' @param ... other explainers that shall be plotted together
@@ -24,7 +24,7 @@
 #'
 #' @return a \code{r2d3} object.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
 #' @examples
 #' library("DALEX")

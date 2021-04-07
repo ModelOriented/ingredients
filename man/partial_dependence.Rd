@@ -72,7 +72,7 @@ Partial Dependence Profiles are averages from Ceteris Paribus Profiles.
 Function \code{partial_dependence} calls \code{ceteris_paribus} and then \code{aggregate_profiles}.
 }
 \details{
-Find more details in the \href{http://ema.drwhy.ai/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
+Find more details in the \href{https://ema.drwhy.ai/partialDependenceProfiles.html}{Partial Dependence Profiles Chapter}.
 }
 \examples{
 library("DALEX")
@@ -110,5 +110,5 @@ plotD3(pdp_rf, label_margin = 80, scale_plot = TRUE)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

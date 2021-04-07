@@ -18,7 +18,7 @@ an object of the class \code{ceteris_paribus_oscillations}
 }
 \description{
 Oscillations are proxies for local feature importance at the instance level.
-Find more details in \href{http://ema.drwhy.ai/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
+Find more details in \href{https://ema.drwhy.ai/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
 }
 \examples{
 library("DALEX")
@@ -59,5 +59,5 @@ calculate_oscillations(cp_rf)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

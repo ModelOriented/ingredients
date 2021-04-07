@@ -14,7 +14,7 @@
 #' @param title a character. Partial and accumulated dependence explainers have deafult value.
 #' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
 #' @return a \code{ggplot2} object
 #'

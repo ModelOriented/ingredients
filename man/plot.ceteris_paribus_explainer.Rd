@@ -50,7 +50,7 @@ a \code{ggplot2} object
 Function \code{plot.ceteris_paribus_explainer} plots Individual Variable Profiles for selected observations.
 Various parameters help to decide what should be plotted, profiles, aggregated profiles, points or rugs.
 
-Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more details in \href{https://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
@@ -108,5 +108,5 @@ plotD3(cp_rf, variables = c("class", "embarked", "gender"),
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

@@ -5,7 +5,7 @@
 #' Such profiles can be used to hypothesize about model results if selected variable is changed.
 #' For this reason it is also called 'What-If Profiles'.
 #'
-#' Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
+#' Find more details in \href{https://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 #'
 #' @param x an explainer created with the \code{DALEX::explain()} function, or a model to be explained.
 #' @param data validation dataset. It will be extracted from \code{x} if it's an explainer
@@ -25,7 +25,7 @@
 #' @param variable_splits_type how variable grids shall be calculated? Use "quantiles" (default) for percentiles or "uniform" to get uniform grid of points
 #' @param variable_splits_with_obs if \code{TRUE} then all values in \code{new_observation} will be included in \code{variable_splits}
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
 #' @return an object of the class \code{ceteris_paribus_explainer}.
 #'

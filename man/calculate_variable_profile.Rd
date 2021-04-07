@@ -44,5 +44,5 @@ If you want to work on non standard data sources (like H2O ddf, external databas
 you should overload it.
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

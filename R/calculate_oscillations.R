@@ -1,13 +1,13 @@
 #' Calculate Oscillations for Ceteris Paribus Explainer
 #'
 #' Oscillations are proxies for local feature importance at the instance level.
-#' Find more details in \href{http://ema.drwhy.ai/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
+#' Find more details in \href{https://ema.drwhy.ai/ceterisParibusOscillations.html}{Ceteris Paribus Oscillations Chapter}.
 #'
 #' @param x a ceteris paribus explainer produced with the \code{ceteris_paribus()} function
 #' @param sort a logical value. If \code{TRUE} then rows are sorted along the oscillations
 #' @param ... other arguments
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
 #' @return an object of the class \code{ceteris_paribus_oscillations}
 #'

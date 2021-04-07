@@ -78,7 +78,7 @@ This function calculates permutation based feature importance.
 For this reason it is also called the Variable Dropout Plot.
 }
 \details{
-Find more details in the \href{http://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
+Find more details in the \href{https://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
 }
 \examples{
 library("DALEX")
@@ -156,5 +156,5 @@ plot(fi_glm)
 }
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

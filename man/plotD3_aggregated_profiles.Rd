@@ -46,7 +46,7 @@ Function \code{\link{plotD3.aggregated_profiles_explainer}} plots an aggregate o
 It works in a similar way to \code{\link{plotD3.ceteris_paribus_explainer}} but, instead of individual profiles,
 show average profiles for each variable listed in the \code{variables} vector.
 
-Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more details in \href{https://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
@@ -84,5 +84,5 @@ plotD3(pdp, variables = c("gender","class"), label_margin = 70)
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }

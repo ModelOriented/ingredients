@@ -3,7 +3,7 @@
 #' This function calculates permutation based feature importance.
 #' For this reason it is also called the Variable Dropout Plot.
 #'
-#' Find more details in the \href{http://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
+#' Find more details in the \href{https://ema.drwhy.ai/featureImportance.html}{Feature Importance Chapter}.
 #'
 #' @param x an explainer created with function \code{DALEX::explain()}, or a model to be explained.
 #' @param data validation dataset, will be extracted from \code{x} if it's an explainer
@@ -25,7 +25,7 @@
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
 #' By default \code{NULL}. If specified then it will override \code{variables}
 #'
-#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+#' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
 #' @return an object of the class \code{feature_importance}
 #' @importFrom methods hasArg

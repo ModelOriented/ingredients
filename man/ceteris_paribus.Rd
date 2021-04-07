@@ -74,7 +74,7 @@ Such profiles can be used to hypothesize about model results if selected variabl
 For this reason it is also called 'What-If Profiles'.
 }
 \details{
-Find more details in \href{http://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
+Find more details in \href{https://ema.drwhy.ai/ceterisParibus.html}{Ceteris Paribus Chapter}.
 }
 \examples{
 library("DALEX")
@@ -119,5 +119,5 @@ plot(cp_rf, variables = "age") +
 
 }
 \references{
-Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{http://ema.drwhy.ai/}
+Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 }
