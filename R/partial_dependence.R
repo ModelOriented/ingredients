@@ -107,7 +107,7 @@ partial_dependence.default <- function(x,
                                        variable_type = "numerical") {
   if (!is.null(N) && N < nrow(data)) {
     # sample N points
-    ndata <- data[sample(1:nrow(data), N),]
+    ndata <- data[sample(1:nrow(data), N), , drop = FALSE]
   } else {
     ndata <- data
   }

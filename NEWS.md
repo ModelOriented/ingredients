@@ -1,3 +1,7 @@
+ingredients 2.2.0
+--------------------------------------------------------------
+* fixes explanations when data has one column [#137](https://github.com/ModelOriented/ingredients/issues/137)
+
 ingredients 2.0.1
 --------------------------------------------------------------
 * code and documentation maintenance [#130](https://github.com/ModelOriented/ingredients/issues/130)
