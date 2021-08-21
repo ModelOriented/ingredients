@@ -1,3 +1,7 @@
+ingredients 2.2.1
+--------------------------------------------------------------
+* added `scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) 
+
 ingredients 2.2.0
 --------------------------------------------------------------
 * fixes explanations when data has one column [#137](https://github.com/ModelOriented/ingredients/issues/137)

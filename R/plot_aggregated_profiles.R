@@ -13,6 +13,7 @@
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param title a character. Partial and accumulated dependence explainers have deafult value.
 #' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
+#' @param scales a character. Passed to \code{facet_wrap()}.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
@@ -80,7 +81,8 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                                                facet_ncol = NULL,
                                                variables = NULL,
                                                title = NULL,
-                                               subtitle = NULL) {
+                                               subtitle = NULL,
+                                               scales = "free_x") {
 
   # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -151,6 +153,6 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   res + DALEX::theme_drwhy() + ylab("average prediction") + xlab("") +
         theme(plot.title = element_text(hjust =0),
               plot.subtitle = element_text(vjust = -2, hjust = 0)) +
-    facet_wrap(~ `_vname_`, scales = "free_x", ncol = facet_ncol)
+    facet_wrap(~ `_vname_`, scales = scales, ncol = facet_ncol)
 }
 

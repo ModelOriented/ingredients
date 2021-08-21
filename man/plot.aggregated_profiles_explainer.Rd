@@ -13,7 +13,8 @@
   facet_ncol = NULL,
   variables = NULL,
   title = NULL,
-  subtitle = NULL
+  subtitle = NULL,
+  scales = "free_x"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@
 \item{title}{a character. Partial and accumulated dependence explainers have deafult value.}
 
 \item{subtitle}{a character. If \code{NULL} value will be dependent on model usage.}
+
+\item{scales}{a character. Passed to \code{facet_wrap()}.}
 }
 \value{
 a \code{ggplot2} object
