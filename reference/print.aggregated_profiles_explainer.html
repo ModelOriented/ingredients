@@ -190,16 +190,16 @@
                                data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
                                y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.5 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.1.1 , task classification ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>selected_passangers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='select_sample.html'>select_sample</a></span><span class='op'>(</span><span class='va'>titanic_imputed</span>, n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 <span class='va'>cp_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ceteris_paribus.html'>ceteris_paribus</a></span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, <span class='va'>selected_passangers</span><span class='op'>)</span>
 
@@ -303,7 +303,7 @@
 #&gt; 5     age ranger forest  9.0000000 0.4988154     0
 #&gt; 6     age ranger forest 13.0000000 0.4224053     0</div><div class='input'><span class='co'># }</span>
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

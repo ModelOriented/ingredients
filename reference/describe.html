@@ -306,23 +306,23 @@ The current design of DALEX explainer does not allow for displaying variables va
 <span class='va'>lm_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>m2.price</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>apartments</span><span class='op'>)</span>
 <span class='va'>explainer_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>lm_model</span>, data <span class='op'>=</span> <span class='va'>apartments</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>, y <span class='op'>=</span> <span class='va'>apartments</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  1000  rows  5  cols 
 #&gt;   -&gt; target variable   :  1000  values 
-#&gt;   -&gt; predict function  :  yhat.lm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.5 , task regression ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.lm  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.1.1 , task regression ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  1781.848 , mean =  3487.019 , max =  6176.032  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -247.4728 , mean =  2.093656e-14 , max =  469.0023  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>fi_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='feature_importance.html'>feature_importance</a></span><span class='op'>(</span><span class='va'>explainer_lm</span>, loss_function <span class='op'>=</span> <span class='fu'>DALEX</span><span class='fu'>::</span><span class='va'><a href='https://dalex.drwhy.ai/reference/loss_functions.html'>loss_root_mean_square</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fi_lm</span><span class='op'>)</span>
 </div><div class='img'><img src='describe-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>describe</span><span class='op'>(</span><span class='va'>fi_lm</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; The number of important variables for lm's prediction is 3 out of 5. 
 #&gt;  Variables district, surface, floor have the highest importantance. </div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

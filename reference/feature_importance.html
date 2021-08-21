@@ -281,16 +281,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
                                data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>8</span><span class='op'>]</span>,
                                y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  2207  rows  7  cols 
 #&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.5 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.1.1 , task classification ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.1490412 , mean =  0.3221568 , max =  0.9878987  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.8898433 , mean =  4.198546e-13 , max =  0.8448637  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>fi_glm</span> <span class='op'>&lt;-</span> <span class='fu'>feature_importance</span><span class='op'>(</span><span class='va'>explain_titanic_glm</span>, B <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fi_glm</span><span class='op'>)</span>
 </div><div class='img'><img src='feature_importance-1.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -341,16 +341,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='va'>explainer_rf</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>HR_rf_model</span>, data <span class='op'>=</span> <span class='va'>HR</span>, y <span class='op'>=</span> <span class='va'>HR</span><span class='op'>$</span><span class='va'>status</span>,
                          model_info <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>'multiclass'</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  ranger  ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  ranger  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  7847  rows  6  cols 
 #&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; predict function  :  yhat.ranger  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predict function  :  yhat.ranger  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; model_info        :  package , ver. , task multiclass 
-#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( </span><span style='color: #BBBB00;'> default </span><span> ) 
-#&gt;   -&gt; residual function :  difference between 1 and probability of true class ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; predicted values  :  predict function returns multiple columns:  3  ( <span style='color: #BBBB00;'> default </span> ) 
+#&gt;   -&gt; residual function :  difference between 1 and probability of true class ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  0.001843705 , mean =  0.2793549 , max =  0.8491906  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'>
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'>
 <span class='va'>fi_rf</span> <span class='op'>&lt;-</span> <span class='fu'>feature_importance</span><span class='op'>(</span><span class='va'>explainer_rf</span>, type <span class='op'>=</span> <span class='st'>"raw"</span>,
                             loss_function <span class='op'>=</span> <span class='fu'>DALEX</span><span class='fu'>::</span><span class='va'><a href='https://dalex.drwhy.ai/reference/loss_functions.html'>loss_cross_entropy</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fi_rf</span><span class='op'>)</span>
@@ -365,16 +365,16 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 <span class='va'>HR_glm_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>status</span> <span class='op'>==</span> <span class='st'>"fired"</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>HR</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
 <span class='va'>explainer_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>HR_glm_model</span>, data <span class='op'>=</span> <span class='va'>HR</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>HR</span><span class='op'>$</span><span class='va'>status</span> <span class='op'>==</span> <span class='st'>"fired"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  lm  ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; model label       :  lm  ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; data              :  7847  rows  6  cols 
 #&gt;   -&gt; target variable   :  7847  values 
-#&gt;   -&gt; predict function  :  yhat.glm  will be used ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( </span><span style='color: #BBBB00;'> default </span><span> )
-#&gt;   -&gt; model_info        :  package stats , ver. 4.0.5 , task classification ( </span><span style='color: #BBBB00;'> default </span><span> ) 
+#&gt;   -&gt; predict function  :  yhat.glm  will be used ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; predicted values  :  No value for predict function target column. ( <span style='color: #BBBB00;'> default </span> )
+#&gt;   -&gt; model_info        :  package stats , ver. 4.1.1 , task classification ( <span style='color: #BBBB00;'> default </span> ) 
 #&gt;   -&gt; predicted values  :  numerical, min =  0.00861694 , mean =  0.3638333 , max =  0.7822214  
-#&gt;   -&gt; residual function :  difference between y and yhat ( </span><span style='color: #BBBB00;'> default </span><span> )
+#&gt;   -&gt; residual function :  difference between y and yhat ( <span style='color: #BBBB00;'> default </span> )
 #&gt;   -&gt; residuals         :  numerical, min =  -0.7755901 , mean =  -1.293796e-13 , max =  0.9820537  
-#&gt;  </span><span style='color: #00BB00;'> A new explainer has been created! </span><span> </div><div class='input'><span class='va'>fi_glm</span> <span class='op'>&lt;-</span> <span class='fu'>feature_importance</span><span class='op'>(</span><span class='va'>explainer_glm</span>, type <span class='op'>=</span> <span class='st'>"raw"</span>,
+#&gt;  <span style='color: #00BB00;'> A new explainer has been created! </span> </div><div class='input'><span class='va'>fi_glm</span> <span class='op'>&lt;-</span> <span class='fu'>feature_importance</span><span class='op'>(</span><span class='va'>explainer_glm</span>, type <span class='op'>=</span> <span class='st'>"raw"</span>,
                              loss_function <span class='op'>=</span> <span class='fu'>DALEX</span><span class='fu'>::</span><span class='va'><a href='https://dalex.drwhy.ai/reference/loss_functions.html'>loss_root_mean_square</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fi_glm</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       variable mean_dropout_loss label
@@ -386,7 +386,7 @@ NOTE: It is best when target variable is not present in the <code>data</code></p
 #&gt; 6   evaluation         0.4350820    lm</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fi_glm</span><span class='op'>)</span>
 </div><div class='img'><img src='feature_importance-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># }</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
