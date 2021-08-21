@@ -10,10 +10,10 @@
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
+#' @param scales a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param title a character. Partial and accumulated dependence explainers have deafult value.
 #' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
-#' @param scales a character. Passed to \code{facet_wrap()}.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
@@ -79,10 +79,10 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                                                alpha = 1,
                                                color = "_label_",
                                                facet_ncol = NULL,
+                                               facet_scales = "free_x",
                                                variables = NULL,
                                                title = NULL,
-                                               subtitle = NULL,
-                                               scales = "free_x") {
+                                               subtitle = NULL) {
 
   # if there are more explainers, they should be merged into a single data frame
   dfl <- c(list(x), list(...))
@@ -153,6 +153,6 @@ plot.aggregated_profiles_explainer <- function(x, ...,
   res + DALEX::theme_drwhy() + ylab("average prediction") + xlab("") +
         theme(plot.title = element_text(hjust =0),
               plot.subtitle = element_text(vjust = -2, hjust = 0)) +
-    facet_wrap(~ `_vname_`, scales = scales, ncol = facet_ncol)
+    facet_wrap(~ `_vname_`, scales = facet_scales, ncol = facet_ncol)
 }
 

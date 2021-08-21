@@ -11,10 +11,10 @@
   alpha = 1,
   color = "_label_",
   facet_ncol = NULL,
+  facet_scales = "free_x",
   variables = NULL,
   title = NULL,
-  subtitle = NULL,
-  scales = "free_x"
+  subtitle = NULL
 )
 }
 \arguments{
@@ -36,7 +36,7 @@
 
 \item{subtitle}{a character. If \code{NULL} value will be dependent on model usage.}
 
-\item{scales}{a character. Passed to \code{facet_wrap()}.}
+\item{scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.}
 }
 \value{
 a \code{ggplot2} object

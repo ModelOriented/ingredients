@@ -1,6 +1,6 @@
 ingredients 2.2.1
 --------------------------------------------------------------
-* added `scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) 
+* added `facet_scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) 
 
 ingredients 2.2.0
 --------------------------------------------------------------
