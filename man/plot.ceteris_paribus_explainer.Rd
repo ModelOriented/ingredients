@@ -12,6 +12,7 @@
   color = "#46bac2",
   variable_type = "numerical",
   facet_ncol = NULL,
+  facet_scales = NULL,
   variables = NULL,
   title = "Ceteris Paribus profile",
   subtitle = NULL,
@@ -33,6 +34,9 @@
 If \code{categorical} then only categorical variables will be plotted.}
 
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
+
+\item{facet_scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}.
+Default is \code{"free_x"} if \code{variable_type="numerical"} and \code{"free_y"} if \code{variable_type="categorical"}.}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 

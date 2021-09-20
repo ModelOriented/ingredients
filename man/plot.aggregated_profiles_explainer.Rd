@@ -30,13 +30,13 @@
 
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
+\item{facet_scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.}
+
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 
 \item{title}{a character. Partial and accumulated dependence explainers have deafult value.}
 
 \item{subtitle}{a character. If \code{NULL} value will be dependent on model usage.}
-
-\item{scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.}
 }
 \value{
 a \code{ggplot2} object

@@ -10,7 +10,7 @@
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
-#' @param scales a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.
+#' @param facet_scales a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param title a character. Partial and accumulated dependence explainers have deafult value.
 #' @param subtitle a character. If \code{NULL} value will be dependent on model usage.
