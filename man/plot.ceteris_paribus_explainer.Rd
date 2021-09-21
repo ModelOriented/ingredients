@@ -36,7 +36,7 @@ If \code{categorical} then only categorical variables will be plotted.}
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
 
 \item{facet_scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}.
-Default is \code{"free_x"} if \code{variable_type="numerical"} and \code{"free_y"} if \code{variable_type="categorical"}.}
+Default is \code{"free_x"}, but \code{"free_y"} if \code{categorical_type="bars"}.}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 

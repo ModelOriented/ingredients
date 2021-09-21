@@ -1,6 +1,6 @@
 ingredients 2.2.1
 --------------------------------------------------------------
-* added `facet_scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) and `plot.ceteris_paribus_explainer` (`'free_x'` or `'free_y'` by default, depending on plot type)
+* added `facet_scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) [#138](https://github.com/ModelOriented/ingredients/issues/138) and `plot.ceteris_paribus_explainer` (`'free_x'` or `'free_y'` by default, depending on plot type) [#136](https://github.com/ModelOriented/ingredients/issues/136)
 
 ingredients 2.2.0
 --------------------------------------------------------------

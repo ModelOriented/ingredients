@@ -13,7 +13,7 @@
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
 #' @param facet_scales a character value for the \code{\link[ggplot2]{facet_wrap}}.
-#' Default is \code{"free_x"} if \code{variable_type="numerical"} and \code{"free_y"} if \code{variable_type="categorical"}.
+#' Default is \code{"free_x"}, but \code{"free_y"} if \code{categorical_type="bars"}.
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be plotted.
 #' If \code{categorical} then only categorical variables will be plotted.
@@ -114,6 +114,10 @@ plot.ceteris_paribus_explainer <- function(x, ...,
   if (is.null(subtitle)) {
     labels <- paste0(unique(all_profiles$`_label_`), collapse = ", ")
     subtitle <- paste0("created for the ", labels, " model")
+  }
+
+  if (is.null(facet_scales)) {
+    facet_scales <- ifelse(categorical_type == "bars", "free_y", "free_x")
   }
 
   # variables to use
