@@ -100,7 +100,7 @@ show average profiles for each variable listed in the variables vector." />
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.2.0</span>
+          <span class="version version-default">2.2.1</span>
         </div>
       </div>
     </div>
@@ -174,6 +174,7 @@ show average profiles for each variable listed in the <code>variables</code> vec
   alpha <span class='op'>=</span> <span class='fl'>1</span>,
   color <span class='op'>=</span> <span class='st'>"_label_"</span>,
   facet_ncol <span class='op'>=</span> <span class='cn'>NULL</span>,
+  facet_scales <span class='op'>=</span> <span class='st'>"free_x"</span>,
   variables <span class='op'>=</span> <span class='cn'>NULL</span>,
   title <span class='op'>=</span> <span class='cn'>NULL</span>,
   subtitle <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -205,6 +206,10 @@ show average profiles for each variable listed in the <code>variables</code> vec
     <tr>
       <th>facet_ncol</th>
       <td><p>number of columns for the <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code></p></td>
+    </tr>
+    <tr>
+      <th>facet_scales</th>
+      <td><p>a character value for the <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></code>. Default is <code>"free_x"</code>.</p></td>
     </tr>
     <tr>
       <th>variables</th>
