@@ -157,7 +157,7 @@
 #&gt; Target node size:                 10 
 #&gt; Variable importance mode:         none 
 #&gt; Splitrule:                        gini 
-#&gt; OOB prediction error (Brier s.):  0.141722</code></pre>
+#&gt; OOB prediction error (Brier s.):  0.1417854</code></pre>
 </div>
 <div id="explainer-for-titanic-survival" class="section level1">
 <h1 class="hasAnchor">
@@ -176,9 +176,9 @@
 #&gt;   -&gt; predict function  :  yhat.ranger  will be used ( [33m default [39m )
 #&gt;   -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
 #&gt;   -&gt; model_info        :  package ranger , ver. 0.13.1 , task classification ( [33m default [39m ) 
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01350293 , mean =  0.3225648 , max =  0.9911141  
+#&gt;   -&gt; predicted values  :  numerical, min =  0.01825708 , mean =  0.3226336 , max =  0.989239  
 #&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7885656 , mean =  -0.0004080027 , max =  0.885276  
+#&gt;   -&gt; residuals         :  numerical, min =  -0.7965124 , mean =  -0.0004768215 , max =  0.8905317  
 #&gt;  [32m A new explainer has been created! [39m</code></pre>
 </div>
 <div id="model-level-feature-importance" class="section level1">
@@ -191,12 +191,12 @@
 <span class="va">fi_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/feature_importance.html">feature_importance</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;       variable mean_dropout_loss         label
-#&gt; 1 _full_model_         0.3404450 Random Forest
-#&gt; 2        parch         0.3507265 Random Forest
-#&gt; 3        sibsp         0.3515886 Random Forest
-#&gt; 4     embarked         0.3528982 Random Forest
-#&gt; 5          age         0.3772732 Random Forest
-#&gt; 6         fare         0.3816369 Random Forest</code></pre>
+#&gt; 1 _full_model_         0.3403804 Random Forest
+#&gt; 2        parch         0.3508701 Random Forest
+#&gt; 3        sibsp         0.3511097 Random Forest
+#&gt; 4     embarked         0.3517218 Random Forest
+#&gt; 5          age         0.3766709 Random Forest
+#&gt; 6         fare         0.3841474 Random Forest</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
@@ -218,12 +218,12 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_       _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest 0.0000000 0.3546222     0
-#&gt; 2     age Random Forest 0.1666667 0.5276260     0
-#&gt; 3     age Random Forest 2.0000000 0.5601227     0
-#&gt; 4     age Random Forest 4.0000000 0.5644827     0
-#&gt; 5    fare Random Forest 6.1793080 0.3083494     0
-#&gt; 6     age Random Forest 7.0000000 0.5241742     0</code></pre>
+#&gt; 1    fare Random Forest 0.0000000 0.3573411     0
+#&gt; 2     age Random Forest 0.1666667 0.5284742     0
+#&gt; 3     age Random Forest 2.0000000 0.5661150     0
+#&gt; 4     age Random Forest 4.0000000 0.5724952     0
+#&gt; 5    fare Random Forest 6.1793080 0.3121631     0
+#&gt; 6     age Random Forest 7.0000000 0.5332474     0</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -285,12 +285,12 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">clust_rf</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Top profiles    : 
 #&gt;   _vname_         _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest_1 0.0000000         1 0.2281184     0
-#&gt; 2   parch Random Forest_1 0.0000000         1 0.1660554     0
-#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1700076     0
-#&gt; 4     age Random Forest_1 0.1666667         1 0.4671322     0
-#&gt; 5   parch Random Forest_1 1.0000000         1 0.2490669     0
-#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1452975     0</code></pre>
+#&gt; 1    fare Random Forest_1 0.0000000         1 0.2282251     0
+#&gt; 2   parch Random Forest_1 0.0000000         1 0.1659529     0
+#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1696580     0
+#&gt; 4     age Random Forest_1 0.1666667         1 0.4563244     0
+#&gt; 5   parch Random Forest_1 1.0000000         1 0.2456402     0
+#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1490844     0</code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span><span class="op">(</span><span class="va">clust_rf</span>, color <span class="op">=</span> <span class="st">"_label_"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
