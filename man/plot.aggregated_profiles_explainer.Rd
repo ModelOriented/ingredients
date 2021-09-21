@@ -11,6 +11,7 @@
   alpha = 1,
   color = "_label_",
   facet_ncol = NULL,
+  facet_scales = "free_x",
   variables = NULL,
   title = NULL,
   subtitle = NULL
@@ -28,6 +29,8 @@
 \item{color}{a character. Either name of a color, or hex code for a color, or \code{_label_} if models shall be colored, or \code{_ids_} if instances shall be colored}
 
 \item{facet_ncol}{number of columns for the \code{\link[ggplot2]{facet_wrap}}}
+
+\item{facet_scales}{a character value for the \code{\link[ggplot2]{facet_wrap}}. Default is \code{"free_x"}.}
 
 \item{variables}{if not \code{NULL} then only \code{variables} will be presented}
 

@@ -12,6 +12,8 @@
 #' @param size a numeric. Size of lines to be plotted
 #' @param alpha a numeric between \code{0} and \code{1}. Opacity of lines
 #' @param facet_ncol number of columns for the \code{\link[ggplot2]{facet_wrap}}
+#' @param facet_scales a character value for the \code{\link[ggplot2]{facet_wrap}}.
+#' Default is \code{"free_x"} if \code{variable_type="numerical"} and \code{"free_y"} if \code{variable_type="categorical"}.
 #' @param variables if not \code{NULL} then only \code{variables} will be presented
 #' @param variable_type a character. If \code{numerical} then only numerical variables will be plotted.
 #' If \code{categorical} then only categorical variables will be plotted.
@@ -89,6 +91,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
    color = "#46bac2",
    variable_type = "numerical",
    facet_ncol = NULL,
+   facet_scales = NULL,
    variables = NULL,
    title = "Ceteris Paribus profile",
    subtitle = NULL,
@@ -164,6 +167,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
     pl <- plot_numerical_ceteris_paribus(all_profiles = all_profiles,
                                          color_values = color_values,
                                          facet_ncol = facet_ncol,
+                                         facet_scales = facet_scales,
                                          color = color,
                                          size = size,
                                          alpha = alpha)
@@ -180,6 +184,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
                    variables = variables,
                    color_values = color_values,
                    facet_ncol = facet_ncol,
+                   facet_scales = facet_scales,
                    color = color,
                    size = size,
                    alpha = alpha),
@@ -189,6 +194,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
                       variables = variables,
                       color_values = color_values,
                       facet_ncol = facet_ncol,
+                      facet_scales = facet_scales,
                       color = color,
                       size = size,
                       alpha = alpha),
@@ -198,6 +204,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
                       variables = variables,
                       color_values = color_values,
                       facet_ncol = facet_ncol,
+                      facet_scales = facet_scales,
                       color = color,
                       size = size,
                       alpha = alpha),
@@ -213,6 +220,7 @@ plot.ceteris_paribus_explainer <- function(x, ...,
 plot_numerical_ceteris_paribus <- function(all_profiles,
                                            color_values,
                                            facet_ncol = NULL,
+                                           facet_scales = "free_x",
                                            color = "#46bac2",
                                            size = 1,
                                            alpha = 1) {
@@ -236,7 +244,7 @@ plot_numerical_ceteris_paribus <- function(all_profiles,
   }
 
   pl +
-    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    facet_wrap(~`_vname_`, scales = facet_scales, ncol = facet_ncol) +
     DALEX::theme_drwhy()
 }
 
@@ -246,6 +254,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles,
                                              variables,
                                              color_values,
                                              facet_ncol = NULL,
+                                             facet_scales = "free_x",
                                              color = "#46bac2",
                                              size = 1,
                                              alpha = 1) {
@@ -285,7 +294,7 @@ plot_categorical_ceteris_paribus <- function(all_profiles,
   # prepare plot
   pl +
     DALEX::theme_drwhy()  +
-    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    facet_wrap(~`_vname_`, scales = facet_scales, ncol = facet_ncol) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
 
@@ -295,6 +304,7 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles,
                                                       variables,
                                                       color_values,
                                                       facet_ncol = NULL,
+                                                      facet_scales = "free_x",
                                                       color = "#46bac2",
                                                       size = 1,
                                                       alpha = 1) {
@@ -332,7 +342,7 @@ plot_categorical_ceteris_paribus_profiles <- function(all_profiles,
   # prepare plot
   pl +
     DALEX::theme_drwhy()  +
-    facet_wrap(~`_vname_`, scales = "free_x", ncol = facet_ncol) +
+    facet_wrap(~`_vname_`, scales = facet_scales, ncol = facet_ncol) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 }
 
@@ -342,6 +352,7 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles,
                                                   variables,
                                                   color_values,
                                                   facet_ncol = NULL,
+                                                  facet_scales = "free_y",
                                                   color = "#46bac2",
                                                   size = 1,
                                                   alpha = 1) {
@@ -379,7 +390,7 @@ plot_categorical_ceteris_paribus_bars <- function(all_profiles,
   }
 
   pl +
-    facet_wrap(~`_vname_`, scales = "free_y", ncol = facet_ncol)+
+    facet_wrap(~`_vname_`, scales = facet_scales, ncol = facet_ncol)+
     scale_y_continuous(trans = t_shift) +
     coord_flip() +
     DALEX::theme_drwhy_vertical() +

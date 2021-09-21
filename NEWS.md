@@ -1,3 +1,7 @@
+ingredients 2.2.1
+--------------------------------------------------------------
+* added `facet_scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) and `plot.ceteris_paribus_explainer` (`'free_x'` or `'free_y'` by default, depending on plot type)
+
 ingredients 2.2.0
 --------------------------------------------------------------
 * fixes explanations when data has one column [#137](https://github.com/ModelOriented/ingredients/issues/137)
