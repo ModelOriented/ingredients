@@ -125,12 +125,13 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>The <code>ingredients</code> package is a collection of tools for assessment of feature importance and feature effects. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR"><code>arenar</code></a>.</p>
+<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/ema/">Explanatory Model Analysis: Explore, Explain, and Examine Predictive Models</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
 <p>Key functions:</p>
 <ul>
 <li>
 <code><a href="reference/feature_importance.html">feature_importance()</a></code> for assessment of global level feature importance,</li>
 <li>
-<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://pbiecek.github.io/ema/ceterisParibus.html" class="uri">https://pbiecek.github.io/ema/ceterisParibus.html</a>),</li>
+<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://ema.drwhy.ai/ceterisParibus.html" class="uri">https://ema.drwhy.ai/ceterisParibus.html</a>),</li>
 <li>
 <code><a href="reference/partial_dependence.html">partial_dependence()</a></code> for Partial Dependence Plots,</li>
 <li>
@@ -140,14 +141,13 @@
 <li>
 <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus Profiles,</li>
 <li>
-<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://pbiecek.github.io/ema/ceterisParibusOscillations.html" class="uri">https://pbiecek.github.io/ema/ceterisParibusOscillations.html</a>),</li>
+<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://ema.drwhy.ai/ceterisParibusOscillations.html" class="uri">https://ema.drwhy.ai/ceterisParibusOscillations.html</a>),</li>
 <li>
-<code><a href="reference/ceteris_paribus_2d.html">ceteris_paribus_2d()</a></code> for Ceteris Paribus 2D Profiles (read more at <a href="https://pbiecek.github.io/ema/ceterisParibus2d.html" class="uri">https://pbiecek.github.io/ema/ceterisParibus2d.html</a>),</li>
-<li>generic <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for better usability of selected explainers,</li>
+<code><a href="reference/ceteris_paribus_2d.html">ceteris_paribus_2d()</a></code> for Ceteris Paribus 2D Profiles,</li>
+<li>generic <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for better usability of selected explanations,</li>
 <li>generic <code><a href="reference/plotD3.html">plotD3()</a></code> for interactive, D3 based explanations,</li>
 <li>generic <code><a href="reference/describe.partial_dependence_explainer.html">describe()</a></code> for explanations in natural language.</li>
 </ul>
-<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/ema/">Explanatory Model Analysis: Explore, Explain, and Examine Predictive Models</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -163,7 +163,8 @@
 <div id="interactive-plots-with-d3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interactive-plots-with-d3" class="anchor"></a>Interactive plots with D3</h2>
-<p><code><a href="reference/feature_importance.html">feature_importance()</a></code>, <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> and <code>aggregated_profiles()</code> also work with <strong>D3</strong>! <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a> <img src="reference/figures/demo.gif" alt="plotD3"></p>
+<p><code><a href="reference/feature_importance.html">feature_importance()</a></code>, <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> and <code>aggregated_profiles()</code> also work with <strong>D3</strong>: <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a>.</p>
+<p><img src="reference/figures/demo.gif" alt="plotD3"></p>
 </div>
 <div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">
