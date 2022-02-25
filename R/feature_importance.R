@@ -121,7 +121,8 @@ feature_importance.explainer <- function(x,
                                          variables = NULL,
                                          variable_groups = NULL,
                                          N = n_sample,
-                                         label = NULL) {
+                                         label = NULL,
+                                         permDim=2) {
   if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
   if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
 
@@ -146,6 +147,7 @@ feature_importance.explainer <- function(x,
                              B = B,
                              variables = variables,
                              variable_groups = variable_groups,
+                             permDim=permDim,
                              ...
   )
 }
