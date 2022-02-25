@@ -22,6 +22,7 @@
 #' @param B integer, number of permutation rounds to perform on each variable. By default it's \code{10}.
 #' @param variables vector of variables. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}
 #' @param variable_groups list of variables names vectors. This is for testing joint variable importance.
+#' @param permDim dimension to perform the permutations when \code{data} is a 3d array.
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
 #' By default \code{NULL}. If specified then it will override \code{variables}
 #'
@@ -163,7 +164,8 @@ feature_importance.default <- function(x,
                                        B = 10,
                                        variables = NULL,
                                        N = n_sample,
-                                       variable_groups = NULL) {
+                                       variable_groups = NULL,
+                                       permDim=2) {
   # start: checks for arguments
 ##  if (is.null(N) & methods::hasArg("n_sample")) {
 ##    warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
@@ -174,7 +176,7 @@ feature_importance.default <- function(x,
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
 
     wrong_names <- !all(sapply(variable_groups, function(variable_set) {
-      all(variable_set %in% colnames(data))
+      all(variable_set %in% dimnames(data)[[permDim]])
     }))
 
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
@@ -195,8 +197,8 @@ feature_importance.default <- function(x,
   if (is.null(variable_groups)) {
     # if `variables` are not specified, then extract from data
     if (is.null(variables)) {
-      variables <- colnames(data)
-      names(variables) <- colnames(data)
+      variables <- dimnames(data)[[permDim]]
+      names(variables) <- dimnames(data)[[permDim]]
     }
   } else {
     variables <- variable_groups
@@ -212,7 +214,11 @@ feature_importance.default <- function(x,
         sampled_rows <- sample(1:nrow(data), N)
       }
     }
-    sampled_data <- data[sampled_rows, , drop = FALSE]
+    if (length(dim(data)) == 2) {
+      sampled_data <- data[sampled_rows, , drop = FALSE]
+    } else if (length(dim(data)) == 3) {
+      sampled_data <- data[sampled_rows, , , drop = FALSE]
+    }
     observed <- y[sampled_rows]
     # loss on the full model or when outcomes are permuted
     loss_full <- loss_function(observed, predict_function(x, sampled_data))
@@ -220,7 +226,15 @@ feature_importance.default <- function(x,
     # loss upon dropping a single variable (or a single group)
     loss_features <- sapply(variables, function(variables_set) {
       ndf <- sampled_data
-      ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
+      if (length(dim(data)) == 2) {
+        ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
+      } else if (length(dim(data)) == 3) {
+        if (permDim == 2L) {
+          ndf[, variables_set,] <- ndf[sample(1:nrow(ndf)), variables_set,]
+        } else if (permDim == 3L) {
+          ndf[, , variables_set] <- ndf[sample(1:nrow(ndf)), , variables_set]
+        }
+      }
       predicted <- predict_function(x, ndf)
       loss_function(observed, predicted)
     })
