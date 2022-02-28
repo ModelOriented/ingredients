@@ -22,9 +22,9 @@
 #' @param B integer, number of permutation rounds to perform on each variable. By default it's \code{10}.
 #' @param variables vector of variables. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}
 #' @param variable_groups list of variables names vectors. This is for testing joint variable importance.
-#' @param permDim dimension to perform the permutations when \code{data} is a 3d array.
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
 #' By default \code{NULL}. If specified then it will override \code{variables}
+#' @param permDim dimension to perform the permutations when \code{data} is a 3d array.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
@@ -122,7 +122,7 @@ feature_importance.explainer <- function(x,
                                          variable_groups = NULL,
                                          N = n_sample,
                                          label = NULL,
-                                         permDim=2) {
+                                         permDim = 2) {
   if (is.null(x$data)) stop("The feature_importance() function requires explainers created with specified 'data' parameter.")
   if (is.null(x$y)) stop("The feature_importance() function requires explainers created with specified 'y' parameter.")
 
@@ -147,7 +147,7 @@ feature_importance.explainer <- function(x,
                              B = B,
                              variables = variables,
                              variable_groups = variable_groups,
-                             permDim=permDim,
+                             permDim = permDim,
                              ...
   )
 }
@@ -167,7 +167,7 @@ feature_importance.default <- function(x,
                                        variables = NULL,
                                        N = n_sample,
                                        variable_groups = NULL,
-                                       permDim=2) {
+                                       permDim = 2) {
   # start: checks for arguments
 ##  if (is.null(N) & methods::hasArg("n_sample")) {
 ##    warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")

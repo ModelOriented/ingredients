@@ -18,7 +18,8 @@ feature_importance(x, ...)
   variables = NULL,
   variable_groups = NULL,
   N = n_sample,
-  label = NULL
+  label = NULL,
+  permDim = 2
 )
 
 \method{feature_importance}{default}(
@@ -34,7 +35,8 @@ feature_importance(x, ...)
   B = 10,
   variables = NULL,
   N = n_sample,
-  variable_groups = NULL
+  variable_groups = NULL,
+  permDim = 2
 )
 }
 \arguments{
@@ -62,6 +64,8 @@ By default \code{NULL}. If specified then it will override \code{variables}}
 If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
 
 \item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
+
+\item{permDim}{dimension to perform the permutations when \code{data} is a 3d array.}
 
 \item{data}{validation dataset, will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}
