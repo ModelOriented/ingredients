@@ -65,7 +65,8 @@ If \code{NULL} then variable importance will be calculated on whole dataset (no 
 
 \item{label}{name of the model. By default it's extracted from the \code{class} attribute of the model}
 
-\item{permDim}{dimension to perform the permutations when \code{data} is a 3d array.}
+\item{permDim}{dimension to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
+If \code{permDim = 2:3}, it calculates the importance for each combination of the 2nd and 3rd dimensions.}
 
 \item{data}{validation dataset, will be extracted from \code{x} if it's an explainer
 NOTE: It is best when target variable is not present in the \code{data}}

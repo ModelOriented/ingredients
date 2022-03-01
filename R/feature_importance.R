@@ -24,7 +24,8 @@
 #' @param variable_groups list of variables names vectors. This is for testing joint variable importance.
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
 #' By default \code{NULL}. If specified then it will override \code{variables}
-#' @param permDim dimension to perform the permutations when \code{data} is a 3d array.
+#' @param permDim dimension to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
+#' If \code{permDim = 2:3}, it calculates the importance for each combination of the 2nd and 3rd dimensions.
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
@@ -178,7 +179,7 @@ feature_importance.default <- function(x,
     if (!inherits(variable_groups, "list")) stop("variable_groups should be of class list")
 
     wrong_names <- !all(sapply(variable_groups, function(variable_set) {
-      all(variable_set %in% dimnames(data)[[permDim]])
+      all(variable_set %in% unlist(dimnames(data)[permDim]))
     }))
 
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
@@ -199,8 +200,14 @@ feature_importance.default <- function(x,
   if (is.null(variable_groups)) {
     # if `variables` are not specified, then extract from data
     if (is.null(variables)) {
-      variables <- dimnames(data)[[permDim]]
-      names(variables) <- dimnames(data)[[permDim]]
+      if (length(permDim) == 1){
+        variables <- dimnames(data)[[permDim]]
+        names(variables) <- dimnames(data)[[permDim]]
+      } else {
+        variables<- expand.grid(lapply(permDim, function(d) dimnames(data)[[d]]), stringsAsFactors=FALSE)
+        names(variables)<- names(dimnames(data))[permDim]
+        rownames(variables)<- apply(variables, 1, paste, collapse="|")
+      }
     }
   } else {
     variables <- variable_groups
@@ -226,20 +233,32 @@ feature_importance.default <- function(x,
     loss_full <- loss_function(observed, predict_function(x, sampled_data))
     loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data))
     # loss upon dropping a single variable (or a single group)
-    loss_features <- sapply(variables, function(variables_set) {
-      ndf <- sampled_data
-      if (length(dim(data)) == 2) {
-        ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
-      } else if (length(dim(data)) == 3) {
-        if (permDim == 2L) {
-          ndf[, variables_set,] <- ndf[sample(1:nrow(ndf)), variables_set,]
-        } else if (permDim == 3L) {
-          ndf[, , variables_set] <- ndf[sample(1:nrow(ndf)), , variables_set]
+    if (length(permDim) > 1){
+      variablesL<- split(variables, rownames(variables))
+      loss_features <- sapply(variablesL, function(variables_set) {
+        ndf <- sampled_data
+        dim2 <- variables_set[[names(dimnames(ndf))[2]]]
+        dim3 <- variables_set[[names(dimnames(ndf))[3]]]
+        ndf[, dim2, dim3] <- ndf[sample(1:nrow(ndf)), dim2, dim3]
+        predicted <- predict_function(x, ndf)
+        loss_function(observed, predicted)
+      })
+    } else {
+      loss_features <- sapply(variables, function(variables_set) {
+        ndf <- sampled_data
+        if (length(dim(data)) == 2) {
+          ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
+        } else if (length(dim(data)) == 3) {
+          if (permDim == 2L) {
+            ndf[, variables_set,] <- ndf[sample(1:nrow(ndf)), variables_set,]
+          } else if (permDim == 3L) {
+            ndf[, , variables_set] <- ndf[sample(1:nrow(ndf)), , variables_set]
+          }
         }
-      }
-      predicted <- predict_function(x, ndf)
-      loss_function(observed, predicted)
-    })
+        predicted <- predict_function(x, ndf)
+        loss_function(observed, predicted)
+      })
+    }
     c("_full_model_" = loss_full, loss_features, "_baseline_" = loss_baseline)
   }
   # permute B times, collect results into single matrix
