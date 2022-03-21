@@ -35,8 +35,8 @@ feature_importance(x, ...)
   variables = NULL,
   N = n_sample,
   variable_groups = NULL,
-  permDim = NULL,
-  combDims = FALSE
+  perm_dim = NULL,
+  comb_dims = FALSE
 )
 }
 \arguments{
@@ -58,7 +58,7 @@ while "difference" returns \code{drop_loss - drop_loss_full_model}}
 
 \item{variable_groups}{list of variables names vectors or a list of vectors for multiinput models. This is for testing joint variable importance.
 If \code{NULL} then variable importance will be tested separately for \code{variables}.
-By default \code{NULL}. If specified then it will override \code{variables},  \code{permDim} and \code{combDims}.}
+By default \code{NULL}. If specified then it will override \code{variables},  \code{perm_dim} and \code{comb_dims}.}
 
 \item{N}{number of observations that should be sampled for calculation of variable importance.
 If \code{NULL} then variable importance will be calculated on whole dataset (no sampling).}
@@ -72,11 +72,11 @@ NOTE: It is best when target variable is not present in the \code{data}}
 
 \item{predict_function}{predict function, will be extracted from \code{x} if it's an explainer}
 
-\item{permDim}{the dimensions to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
-If \code{permDim = 2:3}, it calculates the importance for each variable in the 2nd and 3rd dimensions.
+\item{perm_dim}{the dimensions to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
+If \code{perm_dim = 2:3}, it calculates the importance for each variable in the 2nd and 3rd dimensions.
 For multiinput models, a list of dimensions in the same order than in  \code{data}. If  \code{NULL}, the default, take all dimensions except the first one (i.e. rows) which correspond to cases.}
 
-\item{combDims}{if \code{TRUE}, do the permutations for each combination of the levels of the variables from 2nd and 3rd dimensions for input data with 3 dimensions. By default \code{FALSE}}
+\item{comb_dims}{if \code{TRUE}, do the permutations for each combination of the levels of the variables from 2nd and 3rd dimensions for input data with 3 dimensions. By default \code{FALSE}}
 }
 \value{
 an object of the class \code{feature_importance}
