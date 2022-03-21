@@ -176,7 +176,7 @@ feature_importance.default <- function(x,
 ##    N <- list(...)[["n_sample"]]
 ##  }
 
-  if (inherits(data, "list")){
+  if (inherits(data, "list")) {
     res <- feature_importance.multiinput(x = x,
                                          data = data,
                                          y = y,
@@ -326,12 +326,12 @@ feature_importance.multiinput <- function(x,
   ##    N <- list(...)[["n_sample"]]
   ##  }
 
-  if (is.null(permDim) | !is.null(variable_groups)){
-    permDim<- lapply(data, function(d) setNames(2:length(dim(d)), nm=names(dimnames(d))[-1])) # all dims except first (rows) which correspond to cases
+  if (is.null(permDim) | !is.null(variable_groups)) {
+    permDim <- lapply(data, function(d) setNames(2:length(dim(d)), nm=names(dimnames(d))[-1])) # all dims except first (rows) which correspond to cases
   }
 
   # Variables for the dimensions to permute
-  varsL<- mapply(function(d, dim){
+  varsL <- mapply(function(d, dim) {
     dimnames(d)[dim]
   }, d=data, dim=permDim, SIMPLIFY=FALSE)
 
@@ -346,13 +346,12 @@ feature_importance.multiinput <- function(x,
     if (wrong_names) stop("You have passed wrong variables names in variable_groups argument")
     if (!all(unlist(sapply(variable_groups, sapply, sapply, class)) == "character"))
       stop("Elements of variable_groups argument should be of class character")
-    if (any(sapply(sapply(variable_groups, names), is.null))){
+    if (any(sapply(sapply(variable_groups, names), is.null))) {
       warning("You have passed an unnamed list. The names of variable groupings will be created from variables names.")
       # Adding names for variable_groups if not specified
-      # names(variable_groups) <-
-      variable_groups<- lapply(variable_groups, function(variable_sets_input) {
-        if (is.null(names(variable_sets_input))){
-          groupNames<- sapply(variable_sets_input, function(v) paste(paste(names(v), v, sep="."), collapse = "; "))
+      variable_groups <- lapply(variable_groups, function(variable_sets_input) {
+        if (is.null(names(variable_sets_input))) {
+          groupNames <- sapply(variable_sets_input, function(v) paste(paste(names(v), sapply(v, paste, collapse="; "), sep="."), collapse = " | "))
           names(variable_sets_input) <- groupNames
         }
         variable_sets_input
@@ -366,15 +365,15 @@ feature_importance.multiinput <- function(x,
   if (is.null(variable_groups)) {
     # if `variables` are not specified, then extract from data
     if (is.null(variables)) {
-      variables <- lapply(varsL, function(vars){
-        if (combDims){
+      variables <- lapply(varsL, function(vars) {
+        if (combDims) {
           vars <- expand.grid(vars, stringsAsFactors=FALSE, KEEP.OUT.ATTRS=FALSE) # All combinations for all dimensions in a dataset
           rownames(vars) <- apply(vars, 1, function(v) paste(v, collapse="|"))
-          vars<- split(vars, rownames(vars))
-          vars<- lapply(vars, as.list)
+          vars <- split(vars, rownames(vars))
+          vars <- lapply(vars, as.list)
         } else {
           vars <- mapply(function(dimVar, dimNames) {
-            v<- lapply(dimVar, function(v) setNames(list(v), dimNames))
+            v <- lapply(dimVar, function(v) setNames(list(v), dimNames))
             setNames(v, nm = dimVar)
           }, dimVar=vars, dimNames=names(vars), SIMPLIFY=FALSE)
           vars <- do.call(c, vars)
@@ -388,8 +387,8 @@ feature_importance.multiinput <- function(x,
 
   # start: actual calculations
   # one permutation round: subsample data, permute variables and compute losses
-  nCases<- unique(sapply(data, nrow))
-  if (length(nCases) > 1){
+  nCases <- unique(sapply(data, nrow))
+  if (length(nCases) > 1) {
     stop("Number of cases among inputs in data are different.")
   }
   sampled_rows <- 1:nCases
@@ -401,7 +400,7 @@ feature_importance.multiinput <- function(x,
         sampled_rows <- sample(1:nCases, N)
       }
     }
-    sampled_data <- lapply(data, function(d){
+    sampled_data <- lapply(data, function(d) {
       if (length(dim(d)) == 2) {
         sampled_data <- d[sampled_rows, , drop = FALSE]
       } else if (length(dim(d)) == 3) {
@@ -414,13 +413,13 @@ feature_importance.multiinput <- function(x,
     loss_full <- loss_function(observed, predict_function(x, sampled_data))
     loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data))
     # loss upon dropping a single variable (or a single group)
-    loss_featuresL <- mapply(function(d, vars, inputData){
+    loss_featuresL <- mapply(function(d, vars, inputData) {
       loss_features <- sapply(vars, function(variables_set) {
         ndf <- d
         dimPerm <- names(dimnames(ndf)) %in% names(variables_set)
         dims <- list()
-        for (i in 2:length(dimPerm)){  # First dimension for cases
-          if (dimPerm[i]){
+        for (i in 2:length(dimPerm)) {  # First dimension for cases
+          if (dimPerm[i]) {
             dims[[i]] <- variables_set[[names(dimnames(ndf))[i]]]
           } else {
             dims[[i]] <- 1:dim(ndf)[i]
@@ -428,9 +427,9 @@ feature_importance.multiinput <- function(x,
         }
         names(dims) <- names(dimnames(ndf))
 
-        if (length(dimPerm) == 2){
+        if (length(dimPerm) == 2) {
           ndf[, dims[[2]]] <- ndf[sample(1:nrow(ndf)), dims[[2]]]
-        } else if (length(dimPerm) == 3){
+        } else if (length(dimPerm) == 3) {
           ndf[, dims[[2]], dims[[3]]] <- ndf[sample(1:nrow(ndf)), dims[[2]], dims[[3]]]
         } else {
           stop("Dimensions for this kind of data is not implemented but should be easy. Contact with the developers.")
@@ -452,7 +451,7 @@ feature_importance.multiinput <- function(x,
   res_full <- res["_full_model_"]
   res <- sort(res[!names(res) %in% c("_full_model_", "_baseline_")])
   res <- data.frame(
-    variable = c("_full_model_", names(res), "_baseline_"),
+    variable = gsub(paste0("^(", paste(names(data), collapse="|"), ")\\."), "\\1: ", c("_full_model_", names(res), "_baseline_")),
     permutation = 0,
     dropout_loss = c(res_full, res, res_baseline),
     label = label,
@@ -471,7 +470,7 @@ feature_importance.multiinput <- function(x,
 
   if (B > 1) {
     res_B <- data.frame(
-      variable = rep(rownames(raw), ncol(raw)),
+      variable = gsub(paste0("^(", paste(names(data), collapse="|"), ")\\."), "\\1: ", rep(rownames(raw), ncol(raw))),
       permutation = rep(seq_len(B), each = nrow(raw)),
       dropout_loss = as.vector(raw),
       label = label
