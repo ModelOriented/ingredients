@@ -23,11 +23,11 @@
 #' @param variables vector of variables or a list of vectors for multiinput models. If \code{NULL} then variable importance will be tested for each variable from the \code{data} separately. By default \code{NULL}
 #' @param variable_groups list of variables names vectors or a list of vectors for multiinput models. This is for testing joint variable importance.
 #' If \code{NULL} then variable importance will be tested separately for \code{variables}.
-#' By default \code{NULL}. If specified then it will override \code{variables},  \code{permDim} and \code{combDims}.
-#' @param permDim the dimensions to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
-#' If \code{permDim = 2:3}, it calculates the importance for each variable in the 2nd and 3rd dimensions.
+#' By default \code{NULL}. If specified then it will override \code{variables},  \code{perm_dim} and \code{comb_dims}.
+#' @param perm_dim the dimensions to perform the permutations when \code{data} is a 3d array (e.g. [case, time, variable]).
+#' If \code{perm_dim = 2:3}, it calculates the importance for each variable in the 2nd and 3rd dimensions.
 #' For multiinput models, a list of dimensions in the same order than in  \code{data}. If  \code{NULL}, the default, take all dimensions except the first one (i.e. rows) which correspond to cases.
-#' @param combDims if \code{TRUE}, do the permutations for each combination of the levels of the variables from 2nd and 3rd dimensions for input data with 3 dimensions. By default \code{FALSE}
+#' @param comb_dims if \code{TRUE}, do the permutations for each combination of the levels of the variables from 2nd and 3rd dimensions for input data with 3 dimensions. By default \code{FALSE}
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
@@ -168,8 +168,8 @@ feature_importance.default <- function(x,
                                        variables = NULL,
                                        N = n_sample,
                                        variable_groups = NULL,
-                                       permDim = NULL,
-                                       combDims = FALSE) {
+                                       perm_dim = NULL,
+                                       comb_dims = FALSE) {
   # start: checks for arguments
 ##  if (is.null(N) & methods::hasArg("n_sample")) {
 ##    warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
@@ -190,8 +190,8 @@ feature_importance.default <- function(x,
                                          variables = variables,
                                          N = n_sample,
                                          variable_groups = variable_groups,
-                                         permDim = permDim,
-                                         combDims = combDims)
+                                         perm_dim = perm_dim,
+                                         comb_dims = comb_dims)
     return (res)
   }
 
@@ -318,22 +318,22 @@ feature_importance.multiinput <- function(x,
                                           variables = NULL,
                                           N = n_sample,
                                           variable_groups = NULL,
-                                          permDim = NULL,
-                                          combDims = FALSE) {
+                                          perm_dim = NULL,
+                                          comb_dims = FALSE) {
   # start: checks for arguments
   ##  if (is.null(N) & methods::hasArg("n_sample")) {
   ##    warning("n_sample is deprecated, please update ingredients and DALEX packages to use N instead")
   ##    N <- list(...)[["n_sample"]]
   ##  }
 
-  if (is.null(permDim) | !is.null(variable_groups)) {
-    permDim <- lapply(data, function(d) setNames(2:length(dim(d)), nm=names(dimnames(d))[-1])) # all dims except first (rows) which correspond to cases
+  if (is.null(perm_dim) | !is.null(variable_groups)) {
+    perm_dim <- lapply(data, function(d) setNames(2:length(dim(d)), nm=names(dimnames(d))[-1])) # all dims except first (rows) which correspond to cases
   }
 
   # Variables for the dimensions to permute
   varsL <- mapply(function(d, dim) {
     dimnames(d)[dim]
-  }, d=data, dim=permDim, SIMPLIFY=FALSE)
+  }, d=data, dim=perm_dim, SIMPLIFY=FALSE)
 
   if (!is.null(variable_groups)) {
     if (!inherits(variable_groups, "list") | !all(sapply(variable_groups, inherits, "list")))
@@ -351,8 +351,8 @@ feature_importance.multiinput <- function(x,
       # Adding names for variable_groups if not specified
       variable_groups <- lapply(variable_groups, function(variable_sets_input) {
         if (is.null(names(variable_sets_input))) {
-          groupNames <- sapply(variable_sets_input, function(v) paste(paste(names(v), sapply(v, paste, collapse="; "), sep="."), collapse = " | "))
-          names(variable_sets_input) <- groupNames
+          group_names <- sapply(variable_sets_input, function(v) paste(paste(names(v), sapply(v, paste, collapse="; "), sep="."), collapse = " | "))
+          names(variable_sets_input) <- group_names
         }
         variable_sets_input
       })
@@ -366,16 +366,16 @@ feature_importance.multiinput <- function(x,
     # if `variables` are not specified, then extract from data
     if (is.null(variables)) {
       variables <- lapply(varsL, function(vars) {
-        if (combDims) {
+        if (comb_dims) {
           vars <- expand.grid(vars, stringsAsFactors=FALSE, KEEP.OUT.ATTRS=FALSE) # All combinations for all dimensions in a dataset
           rownames(vars) <- apply(vars, 1, function(v) paste(v, collapse="|"))
           vars <- split(vars, rownames(vars))
           vars <- lapply(vars, as.list)
         } else {
-          vars <- mapply(function(dimVar, dimNames) {
-            v <- lapply(dimVar, function(v) setNames(list(v), dimNames))
-            setNames(v, nm = dimVar)
-          }, dimVar=vars, dimNames=names(vars), SIMPLIFY=FALSE)
+          vars <- mapply(function(dim_var, dim_names) {
+            v <- lapply(dim_var, function(v) setNames(list(v), dim_names))
+            setNames(v, nm = dim_var)
+          }, dim_var=vars, dim_names=names(vars), SIMPLIFY=FALSE)
           vars <- do.call(c, vars)
         }
         vars
@@ -387,17 +387,17 @@ feature_importance.multiinput <- function(x,
 
   # start: actual calculations
   # one permutation round: subsample data, permute variables and compute losses
-  nCases <- unique(sapply(data, nrow))
-  if (length(nCases) > 1) {
+  n_cases <- unique(sapply(data, nrow))
+  if (length(n_cases) > 1) {
     stop("Number of cases among inputs in data are different.")
   }
-  sampled_rows <- 1:nCases
+  sampled_rows <- 1:n_cases
 
   loss_after_permutation <- function() {
     if (!is.null(N)) {
-      if (N < nCases) {
+      if (N < n_cases) {
         # sample N points
-        sampled_rows <- sample(1:nCases, N)
+        sampled_rows <- sample(1:n_cases, N)
       }
     }
     sampled_data <- lapply(data, function(d) {
@@ -413,13 +413,13 @@ feature_importance.multiinput <- function(x,
     loss_full <- loss_function(observed, predict_function(x, sampled_data))
     loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data))
     # loss upon dropping a single variable (or a single group)
-    loss_featuresL <- mapply(function(d, vars, inputData) {
+    loss_featuresL <- mapply(function(d, vars, input_data) {
       loss_features <- sapply(vars, function(variables_set) {
         ndf <- d
-        dimPerm <- names(dimnames(ndf)) %in% names(variables_set)
+        dim_perm <- names(dimnames(ndf)) %in% names(variables_set)
         dims <- list()
-        for (i in 2:length(dimPerm)) {  # First dimension for cases
-          if (dimPerm[i]) {
+        for (i in 2:length(dim_perm)) {  # First dimension for cases
+          if (dim_perm[i]) {
             dims[[i]] <- variables_set[[names(dimnames(ndf))[i]]]
           } else {
             dims[[i]] <- 1:dim(ndf)[i]
@@ -427,18 +427,18 @@ feature_importance.multiinput <- function(x,
         }
         names(dims) <- names(dimnames(ndf))
 
-        if (length(dimPerm) == 2) {
+        if (length(dim_perm) == 2) {
           ndf[, dims[[2]]] <- ndf[sample(1:nrow(ndf)), dims[[2]]]
-        } else if (length(dimPerm) == 3) {
+        } else if (length(dim_perm) == 3) {
           ndf[, dims[[2]], dims[[3]]] <- ndf[sample(1:nrow(ndf)), dims[[2]], dims[[3]]]
         } else {
           stop("Dimensions for this kind of data is not implemented but should be easy. Contact with the developers.")
         }
-        sampled_data[[inputData]] <- ndf
+        sampled_data[[input_data]] <- ndf
         predicted <- predict_function(x, sampled_data)
         loss_function(observed, predicted)
       })
-    }, d=sampled_data, vars=variables, inputData=seq_along(sampled_data), SIMPLIFY=FALSE)
+    }, d=sampled_data, vars=variables, input_data=seq_along(sampled_data), SIMPLIFY=FALSE)
 
     unlist(c("_full_model_" = loss_full, loss_featuresL, "_baseline_" = loss_baseline))
   }
