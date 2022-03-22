@@ -37,7 +37,10 @@ Suggests:
     jsonlite,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    abind,
+    data.table,
+    keras
 URL: https://ModelOriented.github.io/ingredients/, https://github.com/ModelOriented/ingredients
 BugReports: https://github.com/ModelOriented/ingredients/issues
 VignetteBuilder: knitr
