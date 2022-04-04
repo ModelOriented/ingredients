@@ -40,7 +40,7 @@ feature_importance(x, ...)
 \arguments{
 \item{x}{an explainer created with function \code{DALEX::explain()}, or a model to be explained.}
 
-\item{...}{other parameters}
+\item{...}{other parameters passed to \code{predict_function}.}
 
 \item{loss_function}{a function thet will be used to assess variable importance}
 
