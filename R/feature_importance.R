@@ -12,7 +12,7 @@
 #' @param y true labels for \code{data}, will be extracted from \code{x} if it's an explainer
 #' @param label name of the model. By default it's extracted from the \code{class} attribute of the model
 #' @param loss_function a function thet will be used to assess variable importance
-#' @param ... other parameters passed to \code{predict_function}.
+#' @param ... other parameters passed to \code{predict_function} and \code{loss_function}.
 #' @param type character, type of transformation that should be applied for dropout loss.
 #' "raw" results raw drop losses, "ratio" returns \code{drop_loss/drop_loss_full_model}
 #' while "difference" returns \code{drop_loss - drop_loss_full_model}
@@ -215,14 +215,14 @@ feature_importance.default <- function(x,
     sampled_data <- data[sampled_rows, , drop = FALSE]
     observed <- y[sampled_rows]
     # loss on the full model or when outcomes are permuted
-    loss_full <- loss_function(observed, predict_function(x, sampled_data, ...))
-    loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data, ...))
+    loss_full <- loss_function(observed, predict_function(x, sampled_data, ...), ...)
+    loss_baseline <- loss_function(sample(observed), predict_function(x, sampled_data, ...), ...)
     # loss upon dropping a single variable (or a single group)
     loss_features <- sapply(variables, function(variables_set) {
       ndf <- sampled_data
       ndf[, variables_set] <- ndf[sample(1:nrow(ndf)), variables_set]
       predicted <- predict_function(x, ndf, ...)
-      loss_function(observed, predicted)
+      loss_function(observed, predicted, ...)
     })
     c("_full_model_" = loss_full, loss_features, "_baseline_" = loss_baseline)
   }
