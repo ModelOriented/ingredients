@@ -60,8 +60,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="index.html">ingredients</a>
         <div class="info">
-          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
-           developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
+          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy" class="external-link">DrWhy.AI</a>
+           developed by the <a href="https://mi2.mini.pw.edu.pl/" class="external-link">MI^2 DataLab</a> </span>
           <span class="version version-default">2.2.1</span>
         </div>
       </div>
@@ -69,16 +69,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -99,7 +93,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/ModelOriented/ingredients/">
+  <a href="https://github.com/ModelOriented/ingredients/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -116,22 +110,21 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="model-ingredients-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#model-ingredients-" class="anchor"></a>Model Ingredients <img src="reference/figures/logo.png" align="right" width="150">
+<div class="section level1">
+<div class="page-header"><h1 id="model-ingredients-">Model Ingredients <img src="reference/figures/logo.png" align="right" width="150"><a class="anchor" aria-label="anchor" href="#model-ingredients-"></a>
 </h1></div>
-
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>The <code>ingredients</code> package is a collection of tools for assessment of feature importance and feature effects. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR"><code>arenar</code></a>.</p>
-<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/ema/">Explanatory Model Analysis: Explore, Explain, and Examine Predictive Models</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI">DrWhy.AI</a> universe.</p>
+<p><a href="https://github.com/ModelOriented/ingredients/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/ModelOriented/ingredients/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/github/ModelOriented/ingredients?branch=master" class="external-link"><img src="https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg" alt="Coverage Status"></a> <a href="https://cran.r-project.org/package=ingredients" class="external-link"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a> <a href="http://cranlogs.r-pkg.org/badges/grand-total/ingredients" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/ingredients?color=orange" alt="Total Downloads"></a></p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The <code>ingredients</code> package is a collection of tools for assessment of feature importance and feature effects. It is imported and used to compute model explanations in multiple packages e.g. <a href="https://github.com/ModelOriented/DALEX" class="external-link"><code>DALEX</code></a>, <a href="https://github.com/ModelOriented/modelStudio" class="external-link"><code>modelStudio</code></a>, <a href="https://github.com/ModelOriented/ArenaR" class="external-link"><code>arenar</code></a>.</p>
+<p>The philosophy behind <code>ingredients</code> explanations is described in the <a href="https://pbiecek.github.io/ema/" class="external-link">Explanatory Model Analysis: Explore, Explain, and Examine Predictive Models</a> e-book. The <code>ingredients</code> package is a part of <a href="http://DrWhy.AI" class="external-link">DrWhy.AI</a> universe.</p>
 <p>Key functions:</p>
 <ul>
 <li>
 <code><a href="reference/feature_importance.html">feature_importance()</a></code> for assessment of global level feature importance,</li>
 <li>
-<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://ema.drwhy.ai/ceterisParibus.html" class="uri">https://ema.drwhy.ai/ceterisParibus.html</a>),</li>
+<code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> for calculation of the Ceteris Paribus / What-If Profiles (read more at <a href="https://ema.drwhy.ai/ceterisParibus.html" class="external-link uri">https://ema.drwhy.ai/ceterisParibus.html</a>),</li>
 <li>
 <code><a href="reference/partial_dependence.html">partial_dependence()</a></code> for Partial Dependence Plots,</li>
 <li>
@@ -141,34 +134,36 @@
 <li>
 <code><a href="reference/aggregate_profiles.html">aggregate_profiles()</a></code> and <code><a href="reference/cluster_profiles.html">cluster_profiles()</a></code> for aggregation of Ceteris Paribus Profiles,</li>
 <li>
-<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://ema.drwhy.ai/ceterisParibusOscillations.html" class="uri">https://ema.drwhy.ai/ceterisParibusOscillations.html</a>),</li>
+<code><a href="reference/calculate_oscillations.html">calculate_oscillations()</a></code> for calculation of the Ceteris Paribus Oscillations (read more at <a href="https://ema.drwhy.ai/ceterisParibusOscillations.html" class="external-link uri">https://ema.drwhy.ai/ceterisParibusOscillations.html</a>),</li>
 <li>
 <code><a href="reference/ceteris_paribus_2d.html">ceteris_paribus_2d()</a></code> for Ceteris Paribus 2D Profiles,</li>
-<li>generic <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> for better usability of selected explanations,</li>
-<li>generic <code><a href="reference/plotD3.html">plotD3()</a></code> for interactive, D3 based explanations,</li>
-<li>generic <code><a href="reference/describe.partial_dependence_explainer.html">describe()</a></code> for explanations in natural language.</li>
+<li>generic <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> for better usability of selected explanations,</li>
+<li>generic <code><a href="reference/plotD3_ceteris_paribus.html">plotD3()</a></code> for interactive, D3 based explanations,</li>
+<li>generic <code><a href="reference/describe.html">describe()</a></code> for explanations in natural language.</li>
 </ul>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># the easiest way to get ingredients is to install it from CRAN:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ingredients"</span><span class="op">)</span>
-
-<span class="co"># Or the the development version from GitHub:</span>
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ModelOriented/ingredients"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># the easiest way to get ingredients is to install it from CRAN:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ingredients"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or the the development version from GitHub:</span></span>
+<span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ModelOriented/ingredients"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="interactive-plots-with-d3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interactive-plots-with-d3" class="anchor"></a>Interactive plots with D3</h2>
-<p><code><a href="reference/feature_importance.html">feature_importance()</a></code>, <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> and <code>aggregated_profiles()</code> also work with <strong>D3</strong>: <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html">see an example</a>.</p>
-<p><img src="reference/figures/demo.gif" alt="plotD3"></p>
+<div class="section level2">
+<h2 id="interactive-plots-with-d3">Interactive plots with D3<a class="anchor" aria-label="anchor" href="#interactive-plots-with-d3"></a>
+</h2>
+<p><code><a href="reference/feature_importance.html">feature_importance()</a></code>, <code><a href="reference/ceteris_paribus.html">ceteris_paribus()</a></code> and <code>aggregated_profiles()</code> also work with <strong>D3</strong>: <a href="https://modeloriented.github.io/ingredients/ceterisParibusDemo.html" class="external-link">see an example</a>.</p>
+<div class="figure">
+<img src="reference/figures/demo.gif" alt=""><p class="caption">plotD3</p>
 </div>
-<div id="acknowledgments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+</div>
+<div class="section level2">
+<h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
 <p>Work on this package was financially supported by the <code>NCN Opus grant 2016/21/B/ST6/02176</code>.</p>
 </div>
 </div>
@@ -176,50 +171,50 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ingredients">https://​cloud.r-project.org/​package=ingredients</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/ModelOriented/ingredients/">https://​github.com/​ModelOriented/​ingredients/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/ModelOriented/ingredients/issues">https://​github.com/​ModelOriented/​ingredients/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Hubert Baniecki <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6661-5364" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=ingredients" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/ModelOriented/ingredients/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ModelOriented/ingredients/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ModelOriented/ingredients/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/ingredients/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/github/ModelOriented/ingredients?branch=master"><img src="https://img.shields.io/codecov/c/github/ModelOriented/ingredients/master.svg" alt="Coverage Status"></a></li>
-<li><a href="https://cran.r-project.org/package=ingredients"><img src="http://www.r-pkg.org/badges/version/ingredients" alt="CRAN_Status_Badge"></a></li>
-<li><a href="http://cranlogs.r-pkg.org/badges/grand-total/ingredients"><img src="http://cranlogs.r-pkg.org/badges/grand-total/ingredients?color=orange" alt="Total Downloads"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing ingredients</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Przemyslaw Biecek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8423-1823" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Hubert Baniecki <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6661-5364" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
 </div>
 
       </footer>

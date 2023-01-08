@@ -49,8 +49,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
-          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
-           developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
+          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy" class="external-link">DrWhy.AI</a>
+           developed by the <a href="https://mi2.mini.pw.edu.pl/" class="external-link">MI^2 DataLab</a> </span>
           <span class="version version-default">2.2.1</span>
         </div>
       </div>
@@ -58,16 +58,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -88,7 +82,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/ModelOriented/ingredients/">
+  <a href="https://github.com/ModelOriented/ingredients/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -103,185 +97,194 @@
 
       
 
-      </header><script src="vignette_simulated_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Simulated data, real problem</h1>
-                        <h4 class="author">Przemyslaw Biecek</h4>
+                        <h4 data-toc-skip class="author">Przemyslaw
+Biecek</h4>
             
-            <h4 class="date">2021-10-09</h4>
+            <h4 data-toc-skip class="date">2023-01-08</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_simulated.Rmd"><code>vignettes/vignette_simulated.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/HEAD/vignettes/vignette_simulated.Rmd" class="external-link"><code>vignettes/vignette_simulated.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_simulated.Rmd</code></div>
 
     </div>
 
     
     
-<div id="simulated-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#simulated-data" class="anchor"></a>Simulated data</h1>
+<div class="section level2">
+<h2 id="simulated-data">Simulated data<a class="anchor" aria-label="anchor" href="#simulated-data"></a>
+</h2>
 <p>Let’s consider a following problem, the model is defined as</p>
 <p><span class="math display">\[
 y = x_1 * x_2 + x_2
 \]</span></p>
-<p>But <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are correlated. How XAI methods work for such model?</p>
+<p>But <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are correlated. How XAI methods work
+for such model?</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># predict function for the model</span>
-<span class="va">the_model_predict</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span>
- <span class="va">x</span><span class="op">$</span><span class="va">x1</span> <span class="op">*</span> <span class="va">x</span><span class="op">$</span><span class="va">x2</span> <span class="op">+</span> <span class="va">x</span><span class="op">$</span><span class="va">x2</span>
-<span class="op">}</span>
-
-<span class="co"># correlated variables </span>
-<span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">50</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">N</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
-<span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">x1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># predict function for the model</span></span>
+<span><span class="va">the_model_predict</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span> <span class="va">x</span><span class="op">$</span><span class="va">x1</span> <span class="op">*</span> <span class="va">x</span><span class="op">$</span><span class="va">x2</span> <span class="op">+</span> <span class="va">x</span><span class="op">$</span><span class="va">x2</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># correlated variables </span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="va">x1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="explainer-for-the-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#explainer-for-the-models" class="anchor"></a>Explainer for the models</h1>
-<p>In fact this model is defined by the predict function <code>the_model_predict</code>. So it does not matter what is in the first argument of the <code>explain</code> function.</p>
+<div class="section level2">
+<h2 id="explainer-for-the-models">Explainer for the models<a class="anchor" aria-label="anchor" href="#explainer-for-the-models"></a>
+</h2>
+<p>In fact this model is defined by the predict function
+<code>the_model_predict</code>. So it does not matter what is in the
+first argument of the <code>explain</code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://dalex.drwhy.ai">"DALEX"</a></span><span class="op">)</span>
-<span class="va">explain_the_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dalex.drwhy.ai/reference/explain.html">explain</a></span><span class="op">(</span><span class="fl">1</span>,
-                      data <span class="op">=</span> <span class="va">df</span>,
-                      predict_function <span class="op">=</span> <span class="va">the_model_predict</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  numeric  ( [33m default [39m )
-#&gt;   -&gt; data              :  50  rows  2  cols 
-#&gt;   -&gt; target variable   :  not specified! ( [31m WARNING [39m )
-#&gt;   -&gt; predict function  :  the_model_predict 
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
-#&gt;   -&gt; model_info        :  package Model of class: numeric package unrecognized , ver. Unknown , task regression ( [33m default [39m ) 
-#&gt;   -&gt; model_info        :  Model info detected regression task but 'y' is a NULL .  ( [31m WARNING [39m )
-#&gt;   -&gt; model_info        :  By deafult regressions tasks supports only numercical 'y' parameter. 
-#&gt;   -&gt; model_info        :  Consider changing to numerical vector.
-#&gt;   -&gt; model_info        :  Otherwise I will not be able to calculate residuals or loss function.
-#&gt;   -&gt; predicted values  :  numerical, min =  -0.1726853 , mean =  7.70239 , max =  29.16158  
-#&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;  [32m A new explainer has been created! [39m</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://modeloriented.github.io/DALEX/" class="external-link">"DALEX"</a></span><span class="op">)</span></span>
+<span><span class="va">explain_the_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://modeloriented.github.io/DALEX/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>                      data <span class="op">=</span> <span class="va">df</span>,</span>
+<span>                      predict_function <span class="op">=</span> <span class="va">the_model_predict</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Preparation of a new explainer is initiated</span></span>
+<span><span class="co">#&gt;   -&gt; model label       :  numeric  (  default  )</span></span>
+<span><span class="co">#&gt;   -&gt; data              :  50  rows  2  cols </span></span>
+<span><span class="co">#&gt;   -&gt; target variable   :  not specified! (  WARNING  )</span></span>
+<span><span class="co">#&gt;   -&gt; predict function  :  the_model_predict </span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  No value for predict function target column. (  default  )</span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  package Model of class: numeric package unrecognized , ver. Unknown , task regression (  default  ) </span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  Model info detected regression task but 'y' is a NULL .  (  WARNING  )</span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  By deafult regressions tasks supports only numercical 'y' parameter. </span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  Consider changing to numerical vector.</span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  Otherwise I will not be able to calculate residuals or loss function.</span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  -0.1726853 , mean =  7.70239 , max =  29.16158  </span></span>
+<span><span class="co">#&gt;   -&gt; residual function :  difference between y and yhat (  default  )</span></span>
+<span><span class="co">#&gt;   A new explainer has been created!</span></span></code></pre>
 </div>
-<div id="ceteris-paribus" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ceteris-paribus" class="anchor"></a>Ceteris paribus</h1>
-<p>Use the <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code> function to see Ceteris Paribus profiles. Clearly it’s not an additive model, as the effect of <span class="math inline">\(x_1\)</span> depends on <span class="math inline">\(x_2\)</span>.</p>
+<div class="section level2">
+<h2 id="ceteris-paribus">Ceteris paribus<a class="anchor" aria-label="anchor" href="#ceteris-paribus"></a>
+</h2>
+<p>Use the <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code> function to see Ceteris
+Paribus profiles. Clearly it’s not an additive model, as the effect of
+<span class="math inline">\(x_1\)</span> depends on <span class="math inline">\(x_2\)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/ingredients/">"ingredients"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span>
-
-<span class="va">sample_rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span>,
-                          x2 <span class="op">=</span> <span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
-
-<span class="va">cp_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_the_model</span>, <span class="va">sample_rows</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/show_observations.html">show_observations</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Ceteris Paribus profiles"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/ingredients/" class="external-link">"ingredients"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sample_rows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span>,</span>
+<span>                          x2 <span class="op">=</span> <span class="op">-</span><span class="fl">5</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cp_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_the_model</span>, <span class="va">sample_rows</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/show_observations.html">show_observations</a></span><span class="op">(</span><span class="va">cp_model</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Ceteris Paribus profiles"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
-<div id="dependence-profiles" class="section level1">
-<h1 class="hasAnchor">
-<a href="#dependence-profiles" class="anchor"></a>Dependence profiles</h1>
-<p>Lets try Partial Dependence profiles, Conditional Dependence profiles and Accumulated Local profiles. For the last two we can try different smoothing factors</p>
+<div class="section level2">
+<h2 id="dependence-profiles">Dependence profiles<a class="anchor" aria-label="anchor" href="#dependence-profiles"></a>
+</h2>
+<p>Lets try Partial Dependence profiles, Conditional Dependence profiles
+and Accumulated Local profiles. For the last two we can try different
+smoothing factors</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pd_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pd_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"PDP"</span>
-
-<span class="va">cd_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">cd_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.25"</span>
-
-<span class="va">ad_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ad_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.25"</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ad_model</span>, <span class="va">cd_model</span>, <span class="va">pd_model</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Feature effects - PDP, CDP, ALE"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pd_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pd_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"PDP"</span></span>
+<span></span>
+<span><span class="va">cd_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cd_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.25"</span></span>
+<span></span>
+<span><span class="va">ad_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ad_model</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.25"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ad_model</span>, <span class="va">cd_model</span>, <span class="va">pd_model</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Feature effects - PDP, CDP, ALE"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cd_model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
-<span class="va">cd_model_1</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.1"</span>
-
-<span class="va">cd_model_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="va">cd_model_5</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.5"</span>
-
-<span class="va">ad_model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="va">ad_model_1</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.1"</span>
-
-<span class="va">ad_model_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="va">ad_model_5</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.5"</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ad_model</span>, <span class="va">cd_model</span>, <span class="va">pd_model</span>, <span class="va">cd_model_1</span>, <span class="va">cd_model_5</span>, <span class="va">ad_model_1</span>, <span class="va">ad_model_5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Feature effects - PDP, CDP, ALE"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cd_model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="va">cd_model_1</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.1"</span></span>
+<span></span>
+<span><span class="va">cd_model_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">cd_model_5</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"CDP 0.5"</span></span>
+<span></span>
+<span><span class="va">ad_model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">ad_model_1</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.1"</span></span>
+<span></span>
+<span><span class="va">ad_model_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, span <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">ad_model_5</span><span class="op">$</span><span class="va">`_label_`</span> <span class="op">=</span> <span class="st">"ALE 0.5"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ad_model</span>, <span class="va">cd_model</span>, <span class="va">pd_model</span>, <span class="va">cd_model_1</span>, <span class="va">cd_model_5</span>, <span class="va">ad_model_1</span>, <span class="va">ad_model_5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Feature effects - PDP, CDP, ALE"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
-<div id="dependence-profiles-in-groups" class="section level1">
-<h1 class="hasAnchor">
-<a href="#dependence-profiles-in-groups" class="anchor"></a>Dependence profiles in groups</h1>
+<div class="section level2">
+<h2 id="dependence-profiles-in-groups">Dependence profiles in groups<a class="anchor" aria-label="anchor" href="#dependence-profiles-in-groups"></a>
+</h2>
 <p>And now, let’s see how the grouping factor works</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># add grouping variable</span>
-<span class="va">df</span><span class="op">$</span><span class="va">x3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sign.html">sign</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># update the data argument</span>
-<span class="va">explain_the_model</span><span class="op">$</span><span class="va">data</span> <span class="op">=</span> <span class="va">df</span>
-
-<span class="co"># PDP in groups</span>
-<span class="va">pd_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, 
-                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, 
-                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pd_model_groups</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Partial Dependence"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># add grouping variable</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">x3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sign.html" class="external-link">sign</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># update the data argument</span></span>
+<span><span class="va">explain_the_model</span><span class="op">$</span><span class="va">data</span> <span class="op">=</span> <span class="va">df</span></span>
+<span></span>
+<span><span class="co"># PDP in groups</span></span>
+<span><span class="va">pd_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, </span>
+<span>                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, </span>
+<span>                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pd_model_groups</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Partial Dependence"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># ALE in groups</span>
-<span class="va">ad_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, 
-                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, 
-                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ad_model_groups</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Accumulated Local"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># ALE in groups</span></span>
+<span><span class="va">ad_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, </span>
+<span>                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, </span>
+<span>                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ad_model_groups</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Accumulated Local"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># CDP in groups</span>
-<span class="va">cd_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, 
-                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, 
-                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cd_model_groups</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Conditional Dependence"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># CDP in groups</span></span>
+<span><span class="va">cd_model_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_the_model</span>, </span>
+<span>                                      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, </span>
+<span>                                      groups <span class="op">=</span> <span class="st">"x3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cd_model_groups</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Conditional Dependence"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_simulated_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
 </div>
-<div id="session-info" class="section level1">
-<h1 class="hasAnchor">
-<a href="#session-info" class="anchor"></a>Session info</h1>
+<div class="section level2">
+<h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; R version 4.1.1 (2021-08-10)
-#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)
-#&gt; Running under: macOS Catalina 10.15.7
-#&gt; 
-#&gt; Matrix products: default
-#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
-#&gt; 
-#&gt; locale:
-#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-#&gt; 
-#&gt; attached base packages:
-#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
-#&gt; 
-#&gt; other attached packages:
-#&gt; [1] ggplot2_3.3.5     ingredients_2.2.1 DALEX_2.3.0      
-#&gt; 
-#&gt; loaded via a namespace (and not attached):
-#&gt;  [1] highr_0.9         compiler_4.1.1    pillar_1.6.3      jquerylib_0.1.4  
-#&gt;  [5] tools_4.1.1       digest_0.6.28     evaluate_0.14     memoise_2.0.0    
-#&gt;  [9] lifecycle_1.0.1   tibble_3.1.5      gtable_0.3.0      pkgconfig_2.0.3  
-#&gt; [13] rlang_0.4.11      yaml_2.2.1        pkgdown_1.6.1     xfun_0.26        
-#&gt; [17] fastmap_1.1.0     withr_2.4.2       stringr_1.4.0     knitr_1.36       
-#&gt; [21] desc_1.4.0        fs_1.5.0          vctrs_0.3.8       systemfonts_1.0.2
-#&gt; [25] rprojroot_2.0.2   grid_4.1.1        glue_1.4.2        R6_2.5.1         
-#&gt; [29] textshaping_0.3.5 fansi_0.5.0       rmarkdown_2.11    farver_2.1.0     
-#&gt; [33] magrittr_2.0.1    scales_1.1.1      htmltools_0.5.2   ellipsis_0.3.2   
-#&gt; [37] colorspace_2.0-2  labeling_0.4.2    ragg_1.1.3        utf8_1.2.2       
-#&gt; [41] stringi_1.7.5     munsell_0.5.0     cachem_1.0.6      crayon_1.4.1</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; R version 4.2.2 (2022-10-31)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] ggplot2_3.4.0     ingredients_2.2.1 DALEX_2.4.2      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] highr_0.10        bslib_0.4.2       compiler_4.2.2    pillar_1.8.1     </span></span>
+<span><span class="co">#&gt;  [5] jquerylib_0.1.4   tools_4.2.2       digest_0.6.31     jsonlite_1.8.4   </span></span>
+<span><span class="co">#&gt;  [9] evaluate_0.19     memoise_2.0.1     lifecycle_1.0.3   tibble_3.1.8     </span></span>
+<span><span class="co">#&gt; [13] gtable_0.3.1      pkgconfig_2.0.3   rlang_1.0.6       cli_3.5.0        </span></span>
+<span><span class="co">#&gt; [17] yaml_2.3.6        pkgdown_2.0.7     xfun_0.36         fastmap_1.1.0    </span></span>
+<span><span class="co">#&gt; [21] withr_2.5.0       stringr_1.5.0     knitr_1.41        desc_1.4.2       </span></span>
+<span><span class="co">#&gt; [25] fs_1.5.2          vctrs_0.5.1       sass_0.4.4        systemfonts_1.0.4</span></span>
+<span><span class="co">#&gt; [29] rprojroot_2.0.3   grid_4.2.2        glue_1.6.2        R6_2.5.1         </span></span>
+<span><span class="co">#&gt; [33] textshaping_0.3.6 fansi_1.0.3       rmarkdown_2.19    farver_2.1.1     </span></span>
+<span><span class="co">#&gt; [37] purrr_1.0.0       magrittr_2.0.3    scales_1.2.1      htmltools_0.5.4  </span></span>
+<span><span class="co">#&gt; [41] colorspace_2.0-3  labeling_0.4.2    ragg_1.2.4        utf8_1.2.2       </span></span>
+<span><span class="co">#&gt; [45] stringi_1.7.8     munsell_0.5.0     cachem_1.0.6</span></span></code></pre>
 </div>
   </div>
 
@@ -296,11 +299,11 @@ y = x_1 * x_2 + x_2
 
 
       <footer><div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
 </div>
 
       </footer>

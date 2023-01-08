@@ -49,8 +49,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">ingredients</a>
         <div class="info">
-          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
-           developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
+          <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy" class="external-link">DrWhy.AI</a>
+           developed by the <a href="https://mi2.mini.pw.edu.pl/" class="external-link">MI^2 DataLab</a> </span>
           <span class="version version-default">2.2.1</span>
         </div>
       </div>
@@ -58,16 +58,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -88,7 +82,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/ModelOriented/ingredients/">
+  <a href="https://github.com/ModelOriented/ingredients/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -103,234 +97,256 @@
 
       
 
-      </header><script src="vignette_titanic_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>General introduction: Survival on the RMS Titanic</h1>
-                        <h4 class="author">Przemyslaw Biecek</h4>
+      <h1 data-toc-skip>General introduction: Survival on the RMS
+Titanic</h1>
+                        <h4 data-toc-skip class="author">Przemyslaw
+Biecek</h4>
             
-            <h4 class="date">2021-10-09</h4>
+            <h4 data-toc-skip class="date">2023-01-08</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/master/vignettes/vignette_titanic.Rmd"><code>vignettes/vignette_titanic.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ModelOriented/ingredients/blob/HEAD/vignettes/vignette_titanic.Rmd" class="external-link"><code>vignettes/vignette_titanic.Rmd</code></a></small>
       <div class="hidden name"><code>vignette_titanic.Rmd</code></div>
 
     </div>
 
     
     
-<div id="data-for-titanic-survival" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-for-titanic-survival" class="anchor"></a>Data for Titanic survival</h1>
-<p>Let’s see an example for <code>DALEX</code> package for classification models for the survival problem for Titanic dataset. Here we are using a dataset <code>titanic_imputed</code> avaliable in the <code>DALEX</code> package. Note that this data was copied from the <code>stablelearner</code> package and changed for practicality.</p>
+<div class="section level2">
+<h2 id="data-for-titanic-survival">Data for Titanic survival<a class="anchor" aria-label="anchor" href="#data-for-titanic-survival"></a>
+</h2>
+<p>Let’s see an example for <code>DALEX</code> package for
+classification models for the survival problem for Titanic dataset. Here
+we are using a dataset <code>titanic_imputed</code> avaliable in the
+<code>DALEX</code> package. Note that this data was copied from the
+<code>stablelearner</code> package and changed for practicality.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://dalex.drwhy.ai">"DALEX"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">titanic_imputed</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;   gender age class    embarked  fare sibsp parch survived
-#&gt; 1   male  42   3rd Southampton  7.11     0     0        0
-#&gt; 2   male  13   3rd Southampton 20.05     0     2        0
-#&gt; 3   male  16   3rd Southampton 20.05     1     1        0
-#&gt; 4 female  39   3rd Southampton 20.05     1     1        1
-#&gt; 5 female  16   3rd Southampton  7.13     0     0        1
-#&gt; 6   male  25   3rd Southampton  7.13     0     0        1</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://modeloriented.github.io/DALEX/" class="external-link">"DALEX"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">titanic_imputed</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;   gender age class    embarked  fare sibsp parch survived</span></span>
+<span><span class="co">#&gt; 1   male  42   3rd Southampton  7.11     0     0        0</span></span>
+<span><span class="co">#&gt; 2   male  13   3rd Southampton 20.05     0     2        0</span></span>
+<span><span class="co">#&gt; 3   male  16   3rd Southampton 20.05     1     1        0</span></span>
+<span><span class="co">#&gt; 4 female  39   3rd Southampton 20.05     1     1        1</span></span>
+<span><span class="co">#&gt; 5 female  16   3rd Southampton  7.13     0     0        1</span></span>
+<span><span class="co">#&gt; 6   male  25   3rd Southampton  7.13     0     0        1</span></span></code></pre>
 </div>
-<div id="model-for-titanic-survival" class="section level1">
-<h1 class="hasAnchor">
-<a href="#model-for-titanic-survival" class="anchor"></a>Model for Titanic survival</h1>
-<p>Ok, now it’s time to create a model. Let’s use the Random Forest model.</p>
+<div class="section level2">
+<h2 id="model-for-titanic-survival">Model for Titanic survival<a class="anchor" aria-label="anchor" href="#model-for-titanic-survival"></a>
+</h2>
+<p>Ok, now it’s time to create a model. Let’s use the Random Forest
+model.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># prepare model</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/imbs-hl/ranger">"ranger"</a></span><span class="op">)</span>
-<span class="va">model_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ranger/man/ranger.html">ranger</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">class</span> <span class="op">+</span> <span class="va">embarked</span> <span class="op">+</span>
-                           <span class="va">fare</span> <span class="op">+</span> <span class="va">sibsp</span> <span class="op">+</span> <span class="va">parch</span>,
-                           data <span class="op">=</span> <span class="va">titanic_imputed</span>, probability <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">model_titanic_rf</span></code></pre></div>
-<pre><code>#&gt; Ranger result
-#&gt; 
-#&gt; Call:
-#&gt;  ranger(survived ~ gender + age + class + embarked + fare + sibsp +      parch, data = titanic_imputed, probability = TRUE) 
-#&gt; 
-#&gt; Type:                             Probability estimation 
-#&gt; Number of trees:                  500 
-#&gt; Sample size:                      2207 
-#&gt; Number of independent variables:  7 
-#&gt; Mtry:                             2 
-#&gt; Target node size:                 10 
-#&gt; Variable importance mode:         none 
-#&gt; Splitrule:                        gini 
-#&gt; OOB prediction error (Brier s.):  0.1420794</code></pre>
+<code class="sourceCode R"><span><span class="co"># prepare model</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/imbs-hl/ranger" class="external-link">"ranger"</a></span><span class="op">)</span></span>
+<span><span class="va">model_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ranger/man/ranger.html" class="external-link">ranger</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">class</span> <span class="op">+</span> <span class="va">embarked</span> <span class="op">+</span></span>
+<span>                           <span class="va">fare</span> <span class="op">+</span> <span class="va">sibsp</span> <span class="op">+</span> <span class="va">parch</span>,</span>
+<span>                           data <span class="op">=</span> <span class="va">titanic_imputed</span>, probability <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">model_titanic_rf</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Ranger result</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt;  ranger(survived ~ gender + age + class + embarked + fare + sibsp +      parch, data = titanic_imputed, probability = TRUE) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Type:                             Probability estimation </span></span>
+<span><span class="co">#&gt; Number of trees:                  500 </span></span>
+<span><span class="co">#&gt; Sample size:                      2207 </span></span>
+<span><span class="co">#&gt; Number of independent variables:  7 </span></span>
+<span><span class="co">#&gt; Mtry:                             2 </span></span>
+<span><span class="co">#&gt; Target node size:                 10 </span></span>
+<span><span class="co">#&gt; Variable importance mode:         none </span></span>
+<span><span class="co">#&gt; Splitrule:                        gini </span></span>
+<span><span class="co">#&gt; OOB prediction error (Brier s.):  0.1419707</span></span></code></pre>
 </div>
-<div id="explainer-for-titanic-survival" class="section level1">
-<h1 class="hasAnchor">
-<a href="#explainer-for-titanic-survival" class="anchor"></a>Explainer for Titanic survival</h1>
-<p>The third step (it’s optional but useful) is to create a <code>DALEX</code> explainer for random forest model.</p>
+<div class="section level2">
+<h2 id="explainer-for-titanic-survival">Explainer for Titanic survival<a class="anchor" aria-label="anchor" href="#explainer-for-titanic-survival"></a>
+</h2>
+<p>The third step (it’s optional but useful) is to create a
+<code>DALEX</code> explainer for random forest model.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://dalex.drwhy.ai">"DALEX"</a></span><span class="op">)</span>
-<span class="va">explain_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dalex.drwhy.ai/reference/explain.html">explain</a></span><span class="op">(</span><span class="va">model_titanic_rf</span>,
-                              data <span class="op">=</span> <span class="va">titanic_imputed</span><span class="op">[</span>,<span class="op">-</span><span class="fl">8</span><span class="op">]</span>,
-                              y <span class="op">=</span> <span class="va">titanic_imputed</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span>,
-                              label <span class="op">=</span> <span class="st">"Random Forest"</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Preparation of a new explainer is initiated
-#&gt;   -&gt; model label       :  Random Forest 
-#&gt;   -&gt; data              :  2207  rows  7  cols 
-#&gt;   -&gt; target variable   :  2207  values 
-#&gt;   -&gt; predict function  :  yhat.ranger  will be used ( [33m default [39m )
-#&gt;   -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
-#&gt;   -&gt; model_info        :  package ranger , ver. 0.13.1 , task classification ( [33m default [39m ) 
-#&gt;   -&gt; predicted values  :  numerical, min =  0.01082252 , mean =  0.3218028 , max =  0.9887921  
-#&gt;   -&gt; residual function :  difference between y and yhat ( [33m default [39m )
-#&gt;   -&gt; residuals         :  numerical, min =  -0.7811018 , mean =  0.0003540103 , max =  0.8901342  
-#&gt;  [32m A new explainer has been created! [39m</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://modeloriented.github.io/DALEX/" class="external-link">"DALEX"</a></span><span class="op">)</span></span>
+<span><span class="va">explain_titanic_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://modeloriented.github.io/DALEX/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">model_titanic_rf</span>,</span>
+<span>                              data <span class="op">=</span> <span class="va">titanic_imputed</span><span class="op">[</span>,<span class="op">-</span><span class="fl">8</span><span class="op">]</span>,</span>
+<span>                              y <span class="op">=</span> <span class="va">titanic_imputed</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span>,</span>
+<span>                              label <span class="op">=</span> <span class="st">"Random Forest"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Preparation of a new explainer is initiated</span></span>
+<span><span class="co">#&gt;   -&gt; model label       :  Random Forest </span></span>
+<span><span class="co">#&gt;   -&gt; data              :  2207  rows  7  cols </span></span>
+<span><span class="co">#&gt;   -&gt; target variable   :  2207  values </span></span>
+<span><span class="co">#&gt;   -&gt; predict function  :  yhat.ranger  will be used (  default  )</span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  No value for predict function target column. (  default  )</span></span>
+<span><span class="co">#&gt;   -&gt; model_info        :  package ranger , ver. 0.14.1 , task classification (  default  ) </span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  0.01778066 , mean =  0.3221693 , max =  0.9892096  </span></span>
+<span><span class="co">#&gt;   -&gt; residual function :  difference between y and yhat (  default  )</span></span>
+<span><span class="co">#&gt;   -&gt; residuals         :  numerical, min =  -0.7806093 , mean =  -1.257523e-05 , max =  0.8887564  </span></span>
+<span><span class="co">#&gt;   A new explainer has been created!</span></span></code></pre>
 </div>
-<div id="model-level-feature-importance" class="section level1">
-<h1 class="hasAnchor">
-<a href="#model-level-feature-importance" class="anchor"></a>Model Level Feature Importance</h1>
-<p>Use the <code><a href="../reference/feature_importance.html">feature_importance()</a></code> explainer to present importance of particular features. Note that <code>type = "difference"</code> normalizes dropouts, and now they all start in 0.</p>
+<div class="section level2">
+<h2 id="model-level-feature-importance">Model Level Feature Importance<a class="anchor" aria-label="anchor" href="#model-level-feature-importance"></a>
+</h2>
+<p>Use the <code><a href="../reference/feature_importance.html">feature_importance()</a></code> explainer to present
+importance of particular features. Note that
+<code>type = "difference"</code> normalizes dropouts, and now they all
+start in 0.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/ingredients/">"ingredients"</a></span><span class="op">)</span>
-
-<span class="va">fi_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/feature_importance.html">feature_importance</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;       variable mean_dropout_loss         label
-#&gt; 1 _full_model_         0.3409101 Random Forest
-#&gt; 2        parch         0.3515762 Random Forest
-#&gt; 3        sibsp         0.3524437 Random Forest
-#&gt; 4     embarked         0.3524584 Random Forest
-#&gt; 5          age         0.3775306 Random Forest
-#&gt; 6         fare         0.3838861 Random Forest</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ModelOriented.github.io/ingredients/" class="external-link">"ingredients"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fi_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/feature_importance.html">feature_importance</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt;       variable mean_dropout_loss         label</span></span>
+<span><span class="co">#&gt; 1 _full_model_         0.3411709 Random Forest</span></span>
+<span><span class="co">#&gt; 2        parch         0.3515187 Random Forest</span></span>
+<span><span class="co">#&gt; 3        sibsp         0.3518892 Random Forest</span></span>
+<span><span class="co">#&gt; 4     embarked         0.3526868 Random Forest</span></span>
+<span><span class="co">#&gt; 5          age         0.3766254 Random Forest</span></span>
+<span><span class="co">#&gt; 6         fare         0.3825263 Random Forest</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
-<div id="feature-effects" class="section level1">
-<h1 class="hasAnchor">
-<a href="#feature-effects" class="anchor"></a>Feature effects</h1>
-<p>As we see the most important feature is <code>gender</code>. Next three importnat features are <code>class</code>, <code>age</code> and <code>fare</code>. Let’s see the link between model response and these features.</p>
-<p>Such univariate relation can be calculated with <code><a href="../reference/partial_dependence.html">partial_dependence()</a></code>.</p>
-<div id="age" class="section level2">
-<h2 class="hasAnchor">
-<a href="#age" class="anchor"></a>age</h2>
-<p>Kids 5 years old and younger have much higher survival probability.</p>
-<div id="partial-dependence-profiles" class="section level3">
-<h3 class="hasAnchor">
-<a href="#partial-dependence-profiles" class="anchor"></a>Partial Dependence Profiles</h3>
+<div class="section level2">
+<h2 id="feature-effects">Feature effects<a class="anchor" aria-label="anchor" href="#feature-effects"></a>
+</h2>
+<p>As we see the most important feature is <code>gender</code>. Next
+three importnat features are <code>class</code>, <code>age</code> and
+<code>fare</code>. Let’s see the link between model response and these
+features.</p>
+<p>Such univariate relation can be calculated with
+<code><a href="../reference/partial_dependence.html">partial_dependence()</a></code>.</p>
+<div class="section level3">
+<h3 id="age">age<a class="anchor" aria-label="anchor" href="#age"></a>
+</h3>
+<p>Kids 5 years old and younger have much higher survival
+probability.</p>
+<div class="section level4">
+<h4 id="partial-dependence-profiles">Partial Dependence Profiles<a class="anchor" aria-label="anchor" href="#partial-dependence-profiles"></a>
+</h4>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pp_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Top profiles    : 
-#&gt;   _vname_       _label_       _x_    _yhat_ _ids_
-#&gt; 1    fare Random Forest 0.0000000 0.3549150     0
-#&gt; 2     age Random Forest 0.1666667 0.5144582     0
-#&gt; 3     age Random Forest 2.0000000 0.5420579     0
-#&gt; 4     age Random Forest 4.0000000 0.5501169     0
-#&gt; 5    fare Random Forest 6.1793080 0.3059142     0
-#&gt; 6     age Random Forest 7.0000000 0.5068805     0</code></pre>
+<code class="sourceCode R"><span><span class="va">pp_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/partial_dependence.html">partial_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Top profiles    : </span></span>
+<span><span class="co">#&gt;   _vname_       _label_       _x_    _yhat_ _ids_</span></span>
+<span><span class="co">#&gt; 1    fare Random Forest 0.0000000 0.3484979     0</span></span>
+<span><span class="co">#&gt; 2     age Random Forest 0.1666667 0.5333581     0</span></span>
+<span><span class="co">#&gt; 3     age Random Forest 2.0000000 0.5567952     0</span></span>
+<span><span class="co">#&gt; 4     age Random Forest 4.0000000 0.5651997     0</span></span>
+<span><span class="co">#&gt; 5    fare Random Forest 6.1793080 0.2996907     0</span></span>
+<span><span class="co">#&gt; 6     age Random Forest 7.0000000 0.5111208     0</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
-<div id="conditional-dependence-profiles" class="section level3">
-<h3 class="hasAnchor">
-<a href="#conditional-dependence-profiles" class="anchor"></a>Conditional Dependence Profiles</h3>
+<div class="section level4">
+<h4 id="conditional-dependence-profiles">Conditional Dependence Profiles<a class="anchor" aria-label="anchor" href="#conditional-dependence-profiles"></a>
+</h4>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cp_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cp_age</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cp_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conditional_dependence.html">conditional_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cp_age</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="accumulated-local-effect-profiles" class="section level3">
-<h3 class="hasAnchor">
-<a href="#accumulated-local-effect-profiles" class="anchor"></a>Accumulated Local Effect Profiles</h3>
+<div class="section level4">
+<h4 id="accumulated-local-effect-profiles">Accumulated Local Effect Profiles<a class="anchor" aria-label="anchor" href="#accumulated-local-effect-profiles"></a>
+</h4>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ap_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ap_age</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ap_age</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/accumulated_dependence.html">accumulated_dependence</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, variables <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"fare"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ap_age</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 </div>
 </div>
-<div id="instance-level-explanations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#instance-level-explanations" class="anchor"></a>Instance level explanations</h1>
-<p>Let’s see break down explanation for model predictions for 8 years old male from 1st class that embarked from port C.</p>
+<div class="section level2">
+<h2 id="instance-level-explanations">Instance level explanations<a class="anchor" aria-label="anchor" href="#instance-level-explanations"></a>
+</h2>
+<p>Let’s see break down explanation for model predictions for 8 years
+old male from 1st class that embarked from port C.</p>
 <p>First Ceteris Paribus Profiles for numerical variables</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_passanger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="st">"1st"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1st"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"deck crew"</span>, <span class="st">"engineering crew"</span>, <span class="st">"restaurant staff"</span>, <span class="st">"victualling crew"</span><span class="op">)</span><span class="op">)</span>,
-  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="st">"male"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span><span class="op">)</span>,
-  age <span class="op">=</span> <span class="fl">8</span>,
-  sibsp <span class="op">=</span> <span class="fl">0</span>,
-  parch <span class="op">=</span> <span class="fl">0</span>,
-  fare <span class="op">=</span> <span class="fl">72</span>,
-  embarked <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="st">"Southampton"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Belfast"</span>, <span class="st">"Cherbourg"</span>, <span class="st">"Queenstown"</span>, <span class="st">"Southampton"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">sp_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, <span class="va">new_passanger</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp_rf</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/show_observations.html">show_observations</a></span><span class="op">(</span><span class="va">sp_rf</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_passanger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="st">"1st"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1st"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"deck crew"</span>, <span class="st">"engineering crew"</span>, <span class="st">"restaurant staff"</span>, <span class="st">"victualling crew"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="st">"male"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  age <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  sibsp <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  parch <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  fare <span class="op">=</span> <span class="fl">72</span>,</span>
+<span>  embarked <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="st">"Southampton"</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Belfast"</span>, <span class="st">"Cherbourg"</span>, <span class="st">"Queenstown"</span>, <span class="st">"Southampton"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sp_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, <span class="va">new_passanger</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp_rf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/show_observations.html">show_observations</a></span><span class="op">(</span><span class="va">sp_rf</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>And for selected categorical variables. Note, that sibsp is numerical but here is presented as a categorical variable.</p>
+<p>And for selected categorical variables. Note, that sibsp is numerical
+but here is presented as a categorical variable.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>,
-     variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"embarked"</span>, <span class="st">"gender"</span>, <span class="st">"sibsp"</span><span class="op">)</span>,
-     variable_type <span class="op">=</span> <span class="st">"categorical"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>,</span>
+<span>     variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"embarked"</span>, <span class="st">"gender"</span>, <span class="st">"sibsp"</span><span class="op">)</span>,</span>
+<span>     variable_type <span class="op">=</span> <span class="st">"categorical"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>It looks like the most important feature for this passenger is <code>age</code> and <code>sex</code>. After all his odds for survival are higher than for the average passenger. Mainly because of the young age and despite of being a male.</p>
+<p>It looks like the most important feature for this passenger is
+<code>age</code> and <code>sex</code>. After all his odds for survival
+are higher than for the average passenger. Mainly because of the young
+age and despite of being a male.</p>
 </div>
-<div id="profile-clustering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#profile-clustering" class="anchor"></a>Profile clustering</h1>
+<div class="section level2">
+<h2 id="profile-clustering">Profile clustering<a class="anchor" aria-label="anchor" href="#profile-clustering"></a>
+</h2>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">passangers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_sample.html">select_sample</a></span><span class="op">(</span><span class="va">titanic</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-
-<span class="va">sp_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, <span class="va">passangers</span><span class="op">)</span>
-<span class="va">clust_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_profiles.html">cluster_profiles</a></span><span class="op">(</span><span class="va">sp_rf</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">clust_rf</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; Top profiles    : 
-#&gt;   _vname_         _label_       _x_ _cluster_    _yhat_ _ids_
-#&gt; 1    fare Random Forest_1 0.0000000         1 0.2310346     0
-#&gt; 2   parch Random Forest_1 0.0000000         1 0.1666286     0
-#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1696358     0
-#&gt; 4     age Random Forest_1 0.1666667         1 0.4534773     0
-#&gt; 5   parch Random Forest_1 1.0000000         1 0.2422872     0
-#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1473978     0</code></pre>
+<code class="sourceCode R"><span><span class="va">passangers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_sample.html">select_sample</a></span><span class="op">(</span><span class="va">titanic</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sp_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ceteris_paribus.html">ceteris_paribus</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span>, <span class="va">passangers</span><span class="op">)</span></span>
+<span><span class="va">clust_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_profiles.html">cluster_profiles</a></span><span class="op">(</span><span class="va">sp_rf</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">clust_rf</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Top profiles    : </span></span>
+<span><span class="co">#&gt;   _vname_         _label_       _x_ _cluster_    _yhat_ _ids_</span></span>
+<span><span class="co">#&gt; 1    fare Random Forest_1 0.0000000         1 0.2312967     0</span></span>
+<span><span class="co">#&gt; 2   parch Random Forest_1 0.0000000         1 0.1669864     0</span></span>
+<span><span class="co">#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1708756     0</span></span>
+<span><span class="co">#&gt; 4     age Random Forest_1 0.1666667         1 0.4693818     0</span></span>
+<span><span class="co">#&gt; 5   parch Random Forest_1 1.0000000         1 0.2518251     0</span></span>
+<span><span class="co">#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1499548     0</span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span><span class="op">(</span><span class="va">clust_rf</span>, color <span class="op">=</span> <span class="st">"_label_"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span><span class="op">(</span><span class="va">clust_rf</span>, color <span class="op">=</span> <span class="st">"_label_"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
-<div id="session-info" class="section level1">
-<h1 class="hasAnchor">
-<a href="#session-info" class="anchor"></a>Session info</h1>
+<div class="section level2">
+<h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h2>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; R version 4.1.1 (2021-08-10)
-#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)
-#&gt; Running under: macOS Catalina 10.15.7
-#&gt; 
-#&gt; Matrix products: default
-#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
-#&gt; 
-#&gt; locale:
-#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-#&gt; 
-#&gt; attached base packages:
-#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     
-#&gt; 
-#&gt; other attached packages:
-#&gt; [1] ingredients_2.2.1 ranger_0.13.1     DALEX_2.3.0      
-#&gt; 
-#&gt; loaded via a namespace (and not attached):
-#&gt;  [1] Rcpp_1.0.7        highr_0.9         compiler_4.1.1    pillar_1.6.3     
-#&gt;  [5] jquerylib_0.1.4   tools_4.1.1       digest_0.6.28     lattice_0.20-44  
-#&gt;  [9] evaluate_0.14     memoise_2.0.0     lifecycle_1.0.1   tibble_3.1.5     
-#&gt; [13] gtable_0.3.0      pkgconfig_2.0.3   rlang_0.4.11      Matrix_1.3-4     
-#&gt; [17] yaml_2.2.1        pkgdown_1.6.1     xfun_0.26         fastmap_1.1.0    
-#&gt; [21] stringr_1.4.0     knitr_1.36        desc_1.4.0        fs_1.5.0         
-#&gt; [25] vctrs_0.3.8       systemfonts_1.0.2 rprojroot_2.0.2   grid_4.1.1       
-#&gt; [29] glue_1.4.2        R6_2.5.1          textshaping_0.3.5 fansi_0.5.0      
-#&gt; [33] rmarkdown_2.11    farver_2.1.0      ggplot2_3.3.5     magrittr_2.0.1   
-#&gt; [37] scales_1.1.1      htmltools_0.5.2   ellipsis_0.3.2    colorspace_2.0-2 
-#&gt; [41] labeling_0.4.2    ragg_1.1.3        utf8_1.2.2        stringi_1.7.5    
-#&gt; [45] munsell_0.5.0     cachem_1.0.6      crayon_1.4.1</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; R version 4.2.2 (2022-10-31)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] ingredients_2.2.1 ranger_0.14.1     DALEX_2.4.2      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] Rcpp_1.0.9        highr_0.10        bslib_0.4.2       compiler_4.2.2   </span></span>
+<span><span class="co">#&gt;  [5] pillar_1.8.1      jquerylib_0.1.4   tools_4.2.2       digest_0.6.31    </span></span>
+<span><span class="co">#&gt;  [9] lattice_0.20-45   jsonlite_1.8.4    evaluate_0.19     memoise_2.0.1    </span></span>
+<span><span class="co">#&gt; [13] lifecycle_1.0.3   tibble_3.1.8      gtable_0.3.1      pkgconfig_2.0.3  </span></span>
+<span><span class="co">#&gt; [17] rlang_1.0.6       Matrix_1.5-1      cli_3.5.0         yaml_2.3.6       </span></span>
+<span><span class="co">#&gt; [21] pkgdown_2.0.7     xfun_0.36         fastmap_1.1.0     withr_2.5.0      </span></span>
+<span><span class="co">#&gt; [25] stringr_1.5.0     knitr_1.41        desc_1.4.2        fs_1.5.2         </span></span>
+<span><span class="co">#&gt; [29] vctrs_0.5.1       sass_0.4.4        systemfonts_1.0.4 rprojroot_2.0.3  </span></span>
+<span><span class="co">#&gt; [33] grid_4.2.2        glue_1.6.2        R6_2.5.1          textshaping_0.3.6</span></span>
+<span><span class="co">#&gt; [37] fansi_1.0.3       rmarkdown_2.19    farver_2.1.1      purrr_1.0.0      </span></span>
+<span><span class="co">#&gt; [41] ggplot2_3.4.0     magrittr_2.0.3    scales_1.2.1      htmltools_0.5.4  </span></span>
+<span><span class="co">#&gt; [45] colorspace_2.0-3  labeling_0.4.2    ragg_1.2.4        utf8_1.2.2       </span></span>
+<span><span class="co">#&gt; [49] stringi_1.7.8     munsell_0.5.0     cachem_1.0.6</span></span></code></pre>
 </div>
   </div>
 
@@ -345,11 +361,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Przemyslaw Biecek, Hubert Baniecki.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
 </div>
 
       </footer>
