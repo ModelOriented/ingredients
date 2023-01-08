@@ -1,3 +1,8 @@
+ingredients 2.3.0
+--------------------------------------------------------------
+* breaking change: `calculate_variable_splits()` now treats `integer` variables as `categorical`. This change is propagated to `ceteris_paribus()`, `partial_dependence()`, `accumulated_dependence()`, `conditional_dependence()`, `aggregate_profiles()`, `DALEX::predict_profile()`, `DALEX::model_profile()`
+* fix an error in `ceteris_paribus` / `calculate_variable_splits` when `tidymodels` uses `integer` variables [#145](https://github.com/ModelOriented/ingredients/issues/145)
+
 ingredients 2.2.1
 --------------------------------------------------------------
 * added `facet_scales` parameter to `plot.aggregated_profiles_explainer` (`'free_x'` by default) [#138](https://github.com/ModelOriented/ingredients/issues/138) and `plot.ceteris_paribus_explainer` (`'free_x'` or `'free_y'` by default, depending on plot type) [#136](https://github.com/ModelOriented/ingredients/issues/136)

@@ -81,8 +81,8 @@ calculate_variable_split <- function(data, variables = colnames(data), grid_poin
 calculate_variable_split.default <- function(data, variables = colnames(data), grid_points = 101, variable_splits_type = "quantiles", new_observation = NA) {
   variable_splits <- lapply(variables, function(var) {
     selected_column <- na.omit(data[,var])
-    # numeric?
-    if (is.numeric(selected_column)) {
+    # as per ?is.numeric :  `is.numeric(x)` equals `is.double(x) || is.integer(x)`
+    if (is.double(selected_column)) {
       probs <- seq(0, 1, length.out = grid_points)
       if (variable_splits_type == "quantiles") {
         # variable quantiles
@@ -93,7 +93,14 @@ calculate_variable_split.default <- function(data, variables = colnames(data), g
       # fixing https://github.com/ModelOriented/ingredients/issues/124
       if (!any(is.na(new_observation)))
         selected_splits <- sort(unique(c(selected_splits, na.omit(new_observation[,var]))))
-    } else {
+    } else { # categorical OR integer fix for https://github.com/ModelOriented/ingredients/issues/145
+
+      if (length(unique(selected_column)) > 201) warning(
+        paste0("Variable: < ", var, " > has more than 201 unique values and all of them will be used as variable splits in calculating variable profiles.",
+               " Use the `variable_splits` parameter to mannualy change this behaviour.",
+               " If you believe this warning to be a false positive, raise issue at <https://github.com/ModelOriented/ingredients/issues>.")
+      )
+
       # sort will change order of factors in a good way
       if (any(is.na(new_observation))) {
         selected_splits <- sort(unique(selected_column))
