@@ -89,7 +89,7 @@ show_observations <- function(x, ...,
     data.frame(`_x_` = all_observations[[var]],
                `_vname_` = var,
                `_yhat_`  = all_observations$`_yhat_`,
-               `_y_`     = if (is.null(all_observations$`_y_`)) NA else all_observations$`_y_`,
+               `_y_`     = if ("_y_" %in% names(all_observations)) all_observations$`_y_` else NA,
                `_color_` = if (!is_color_points_a_variable) NA else {
                  if (color == "_vname_") var else all_observations[[color]]
                },
