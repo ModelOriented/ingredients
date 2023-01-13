@@ -86,12 +86,12 @@ show_observations <- function(x, ...,
   is_color_points_a_variable    <- color %in% c(all_variables, "_label_", "_vname_", "_ids_")
 
   tmp <- lapply(vnames, function(var) {
-    data.frame(`_x_` = all_observations[,var],
+    data.frame(`_x_` = all_observations[[var]],
                `_vname_` = var,
                `_yhat_`  = all_observations$`_yhat_`,
                `_y_`     = if (is.null(all_observations$`_y_`)) NA else all_observations$`_y_`,
                `_color_` = if (!is_color_points_a_variable) NA else {
-                 if (color == "_vname_") var else all_observations[,color]
+                 if (color == "_vname_") var else all_observations[[color]]
                },
                `_ids_`   = all_observations$`_ids_`,
                `_label_`  = all_observations$`_label_`)
