@@ -172,12 +172,12 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cp_rf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Top profiles    : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        gender age            class    embarked    fare sibsp parch    _yhat_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 515    female  45              2nd Southampton 10.1000     0     0 0.8229156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 515.1    male  45              2nd Southampton 10.1000     0     0 0.1208888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 604    female  17              3rd Southampton  7.1701     1     0 0.4314421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 604.1    male  17              3rd Southampton  7.1701     1     0 0.1176121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1430   female  25 engineering crew Southampton  0.0000     0     0 0.7622267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2391719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515    female  45              2nd Southampton 10.1000     0     0 0.8002607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515.1    male  45              2nd Southampton 10.1000     0     0 0.1150382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 604    female  17              3rd Southampton  7.1701     1     0 0.4554289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 604.1    male  17              3rd Southampton  7.1701     1     0 0.1021623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1430   female  25 engineering crew Southampton  0.0000     0     0 0.7257433</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1430.1   male  25 engineering crew Southampton  0.0000     0     0 0.2397259</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        _vname_ _ids_       _label_</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 515     gender   515 ranger forest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 515.1   gender   515 ranger forest</span>
@@ -189,12 +189,12 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Top observations:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      gender age            class    embarked    fare sibsp parch    _yhat_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 515    male  45              2nd Southampton 10.1000     0     0 0.1208888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 604    male  17              3rd Southampton  7.1701     1     0 0.1176121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2391719</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1163799</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 452  female  17              3rd  Queenstown  7.1408     0     0 0.6351056</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1696048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515    male  45              2nd Southampton 10.1000     0     0 0.1150382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 604    male  17              3rd Southampton  7.1701     1     0 0.1021623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1430   male  25 engineering crew Southampton  0.0000     0     0 0.2397259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 865    male  20              3rd   Cherbourg  7.0406     0     0 0.1209358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 452  female  17              3rd  Queenstown  7.1408     0     0 0.6688790</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1534   male  38 victualling crew Southampton  0.0000     0     0 0.1667650</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            _label_ _ids_</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 515  ranger forest     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 604  ranger forest     2</span>
@@ -220,12 +220,12 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pdp_rf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Top profiles    : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   _vname_              _label_        _x_ _groups_    _yhat_ _ids_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     age ranger forest_female  0.1666667   female 0.7274277     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     age ranger forest_female  2.0000000   female 0.7132767     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     age ranger forest_female  4.0000000   female 0.7358795     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     age ranger forest_female  7.0000000   female 0.7149023     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     age ranger forest_female  9.0000000   female 0.7171565     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     age ranger forest_female 13.0000000   female 0.7317510     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     age ranger forest_female  0.1666667   female 0.7263929     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     age ranger forest_female  2.0000000   female 0.7204115     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     age ranger forest_female  4.0000000   female 0.7391628     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     age ranger forest_female  7.0000000   female 0.7219996     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     age ranger forest_female  9.0000000   female 0.7229659     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     age ranger forest_female 13.0000000   female 0.7367732     0</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cp_rf</span>, variables <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="show_observations.html">show_observations</a></span><span class="op">(</span><span class="va">cp_rf</span>, variables <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="show_rugs.html">show_rugs</a></span><span class="op">(</span><span class="va">cp_rf</span>, variables <span class="op">=</span> <span class="st">"age"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -255,12 +255,12 @@ which is calculated on the observations used in <code>ceteris_paribus</code>.</p
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pdp_rf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Top profiles    : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    _vname_              _label_ _x_ _groups_    _yhat_ _ids_</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    class ranger forest_female 1st   female 0.8679155     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    class   ranger forest_male 1st     male 0.3399183     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    class ranger forest_female 2nd   female 0.8363059     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    class   ranger forest_male 2nd     male 0.2085490     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    class ranger forest_female 3rd   female 0.5458281     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   class   ranger forest_male 3rd     male 0.2344476     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    class ranger forest_female 1st   female 0.8627672     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    class   ranger forest_male 1st     male 0.3558428     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    class ranger forest_female 2nd   female 0.8284278     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    class   ranger forest_male 2nd     male 0.2221388     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    class ranger forest_female 3rd   female 0.5597408     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   class   ranger forest_male 3rd     male 0.2407558     0</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pdp_rf</span>, variables <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="aggregate_profiles-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># or maybe flipped?</span></span></span>
