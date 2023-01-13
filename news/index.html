@@ -25,7 +25,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy" class="external-link">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/" class="external-link">MI^2 DataLab</a> </span>
-          <span class="version version-default">2.2.1</span>
+          <span class="version version-default">2.3.0</span>
         </div>
       </div>
     </div>
@@ -71,6 +71,13 @@
       <small>Source: <a href="https://github.com/ModelOriented/ingredients/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.3.0" id="ingredients-230">ingredients 2.3.0<a class="anchor" aria-label="anchor" href="#ingredients-230"></a></h2>
+<ul><li>breaking change: <code>calculate_variable_splits()</code> now treats <code>integer</code> variables as <code>categorical</code>. This change is propagated to <code><a href="../reference/ceteris_paribus.html">ceteris_paribus()</a></code>, <code><a href="../reference/partial_dependence.html">partial_dependence()</a></code>, <code><a href="../reference/accumulated_dependence.html">accumulated_dependence()</a></code>, <code><a href="../reference/conditional_dependence.html">conditional_dependence()</a></code>, <code><a href="../reference/aggregate_profiles.html">aggregate_profiles()</a></code>, <code><a href="https://modeloriented.github.io/DALEX/reference/predict_profile.html" class="external-link">DALEX::predict_profile()</a></code>, <code><a href="https://modeloriented.github.io/DALEX/reference/model_profile.html" class="external-link">DALEX::model_profile()</a></code>
+</li>
+<li>fix an error in <code>ceteris_paribus</code> / <code>calculate_variable_splits</code> when <code>tidymodels</code> uses <code>integer</code> variables <a href="https://github.com/ModelOriented/ingredients/issues/145" class="external-link">#145</a>
+</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.2.1" id="ingredients-221">ingredients 2.2.1<a class="anchor" aria-label="anchor" href="#ingredients-221"></a></h2>
 <ul><li>added <code>facet_scales</code> parameter to <code>plot.aggregated_profiles_explainer</code> (<code>'free_x'</code> by default) <a href="https://github.com/ModelOriented/ingredients/issues/138" class="external-link">#138</a> and <code>plot.ceteris_paribus_explainer</code> (<code>'free_x'</code> or <code>'free_y'</code> by default, depending on plot type) <a href="https://github.com/ModelOriented/ingredients/issues/136" class="external-link">#136</a>
