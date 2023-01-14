@@ -158,7 +158,7 @@ model.</p>
 <span><span class="co">#&gt; Target node size:                 10 </span></span>
 <span><span class="co">#&gt; Variable importance mode:         none </span></span>
 <span><span class="co">#&gt; Splitrule:                        gini </span></span>
-<span><span class="co">#&gt; OOB prediction error (Brier s.):  0.1424322</span></span></code></pre>
+<span><span class="co">#&gt; OOB prediction error (Brier s.):  0.1423142</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="explainer-for-titanic-survival">Explainer for Titanic survival<a class="anchor" aria-label="anchor" href="#explainer-for-titanic-survival"></a>
@@ -178,9 +178,9 @@ model.</p>
 <span><span class="co">#&gt;   -&gt; predict function  :  yhat.ranger  will be used (  default  )</span></span>
 <span><span class="co">#&gt;   -&gt; predicted values  :  No value for predict function target column. (  default  )</span></span>
 <span><span class="co">#&gt;   -&gt; model_info        :  package ranger , ver. 0.14.1 , task classification (  default  ) </span></span>
-<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  0.01145251 , mean =  0.3222221 , max =  0.9901905  </span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  0.0162592 , mean =  0.3219181 , max =  0.9889939  </span></span>
 <span><span class="co">#&gt;   -&gt; residual function :  difference between y and yhat (  default  )</span></span>
-<span><span class="co">#&gt;   -&gt; residuals         :  numerical, min =  -0.7861032 , mean =  -6.530714e-05 , max =  0.878965  </span></span>
+<span><span class="co">#&gt;   -&gt; residuals         :  numerical, min =  -0.7763972 , mean =  0.0002387022 , max =  0.8771215  </span></span>
 <span><span class="co">#&gt;   A new explainer has been created!</span></span></code></pre>
 </div>
 <div class="section level2">
@@ -196,12 +196,12 @@ start in 0.</p>
 <span><span class="va">fi_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/feature_importance.html">feature_importance</a></span><span class="op">(</span><span class="va">explain_titanic_rf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt;       variable mean_dropout_loss         label</span></span>
-<span><span class="co">#&gt; 1 _full_model_         0.3412431 Random Forest</span></span>
-<span><span class="co">#&gt; 2        parch         0.3520250 Random Forest</span></span>
-<span><span class="co">#&gt; 3        sibsp         0.3525662 Random Forest</span></span>
-<span><span class="co">#&gt; 4     embarked         0.3531364 Random Forest</span></span>
-<span><span class="co">#&gt; 5          age         0.3767761 Random Forest</span></span>
-<span><span class="co">#&gt; 6         fare         0.3846645 Random Forest</span></span></code></pre>
+<span><span class="co">#&gt; 1 _full_model_         0.3414379 Random Forest</span></span>
+<span><span class="co">#&gt; 2        parch         0.3519820 Random Forest</span></span>
+<span><span class="co">#&gt; 3        sibsp         0.3523238 Random Forest</span></span>
+<span><span class="co">#&gt; 4     embarked         0.3530639 Random Forest</span></span>
+<span><span class="co">#&gt; 5          age         0.3775351 Random Forest</span></span>
+<span><span class="co">#&gt; 6         fare         0.3832377 Random Forest</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fi_rf</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
@@ -228,12 +228,12 @@ probability.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; Top profiles    : </span></span>
 <span><span class="co">#&gt;   _vname_       _label_       _x_    _yhat_ _ids_</span></span>
-<span><span class="co">#&gt; 1    fare Random Forest 0.0000000 0.3488368     0</span></span>
-<span><span class="co">#&gt; 2     age Random Forest 0.1666667 0.5324238     0</span></span>
-<span><span class="co">#&gt; 3     age Random Forest 2.0000000 0.5535606     0</span></span>
-<span><span class="co">#&gt; 4     age Random Forest 4.0000000 0.5653186     0</span></span>
-<span><span class="co">#&gt; 5    fare Random Forest 6.1793080 0.3059550     0</span></span>
-<span><span class="co">#&gt; 6     age Random Forest 7.0000000 0.5174670     0</span></span></code></pre>
+<span><span class="co">#&gt; 1    fare Random Forest 0.0000000 0.3596720     0</span></span>
+<span><span class="co">#&gt; 2     age Random Forest 0.1666667 0.5371610     0</span></span>
+<span><span class="co">#&gt; 3     age Random Forest 2.0000000 0.5760988     0</span></span>
+<span><span class="co">#&gt; 4     age Random Forest 4.0000000 0.5908485     0</span></span>
+<span><span class="co">#&gt; 5    fare Random Forest 6.1793080 0.3082799     0</span></span>
+<span><span class="co">#&gt; 6     age Random Forest 7.0000000 0.5440191     0</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pp_age</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_titanic_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -300,12 +300,12 @@ age and despite of being a male.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">clust_rf</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; Top profiles    : </span></span>
 <span><span class="co">#&gt;   _vname_         _label_       _x_ _cluster_    _yhat_ _ids_</span></span>
-<span><span class="co">#&gt; 1    fare Random Forest_1 0.0000000         1 0.2277653     0</span></span>
-<span><span class="co">#&gt; 2   parch Random Forest_1 0.0000000         1 0.1674883     0</span></span>
-<span><span class="co">#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1716754     0</span></span>
-<span><span class="co">#&gt; 4     age Random Forest_1 0.1666667         1 0.4664451     0</span></span>
-<span><span class="co">#&gt; 5   parch Random Forest_1 1.0000000         1 0.2593847     0</span></span>
-<span><span class="co">#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1484452     0</span></span></code></pre>
+<span><span class="co">#&gt; 1    fare Random Forest_1 0.0000000         1 0.2339843     0</span></span>
+<span><span class="co">#&gt; 2   parch Random Forest_1 0.0000000         1 0.1671031     0</span></span>
+<span><span class="co">#&gt; 3   sibsp Random Forest_1 0.0000000         1 0.1701528     0</span></span>
+<span><span class="co">#&gt; 4     age Random Forest_1 0.1666667         1 0.4576590     0</span></span>
+<span><span class="co">#&gt; 5   parch Random Forest_1 1.0000000         1 0.2386795     0</span></span>
+<span><span class="co">#&gt; 6   sibsp Random Forest_1 1.0000000         1 0.1507614     0</span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sp_rf</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/show_aggregated_profiles.html">show_aggregated_profiles</a></span><span class="op">(</span><span class="va">clust_rf</span>, color <span class="op">=</span> <span class="st">"_label_"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>

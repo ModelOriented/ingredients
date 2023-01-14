@@ -155,15 +155,15 @@ passanger, which prediction’s should be explained.</p>
 <span><span class="co">#&gt;   -&gt; predict function  :  yhat.ranger  will be used (  default  )</span></span>
 <span><span class="co">#&gt;   -&gt; predicted values  :  No value for predict function target column. (  default  )</span></span>
 <span><span class="co">#&gt;   -&gt; model_info        :  package ranger , ver. 0.14.1 , task classification (  default  ) </span></span>
-<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  0.01916471 , mean =  0.3223859 , max =  0.9932576  </span></span>
+<span><span class="co">#&gt;   -&gt; predicted values  :  numerical, min =  0.01322945 , mean =  0.3225733 , max =  0.9887516  </span></span>
 <span><span class="co">#&gt;   -&gt; residual function :  difference between y and yhat (  default  )</span></span>
-<span><span class="co">#&gt;   -&gt; residuals         :  numerical, min =  -0.7947515 , mean =  -0.0002291454 , max =  0.881366  </span></span>
+<span><span class="co">#&gt;   -&gt; residuals         :  numerical, min =  -0.7765934 , mean =  -0.0004165458 , max =  0.8851101  </span></span>
 <span><span class="co">#&gt;   A new explainer has been created!</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">passanger</span> <span class="op">&lt;-</span> <span class="va">titanic_imputed</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">titanic_imputed</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> ,<span class="op">-</span><span class="fl">8</span><span class="op">]</span></span>
 <span><span class="va">passanger</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt;      gender age class    embarked fare sibsp parch</span></span>
-<span><span class="co">#&gt; 1040 female  33   1st Southampton 86.1     0     0</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;      gender age class    embarked    fare sibsp parch</span></span>
+<span><span class="co">#&gt; 1182 female  46   1st Southampton 25.1807     0     0</span></span></code></pre>
 <p>Now we are ready for generating various explantions and then
 describing it with <code><a href="../reference/describe.html">describe()</a></code> function.</p>
 <div class="section level3">
@@ -202,9 +202,9 @@ straightforward. Thus we generate a natural language description in
 order to make it easier.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">cp_rf</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; For the selected instance, prediction estimated by Random Forest is equal to 0.967.</span></span>
+<pre><code><span><span class="co">#&gt; For the selected instance, prediction estimated by Random Forest is equal to 0.902.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Model's prediction would decrease substantially if the value of class variable would change to "3rd", "deck crew", "engineering crew", "victualling crew", "restaurant staff", "2nd".</span></span>
+<span><span class="co">#&gt; Model's prediction would decrease substantially if the value of class variable would change to "3rd", "deck crew", "engineering crew", "restaurant staff", "victualling crew", "2nd".</span></span>
 <span><span class="co">#&gt; The largest change would be marked if class variable would change to "3rd".</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; All the variables were displayed.</span></span></code></pre>
@@ -215,13 +215,13 @@ can modify the description being generated.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">cp_rf</span>,</span>
 <span>         display_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         label <span class="op">=</span> <span class="st">"the probability that the passanger will survive"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.967</span></span>
+<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.902</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The most important change in Random Forest's prediction would occur for class = "3rd". It decreases the prediction by 0.415. </span></span>
-<span><span class="co">#&gt; The second most important change in the prediction would occur for class = "deck crew". It decreases the prediction by 0.413. </span></span>
-<span><span class="co">#&gt; The third most important change in the prediction would occur for class = "engineering crew". It decreases the prediction by 0.362.</span></span>
+<span><span class="co">#&gt; The most important change in Random Forest's prediction would occur for class = "3rd". It decreases the prediction by 0.502. </span></span>
+<span><span class="co">#&gt; The second most important change in the prediction would occur for class = "deck crew". It decreases the prediction by 0.49. </span></span>
+<span><span class="co">#&gt; The third most important change in the prediction would occur for class = "engineering crew". It decreases the prediction by 0.422.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.359.</span></span></code></pre>
+<span><span class="co">#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.387.</span></span></code></pre>
 <p>Please note, that <code><a href="../reference/describe.html">describe()</a></code> can handle only one
 variable at a time, so it is recommended to specify, which variables
 should be described.</p>
@@ -230,13 +230,13 @@ should be described.</p>
 <span>         display_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         label <span class="op">=</span> <span class="st">"the probability that the passanger will survive"</span>,</span>
 <span>         variables <span class="op">=</span> <span class="va">perturbed_variable</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.967</span></span>
+<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, the probability that the passanger will survive is equal to 0.902</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The most important change in Random Forest's prediction would occur for class = "3rd". It decreases the prediction by 0.415. </span></span>
-<span><span class="co">#&gt; The second most important change in the prediction would occur for class = "deck crew". It decreases the prediction by 0.413. </span></span>
-<span><span class="co">#&gt; The third most important change in the prediction would occur for class = "engineering crew". It decreases the prediction by 0.362.</span></span>
+<span><span class="co">#&gt; The most important change in Random Forest's prediction would occur for class = "3rd". It decreases the prediction by 0.502. </span></span>
+<span><span class="co">#&gt; The second most important change in the prediction would occur for class = "deck crew". It decreases the prediction by 0.49. </span></span>
+<span><span class="co">#&gt; The third most important change in the prediction would occur for class = "engineering crew". It decreases the prediction by 0.422.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.359.</span></span></code></pre>
+<span><span class="co">#&gt; Other variable values are with less importance. They do not change the the probability that the passanger will survive by more than 0.387.</span></span></code></pre>
 <p>Continuous variables are described as well.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">perturbed_variable_continuous</span> <span class="op">&lt;-</span> <span class="st">"age"</span></span>
@@ -246,9 +246,9 @@ should be described.</p>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">cp_rf</span>, variables <span class="op">=</span> <span class="va">perturbed_variable_continuous</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, prediction is equal to 0.967</span></span>
+<pre><code><span><span class="co">#&gt; Random Forest predicts that for the selected instance, prediction is equal to 0.902</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The highest prediction occurs for (age = 35), while the lowest for (age = 74).</span></span>
+<span><span class="co">#&gt; The highest prediction occurs for (age = 15.36), while the lowest for (age = 74).</span></span>
 <span><span class="co">#&gt; Breakpoint is identified at (age = 60).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Average model responses are *lower* for variable values *higher* than breakpoint (= 60).</span></span></code></pre>
@@ -265,24 +265,24 @@ to describe dependence profiles.</p>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">pdp</span>, variables <span class="op">=</span> <span class="st">"fare"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Random Forest's mean prediction is equal to 0.967.</span></span>
+<pre><code><span><span class="co">#&gt; Random Forest's mean prediction is equal to 0.902.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The highest prediction occurs for (fare = 152.858664), while the lowest for (fare = 7.161258).</span></span>
-<span><span class="co">#&gt; Breakpoint is identified at (fare = 92.599).</span></span>
+<span><span class="co">#&gt; The highest prediction occurs for (fare = 83.0302), while the lowest for (fare = 7.1506).</span></span>
+<span><span class="co">#&gt; Breakpoints are identified at (fare = 120 and fare = 23.09).</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Average model responses are *higher* for variable values *higher* than breakpoint (= 92.599).</span></span></code></pre>
+<span><span class="co">#&gt; Average model responses are *higher* for variable values *higher* than breakpoint (= 23.09).</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggregate_profiles.html">aggregate_profiles</a></span><span class="op">(</span><span class="va">cp_rf</span>, type <span class="op">=</span> <span class="st">"partial"</span>, variable_type <span class="op">=</span> <span class="st">"categorical"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pdp</span>, variables <span class="op">=</span> <span class="va">perturbed_variable</span><span class="op">)</span></span></code></pre></div>
 <p><img src="vignette_describe_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">pdp</span>, variables <span class="op">=</span> <span class="va">perturbed_variable</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Random Forest's mean prediction is equal to 0.967.</span></span>
+<pre><code><span><span class="co">#&gt; Random Forest's mean prediction is equal to 0.902.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model's prediction would increase substantially if the value of class variable would change to "3rd".</span></span>
 <span><span class="co">#&gt; The largest change would be marked if class variable would change to "1st".</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Other variables are with less importance and they do not change prediction by more than 0.06%.</span></span></code></pre>
+<span><span class="co">#&gt; Other variables are with less importance and they do not change prediction by more than 0.08%.</span></span></code></pre>
 </div>
 </div>
   </div>
