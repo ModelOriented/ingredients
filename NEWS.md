@@ -3,6 +3,8 @@ ingredients 2.3.0
 * breaking change: `calculate_variable_splits()` now treats `integer` variables as `categorical`. This change is propagated to `ceteris_paribus()`, `partial_dependence()`, `accumulated_dependence()`, `conditional_dependence()`, `aggregate_profiles()`, `DALEX::predict_profile()`, `DALEX::model_profile()`
 * fix an error in `ceteris_paribus` / `calculate_variable_splits` when `tidymodels` uses `integer` variables [#145](https://github.com/ModelOriented/ingredients/issues/145)
 * fix an error in `show_observations` [#148](https://github.com/ModelOriented/ingredients/issues/148). This change is propagated to `DALEX::plot.predict_profile()` [#540](https://github.com/ModelOriented/DALEX/issues/540).
+* fix [#149](https://github.com/ModelOriented/ingredients/issues/149) by replacing all `class(x) = "y"` with `is(x, "y")`
+
 
 ingredients 2.2.1
 --------------------------------------------------------------

@@ -22,7 +22,7 @@ Description: Collection of tools for assessment of feature importance and featur
 Depends: R (>= 3.5)
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Imports:
     ggplot2,
     scales,

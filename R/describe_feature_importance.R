@@ -6,6 +6,7 @@
 #'
 #' @importFrom graphics plot
 #' @importFrom stats quantile
+#' @importFrom methods is
 #'
 #' @references Explanatory Model Analysis. Explore, Explain, and Examine Predictive Models. \url{https://ema.drwhy.ai/}
 #'
