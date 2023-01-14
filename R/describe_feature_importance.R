@@ -28,7 +28,7 @@ describe.feature_importance_explainer <- function(x,
                                                   ...) {
 
   #Error handling
-  if (!(class(nonsignificance_treshold) == 'numeric')) {
+  if (!is(nonsignificance_treshold, "numeric")) {
     stop("Arguments are not valid")
   }
   # fix for https://github.com/ModelOriented/ingredients/issues/95

@@ -104,7 +104,7 @@ aggregate_profiles <- function(x, ...,
   elist <- list(...)
   if (length(elist) > 1) {
     # only ceteris_paribus_explainer objects
-    elist <-  elist[sapply(elist, function(x) "ceteris_paribus_explainer" %in% class(x))]
+    elist <-  elist[sapply(elist, is, "ceteris_paribus_explainer")]
   } else {
     elist <- NULL
   }
@@ -166,7 +166,7 @@ aggregate_profiles <- function(x, ...,
     all_profiles$`_x_`[tmp == viname] <- all_profiles[tmp == viname, viname]
   }
 
-  if (class(all_profiles) != "data.frame") {
+  if (!is(all_profiles, "data.frame")) {
     all_profiles <- as.data.frame(all_profiles)
   }
 

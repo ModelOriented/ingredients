@@ -60,14 +60,14 @@ describe.ceteris_paribus_explainer <- function(x,
   # ERROR HANDLING
   if (length(unique(x[ ,'_vname_'])) == 1) variables <- as.character(x[1,'_vname_'])
   if (is.null(variables)) stop("Choose a single variable to be described.")
-  if (!class(variables) == "character") stop("Enter the single variables name as character.")
+  if (!is(variables, "character")) stop("Enter the single variables name as character.")
 
   # Assigning model's name
   model_name <- as.character(x[1,'_label_'])
   model_name <- paste(toupper(substr(model_name, 1, 1)), substr(model_name, 2, nchar(model_name)), sep="")
 
   # Assigning a value to the choosen variable
-  variables_value <- ifelse(class(attr(x, "observations")[,variables]) == 'numeric',
+  variables_value <- ifelse(is(attr(x, "observations")[,variables], "numeric"),
                             round(attr(x, "observations")[,variables],3),
                             as.character(attr(x, "observations")[,variables]))
 
@@ -77,7 +77,7 @@ describe.ceteris_paribus_explainer <- function(x,
                   "")
 
   # Generating description
-  if (class(x[ ,variables]) == "numeric") {
+  if (is(x[ ,variables], "numeric")) {
     description <- describe_ceteris_paribus_continuous(x = x,
                                                       nonsignificance_treshold = nonsignificance_treshold,
                                                       display_values = display_values,
@@ -117,11 +117,11 @@ specify_df <- function(x, variables, nonsignificance_treshold) {
 
   df <- df[ ,c(variables,"_yhat_")]
   treshold <- NULL
-  if (class(df[ ,variables]) == "factor" | class(df[ ,variables]) == "character") {
-    #choosing the prediction value for the observation being explained
+  if (is(df[ ,variables], "factor") | is(df[ ,variables], "character")) {
+    # choosing the prediction value for the observation being explained
     baseline_prediction <- attr(x, "observations")[1,'_yhat_']
     df['importance'] <- sapply(df[ ,'_yhat_'], function(x) abs(x-baseline_prediction))
-    df['importance'] <- round(df['importance'],3)
+    df['importance'] <- round(df['importance'], 3)
     df <- df[order(df[ ,'importance'], decreasing = TRUE), ]
     df['variable_name'] <- paste0('"', df[ ,variables],'"')
     df <- df[-which(df[ ,variables] == attr(x, "observations")[1,variables]), ]
