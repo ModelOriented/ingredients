@@ -29,7 +29,7 @@ Imports:
     gridExtra,
     methods
 Suggests:
-    DALEX,
+    DALEX (>= 2.4.3),
     gower,
     ranger,
     testthat,
