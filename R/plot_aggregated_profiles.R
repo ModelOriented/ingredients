@@ -150,7 +150,7 @@ plot.aggregated_profiles_explainer <- function(x, ...,
                          subtitle = subtitle)
 
 
-  res + DALEX::theme_drwhy() + ylab("average prediction") + xlab("") +
+  res + DALEX::theme_default_dalex() + ylab("average prediction") + xlab("") +
         theme(plot.title = element_text(hjust =0),
               plot.subtitle = element_text(vjust = -2, hjust = 0)) +
     facet_wrap(~ `_vname_`, scales = facet_scales, ncol = facet_ncol)

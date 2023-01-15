@@ -1,3 +1,7 @@
+ingredients 2.3.1
+--------------------------------------------------------------
+* Changes in default color theme as in  [#150](https://github.com/ModelOriented/ingredients/issues/150)
+
 ingredients 2.3.0
 --------------------------------------------------------------
 * breaking change: `calculate_variable_splits()` now treats `integer` variables as `categorical`. This change is propagated to `ceteris_paribus()`, `partial_dependence()`, `accumulated_dependence()`, `conditional_dependence()`, `aggregate_profiles()`, `DALEX::predict_profile()`, `DALEX::model_profile()`
